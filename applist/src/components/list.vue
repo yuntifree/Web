@@ -32,13 +32,13 @@
   width: 4.5rem;
 }
 .list-img1 {
-  @include containerSize(2.25rem, 1.78rem);
+  @include containerSize(2.25rem, 1.5rem);
   overflow: hidden;
   margin-right: 0.2rem;
 }
 .list-img1 img{
   @include containerSize(100%, auto);
-  min-height: 1.78rem;
+  min-height: 1.5rem;
 }
 .item-desc {
   font-size: 0.24rem;
@@ -92,9 +92,9 @@ import tip from './tip.vue'
 import msgbox from './msgbox.vue'
 import CGI from '../lib/cgi'
 import infiniteloading from 'vue-infinite-loading'
-var uid = CGI.query('uid')['uid'];
-var token = CGI.query('token')['uid'];
-//sconsole.log(uid + ' ' +token);
+var query = CGI.query;
+var uid = ~~(query.uid) || 1;
+var token = query.token || '7329cf254871429d803c5826c8d9db1d';
 var count = 0;
 var timer;
 export default {
@@ -112,6 +112,7 @@ export default {
       mounted: false,
       loading: false,
       nomore: false,
+      HOST: __DEV__ ? '' : 'http://120.25.133.234/',
     }
   },
   components: {
@@ -129,12 +130,13 @@ export default {
   methods: {
     getData(seq) {
       var param = {
-        uid: 1,
-        token: '7329cf254871429d803c5826c8d9db1d',
+        uid: uid,
+        token: token,
         seq:seq || 0,
         type:0
       }
       CGI.post('hot', param, (resp)=>{
+
         if (resp.errcode === 0) {
           this.items = this.items.concat(resp.data.infos);
           this.loading = false;
@@ -147,6 +149,36 @@ export default {
           this.tipBox(resp.desc);
         }
       });
+
+      /*var param = {
+        uid: uid,
+        data: {
+          uid: uid,
+          token: token,
+          seq:seq || 0,
+          type:0
+        }
+      }
+      this.$http.post(
+          this.HOST + 'hot', //接口名字
+          param,
+      ).then(function (resp) {
+        resp = JSON.parse(resp.body);
+        console.log(resp.data);
+        if (resp.errcode === 0) {
+          this.items = this.items.concat(resp.data.infos);
+          this.loading = false;
+          if (param.data.seq==0) {
+            this.mounted = true;
+          }
+          this.nomore = resp.hasmore ? false : true;
+          this.$broadcast('$InfiniteLoading:loaded');
+        } else {
+          this.tipBox(resp.desc);
+        }
+      }, function (resp) {
+          console.log(res.statusText);
+      });*/
     },
     loadMore() {
       var len = this.items.length-1;  

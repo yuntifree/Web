@@ -125,7 +125,7 @@ module.exports = {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
         return fmt;
     },
-    query: function() {
+    query: (function() {
         var url = window.document.location.href.toString();
         var u = url.split('?');
         if (typeof(u[1]) === 'string') {
@@ -139,5 +139,5 @@ module.exports = {
         } else {
             return {};
         }
-    },
+    })(),
 };
