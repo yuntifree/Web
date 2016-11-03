@@ -82,7 +82,6 @@
                     <input type="radio" class="form-control radio-sex sex-outline" :value="1" v-model="userInfo.reject">拒绝</label>
                 </div>
               </div>
-              </div>
               <div class="form-group">
                 <label for="title" class="col-sm-3 control-label">title</label>
                 <div class="col-sm-9">
