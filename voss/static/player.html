@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>视频播放</title>
+</head>
+<body>
+<div id="a1"></div>
+<script type="text/javascript" src="ckplayer/ckplayer.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var flashvars={
+        f:'rtmp://cnn-live-rtmp.52miyu.com/live/773f9a23-9773-4d0b-b07f-5e055c7c2a1f',
+        c:0
+    };
+    var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+    var video=['http://cnn-live-hls.52miyu.com/live/773f9a23-9773-4d0b-b07f-5e055c7c2a1f/playlist.m3u8'];
+    CKobject.embed('ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','100%',true,flashvars,video,params);
+</script>
+</body>
+</html>
