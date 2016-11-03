@@ -32,7 +32,7 @@ export default {
   },
   ready() {
     var self = this;
-    CGI.loadScript(__CDN__ + '/js/plupload.2.1.2.min.js', 'uploadjs', () => {
+    CGI.loadScript(/*__CDN__*/'http://yuntifile.oss-cn-shenzhen.aliyuncs.com' + '/js/plupload.2.1.2.min.js', 'uploadjs', () => {
       var uploader = new plupload.Uploader({
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: 'selectfiles',

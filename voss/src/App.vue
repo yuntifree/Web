@@ -19,8 +19,8 @@ import Login from './login.vue'
 
 // import views
 import getUsers from './components/views/getUsers.vue'
-/*import feedback from './components/views/feedback.vue'
-import video from './components/views/video.vue'
+import newsReview from './components/views/newsReview.vue'
+/*import video from './components/views/video.vue'
 import reviewInfo from './components/views/reviewInfo.vue'
 import reviewAuth from './components/views/reviewAuth.vue'
 import reviewHead from './components/views/reviewHead.vue'
@@ -78,6 +78,7 @@ export default {
     sidebar,
     getUsers,
     Login,
+    newsReview,
     /*feedback,
     video,
     reviewInfo,
