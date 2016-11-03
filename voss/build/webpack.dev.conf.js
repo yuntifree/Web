@@ -30,7 +30,7 @@ config.output.publicPath = '/'
 config.plugins = (config.plugins || []).concat([
   // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
   new webpack.DefinePlugin({
-    '__CDN__': '"http://120.76.236.185"',
+    '__CDN__': '"http://yuntifile.oss-cn-shenzhen.aliyuncs.com"',
     '__DEV__': true
   }),
   new webpack.optimize.OccurenceOrderPlugin(),

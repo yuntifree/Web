@@ -32,6 +32,21 @@ export default {
           name: "getUsers",
           icon: "user"
           }]
+        },{
+          title: "运营管理",
+          menus: [{
+          title: "审核管理",
+          name: "newsReview",
+          icon: "user"
+          },{
+          title: "模板管理",
+          name: "templateReview",
+          icon: "user"
+          },{
+          title: "AP监控",
+          name: "apReview",
+          icon: "user"
+          }]
         }
       ]
     }
