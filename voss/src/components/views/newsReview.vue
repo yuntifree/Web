@@ -74,12 +74,12 @@
           <validator name="formValid">
             <form class="form-horizontal">
               <div class="form-group">
-                <label class="col-sm-3 control-label">性别</label>
+                <label class="col-sm-3 control-label">审核操作</label>
                 <div class="col-sm-9 sex-padding">
-                  <label class="sex-margin">
-                    <input type="radio" class="form-control radio-sex sex-outline" :value="0" v-model="newsInfo.reject">通过</label>
-                  <label class="sex-margin">
-                    <input type="radio" class="form-control radio-sex sex-outline" :value="1" v-model="userInfo.reject">拒绝</label>
+                  <input type="radio" id="one" value="0" v-model="newsInfo.reject">
+                  <label for="one">通过</label>
+                  <input type="radio" id="two" value="1" v-model="newsInfo.reject">
+                  <label for="two">拒绝</label>
                 </div>
               </div>
               <div class="form-group">
@@ -90,13 +90,15 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="nickName" class="col-sm-3 control-label">title</label>
+                <label for="nickName" class="col-sm-3 control-label">标签</label>
                 <div class="col-sm-9">
-                  <div v-for="tag in tags">
-                    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-                    <label for="jack">Jack</label>
-                  </div>
-                  <span>Checked names: {{ checkedNames | json }}</span>
+                  <span v-for="tag in tagsInfo.tags">
+                    <input type="checkbox" :id="tag.content" :value="tag.content" v-model="checkedTags">
+                    <label :for="tag.content">{{tag.content}}</label>
+                  </span>
+                  <span class="btn btn-info btn-sm" v-show="tagsInfo.hasmore" @click="edit(tagsInfo.tags[tagsInfo.tags.length-1].seq)">点击加载更多</span>
+                  <br>
+                  <span>Checked tags: {{ checkedTags | json }}</span>
                 </div>
               </div>
             </form>
@@ -130,9 +132,9 @@ export default {
       selIdx: -1,
 
       modal: {
+        editShow: false,
         confirmShow: false,
         textShow: false,
-        detailShow: false
       },
       modalCfg: {
         title: '',
@@ -159,6 +161,14 @@ export default {
         title: '拒绝',
         cmd: 'reject'
       }],
+      tagsInfo: [],
+      checkedTags: [],
+      newsInfo: {
+        title: '',
+        reject: 0,
+        modify: 0,
+        tags: [],
+      }
     }
   },
   components: {
@@ -205,8 +215,52 @@ export default {
           break;
       }
     },
-    edit() {
-
+    edit(seq) {
+      var param = {
+        seq: seq || 0,
+        num:5
+      }
+      CGI.post(this.$store.state,'get_tags',param,(resp)=>{
+        if (resp.errcode === 0) {
+          if (param.seq === 0) {
+            this.tagsInfo = resp.data;
+          } else {
+            this.tagsInfo.tags = this.tagsInfo.tags.concat(resp.data.tags);
+            this.tagsInfo.hasmore = resp.data.hasmore;
+          }        
+          this.editNews();
+        } else {
+          this.tip(resp.desc);
+        }
+      })
+    },
+    editNews() { 
+      var info = this.news[this.selIdx];
+      console.log(this.news[this.selIdx]);
+      this.modalCfg.title = '编辑';
+      this.newsInfo.title = info.title;
+      this.modal.editShow = true;
+      this.modalCfg.callback = () => {
+        var param = {};
+        if (this.newsInfo.title == this.tagsInfo.tags[this.selIdx].title) {
+          param.title = this.newsInfo.title;
+          param.modify = 1;
+        }
+        if (this.checkedTags.length > 0) {
+          param.tags = this.checkedTags;
+        }
+        param.reject = ~~this.newsInfo.reject;
+        param.id = info.id;
+        CGI.post(this.$store.state,'review_news',param,(resp)=> {
+          if (resp.errcode === 0) {
+            this.selIdx = -1;
+            this.news.splice(this.selIdx,1);
+            this.modal.editShow = false;
+          } else {
+            this.tip(resp.desc);
+          }
+        })
+      }
     },
     review(ops) {
       var idx = this.selIdx;
