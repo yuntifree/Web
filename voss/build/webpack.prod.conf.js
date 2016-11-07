@@ -32,7 +32,7 @@ config.plugins = (config.plugins || []).concat([
     'process.env': {
       NODE_ENV: '"production"',
     },
-    '__CDN__': '"http://120.76.236.185"',
+    '__CDN__': '"http://yuntifile.oss-cn-shenzhen.aliyuncs.com"',
     '__DEV__': false
   }),
   new webpack.optimize.UglifyJsPlugin({

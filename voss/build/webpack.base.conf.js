@@ -6,7 +6,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../oss/static'),
-    publicPath: '/oss/static/',
+    publicPath: '/static/',
     filename: '[name].js'
   },
   resolve: {
