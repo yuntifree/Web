@@ -10,7 +10,7 @@
       </ul>
     </template>
     <footer class="sidebar-footer">
-      <p><strong>Copyright &copy; 2016 泰想美</strong></p>
+      <p><strong>Copyright &copy; 2016 云行智慧</strong></p>
       <p></p>
     </footer>
   </aside>

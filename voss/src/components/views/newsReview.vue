@@ -192,7 +192,7 @@ export default {
       }
 
       CGI.post(this.$store.state, 'get_news', param, (resp) => {
-        if (resp.errcode === 0) {
+        if (resp.errno === 0) {
           var data = resp.data;
           this.news = data.news;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
@@ -221,7 +221,7 @@ export default {
         num:5
       }
       CGI.post(this.$store.state,'get_tags',param,(resp)=>{
-        if (resp.errcode === 0) {
+        if (resp.errno === 0) {
           if (param.seq === 0) {
             this.tagsInfo = resp.data;
           } else {
@@ -252,7 +252,7 @@ export default {
         param.reject = ~~this.newsInfo.reject;
         param.id = info.id;
         CGI.post(this.$store.state,'review_news',param,(resp)=> {
-          if (resp.errcode === 0) {
+          if (resp.errno === 0) {
             this.selIdx = -1;
             this.news.splice(this.selIdx,1);
             this.modal.editShow = false;
@@ -287,7 +287,7 @@ export default {
         this.modal.textShow = false;
 
         CGI.post(this.$store.state, 'review_news', param, (resp) => {
-          if (resp.errcode === 0) {
+          if (resp.errno === 0) {
             this.selIdx = -1;
             switch (ops) {
               case 1:
@@ -325,7 +325,7 @@ export default {
       }
 
       CGI.post(this.$store.state, 'get_audit_auth', param, (resp) => {
-        if (resp.errcode === 0) {
+        if (resp.errno === 0) {
           var data = resp.data;
           this.news = data.users;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
@@ -344,7 +344,7 @@ export default {
         tuid: detailUid
       };
       CGI.post(this.$store.state, 'get_user_details', param, (resp)=> {
-        if (resp.errcode === 0){
+        if (resp.errno === 0){
           this.detailInfo = resp.data;
         } else {
           this.tip(resp.desc);

@@ -41,7 +41,7 @@ export default {
 				CGI.post(this.$store.state, 'login',
 					{username:this.username, password:md5(this.password)},
 					(resp)=>{
-					if (resp.errcode === 0) {
+					if (resp.errno === 0) {
 						var data = resp.data;
 						this.$store.state.username = this.username;
 						// save username into localStorage
@@ -50,7 +50,6 @@ export default {
 
 						// set login
 						CGI.login(this.$store.state, data);
-						console.log('login');
 						// sidebar
 						this.$store.state.sidebar = data.sidebar;
 					} else {

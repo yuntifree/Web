@@ -245,7 +245,7 @@ export default {
         num: 30,
       };
       CGI.post(this.$store.state, 'get_users', param, (resp) => {
-        if (resp.errcode === 0) {
+        if (resp.errno === 0) {
           var data = resp.data;
           this.users = data.infos;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);

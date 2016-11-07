@@ -152,7 +152,7 @@ export default {
         num: 30,
       };
       CGI.post(this.$store.state, 'get_ap_stat', param, (resp) => {
-        if (resp.errcode === 0) {
+        if (resp.errno === 0) {
           var data = resp.data;
           this.infos = data.infos;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
@@ -191,7 +191,7 @@ export default {
           latitude: lat,
         }
         CGI.post(this.$store.state,'get_nearby_aps',param,(resp)=>{
-          if (resp.errcode===0) {
+          if (resp.errno===0) {
             this.apAddress = resp.data.infos;
             var len = this.apAddress.length;
             for (var i = 0; i < len; i ++) {
