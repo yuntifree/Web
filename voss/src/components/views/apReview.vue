@@ -51,15 +51,17 @@
         </div>
         <!-- end of #tab1 -->
       </div>
-
-      <div v-show="mapShow" id="map" class="map"  style="width:100%;height:100%"></div> 
+    
       <!-- end of .tab_container -->
       <pager :total-page="pageCfg.total" :curr-page="pageCfg.currentPage"></pager>
       <!--edit-->
     </article>
+    <!--map-->    
+    <div v-show="mapShow" id="map" class="map"  style="width:100%;height:100%;position:absolute;top:0;left:0"></div>
+    <span v-show="mapShow" class="close-map" @click="mapShow=false">X</span
     <alert :show.sync="tips.showTip" :duration="2000" type="info" height="auto" class="search-tip tips">
-        <p>{{tips.msgTip}}</p>
-    </alert>
+     <p>{{tips.msgTip}}</p>
+  </alert>
   </div>
 </template>
 <script>
@@ -162,7 +164,14 @@ export default {
     },
     clickMap() {
       var mp = new BMap.Map('map');  
-      mp.centerAndZoom(new BMap.Point(121.491, 31.233), 11); 
+      var point = new BMap.Point(113.90387023396529, 22.93310386339828);
+      //标注
+      mp.centerAndZoom(point,15);    
+      var marker = new BMap.Marker(point);        // 创建标注    
+      mp.addOverlay(marker);
+      //控件
+      mp.addControl(new BMap.NavigationControl());
+      mp.addControl(new BMap.OverviewMapControl());
       this.mapShow = true;
     },
     refresh() {
@@ -219,9 +228,11 @@ export default {
 .det_img {
   @include pos(top,26px, right, 37px);
 }
-.map {
-    @inlude pos(top,50%,left,50%);
-    transform: translate(-50%, -50%);
-    z-index:100;
+.close-map {
+    width: 20px;
+    height: 20px;
+    @include pos(top,20px,right,20px);
+    background-color: rgba(0,0,0,0.5);
+    z-indx:100;
 }
 </style>
