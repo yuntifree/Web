@@ -4,28 +4,28 @@
       <header class="app_header">
         <div>
           <button class="btn btn-default btn-sm outline-none" @click="clickMap">
-          <i class="iconfont icon-add"></i>°Ù¶ÈµØÍ¼
+          <i class="iconfont icon-add"></i>ç™¾åº¦åœ°å›¾
           </button>
         </div>
         <div>
           <div class="quick_search">
             <i class="iconfont icon-search"></i>
-            <input class="ipt-search" type="text" placeholder="ID/µç»°/ÓÃ»§Ãû"
+            <input class="ipt-search" type="text" placeholder="ID/ç”µè¯/ç”¨æˆ·å"
               v-model="search" @keyup.enter="doSearch(true)">
             <alert :show.sync="showTop" :duration="1500" type="info" width="200px" placement="top-right" class="search-tip">
-              <p>ÇëÊäÈëÏà¹ØµÄID/µç»°/ÓÃ»§Ãû½øĞĞËÑË÷</p>
+              <p>è¯·è¾“å…¥ç›¸å…³çš„ID/ç”µè¯/ç”¨æˆ·åè¿›è¡Œæœç´¢</p>
             </alert>
           </div>
-          <button class="btn btn-default btn-sm outline-none"><i class="iconfont icon-renzheng"></i>¸ß¼¶ËÑË÷</button>
+          <button class="btn btn-default btn-sm outline-none"><i class="iconfont icon-renzheng"></i>é«˜çº§æœç´¢</button>
         </div>
       </header>
-      <!--begin:ÓÒ¼ü²Ëµ¥-->
+      <!--begin:å³é”®èœå•-->
       <div id="context-menu">
         <ul name="dropdown-menu" class="dropdown-menu">
           <li v-for="op in ops" @click="onMenu(op.cmd)"><a>{{op.title}}</a></li>
         </ul>
       </div>
-      <!--end:ÓÒ¼ü²Ëµ¥-->
+      <!--end:å³é”®èœå•-->
       <div class="tab_container" id="tab_container">
         <div class="tab_content tab-fixed" v-if="mounted">
           <table class="table table-bordered tablesorter table-hover user-table" cellspacing="0">
@@ -42,7 +42,7 @@
                 <td>{{row.id}}</td>
                 <td>{{row.ssid}}</td>
                 <td>{{row.address}}</td>
-                <td>{{row.online ? 'ÔÚÏß' : 'ÏÂÏß'}}</td>
+                <td>{{row.online ? 'åœ¨çº¿' : 'ä¸‹çº¿'}}</td>
                 <td>{{row.online}}</td>
                 <td>{{row.bindwidth}}</td>
               </tr>
@@ -74,7 +74,7 @@ import searchs from '../lib/search.vue'
 import CGI from '../../lib/cgi.js'
 import md5 from 'md5'
 
-var columns = ['id','ssid','Î»ÖÃ','×´Ì¬','ÔÚÏßÈËÊı','´ø¿í'];
+var columns = ['id','ssid','ä½ç½®','çŠ¶æ€','åœ¨çº¿äººæ•°','å¸¦å®½'];
 var searchParams = {};
 export default {
   data() {
@@ -95,12 +95,12 @@ export default {
         limit: 30,
       },
 
-      //ÓÒ¼ü¹¦ÄÜ
+      //å³é”®åŠŸèƒ½
       ops: [{
-        title: 'ĞŞ¸ÄÓÃ»§',
+        title: 'ä¿®æ”¹ç”¨æˆ·',
         cmd: 'editUser'
       },{
-        title: 'ÖØÖÃÃÜÂë',
+        title: 'é‡ç½®å¯†ç ',
         cmd: 'rest'
       }],
 
@@ -133,7 +133,7 @@ export default {
     $('#context-menu').on('show.bs.context', (e) => {
       this.selIdx = $(e.target).data('idx');
       //this.msgShopping(this.infos[this.selIdx].shopping);
-    }); //ÓÒ¼ü
+    }); //å³é”®
     CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
   },
   methods: {
@@ -141,7 +141,7 @@ export default {
       if (this.acvandeQuery) {
         this.acvandeQuery = false;
       }
-      //ÅĞ¶Ï·ÖÒ³ÊÇ·ñÎªµÚÒ»Ò³
+      //åˆ¤æ–­åˆ†é¡µæ˜¯å¦ä¸ºç¬¬ä¸€é¡µ
       if (reload) {
         this.pageCfg.start = 0;
         this.pageCfg.currentPage = 1;
@@ -165,21 +165,21 @@ export default {
     clickMap() {
       var map = new BMap.Map('map');  
       var point = new BMap.Point(113.90387023396529, 22.93310386339828);
-      //±ê×¢
+      //æ ‡æ³¨
       map.centerAndZoom(point,15);    
-      var marker = new BMap.Marker(point);        // ´´½¨±ê×¢    
+      var marker = new BMap.Marker(point);        // åˆ›å»ºæ ‡æ³¨    
       map.addOverlay(marker);
-      //¿Ø¼ş
+      //æ§ä»¶
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
       getApAddress(point.lng,point.lat);
 
-      //ÊÂ¼ş
+      //äº‹ä»¶
       this.mapShow = true;
       map.addEventListener("dragend", function(){
-        var bs = map.getBounds();   //»ñÈ¡¿ÉÊÓÇøÓò
-        var bssw = bs.getSouthWest();   //¿ÉÊÓÇøÓò×óÉÏ½Ç
-        var bsne = bs.getNorthEast();   //¿ÉÊÓÇøÓòÓÒÉÏ½Ç
+        var bs = map.getBounds();   //è·å–å¯è§†åŒºåŸŸ
+        var bssw = bs.getSouthWest();   //å¯è§†åŒºåŸŸå·¦ä¸Šè§’
+        var bsne = bs.getNorthEast();   //å¯è§†åŒºåŸŸå³ä¸Šè§’
         var lng = (bssw.lng+bsne.lng)/2;
         var lat = (bssw.lat+bsne.lat)/2;
         getApAddress(lng,lat);
@@ -216,7 +216,7 @@ export default {
       this.pageCfg.currentPage = idx;
       var searchLen = this.search.trim().length;
       var len = this.infos.length-1;
-      //·ÖÒ³½Ó¿ÚÇø·Ö
+      //åˆ†é¡µæ¥å£åŒºåˆ†
       if(searchLen == 0 && !(this.advancedSearch)){
         this.getData(false,this.infos[len].seq);
       } else if (searchLen > 0){
