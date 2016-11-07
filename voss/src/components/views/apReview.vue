@@ -163,16 +163,35 @@ export default {
       });
     },
     clickMap() {
-      var mp = new BMap.Map('map');  
+      var map = new BMap.Map('map');  
       var point = new BMap.Point(113.90387023396529, 22.93310386339828);
       //标注
-      mp.centerAndZoom(point,15);    
+      map.centerAndZoom(point,15);    
       var marker = new BMap.Marker(point);        // 创建标注    
-      mp.addOverlay(marker);
+      map.addOverlay(marker);
       //控件
-      mp.addControl(new BMap.NavigationControl());
-      mp.addControl(new BMap.OverviewMapControl());
+      map.addControl(new BMap.NavigationControl());
+      map.addControl(new BMap.OverviewMapControl());
+      //搜索
+      var local = new BMap.LocalSearch("东莞市",   
+                  {renderOptions: {map: map,autoViewport: true},pageCapacity: 20});      
+      local.search("湖");
+      //事件
+      map.addEventListener("dragend", function(){
+        var bs = map.getBounds();   //获取可视区域
+        var bssw = bs.getSouthWest();   //可视区域左上角
+        var bsne = bs.getNorthEast();   //可视区域右上角
+        var lng = (bssw.lng+bsne.lng)/2;
+        var lat = (bssw.lat+bsne.lat)/2;
+        this.getApAsress(lng,lat);
+      });
       this.mapShow = true;
+    },
+    getApAdress(lng,lat){
+      CGI.post(this.$store.state,'get_nearby_aps',param(resp){
+        if (resp.errcode===0) {
+        }
+      })
     },
     refresh() {
       this.getData(false);
