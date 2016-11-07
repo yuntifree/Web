@@ -4,28 +4,28 @@
       <header class="app_header">
         <div>
           <button class="btn btn-default btn-sm outline-none" @click="clickMap">
-          <i class="iconfont icon-add"></i>ç™¾åº¦åœ°å›¾
+          <i class="iconfont icon-add"></i>°Ù¶ÈµØÍ¼
           </button>
         </div>
         <div>
           <div class="quick_search">
             <i class="iconfont icon-search"></i>
-            <input class="ipt-search" type="text" placeholder="ID/ç”µè¯/ç”¨æˆ·å"
+            <input class="ipt-search" type="text" placeholder="ID/µç»°/ÓÃ»§Ãû"
               v-model="search" @keyup.enter="doSearch(true)">
             <alert :show.sync="showTop" :duration="1500" type="info" width="200px" placement="top-right" class="search-tip">
-              <p>è¯·è¾“å…¥ç›¸å…³çš„ID/ç”µè¯/ç”¨æˆ·åè¿›è¡Œæœç´¢</p>
+              <p>ÇëÊäÈëÏà¹ØµÄID/µç»°/ÓÃ»§Ãû½øĞĞËÑË÷</p>
             </alert>
           </div>
-          <button class="btn btn-default btn-sm outline-none"><i class="iconfont icon-renzheng"></i>é«˜çº§æœç´¢</button>
+          <button class="btn btn-default btn-sm outline-none"><i class="iconfont icon-renzheng"></i>¸ß¼¶ËÑË÷</button>
         </div>
       </header>
-      <!--begin:å³é”®èœå•-->
+      <!--begin:ÓÒ¼ü²Ëµ¥-->
       <div id="context-menu">
         <ul name="dropdown-menu" class="dropdown-menu">
           <li v-for="op in ops" @click="onMenu(op.cmd)"><a>{{op.title}}</a></li>
         </ul>
       </div>
-      <!--end:å³é”®èœå•-->
+      <!--end:ÓÒ¼ü²Ëµ¥-->
       <div class="tab_container" id="tab_container">
         <div class="tab_content tab-fixed" v-if="mounted">
           <table class="table table-bordered tablesorter table-hover user-table" cellspacing="0">
@@ -42,7 +42,7 @@
                 <td>{{row.id}}</td>
                 <td>{{row.ssid}}</td>
                 <td>{{row.address}}</td>
-                <td>{{row.online ? 'åœ¨çº¿' : 'ä¸‹çº¿'}}</td>
+                <td>{{row.online ? 'ÔÚÏß' : 'ÏÂÏß'}}</td>
                 <td>{{row.online}}</td>
                 <td>{{row.bindwidth}}</td>
               </tr>
@@ -51,15 +51,17 @@
         </div>
         <!-- end of #tab1 -->
       </div>
-
-      <div v-show="mapShow" id="map" class="map"  style="width:100%;height:100%"></div> 
+    
       <!-- end of .tab_container -->
       <pager :total-page="pageCfg.total" :curr-page="pageCfg.currentPage"></pager>
       <!--edit-->
     </article>
+    <!--map-->    
+    <div v-show="mapShow" id="map" class="map"  style="width:100%;height:100%;position:absolute;top:0;left:0"></div>
+    <span v-show="mapShow" class="close-map" @click="mapShow=false">X</span
     <alert :show.sync="tips.showTip" :duration="2000" type="info" height="auto" class="search-tip tips">
-        <p>{{tips.msgTip}}</p>
-    </alert>
+     <p>{{tips.msgTip}}</p>
+  </alert>
   </div>
 </template>
 <script>
@@ -72,7 +74,7 @@ import searchs from '../lib/search.vue'
 import CGI from '../../lib/cgi.js'
 import md5 from 'md5'
 
-var columns = ['id','ssid','ä½ç½®','çŠ¶æ€','åœ¨çº¿äººæ•°','å¸¦å®½'];
+var columns = ['id','ssid','Î»ÖÃ','×´Ì¬','ÔÚÏßÈËÊı','´ø¿í'];
 var searchParams = {};
 export default {
   data() {
@@ -93,19 +95,19 @@ export default {
         limit: 30,
       },
 
-      //å³é”®åŠŸèƒ½
+      //ÓÒ¼ü¹¦ÄÜ
       ops: [{
-        title: 'ä¿®æ”¹ç”¨æˆ·',
+        title: 'ĞŞ¸ÄÓÃ»§',
         cmd: 'editUser'
       },{
-        title: 'é‡ç½®å¯†ç ',
+        title: 'ÖØÖÃÃÜÂë',
         cmd: 'rest'
       }],
 
       // table data
       infos: [],
       columns: columns,
-
+      apAddress: [],
       mounted: false,
       selIdx: -1,
       showTop: false,
@@ -131,7 +133,7 @@ export default {
     $('#context-menu').on('show.bs.context', (e) => {
       this.selIdx = $(e.target).data('idx');
       //this.msgShopping(this.infos[this.selIdx].shopping);
-    }); //å³é”®
+    }); //ÓÒ¼ü
     CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
   },
   methods: {
@@ -139,7 +141,7 @@ export default {
       if (this.acvandeQuery) {
         this.acvandeQuery = false;
       }
-      //åˆ¤æ–­åˆ†é¡µæ˜¯å¦ä¸ºç¬¬ä¸€é¡µ
+      //ÅĞ¶Ï·ÖÒ³ÊÇ·ñÎªµÚÒ»Ò³
       if (reload) {
         this.pageCfg.start = 0;
         this.pageCfg.currentPage = 1;
@@ -161,9 +163,44 @@ export default {
       });
     },
     clickMap() {
-      var mp = new BMap.Map('map');  
-      mp.centerAndZoom(new BMap.Point(113.75  23.04)); 
+      var map = new BMap.Map('map');  
+      var point = new BMap.Point(113.90387023396529, 22.93310386339828);
+      //±ê×¢
+      map.centerAndZoom(point,15);    
+      var marker = new BMap.Marker(point);        // ´´½¨±ê×¢    
+      map.addOverlay(marker);
+      //¿Ø¼ş
+      map.addControl(new BMap.NavigationControl());
+      map.addControl(new BMap.OverviewMapControl());
+      getApAddress(point.lng,point.lat);
+
+      //ÊÂ¼ş
       this.mapShow = true;
+      map.addEventListener("dragend", function(){
+        var bs = map.getBounds();   //»ñÈ¡¿ÉÊÓÇøÓò
+        var bssw = bs.getSouthWest();   //¿ÉÊÓÇøÓò×óÉÏ½Ç
+        var bsne = bs.getNorthEast();   //¿ÉÊÓÇøÓòÓÒÉÏ½Ç
+        var lng = (bssw.lng+bsne.lng)/2;
+        var lat = (bssw.lat+bsne.lat)/2;
+        getApAddress(lng,lat);
+      });
+
+      getApAddress(lng,lat)=>{
+        var param = {
+          longitude: lng,
+          latitude: lat,
+        }
+        CGI.post(this.$store.state,'get_nearby_aps',param(resp){
+          if (resp.errcode===0) {
+            this.apAddress = resp.data.infos;
+            var len = this.apAddress.length;
+            for (var i = 0; i < len; i ++) {
+                var spot = new BMap.Point(this.apAddress[i].longitude, this.apAddress[i].latitude);
+                addMarker(spot);
+              }
+          }
+        })
+      }      
     },
     refresh() {
       this.getData(false);
@@ -179,7 +216,7 @@ export default {
       this.pageCfg.currentPage = idx;
       var searchLen = this.search.trim().length;
       var len = this.infos.length-1;
-      //åˆ†é¡µæ¥å£åŒºåˆ†
+      //·ÖÒ³½Ó¿ÚÇø·Ö
       if(searchLen == 0 && !(this.advancedSearch)){
         this.getData(false,this.infos[len].seq);
       } else if (searchLen > 0){
@@ -219,9 +256,11 @@ export default {
 .det_img {
   @include pos(top,26px, right, 37px);
 }
-.map {
-  @inlude pos(top,50%,left,50%);
-  transform: translate(-50%, -50%);
-  z-index:100;
+.close-map {
+    width: 20px;
+    height: 20px;
+    @include pos(top,20px,right,20px);
+    background-color: rgba(0,0,0,0.5);
+    z-indx:100;
 }
 </style>
