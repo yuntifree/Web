@@ -162,7 +162,7 @@ export default {
     },
     clickMap() {
       var mp = new BMap.Map('map');  
-      mp.centerAndZoom(new BMap.Point(121.491, 31.233), 11); 
+      mp.centerAndZoom(new BMap.Point(113.75  23.04)); 
       this.mapShow = true;
     },
     refresh() {
@@ -220,8 +220,8 @@ export default {
   @include pos(top,26px, right, 37px);
 }
 .map {
-    @inlude pos(top,50%,left,50%);
-    transform: translate(-50%, -50%);
-    z-index:100;
+  @inlude pos(top,50%,left,50%);
+  transform: translate(-50%, -50%);
+  z-index:100;
 }
 </style>
