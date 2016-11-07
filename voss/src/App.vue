@@ -20,37 +20,7 @@ import Login from './login.vue'
 // import views
 import getUsers from './components/views/getUsers.vue'
 import newsReview from './components/views/newsReview.vue'
-/*import video from './components/views/video.vue'
-import reviewInfo from './components/views/reviewInfo.vue'
-import reviewAuth from './components/views/reviewAuth.vue'
-import reviewHead from './components/views/reviewHead.vue'
-import reviewReport from './components/views/reviewReport.vue'
-import gift from './components/views/gift.vue'
-import giftRecord from './components/views/giftRecord.vue'
-import anchor from './components/views/anchor.vue'
-import balance from './components/views/balance.vue'
-import regData from './components/views/regData.vue'
-import dauData from './components/views/dauData.vue'
-import retentionData from './components/views/retentionData.vue'
-import widthdraw from './components/views/withdraw.vue'
-import widthdrawPW from './components/views/withdraw_pw.vue'
-import edition from './components/views/edition.vue'
-import profile from './components/views/profile.vue'
-import notice from './components/views/notice.vue'
-import pushData from './components/views/pushData.vue'
-import payBill from './components/views/payBill.vue'
-import payRequest from './components/views/payRequest.vue'
-import addReview from './components/views/addReview.vue'
-import adminPay from './components/views/adminPay.vue'
-import monthIncome from './components/views/monthIncome.vue'
-import Commodity from './components/views/Commodity.vue'
-import whitelist from './components/views/whitelist.vue'
-import block from './components/views/block.vue'
-import live from './components/views/live.vue'
-import historyLive from './components/views/historyLive.vue'
-import adjustRate from './components/views/adjustRate.vue'
-import business from './components/views/business.vue'
-import busiAccount from './components/views/busiAccount.vue'*/
+import apReview from './components/views/apReview.vue'
 
 export default {
   data() {
@@ -79,38 +49,7 @@ export default {
     getUsers,
     Login,
     newsReview,
-    /*feedback,
-    video,
-    reviewInfo,
-    reviewAuth,
-    reviewHead,
-    reviewReport,
-    gift,
-    giftRecord,
-    anchor,
-    balance,
-    regData,
-    dauData,
-    retentionData,
-    widthdraw,
-    widthdrawPW,
-    edition,
-    profile,
-    notice,
-    pushData,
-    payBill,
-    payRequest,
-    addReview,
-    adminPay,
-    monthIncome,
-    Commodity,
-    whitelist,
-    block,
-    live,
-    historyLive,
-    adjustRate,
-    business,
-    busiAccount,*/
+    apReview,
   },
   // for share components View using.
   ready() {
