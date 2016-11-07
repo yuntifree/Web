@@ -3,9 +3,9 @@ var ajax = $.ajax;
 
 module.exports = {
   //HOST: __DEV__ ? 'http://114.55.36.175':'',
-  HOST: __DEV__ ? 'http://120.76.236.185':'',
+  HOST: __DEV__ ? 'http://120.76.236.185:8080':'',
   //CGI: '/oss-bin/',
-  CGI: '',
+  CGI: '/',
   get(state, action, param, callback) {
     if (param.uid == undefined && action != 'login') {
       param.uid = state.uid;
@@ -15,7 +15,7 @@ module.exports = {
     param.debug = 1;
 
     var url = [
-      //this.HOST, //连接远端程序
+      this.HOST, //连接远端程序
       this.CGI,
       action + '?',
       this.makeParam(param)
