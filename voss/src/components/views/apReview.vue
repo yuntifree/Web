@@ -185,12 +185,12 @@ export default {
         getApAddress(lng,lat);
       });
 
-      getApAddress(lng,lat)=>{
+     function  getApAddress(lng,lat){
         var param = {
           longitude: lng,
           latitude: lat,
         }
-        CGI.post(this.$store.state,'get_nearby_aps',param(resp){
+        CGI.post(this.$store.state,'get_nearby_aps',param,(resp)=>{
           if (resp.errcode===0) {
             this.apAddress = resp.data.infos;
             var len = this.apAddress.length;
