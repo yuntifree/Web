@@ -52,7 +52,7 @@
         <!-- end of #tab1 -->
       </div>
 
-      <div v-show="mapShow" id="map" style="width:500px;height:320px"></div> 
+      <div v-show="mapShow" id="map" class="map"  style="width:100%;height:100%"></div> 
       <!-- end of .tab_container -->
       <pager :total-page="pageCfg.total" :curr-page="pageCfg.currentPage"></pager>
       <!--edit-->
@@ -218,5 +218,10 @@ export default {
 }
 .det_img {
   @include pos(top,26px, right, 37px);
+}
+.map {
+    @inlude pos(top,50%,left,50%);
+    transform: translate(-50%, -50%);
+    z-index:100;
 }
 </style>
