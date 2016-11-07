@@ -5,7 +5,7 @@ module.exports = {
   //HOST: __DEV__ ? 'http://114.55.36.175':'',
   HOST: __DEV__ ? 'http://120.76.236.185':'',
   //CGI: '/oss-bin/',
-  CGI: '',
+  CGI: '/',
   get(state, action, param, callback) {
     if (param.uid == undefined && action != 'login') {
       param.uid = state.uid;
