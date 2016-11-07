@@ -162,7 +162,8 @@ export default {
         }
       });
     },
-    clickMap() {
+    clickMap() { 
+     var _this = this;
       var map = new BMap.Map('map');  
       var point = new BMap.Point(113.90387023396529, 22.93310386339828);
       //标注
@@ -184,23 +185,31 @@ export default {
         var lat = (bssw.lat+bsne.lat)/2;
         getApAddress(lng,lat);
       });
-
      function  getApAddress(lng,lat){
         var param = {
           longitude: lng,
           latitude: lat,
         }
-        CGI.post(this.$store.state,'get_nearby_aps',param,(resp)=>{
+        CGI.post(_this.$store.state,'get_nearby_aps',param,(resp)=>{
           if (resp.errno===0) {
-            this.apAddress = resp.data.infos;
-            var len = this.apAddress.length;
+            _this.apAddress = resp.data.infos;
+            var len = _this.apAddress.length;
             for (var i = 0; i < len; i ++) {
-                var spot = new BMap.Point(this.apAddress[i].longitude, this.apAddress[i].latitude);
-                addMarker(spot);
-              }
+                var spot = new BMap.Point(_this.apAddress[i].longitude, _this.apAddress[i].latitude);
+                var marker = new BMap.Marker(spot);
+                map.addOverlay(marker);
+                console.log(_this.apAddress[i].longitude,_this.apAddress[i].latitude);
+                marker.addEventListener("click",attribute)
+             }
           }
         })
-      }      
+      }
+      map.setViewport(spot);
+        //获取覆盖物位置
+     function attribute(e){
+        var p = e.target;
+        alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
+    }
     },
     refresh() {
       this.getData(false);
