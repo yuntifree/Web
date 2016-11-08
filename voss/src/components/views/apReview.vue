@@ -3,7 +3,7 @@
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
-          <button class="btn btn-default btn-sm outline-none" @click="clickMap">
+          <button class="btn btn-default btn-sm outline-none" @click="clickmapTip">
           <i class="iconfont icon-add"></i>百度地图
           </button>
         </div>
@@ -58,13 +58,11 @@
     </article>
     <!--map-->    
     <div v-show="mapShow" id="map" class="map"  style="width:100%;height:100%;position:absolute;top:0;left:0"></div>
-    <span v-show="mapShow" class="close-map" @click="mapShow=false">X</span
+    <span v-show="mapShow" class="close-map" @click="mapShow=false">X</span>
     <alert :show.sync="tips.showTip" :duration="2000" type="info" height="auto" class="search-tip tips">
      <p>{{tips.msgTip}}</p>
     </alert>
-    <tooltip v-show="tooltipShow" effect="scale" placement="bottom" content="Lorem ipsum dolor sit amet consectetur adipisicing elit, sed do eiusmod">
-      <button class="btn btn-default">tooltip on bottom</button>
-      </tooltip>
+    <maptip :show.sync="maptip.show" :info="maptips"></maptip>
   </div>
 </template>
 <script>
@@ -72,7 +70,7 @@ import pager from '../lib/pager.vue'
 import modal from '../lib/Modal.vue'
 import alert from '../lib/Alert.vue'
 import uploader from '../lib/uploader.vue'
-import tooltip from '../lib/Tooltip.vue'
+import maptip from '../lib/maptip.vue'
 import CGI from '../../lib/cgi.js'
 import md5 from 'md5'
 
@@ -118,7 +116,12 @@ export default {
         showTip: false,
         msgTip: '',
       },
-      tooltipShow: false,
+      maptips: {
+        show: false,
+        msg: '',
+        top:0,
+        left:0,
+      }
     }
   },
   components: {
@@ -126,7 +129,7 @@ export default {
     modal,
     uploader,
     alert,
-    tooltip,
+    maptip,
   },
   created() {
     this.getData(true);
@@ -210,9 +213,19 @@ export default {
      function attribute(e){
         var p = e.target;
         console.log(e.screenX+ ','+e.screenY);
+        this.maptips = {
+          show: true,
+          msg: '出来了',
+          top: e.screenY,
+          left: e.screenY
+        }
         console.log("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
-        _this.tooltipShow = true;
-    }
+        
+      }
+    },
+    clickmapTip(e){
+      
+      console.log(e.screenY+','+e.screenX)
     },
     refresh() {
       this.getData(false);

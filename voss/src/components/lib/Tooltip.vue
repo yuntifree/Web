@@ -2,7 +2,7 @@
   <span v-el:trigger>
     <slot></slot>
   </span>
-  <div v-el:popover v-if="show" style="display:block;"
+  <div v-el:popover  style="display:block;"
     :class="['tooltip',placement]"
     :transition="effect"
   >
