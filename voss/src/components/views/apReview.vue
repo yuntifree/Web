@@ -197,6 +197,7 @@ export default {
             for (var i = 0; i < len; i ++) {
                 var spot = new BMap.Point(this.apAddress[i].longitude, this.apAddress[i].latitude);
                 addMarker(spot);
+                
               }
           }
         })
