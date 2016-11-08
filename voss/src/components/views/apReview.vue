@@ -3,7 +3,7 @@
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
-          <button class="btn btn-default btn-sm outline-none" @click="clickmapTip">
+          <button class="btn btn-default btn-sm outline-none" @click="clickMap">
           <i class="iconfont icon-add"></i>百度地图
           </button>
         </div>
@@ -62,7 +62,7 @@
     <alert :show.sync="tips.showTip" :duration="2000" type="info" height="auto" class="search-tip tips">
      <p>{{tips.msgTip}}</p>
     </alert>
-    <maptip :show.sync="maptip.show" :info="maptips"></maptip>
+    <maptip :show.sync="maptips.show" :info="maptips"></maptip>
   </div>
 </template>
 <script>
@@ -70,7 +70,7 @@ import pager from '../lib/pager.vue'
 import modal from '../lib/Modal.vue'
 import alert from '../lib/Alert.vue'
 import uploader from '../lib/uploader.vue'
-import maptip from '../lib/maptip.vue'
+import maptip from '../lib/mapTip.vue'
 import CGI from '../../lib/cgi.js'
 import md5 from 'md5'
 
@@ -205,6 +205,7 @@ export default {
                 map.addOverlay(marker);
                 console.log(_this.apAddress[i].longitude,_this.apAddress[i].latitude);
                 marker.addEventListener("click",attribute)
+                marker.selIdx = i;
             }
           }
         })
@@ -212,20 +213,16 @@ export default {
      //获取覆盖物位置
      function attribute(e){
         var p = e.target;
+        console.log(p);
         console.log(e.screenX+ ','+e.screenY);
-        this.maptips = {
+        _this.maptips = {
           show: true,
-          msg: '出来了',
-          top: e.screenY,
-          left: e.screenY
+          msg: '位置:'+_this.apAddress[p.selIdx].address,
+          top: e.screenY-160,
+          left: e.screenX-100,
         }
-        console.log("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
-        
+       // console.log("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
       }
-    },
-    clickmapTip(e){
-      
-      console.log(e.screenY+','+e.screenX)
     },
     refresh() {
       this.getData(false);

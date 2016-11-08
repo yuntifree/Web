@@ -19,7 +19,7 @@
   border-top-color: #000;
 }
 .maptip-inner {
-  max-width: 200px;
+  width: 200px;
   padding: 3px 8px;
   color: #fff;
   text-align: center;
@@ -29,7 +29,7 @@
 </style>
 
 <template>
-<div class="maptip" v-show="info.show" :style="{top:info.top+'px',left:info.left+'px'}">
+<div class="maptip" v-show="info.show" @click="mapShow" :style="{top:info.top+'px',left:info.left+'px'}">
   <div class="maptip-arrow"></div>
   <div class="maptip-inner">
     <slot name="content">{{info.msg}}</slot>
@@ -47,5 +47,11 @@ export default {
       left: Number,
     }
   },
+  methods: {
+    mapShow(){
+        this.info.show=false;
+        console.log(1);
+    }
+  }
 }
 </script>
