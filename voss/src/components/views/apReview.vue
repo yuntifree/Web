@@ -195,27 +195,20 @@ export default {
             _this.apAddress = resp.data.infos;
             var len = _this.apAddress.length;
             for (var i = 0; i < len; i ++) {
-<<<<<<< HEAD
-                var spot = new BMap.Point(this.apAddress[i].longitude, this.apAddress[i].latitude);
-                addMarker(spot);
-                
-              }
-=======
                 var spot = new BMap.Point(_this.apAddress[i].longitude, _this.apAddress[i].latitude);
                 var marker = new BMap.Marker(spot);
                 map.addOverlay(marker);
                 console.log(_this.apAddress[i].longitude,_this.apAddress[i].latitude);
                 marker.addEventListener("click",attribute)
-             }
->>>>>>> 2f02cf4f746973fa2fdc8eebbfa0b4cf588790d2
+            }
           }
         })
       }
-      map.setViewport(spot);
-        //获取覆盖物位置
+     //获取覆盖物位置
      function attribute(e){
         var p = e.target;
-        alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
+        console.log(e.screenX+ ','+e.screenY);
+        console.log("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
     }
     },
     refresh() {
