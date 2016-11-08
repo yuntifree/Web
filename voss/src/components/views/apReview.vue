@@ -61,7 +61,10 @@
     <span v-show="mapShow" class="close-map" @click="mapShow=false">X</span
     <alert :show.sync="tips.showTip" :duration="2000" type="info" height="auto" class="search-tip tips">
      <p>{{tips.msgTip}}</p>
-  </alert>
+    </alert>
+    <tooltip v-show="tooltipShow" effect="scale" placement="bottom" content="Lorem ipsum dolor sit amet consectetur adipisicing elit, sed do eiusmod">
+      <button class="btn btn-default">tooltip on bottom</button>
+      </tooltip>
   </div>
 </template>
 <script>
@@ -69,8 +72,7 @@ import pager from '../lib/pager.vue'
 import modal from '../lib/Modal.vue'
 import alert from '../lib/Alert.vue'
 import uploader from '../lib/uploader.vue'
-import details from '../lib/detail.vue'
-import searchs from '../lib/search.vue'
+import tooltip from '../lib/Tooltip.vue'
 import CGI from '../../lib/cgi.js'
 import md5 from 'md5'
 
@@ -116,6 +118,7 @@ export default {
         showTip: false,
         msgTip: '',
       },
+      tooltipShow: false,
     }
   },
   components: {
@@ -123,8 +126,7 @@ export default {
     modal,
     uploader,
     alert,
-    details,
-    searchs,
+    tooltip,
   },
   created() {
     this.getData(true);
@@ -209,6 +211,7 @@ export default {
         var p = e.target;
         console.log(e.screenX+ ','+e.screenY);
         console.log("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
+        _this.tooltipShow = true;
     }
     },
     refresh() {
