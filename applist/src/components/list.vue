@@ -112,7 +112,6 @@ export default {
       mounted: false,
       loading: false,
       nomore: false,
-      HOST: __DEV__ ? '' : 'http://120.25.133.234/',
     }
   },
   components: {
@@ -137,7 +136,7 @@ export default {
       }
       CGI.post('hot', param, (resp)=>{
 
-        if (resp.errcode === 0) {
+        if (resp.errno === 0) {
           this.items = this.items.concat(resp.data.infos);
           this.loading = false;
           if (param.seq==0) {
