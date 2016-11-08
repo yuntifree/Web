@@ -14,7 +14,7 @@ new Vue({
     components: {
         App,
     },
-    ready() {
+    /*ready() {
       var f;
       var n = document.querySelector('body');
       n.addEventListener("touchstart", function(e) {         //n为h5页面的body
@@ -36,5 +36,5 @@ new Vue({
 　　　　　　t.preventDefault();
         }
       },!1);
-    }
+    }*/
 })
