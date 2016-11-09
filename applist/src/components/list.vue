@@ -84,12 +84,10 @@
    <infiniteloading :on-infinite="loadMore" :distance="distance"></infiniteloading>
    <p v-if="nomore">全都在这没有更多了</p>
     <tip :show.sync="tips.showTip" :msg="tips.msgTip" :duration="tips.time"></tip>
-    <msgbox v-show="msgbox.showBox" :infos="info"></msgbox>
   </div>
 </template>
 <script>
 import tip from './tip.vue'
-import msgbox from './msgbox.vue'
 import CGI from '../lib/cgi'
 import infiniteloading from 'vue-infinite-loading'
 var query = CGI.query;
@@ -116,8 +114,6 @@ export default {
   },
   components: {
     tip,
-    msgbox,
-    infiniteloading,
   },
   created() {
     
@@ -135,8 +131,8 @@ export default {
         type:0
       }
       CGI.post('hot', param, (resp)=>{
-
         if (resp.errno === 0) {
+          console.log(resp.desc);
           this.items = this.items.concat(resp.data.infos);
           this.loading = false;
           if (param.seq==0) {
@@ -144,6 +140,8 @@ export default {
           }
           this.nomore = resp.data.hasmore ? false : true;
           this.$broadcast('$InfiniteLoading:loaded');
+          this.tipBox(resp.desc);
+
         } else {
           this.tipBox(resp.desc);
         }
@@ -197,9 +195,6 @@ export default {
     }
   },
   events: {
-    'msgbox-cancel': function() {
-      this.msgbox.showBox = false;
-    },
     'tip-show': function() {
       this.tips.showTip = false;
     }

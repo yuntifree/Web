@@ -13,22 +13,33 @@
 
 <template>
 <div class="tip g-font14" v-show="show" transition="fade">
-	{{msg}}
+	{{tipinfo.msg}}
 </div>
 </template>
 
 <script>
 export default {
 	props: {
-		msg: String,
-		duration: Number,
-		show: Boolean,
+		tipinfo: {
+			msg: String,
+			duration: Number,
+			show: Boolean,
+		}
+	},
+	computed: {
+		show() {
+			console.log(this.tipinfo.msg);
+			return this.tipinfo.show;
+		}
 	},
 	watch: {
 		show(val) {
 			if (this._timeout) clearTimeout(this._timeout)
-			if (val && !!this.duration) {
-			    this._timeout = setTimeout(()=> this.show = false, this.duration);
+			if (val && !!this.tipinfo.duration) {
+			    //this._timeout = setTimeout(()=> this.show = false, this.duration);
+			    this._timeout = setTimeout(()=> {
+			    	this.$emit('tip-show');
+			    }, this.tipinfo.duration);
 			}
 		}
 	}

@@ -112,16 +112,14 @@
       </template>
     </div>
   </div>
-  <tip :show.sync="tips.showTip" :msg="tips.msgTip" :duration="tips.time"></tip>
-  <p v-if="loading">加载中...</p>
-  <p v-if="nomore">全都在这没有更多了</p>
+  <tip :tipinfo="tips" @tip-show="tips.show = false"></tip>
+  <p class="item-desc g-tac" v-if="loading">加载中...</p>
+  <p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p>
 </div>
 </template>
 <script>
 import tip from './tip.vue'
-import msgbox from './msgbox.vue'
 import CGI from '../lib/cgi'
-//import infiniteloading from 'vue-infinite-loading'
 var query = CGI.query;
 var uid = ~~(query.uid) || 1;
 var token = query.token || '7329cf254871429d803c5826c8d9db1d';
@@ -131,12 +129,9 @@ export default {
   data() {
     return {
       tips: {
-        showTip: false,
-        msgTip: '',
-        time: 1500
-      },
-      msgbox: {
-        showBox: false,
+        show: false,
+        msg: '',
+        duration: 1500
       },
       items: [],
       ready: false,
@@ -146,7 +141,6 @@ export default {
   },
   components: {
     tip,
-    msgbox,
   },
   mounted() {
     this.$nextTick(function () {
@@ -187,16 +181,14 @@ export default {
       location.href=src;
     },
     tipBox(val) {
-      this.tips.msgTip = val;
-      this.tips.showTip = true;
+      this.tips.msg = val;
+      this.tips.show = true;
     }
   },
   events: {
-    'msgbox-cancel': function() {
-      this.msgbox.showBox = false;
-    },
     'tip-show': function() {
-      this.tips.showTip = false;
+      console.log('tip close');
+      this.tips.show = false;
     }
   }
 }
