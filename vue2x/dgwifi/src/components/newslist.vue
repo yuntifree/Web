@@ -65,9 +65,10 @@
 }
 </style>
 <template>
-  <div v-if="mounted" v-infinite-scroll="loadMore" 
-      infinite-scroll-disabled="loading" 
-      infinite-scroll-distance="10">
+<div>
+  <div v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="30">
     <div v-for="item in items"
         class="item-container"
         @click="link(item.dst)"
@@ -77,7 +78,7 @@
         <div class="list-img3">
           <p class="item-title g-ellipsis">{{item.title}}</p>
           <ul class="g-clearfix item-imgs">
-            <li v-for="imgs in item.images" 
+            <li v-for="imgs in item.images"
                 class="g-fl"><img :src="imgs" class="img-list">
             </li>
           </ul>
@@ -100,7 +101,7 @@
           <p class="item-title g-ellipsis">{{item.title}}</p>
           <div class="adv-img"><img :src="item.images[0]"></div>
           <p class="item-desc"><span>广告</span><span>item.source</span></p>
-        </div> 
+        </div>
       </template>
       <!--无图片新闻-->
       <template v-if="!item.images">
@@ -110,10 +111,11 @@
         </div>
       </template>
     </div>
-    <!--infiniteloading :on-infinite="loadMore" :distance="distance"></infiniteloading-->
-    <p v-if="nomore">全都在这没有更多了</p>
-    <tip :show.sync="tips.showTip" :msg="tips.msgTip" :duration="tips.time"></tip>
   </div>
+  <tip :show.sync="tips.showTip" :msg="tips.msgTip" :duration="tips.time"></tip>
+  <p v-if="loading">加载中...</p>
+  <p v-if="nomore">全都在这没有更多了</p>
+</div>
 </template>
 <script>
 import tip from './tip.vue'
@@ -137,7 +139,7 @@ export default {
         showBox: false,
       },
       items: [],
-      mounted: false,
+      ready: false,
       loading: false,
       nomore: false,
     }
@@ -147,8 +149,9 @@ export default {
     msgbox,
   },
   mounted() {
-    this.getData();
-    //console.log(uid + ' ' +token);
+    this.$nextTick(function () {
+      this.getData()
+    })
   },
   methods: {
     getData(seq) {
@@ -162,7 +165,7 @@ export default {
         if (resp.errno === 0) {
           this.items = this.items.concat(resp.data.infos);
           if (param.seq==0) {
-            this.mounted = true;
+            this.ready = true;
           }
           this.nomore = resp.data.hasmore ? false : true;
           this.loading = false;
@@ -172,12 +175,13 @@ export default {
       });
     },
     loadMore() {
-      console.log(1);
       this.loading = true;
-      var len = this.items.length-1;  
-      if (!this.nomore) {
-          this.getData(this.items[len].seq); 
-      }  
+      var len = this.items.length-1;
+      if (!this.nomore && len >= 0) {
+        setTimeout(()=>{
+          this.getData(this.items[len].seq);
+        },1000)
+      }
     },
     link(src) {
       location.href=src;
