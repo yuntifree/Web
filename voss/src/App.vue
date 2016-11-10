@@ -21,6 +21,7 @@ import Login from './login.vue'
 import getUsers from './components/views/getUsers.vue'
 import newsReview from './components/views/newsReview.vue'
 import apReview from './components/views/apReview.vue'
+import videoReview from './components/views/videoReview.vue'
 
 export default {
   data() {
@@ -50,6 +51,7 @@ export default {
     Login,
     newsReview,
     apReview,
+    videoReview,
   },
   // for share components View using.
   ready() {

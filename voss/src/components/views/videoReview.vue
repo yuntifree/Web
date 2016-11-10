@@ -37,21 +37,18 @@
             <thead class="th-fixed">
               <tr>
                 <td v-for="head in columns">{{head}}</td>
-                <td>文章状态<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">未审核</option><option :value="{ number: 1 }">上 线</option><option :value="{ number: 2 }">下 线</option></select></td>
-                <td>tag</td>
+                <td>文章状态<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">未审核</option><option :value="{ number: 1 }">通 过</option><option :value="{ number: 2 }">拒 绝</option></select></td>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="row in news" @click="selIdx = $index" :class="{choosed:selIdx == $index}" data-toggle="context" data-target="#context-menu" :data-idx="$index">
+              <tr v-for="row in videos" @click="selIdx = $index" :class="{choosed:selIdx == $index}" data-toggle="context" data-target="#context-menu" :data-idx="$index">
                 <td>{{row.id}}</td>
+                <td><img :src="row.img" style="width:100px;height:auto"></td>
                 <td>{{row.title}}</td>
-                <td>{{row.modalName || ' '}}</td>
                 <td>{{row.source}}</td>
+                <td>{{row.duration}}</td>
                 <td>{{row.ctime | dateFormat 'yyyy-MM-dd hh:mm:ss'}}</td>
-                <td>{{row.operator || ' '}}</td>
-                <td>{{row.reading || ' '}}</td>
                 <td>{{reviewStastus(selected.number)}}</td>
-                <td>{{selected.tag}}</td>
               </tr>
             </tbody>
           </table>
@@ -63,45 +60,28 @@
       <modal :title="modalCfg.title" :show.sync="modal.confirmShow" :callback="modalCfg.callback" effet="fade">
         <div slot="modal-body" class="modal-body">{{modalCfg.text}}</div>
       </modal>
-      <modal :title="modalCfg.title" :show.sync="modal.textShow" :callback="modalCfg.callback" effet="fade">
-        <div slot="modal-body" class="modal-body">
-          <p>{{modalCfg.text}}</p>
-          <textarea name="" class="letter-textarea" v-model="reason" placeholder="请输入内容"></textarea>
-        </div>
-      </modal>
-      <modal :title="modalCfg.title" :show.sync="modal.editShow" :callback="modalCfg.callback" effet="fade" width="400" big>
+
+      <modal :title="modalCfg.title" :show.sync="modal.editShow" :callback="modalCfg.callback" effet="fade" width="400" auto>
         <div slot="modal-body" class="modal-body">
           <validator name="formValid">
             <form class="form-horizontal">
               <div class="form-group">
                 <label class="col-sm-3 control-label">审核操作</label>
                 <div class="col-sm-9 sex-padding">
-                  <input type="radio" id="one" value="0" v-model="newsInfo.reject">
+                  <input type="radio" id="one" value="0" v-model="videosInfo.reject">
                   <label for="one">通过</label>
-                  <input type="radio" id="two" value="1" v-model="newsInfo.reject">
+                  <input type="radio" id="two" value="1" v-model="videosInfo.reject">
                   <label for="two">拒绝</label>
                 </div>
               </div>
               <div class="form-group">
                 <label for="title" class="col-sm-3 control-label">title</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="title" v-model="newsInfo.title"
+                  <input type="text" class="form-control" id="title" v-model="videosInfo.title"
                     v-validate:nickname="vFormat.vRequiredMax20">
                 </div>
               </div>
-              <div class="form-group">
-                <label for="nickName" class="col-sm-3 control-label">标签</label>
-                <div class="col-sm-9">
-                  <span v-for="tag in tagsInfo.tags">
-                    <input type="checkbox" :id="tag.content" :value="tag.content" v-model="checkedTags">
-                    <label :for="tag.content">{{tag.content}}</label>
-                  </span>
-                  <span class="btn btn-info btn-sm" v-show="tagsInfo.hasmore" @click="edit(tagsInfo.tags[tagsInfo.tags.length-1].seq)">点击加载更多</span>
-                  <br>
-                  <span>Checked tags: {{ checkedTags | json }}</span>
-                </div>
-              </div>
-            </form>
+             </form>
           </validator>
         </div>
       </modal>
@@ -116,13 +96,13 @@ import pager from '../lib/pager.vue'
 import modal from '../lib/Modal.vue'
 import alert from '../lib/Alert.vue'
 import CGI from '../../lib/cgi.js'
-var columns = ['文章ID', '标题','模板名称', '来源','时间','操作人员','阅读数'];
+var columns = ['文章ID', '图片','标题','来源','时长','发布时间'];
 export default {
   data() {
     return {
       mounted: true,
       columns: columns,
-      news: [],
+      videos: [],
       pageCfg: {
         total: 1,
         limit: 30,
@@ -152,8 +132,8 @@ export default {
       search: '',
       showTop: false,
       ops: [{
-        title: '编辑',
-        cmd: 'edit'
+        title: '审核',
+        cmd: 'editvideos'
       },{
         title: '通过',
         cmd: 'pass'
@@ -161,13 +141,10 @@ export default {
         title: '拒绝',
         cmd: 'reject'
       }],
-      tagsInfo: [],
-      checkedTags: [],
-      newsInfo: {
+      videosInfo: {
         title: '',
         reject: 0,
         modify: 0,
-        tags: [],
       }
     }
   },
@@ -191,10 +168,10 @@ export default {
         type: this.selected.number
       }
 
-      CGI.post(this.$store.state, 'get_news', param, (resp) => {
+      CGI.post(this.$store.state, 'get_videos', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
-          this.news = data.news;
+          this.videos = data.infos;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
           this.mounted = true;
         } else {
@@ -204,8 +181,8 @@ export default {
     },
     onMenu(cmd) {
       switch (cmd) {
-        case 'edit':
-          this.edit();
+        case 'editvideos':
+          this.editvideos();
           break;
         case 'pass':
           this.review(0);
@@ -215,62 +192,40 @@ export default {
           break;
       }
     },
-    revieStastus(val) {
+    reviewStastus(val) {
       var ret;
       switch(val) {
         case 0:
           ret = '未审核';
           break;
         case 1:
-          ret = '上线';
+          ret = '通过';
           break;
         case 2:
-          ret = '下线';
+          ret = '拒绝';
           break;
       }
       return ret;
     },
-    edit(seq) {
-      var param = {
-        seq: seq || 0,
-        num:5
-      }
-      CGI.post(this.$store.state,'get_tags',param,(resp)=>{
-        if (resp.errno === 0) {
-          if (param.seq === 0) {
-            this.tagsInfo = resp.data;
-          } else {
-            this.tagsInfo.tags = this.tagsInfo.tags.concat(resp.data.tags);
-            this.tagsInfo.hasmore = resp.data.hasmore;
-          }        
-          this.editNews();
-        } else {
-          this.tip(resp.desc);
-        }
-      })
-    },
-    editNews() { 
-      var info = this.news[this.selIdx];
-      console.log(this.news[this.selIdx]);
-      this.modalCfg.title = '编辑';
-      this.newsInfo.title = info.title;
+    editvideos() { 
+      var info = this.videos[this.selIdx];
+      console.log(this.videos[this.selIdx]);
+      this.modalCfg.title = '审核操作';
+      this.videosInfo.title = info.title;
       this.modal.editShow = true;
       this.modalCfg.callback = () => {
         var param = {};
-        if (this.newsInfo.title !== this.news[this.selIdx].title) {
-          param.title = this.newsInfo.title;
+        if (this.videosInfo.title !== info.title) {
+          param.title = this.videosInfo.title;
           param.modify = 1;
         }
-        if (this.checkedTags.length > 0) {
-          param.tags = this.checkedTags;
-        }
-        param.reject = ~~this.newsInfo.reject;
+        param.reject = ~~this.videosInfo.reject;
         param.id = info.id;
-        CGI.post(this.$store.state,'review_news',param,(resp)=> {
+        CGI.post(this.$store.state,'review_video',param,(resp)=> {
           if (resp.errno === 0) {
-            this.selIdx = -1;
-            this.news.splice(this.selIdx,1);
+            this.videos.splice(this.selIdx,1);
             this.modal.editShow = false;
+            this.selIdx = -1;
           } else {
             this.tip(resp.desc);
           }
@@ -279,7 +234,7 @@ export default {
     },
     review(ops) {
       var idx = this.selIdx;
-      var name = this.news[idx].name;
+      var name = this.videos[idx].id;
       var title = this.modalCfg.title;
       var text = this.modalCfg.text;
       if (ops) {
@@ -294,27 +249,16 @@ export default {
       this.modal.confirmShow = true;
       this.modalCfg.callback = () => {
         var param = {
-          uid: this.news[idx].id,
+          uid: this.videos[idx].id,
           reject: ops
         }
 
         this.modal.confirmShow = false;
-        this.modal.textShow = false;
 
-        CGI.post(this.$store.state, 'review_news', param, (resp) => {
+        CGI.post(this.$store.state, 'review_video', param, (resp) => {
           if (resp.errno === 0) {
             this.selIdx = -1;
-            switch (ops) {
-              case 1:
-                this.news[idx].flag = 1;
-                this.select(idx);
-                break;
-              case 2:
-                this.news[idx].flag = 2;
-                this.select(idx);
-                break;
-            }
-            this.news[idx].applystate = ops;
+            this.videos.splice(idx,1);
           } else {
             this.tip(resp.desc);
           }
@@ -342,7 +286,7 @@ export default {
       CGI.post(this.$store.state, 'get_audit_auth', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
-          this.news = data.users;
+          this.videos = data.users;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
           if (data.users === null) {
             this.tips.showTip = true;
@@ -373,8 +317,8 @@ export default {
   },
   events: {
     'page-change': function(idx) {
-      var len = this.news.length-1;
-      this.pageCfg.start = this,news[len].seq;
+      var len = this.videos.length-1;
+      this.pageCfg.start = this,videos[len].seq;
       this.pageCfg.currentPage = idx;
       var isSearch = this.search.length > 0;
       if (isSearch) {

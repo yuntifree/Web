@@ -35,8 +35,12 @@ export default {
         },{
           title: "运营管理",
           menus: [{
-          title: "审核管理",
+          title: "新闻审核",
           name: "newsReview",
+          icon: "user"
+          },{
+          title: "视频审核",
+          name: "videoReview",
           icon: "user"
           },{
           title: "模板管理",
