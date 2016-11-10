@@ -3,23 +3,23 @@
 .item-container {
   width: 94%;
   margin: 0 auto;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 2px solid #e7e7e7;
+  padding: 0.16rem 0 0.15rem;
 }
 .item-title {
-  line-height: 0.8rem;
-  font-size: 0.28rem;
+  line-height: 150%;
+  font-size: 0.32rem;
   color: $baseColor;
+}
+.item-imgs {
+  margin: 0.15rem 0;
 }
 .item-imgs li{
   overflow: hidden;
 }
 .list-img3 li {
-  @include containerSize(33%,1.5rem);
-  margin-right: 0.5%;
-}
-.list-img2 li {
-  @include containerSize(49.5%,1.5rem);
-  margin-right: 1%;
+  @include containerSize(32%,1.48rem);
+  margin-right: 2%;
 }
 .item-imgs li:last-child {
   margin-right: 0;
@@ -29,12 +29,13 @@
   min-height: 1.5rem;
 }
 .list1-info {
-  width: 4.5rem;
+  width: 4.74rem;
+  padding-right: 0.16rem;
+  text-align: justify;
 }
 .list-img1 {
-  @include containerSize(2.25rem, 1.5rem);
+  @include containerSize(2.28rem, 1.5rem);
   overflow: hidden;
-  margin-right: 0.2rem;
 }
 .list-img1 img{
   @include containerSize(100%, auto);
@@ -42,18 +43,15 @@
 }
 .item-desc {
   font-size: 0.24rem;
-  color: #848484;
-  line-height: 0.66rem;
+  color: $color84;
+  line-height: 0.34rem;
 }
 .item-desc span:first-child {
   margin-right: 0.4rem;
 }
-.padd25 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
 .list1-item-title {
-  line-height: 0.37rem;
+  line-height: 0.46rem;
+  margin-bottom: 0.12rem;
 }
 .adv-img {
   @include containerSize(100%, auto);
@@ -63,6 +61,13 @@
 .adv-img img {
   @include containerSize(100%, auto);
 }
+.adv-text {
+  padding: 0.02rem 0.12rem;
+  color: #f6c042;
+  border: 1px solid #f6c042;
+  border-radius: 0.08rem;
+}
+
 </style>
 <template>
 <div>
@@ -87,7 +92,7 @@
       </template>
       <!--新闻有1、2张图片-->
       <template v-if="item.images.length==1 || item.images.length==2 && !item.stype">
-        <dl class="g-clearfix padd25">
+        <dl class="g-clearfix">
          <dt class="g-fr list-img1"><img :src="item.images[0]"></dt>
          <dd class="list1-info g-fl">
            <p class="item-title list1-item-title lines-ellipsis">{{item.title}}</p>
@@ -100,7 +105,7 @@
         <div>
           <p class="item-title g-ellipsis">{{item.title}}</p>
           <div class="adv-img"><img :src="item.images[0]"></div>
-          <p class="item-desc"><span>广告</span><span>item.source</span></p>
+          <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
         </div>
       </template>
       <!--无图片新闻-->
@@ -113,7 +118,7 @@
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show = false"></tip>
-  <p class="item-desc g-tac" v-if="loading">加载中...</p>
+  <p class="item-desc g-tac" v-if="loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
   <p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p>
 </div>
 </template>
