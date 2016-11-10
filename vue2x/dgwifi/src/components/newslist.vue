@@ -81,7 +81,7 @@
       <!--新闻有3张图片-->
       <template v-if="item.images.length>2 && !item.stype">
         <div class="list-img3">
-          <p class="item-title g-ellipsis">{{item.title}}</p>
+          <p class="item-title">{{item.title}}</p>
           <ul class="g-clearfix item-imgs">
             <li v-for="imgs in item.images"
                 class="g-fl"><img :src="imgs" class="img-list">
