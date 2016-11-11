@@ -1,27 +1,27 @@
 <template>
-  <div id="mapp">
+  <div id="mapp" class="mapp">
     <div id="map" class="map"  style="width:100%;height:100%"></div>
-    <tooltip :tipinfo="tips" @tip-show="tips.show=false"></tooltip>
+    <tip :tipinfo="maptips" @tip-show="maptips.show = false"></tip>
   </div>
 </template>
 
 <script>
 import CGI from './lib/cgi.js'
-import tooltip from './components/lib/tooltip.vue'
+import tip from './components/lib/tip.vue'
 
 export default {
   data() {
     return {
-      tips: {
+      maptips: {
         show: false,
-        msg: '123',
-        top: '0px',
-        left: '0px',
+        msg: '',
+        tooltip: true,
+        duration: 2500,
       }
     }
   },
   components: {
-    tooltip
+    tip
   },
   mounted() {
     var _this = this;
@@ -58,16 +58,23 @@ export default {
         var param = {
           longitude: lng,
           latitude: lat,
+          uid:1,
+          token:'7329cf254871429d803c5826c8d9db1d'
         }
-        CGI.post(_this.$store.state,'get_nearby_aps',param,(resp)=>{
+        CGI.post('get_nearby_aps',param,(resp)=>{
           if (resp.errno===0) {
             _this.apAddress = resp.data.infos;
             var len = _this.apAddress.length;
+            var allOverlay = map.getOverlays();
+            if (allOverlay.length>0) {
+                for(var j=0;j<allOverlay.length;j++) {
+                    map.removeOverlay(allOverlay[j]);
+                }
+            }
             for (var i = 0; i < len; i ++) {
                 var spot = new BMap.Point(_this.apAddress[i].longitude, _this.apAddress[i].latitude);
                 var marker = new BMap.Marker(spot);
                 map.addOverlay(marker);
-                console.log(_this.apAddress[i].longitude,_this.apAddress[i].latitude);
                 marker.addEventListener("click",attribute)
                 marker.selIdx = i;
             }
@@ -77,21 +84,22 @@ export default {
      //获取覆盖物位置
      function attribute(e){
         var p = e.target;
-        console.log(p);
-        console.log(e.screenX+ ','+e.screenY);
         _this.maptips = {
           show: true,
           msg: '位置:'+_this.apAddress[p.selIdx].address,
-          top: e.screenY-160,
-          left: e.screenX-100,
         }
-       // console.log("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
       }
     },
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
   @import './assets/css/reset.css';
+html,
+body,
+.mapp {
+    width: 100%;
+    height:100%
+}
 </style>

@@ -1,6 +1,10 @@
 <style>
 .tooltip {
   position: absolute;
+  top: 0;
+  left:50%;
+  transform: translate(-50%, -50%);
+  margin-top: 1rem;
   padding:.2rem;
   background-color: #000;
   border-radius: .12rem;
@@ -9,9 +13,7 @@
 </style>
 
 <template>
-<div class="tooltip g-font14" v-show="show" transition="fade"
-    :style="{top:tipinfo.top,left:tipinfo.left}"
-    @click="mapHide">
+<div class="tooltip g-font14" v-show="show" transition="fade">
   {{tipinfo.msg}}
 </div>
 </template>
@@ -31,10 +33,5 @@ export default {
       return this.tipinfo.show;
     }
   },
-  methods: {
-    mapHide() {
-      this.$emit('tip-show');
-    }
-  }
 }
 </script>

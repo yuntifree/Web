@@ -9,10 +9,14 @@
 	border-radius: .12rem;
 	color: #fff;
 }
+.top50 {
+    top:0;
+    margin-top:1rem;
+}
 </style>
 
 <template>
-<div class="tip g-font14" v-show="show" transition="fade">
+<div class="tip g-font14" v-show="show" transition="fade" :class="{top50:tipinfo.tooltip}">
 	{{tipinfo.msg}}
 </div>
 </template>
@@ -24,6 +28,10 @@ export default {
 			msg: String,
 			duration: Number,
 			show: Boolean,
+            tooltip: {
+                type:Boolean,
+                default: false,
+            }
 		}
 	},
 	computed: {

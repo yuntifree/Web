@@ -138,7 +138,8 @@ export default {
       tips: {
         show: false,
         msg: '',
-        duration: 1500
+        duration: 1500,
+        tooltip: false,
       },
       items: [],
       ready: false,
