@@ -119,7 +119,7 @@
       </template>
     </div>
   </div>
-  <tip :tipinfo="tips" @tip-show="tips.show = false"></tip>
+  <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   <p class="item-desc g-tac loading" v-if="loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
   <p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p>
 </div>
@@ -170,7 +170,6 @@ export default {
             this.ready = true;
           }
           this.nomore = resp.data.hasmore ? false : true;
-          this.$emit('load-val');
           this.loading = false;
         } else {
           this.tipBox(resp.desc);

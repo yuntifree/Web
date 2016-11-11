@@ -28,25 +28,23 @@ export default {
 			msg: String,
 			duration: Number,
 			show: Boolean,
-            tooltip: {
-                type:Boolean,
-                default: false,
-            }
+      tooltip: Boolean
 		}
 	},
 	computed: {
 		show() {
-			console.log(this.tipinfo.msg);
 			return this.tipinfo.show;
 		}
 	},
 	watch: {
 		show(val) {
-			if (this._timeout) clearTimeout(this._timeout)
+			console.log(val);// +','+!!this.tipinfo.duration)
+			if (this._timeout) clearTimeout(this._timeout);
 			if (val && !!this.tipinfo.duration) {
 			    //this._timeout = setTimeout(()=> this.show = false, this.duration);
 			    this._timeout = setTimeout(()=> {
 			    	this.$emit('tip-show');
+			    	console.log(this.tipinfo.duration);
 			    }, this.tipinfo.duration);
 			}
 		}

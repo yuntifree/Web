@@ -1,7 +1,7 @@
 <template>
   <div id="mapp" class="mapp">
     <div id="map" class="map"  style="width:100%;height:100%"></div>
-    <tip :tipinfo="maptips" @tip-show="maptips.show = false"></tip>
+    <tip :tipinfo="maptips" @tip-show="maptips.show=false"></tip>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     return {
       maptips: {
         show: false,
-        msg: '',
+        msg: '123',
         tooltip: true,
         duration: 2500,
       }
@@ -84,12 +84,13 @@ export default {
      //获取覆盖物位置
      function attribute(e){
         var p = e.target;
-        _this.maptips = {
-          show: true,
-          msg: '位置:'+_this.apAddress[p.selIdx].address,
-        }
+        _this.tipBox('位置:'+_this.apAddress[p.selIdx].address);
       }
     },
+    tipBox(val) {
+      this.tips.msg = val;
+      this.tips.show = true;
+    }
   }
 }
 </script>
