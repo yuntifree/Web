@@ -24,9 +24,11 @@ export default {
     tooltip
   },
   mounted() {
+    var _this = this;
     this.$nextTick(function () {
-      CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
-      this.mapShow(); 
+      CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
+        _this.mapShow();
+      }) 
     })
   },
   methods: {
