@@ -104,7 +104,31 @@ module.exports = {
         name += '_yctv';
         localStorage.removeItem(name);
     },
-
+    Myload(B, A) {
+      this.done = false;
+      B.onload = B.onreadystatechange = function() {
+        if (!this.done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+          this.done = true;
+          A();
+          B.onload = B.onreadystatechange = null;
+        }
+      };
+    },
+    loadScript(A, id, C) {
+      var B = function() {};
+      if (C !== undefined) {
+        B = C;
+      }
+      if (!document.getElementById(id)) {
+        var D = document.createElement("script");
+        D.setAttribute("src", A);
+        D.setAttribute("id", id);
+        document.body.appendChild(D);
+        this.Myload(D, B);
+      } else {
+        B();
+      }
+    },
     dateFormat: function(date, fmt) {
         var d = new Date(date);
         var o = {

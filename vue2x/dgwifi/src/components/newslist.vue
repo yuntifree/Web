@@ -125,7 +125,7 @@
 </div>
 </template>
 <script>
-import tip from './tip.vue'
+import tip from './lib/tip.vue'
 import CGI from '../lib/cgi'
 var query = CGI.query;
 var uid = ~~(query.uid) || 1;
@@ -169,6 +169,7 @@ export default {
             this.ready = true;
           }
           this.nomore = resp.data.hasmore ? false : true;
+          this.$emit('load-val');
           this.loading = false;
         } else {
           this.tipBox(resp.desc);
