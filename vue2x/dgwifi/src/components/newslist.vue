@@ -67,7 +67,9 @@
   border: 1px solid #f6c042;
   border-radius: 0.08rem;
 }
-
+.loading {
+  line-height: 0.8rem;
+}
 </style>
 <template>
 <div>
@@ -118,7 +120,7 @@
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show = false"></tip>
-  <p class="item-desc g-tac" v-if="loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
+  <p class="item-desc g-tac loading" v-if="loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
   <p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p>
 </div>
 </template>
