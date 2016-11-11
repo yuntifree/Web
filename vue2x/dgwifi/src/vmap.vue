@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       tips: {
-        show: true,
+        show: false,
         msg: '123',
         top: '0px',
         left: '0px',
@@ -26,7 +26,7 @@ export default {
   mounted() {
     this.$nextTick(function () {
       CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
-      //this.mapShow(); 
+      this.mapShow(); 
     })
   },
   methods: {

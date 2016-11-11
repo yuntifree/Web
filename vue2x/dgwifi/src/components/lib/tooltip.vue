@@ -28,7 +28,6 @@ export default {
   },
   computed: {
     show() {
-      console.log(this.tipinfo.msg);
       return this.tipinfo.show;
     }
   },
