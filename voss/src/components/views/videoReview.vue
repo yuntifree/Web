@@ -249,7 +249,7 @@ export default {
       this.modal.confirmShow = true;
       this.modalCfg.callback = () => {
         var param = {
-          uid: this.videos[idx].id,
+          id: this.videos[idx].id,
           reject: ops
         }
 
