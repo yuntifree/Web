@@ -33,7 +33,7 @@ export default {
   },
   mounted() {
     var _this = this;
-    // ´æÏÂunion
+    // å­˜ä¸‹union
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
     }
@@ -60,20 +60,20 @@ export default {
      console.log(_this.longitude+','+_this.latitude)
       var map = new BMap.Map('map');
       var point = new BMap.Point(_this.longitude, _this.latitude);
-      //±ê×¢
+      //æ ‡æ³¨
       map.centerAndZoom(point,15);
-      var marker = new BMap.Marker(point);        // ´´½¨±ê×¢
+      var marker = new BMap.Marker(point);        // åˆ›å»ºæ ‡æ³¨
       map.addOverlay(marker);
-      //¿Ø¼ş
+      //æ§ä»¶
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
       getApAddress(point.lng,point.lat);
 
-      //ÊÂ¼ş
+      //äº‹ä»¶
       map.addEventListener("dragend", function(){
-        var bs = map.getBounds();   //»ñÈ¡¿ÉÊÓÇøÓò
-        var bssw = bs.getSouthWest();   //¿ÉÊÓÇøÓò×óÉÏ½Ç
-        var bsne = bs.getNorthEast();   //¿ÉÊÓÇøÓòÓÒÉÏ½Ç
+        var bs = map.getBounds();   //è·å–å¯è§†åŒºåŸŸ
+        var bssw = bs.getSouthWest();   //å¯è§†åŒºåŸŸå·¦ä¸Šè§’
+        var bsne = bs.getNorthEast();   //å¯è§†åŒºåŸŸå³ä¸Šè§’
         var lng = (bssw.lng+bsne.lng)/2;
         var lat = (bssw.lat+bsne.lat)/2;
         getApAddress(lng,lat);
@@ -105,11 +105,11 @@ export default {
           }
         })
       }
-     //»ñÈ¡¸²¸ÇÎïÎ»ÖÃ
+     //è·å–è¦†ç›–ç‰©ä½ç½®
      function attribute(e){
         var p = e.target;
         console.log('click');
-        _this.tipBox('Î»ÖÃ:'+_this.apAddress[p.selIdx].address);
+        _this.tipBox('ä½ç½®:'+_this.apAddress[p.selIdx].address);
       }
     },
     tipBox(val) {
