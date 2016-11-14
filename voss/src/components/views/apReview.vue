@@ -39,12 +39,12 @@
                 @click="selIdx = $index"
                 :class="{choosed:selIdx == $index}"
                 data-toggle="context" data-target="#context-menu" :data-idx="$index">
-                <td>{{row.id}}</td>
-                <td>{{row.ssid}}</td>
-                <td>{{row.address}}</td>
+                <td>{{row.id||'-'}}</td>
+                <td>{{row.ssid||'-'}}</td>
+                <td>{{row.address||'-'}}</td>
                 <td>{{row.online ? '在线' : '下线'}}</td>
-                <td>{{row.online}}</td>
-                <td>{{row.bindwidth}}</td>
+                <td>{{row.online||'-'}}</td>
+                <td>{{row.bindwidth||'-'}}</td>
               </tr>
             </tbody>
           </table>
@@ -142,18 +142,17 @@ export default {
     CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
   },
   methods: {
-    getData(reload,seq) {
+    getData(reload) {
       if (this.acvandeQuery) {
         this.acvandeQuery = false;
       }
       //判断分页是否为第一页
       if (reload) {
         this.pageCfg.start = 0;
-        this.pageCfg.currentPage = 1;
       }
 
       var param = {
-        seq: seq || 0,
+        seq: this.pageCfg.start,
         num: 30,
       };
       CGI.post(this.$store.state, 'get_ap_stat', param, (resp) => {
@@ -234,19 +233,23 @@ export default {
   },
   events: {
     'page-change': function(idx) {
-      this.pageCfg.start = (idx - 1) * this.pageCfg.limit;
+      var len = (idx-1) * 30;
+      this.pageCfg.start = len;
       this.pageCfg.currentPage = idx;
-      var searchLen = this.search.trim().length;
-      var len = this.infos.length-1;
+      /*if (isSearch) {
+        this.doSearch(false);
+      } else {*/
+        this.getData(false);
+      //}
       //分页接口区分
-      if(searchLen == 0 && !(this.advancedSearch)){
+      /*if(searchLen == 0 && !(this.advancedSearch)){
         this.getData(false,this.infos[len].seq);
       } else if (searchLen > 0){
         this.doSearch(false,this.infos[len].seq);
       } else if (this.advancedSearch) {
         searchParams.start = this.pageCfg.start;
         this.query(searchParams, 'advanced_search', true,this.infos[len].seq);
-      }
+      }*/
     },
     'upload-done': function(imageUrl) {
       this.userInfo.head = imageUrl;
