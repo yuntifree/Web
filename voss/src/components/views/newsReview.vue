@@ -43,15 +43,15 @@
             </thead>
             <tbody>
               <tr v-for="row in news" @click="selIdx = $index" :class="{choosed:selIdx == $index}" data-toggle="context" data-target="#context-menu" :data-idx="$index">
-                <td>{{row.id}}</td>
-                <td>{{row.title}}</td>
-                <td>{{row.modalName || ' '}}</td>
-                <td>{{row.source}}</td>
+                <td>{{row.id||'-'}}</td>
+                <td>{{row.title||'-'}}</td>
+                <td>{{row.modalName||'-'}}</td>
+                <td>{{row.source||'-'}}</td>
                 <td>{{row.ctime | dateFormat 'yyyy-MM-dd hh:mm:ss'}}</td>
-                <td>{{row.operator || ' '}}</td>
-                <td>{{row.reading || ' '}}</td>
+                <td>{{row.operator||'-'}}</td>
+                <td>{{row.reading||'-'}}</td>
                 <td>{{reviewStastus(selected.number)}}</td>
-                <td>{{selected.tag}}</td>
+                <td>{{row.tag||'-'}}</td>
               </tr>
             </tbody>
           </table>
@@ -93,7 +93,7 @@
                 <label for="nickName" class="col-sm-3 control-label">标签</label>
                 <div class="col-sm-9">
                   <span v-for="tag in tagsInfo.tags">
-                    <input type="checkbox" :id="tag.content" :value="tag.content" v-model="checkedTags">
+                    <input type="checkbox" :id="tag.id" :value="tag.content" v-model="checkedTags">
                     <label :for="tag.content">{{tag.content}}</label>
                   </span>
                   <span class="btn btn-info btn-sm" v-show="tagsInfo.hasmore" @click="edit(tagsInfo.tags[tagsInfo.tags.length-1].seq)">点击加载更多</span>
@@ -215,7 +215,7 @@ export default {
           break;
       }
     },
-    revieStastus(val) {
+    reviewStastus(val) {
       var ret;
       switch(val) {
         case 0:
@@ -257,13 +257,24 @@ export default {
       this.modal.editShow = true;
       this.modalCfg.callback = () => {
         var param = {};
+        var paramTags = [];
         if (this.newsInfo.title !== this.news[this.selIdx].title) {
           param.title = this.newsInfo.title;
           param.modify = 1;
         }
         if (this.checkedTags.length > 0) {
-          param.tags = this.checkedTags;
+          //param.tags = this.checkedTags;
+          var clen = this.checkedTags.length;
+          var tlen = this.tagsInfo.tags.length;
+          for (var i=0;i<clen;i++) {
+            for (var j=0;j<tlen;j++) {
+              if (this.checkedTags[i] == this.tagsInfo.tags[j].content) {
+                paramTags.push(this.tagsInfo.tags[j].id);
+              }
+            }
+          }
         }
+        param.tags = paramTags;
         param.reject = ~~this.newsInfo.reject;
         param.id = info.id;
         CGI.post(this.$store.state,'review_news',param,(resp)=> {
@@ -373,15 +384,14 @@ export default {
   },
   events: {
     'page-change': function(idx) {
-      var len = this.news.length-1;
-      this.pageCfg.start = this,news[len].seq;
+      var len = (idx-1) * 30;
+      this.pageCfg.start = len;
       this.pageCfg.currentPage = idx;
-      var isSearch = this.search.length > 0;
-      if (isSearch) {
+      /*if (isSearch) {
         this.doSearch(false);
-      } else {
+      } else {*/
         this.getData(false);
-      }
+      //}
     },
     'data-refresh': function() {
       this.getData(true,0);

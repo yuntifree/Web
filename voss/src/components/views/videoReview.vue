@@ -42,12 +42,12 @@
             </thead>
             <tbody>
               <tr v-for="row in videos" @click="selIdx = $index" :class="{choosed:selIdx == $index}" data-toggle="context" data-target="#context-menu" :data-idx="$index">
-                <td>{{row.id}}</td>
+                <td>{{row.id||'-'}}</td>
                 <td><img :src="row.img" style="width:100px;height:auto"></td>
-                <td>{{row.title}}</td>
-                <td>{{row.source}}</td>
-                <td>{{row.duration}}</td>
-                <td>{{row.ctime | dateFormat 'yyyy-MM-dd hh:mm:ss'}}</td>
+                <td>{{row.title||'-'}}</td>
+                <td>{{row.source||'-'}}</td>
+                <td>{{row.duration||'-'}}</td>
+                <td>{{row.ctime | dateFormat 'yyyy-MM-dd hh:mm:ss'||'-'}}</td>
                 <td>{{reviewStastus(selected.number)}}</td>
               </tr>
             </tbody>
@@ -317,15 +317,14 @@ export default {
   },
   events: {
     'page-change': function(idx) {
-      var len = this.videos.length-1;
-      this.pageCfg.start = this,videos[len].seq;
+      var len = (idx-1) * 30;
+      this.pageCfg.start = len;
       this.pageCfg.currentPage = idx;
-      var isSearch = this.search.length > 0;
-      if (isSearch) {
+      /*if (isSearch) {
         this.doSearch(false);
-      } else {
+      } else {*/
         this.getData(false);
-      }
+      //}
     },
     'data-refresh': function() {
       this.getData(true,0);
