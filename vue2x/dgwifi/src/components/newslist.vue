@@ -130,8 +130,8 @@ import CGI from '../lib/cgi'
 var query = CGI.query;
 var uid = ~~(query.uid) || 1;
 var token = query.token || '7329cf254871429d803c5826c8d9db1d';
-var count = 0;
-var timer;
+var union = query.union || '';
+
 export default {
   data() {
     return {
@@ -152,6 +152,11 @@ export default {
   },
   mounted() {
     this.$nextTick(function () {
+      // 存下union
+      if (union.length > 0) {
+        CGI.setCookie('union', union, 7);
+        alert('union:' + union);
+      }
       this.getData()
     })
   },

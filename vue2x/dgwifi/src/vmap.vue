@@ -9,6 +9,11 @@
 import CGI from './lib/cgi.js'
 import tip from './components/lib/tip.vue'
 
+var query = CGI.query;
+var uid = ~~(query.uid) || 1;
+var token = query.token || '7329cf254871429d803c5826c8d9db1d';
+var union = query.union || '';
+
 export default {
   data() {
     return {
@@ -25,20 +30,24 @@ export default {
   },
   mounted() {
     var _this = this;
+    // 存下union
+    if (union.length > 0) {
+      CGI.setCookie('union', union, 7);
+    }
     this.$nextTick(function () {
       CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
         _this.mapShow();
-      }) 
+      })
     })
   },
   methods: {
-    mapShow() { 
+    mapShow() {
      var _this = this;
-      var map = new BMap.Map('map');  
+      var map = new BMap.Map('map');
       var point = new BMap.Point(113.90387023396529, 22.93310386339828);
       //标注
-      map.centerAndZoom(point,15);    
-      var marker = new BMap.Marker(point);        // 创建标注    
+      map.centerAndZoom(point,15);
+      var marker = new BMap.Marker(point);        // 创建标注
       map.addOverlay(marker);
       //控件
       map.addControl(new BMap.NavigationControl());

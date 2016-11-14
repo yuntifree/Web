@@ -164,4 +164,9 @@ module.exports = {
             return {};
         }
     },
+    setCookie(key, val, day) {
+      var t = new Date();
+      t.setTime(t.getTime() + day * 86400 * 1000);
+      document.cookie = key + "=" + escape(val) + ";path=/" + (day === 0 ? "" : ";expires=" + t.toGMTString());
+    },
 };
