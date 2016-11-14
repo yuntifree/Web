@@ -67,8 +67,8 @@ export default {
         var param = {
           longitude: lng,
           latitude: lat,
-          uid:1,
-          token:'7329cf254871429d803c5826c8d9db1d'
+          uid:uid,
+          token:token
         }
         CGI.post('get_nearby_aps',param,(resp)=>{
           if (resp.errno===0) {
@@ -93,6 +93,7 @@ export default {
      //获取覆盖物位置
      function attribute(e){
         var p = e.target;
+        console.log('click');
         _this.tipBox('位置:'+_this.apAddress[p.selIdx].address);
       }
     },
