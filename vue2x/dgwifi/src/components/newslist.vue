@@ -127,7 +127,7 @@
 <script>
 import tip from './lib/tip.vue'
 import CGI from '../lib/cgi'
-var query = CGI.query;
+var query = CGI.query();
 var uid = ~~(query.uid) || 1;
 var token = query.token || '7329cf254871429d803c5826c8d9db1d';
 var union = query.union || '';
@@ -154,8 +154,7 @@ export default {
     this.$nextTick(function () {
       // 存下union
       if (union.length > 0) {
-        CGI.setCookie('union', union, 7);
-        alert('union:' + union);
+        CGI.setCookie('UNION', union, 7);
       }
       this.getData()
     })
