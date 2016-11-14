@@ -8,6 +8,7 @@
 <script>
 import CGI from './lib/cgi.js'
 import tip from './components/lib/tip.vue'
+import weixin from './lib/wx.js'
 
 var query = CGI.query();
 var uid = ~~(query.uid) || 1;
@@ -22,7 +23,9 @@ export default {
         msg: '123',
         tooltip: true,
         duration: 2500,
-      }
+      },
+      latitude:0.0,
+      longitude:0.0
     }
   },
   components: {
@@ -30,7 +33,7 @@ export default {
   },
   mounted() {
     var _this = this;
-    // å­˜ä¸‹union
+    // ´æÏÂunion
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
     }
@@ -43,22 +46,34 @@ export default {
   methods: {
     mapShow() {
      var _this = this;
+
+     weixin.init(()=>{
+       wx && wx.getLocation({
+         success: function (res) {
+           _this.latitude = res.latitude;
+           _this.longitude = res.longitude;
+         },
+         cancel: function (res) {
+         }
+       });
+     });
+     console.log(_this.longitude+','+_this.latitude)
       var map = new BMap.Map('map');
-      var point = new BMap.Point(113.90387023396529, 22.93310386339828);
-      //æ ‡æ³¨
+      var point = new BMap.Point(_this.longitude, _this.latitude);
+      //±ê×¢
       map.centerAndZoom(point,15);
-      var marker = new BMap.Marker(point);        // åˆ›å»ºæ ‡æ³¨
+      var marker = new BMap.Marker(point);        // ´´½¨±ê×¢
       map.addOverlay(marker);
-      //æ§ä»¶
+      //¿Ø¼ş
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
       getApAddress(point.lng,point.lat);
 
-      //äº‹ä»¶
+      //ÊÂ¼ş
       map.addEventListener("dragend", function(){
-        var bs = map.getBounds();   //è·å–å¯è§†åŒºåŸŸ
-        var bssw = bs.getSouthWest();   //å¯è§†åŒºåŸŸå·¦ä¸Šè§’
-        var bsne = bs.getNorthEast();   //å¯è§†åŒºåŸŸå³ä¸Šè§’
+        var bs = map.getBounds();   //»ñÈ¡¿ÉÊÓÇøÓò
+        var bssw = bs.getSouthWest();   //¿ÉÊÓÇøÓò×óÉÏ½Ç
+        var bsne = bs.getNorthEast();   //¿ÉÊÓÇøÓòÓÒÉÏ½Ç
         var lng = (bssw.lng+bsne.lng)/2;
         var lat = (bssw.lat+bsne.lat)/2;
         getApAddress(lng,lat);
@@ -90,11 +105,11 @@ export default {
           }
         })
       }
-     //è·å–è¦†ç›–ç‰©ä½ç½®
+     //»ñÈ¡¸²¸ÇÎïÎ»ÖÃ
      function attribute(e){
         var p = e.target;
         console.log('click');
-        _this.tipBox('ä½ç½®:'+_this.apAddress[p.selIdx].address);
+        _this.tipBox('Î»ÖÃ:'+_this.apAddress[p.selIdx].address);
       }
     },
     tipBox(val) {
