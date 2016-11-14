@@ -37,6 +37,12 @@ module.exports = merge(baseWebpackConfig, {
       template: 'map.html',
       inject: true,
       chunks: ['jmap'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'error.html',
+      template: 'error.html',
+      inject: true,
+      chunks: ['error'],
     })
   ]
 })
