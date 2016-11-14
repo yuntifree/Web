@@ -1,4 +1,4 @@
-import Vue from 'vue'
+//import Vue from 'vue'
 import error from './error.vue'
 var initFont = require('./common/font.js')
 initFont(true);

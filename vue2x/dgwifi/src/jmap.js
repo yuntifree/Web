@@ -1,4 +1,4 @@
-import Vue from 'vue'
+//import Vue from 'vue'
 import vmap from './vmap'
 var initFont = require('./common/font.js')
 initFont(true);

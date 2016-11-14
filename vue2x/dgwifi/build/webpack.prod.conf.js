@@ -80,7 +80,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
         ? 'error.html'
-        : config.build.map,
+        : config.build.error,
       template: 'error.html',
       inject: true,
       minify: {
