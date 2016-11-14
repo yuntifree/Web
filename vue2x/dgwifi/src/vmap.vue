@@ -88,8 +88,8 @@ export default {
       }
     },
     tipBox(val) {
-      this.tips.msg = val;
-      this.tips.show = true;
+      this.maptips.msg = val;
+      this.maptips.show = true;
     }
   }
 }
