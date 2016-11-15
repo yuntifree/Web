@@ -46,18 +46,7 @@ export default {
   methods: {
     mapShow() {
      var _this = this;
-     weixin.init(()=>{
-      alert(_this.longitude+','+_this.latitude);
-       wx && wx.getLocation({
-         success: function (res) {
-           _this.latitude = res.latitude;
-           _this.longitude = res.longitude;
-           alert(_this.longitude+','+_this.latitude)
-         },
-         cancel: function (res) {
-         }
-       });
-     });
+     weixin.init(this.wxReady);
       var map = new BMap.Map('map');
       var point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
@@ -115,7 +104,19 @@ export default {
     tipBox(val) {
       this.maptips.msg = val;
       this.maptips.show = true;
-    }
+    },
+    wxReady() {
+      alert('wxReady');
+      wx && wx.getLocation({
+        success: function (res) {
+          _this.latitude = res.latitude;
+          _this.longitude = res.longitude;
+          alert(_this.longitude+','+_this.latitude)
+        },
+        cancel: function (res) {
+        }
+      });
+    },
   }
 }
 </script>
