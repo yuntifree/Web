@@ -40,11 +40,11 @@
                  @dblclick="editUser"
                 :class="{choosed:selIdx == $index}"
                 data-toggle="context" data-target="#context-menu" :data-idx="$index">
-                <td>{{row.uid}}</td>
-                <td>{{row.emie}}</td>
-                <td>{{row.phone}}</td>
+                <td>{{row.id||'-'}}</td>
+                <td>{{row.emie||'-'}}</td>
+                <td>{{row.phone||'-'}}</td>
                  <td v-text="row.active | dateFormat 'yyyy-MM-dd hh:mm:ss'"></td>
-                <td>{{row.remark}}</td>
+                <td>{{row.remark||'-'}}</td>
               </tr>
             </tbody>
           </table>

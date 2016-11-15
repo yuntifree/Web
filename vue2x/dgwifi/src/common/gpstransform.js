@@ -7,16 +7,16 @@ WGS84_to_GCJ02.prototype.transform = function(wgLat, wgLon) {
         return [wgLat, wgLon];
     }
 
-    dLat = this.transformLat(wgLon - 105.0, wgLat - 35.0);
-    dLon = this.transformLon(wgLon - 105.0, wgLat - 35.0);
-    radLat = wgLat / 180.0 * Math.PI;
-    magic = Math.sin(radLat);
+    var dLat = this.transformLat(wgLon - 105.0, wgLat - 35.0);
+    var dLon = this.transformLon(wgLon - 105.0, wgLat - 35.0);
+    var radLat = wgLat / 180.0 * Math.PI;
+    var magic = Math.sin(radLat);
     magic = 1 - this.ee * magic * magic;
-    sqrtMagic = Math.sqrt(magic);
+    var sqrtMagic = Math.sqrt(magic);
     dLat = (dLat * 180.0) / ((this.a * (1 - this.ee)) / (magic * sqrtMagic) * Math.PI);
     dLon = (dLon * 180.0) / (this.a / sqrtMagic * Math.cos(radLat) * Math.PI);
-    mgLat = wgLat + dLat;
-    mgLon = wgLon + dLon;
+    var mgLat = wgLat + dLat;
+    var mgLon = wgLon + dLon;
 
     return [mgLat, mgLon];
 
@@ -52,6 +52,15 @@ WGS84_to_GCJ02.prototype.transformLon = function(x, y) {
     ret += (150.0 * Math.sin(x / 12.0 * Math.PI) + 300.0 * Math.sin(x / 30.0 * Math.PI)) * 2.0 / 3.0;
 
     return ret;
-
 };
-module.export =  WGS84_to_GCJ02;
+WGS84_to_GCJ02.prototype.trans2BD = function (gcjLat, gcjLon) {
+    var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+    var local = this.transform(gcjLat, gcjLon);
+    var y = local[0], x = local[1];
+    var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);  
+    var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);  
+    var bdLon = z * Math.cos(theta) + 0.0065;  
+    var bdLat = z * Math.sin(theta) + 0.006; 
+    return [bdLat, bdLon];
+};
+module.exports =  WGS84_to_GCJ02;

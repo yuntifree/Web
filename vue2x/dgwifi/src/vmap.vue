@@ -55,7 +55,7 @@ export default {
       //控件
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
-      getApAddress(point.lng,point.lat);
+      //getApAddress(point.lng,point.lat);
 
       //事件
       map.addEventListener("dragend", function(){
@@ -108,13 +108,11 @@ export default {
         var _this = this;
         wx && wx.getLocation({
         success: function (res) {
-          _this.latitude = res.latitude;
-          _this.longitude = res.longitude;
-          alert(_this.longitude);
-         // var _location = new gps().transform(_this.longitude, _this.latitude);
-          //alert('trans:'+_location[0]+','+_location[1]);
-          //_this.latitude = _location[0];
-          //_this.longitude = _location[1];
+          _this.latitude = parseFloat(res.latitude);
+          _this.longitude = parseFloat(res.longitude);
+          var _location = new gps().trans2BD(_this.latitude, _this.longitude);
+          _this.latitude = _location[0];
+          _this.longitude = _location[1];
           CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
              _this.mapShow();
           })
