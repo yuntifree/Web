@@ -38,17 +38,15 @@ export default {
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
     }
+     weixin.init(this.wxReady); 
     this.$nextTick(function () {
-       CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
-        _this.mapShow();
-      })
     })
   },
   methods: {
     mapShow() {
      var _this = this;
-     weixin.init(this.wxReady);
       var map = new BMap.Map('map');
+      alert('map:'+_this.longitude+','+_this.latitude);
       var point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,15);
@@ -107,14 +105,19 @@ export default {
       this.maptips.show = true;
     },
     wxReady() {
+        var _this = this;
         wx && wx.getLocation({
         success: function (res) {
           _this.latitude = res.latitude;
           _this.longitude = res.longitude;
-          alert(_this.longitude+','+_this.latitude);
-          //new WGS84_to_GCJ02().transform(31.283814, 121.502191) ;
-          gps.WGS84_to_GCJ02.transform(_this.longitude, _this.latitude)
-          alert(_this.longitude+',,'+_this.latitude)
+          alert(_this.longitude);
+         // var _location = new gps().transform(_this.longitude, _this.latitude);
+          //alert('trans:'+_location[0]+','+_location[1]);
+          //_this.latitude = _location[0];
+          //_this.longitude = _location[1];
+          CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
+             _this.mapShow();
+          })
         },
         cancel: function (res) {
         }

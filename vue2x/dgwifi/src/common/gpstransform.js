@@ -1,7 +1,4 @@
-//var WGS84_to_GCJ02 = function() {}
-module.exports = {
-  WGS84_to_GCJ02:function(){}  
-}
+var WGS84_to_GCJ02 = function() {}
 WGS84_to_GCJ02.prototype.a = 6378245.0;
 WGS84_to_GCJ02.prototype.ee = 0.00669342162296594323;
 WGS84_to_GCJ02.prototype.transform = function(wgLat, wgLon) {
@@ -57,3 +54,4 @@ WGS84_to_GCJ02.prototype.transformLon = function(x, y) {
     return ret;
 
 };
+module.export =  WGS84_to_GCJ02;

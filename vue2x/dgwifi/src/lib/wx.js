@@ -7,12 +7,12 @@ init: function(callback) {
 
 if (window.wx === undefined || window.wx_cfg === undefined) {
             console.log('wx init failed');
-            //alert(window.wx_cfg);
+            alert(window.wx+','+window.wx_cfg);
             return null;
 
 }
             
-        wx_cfg.debug = false;
+        wx_cfg.debug = true;
         wx_cfg.jsApiList = [
             'checkJsApi',
             'onMenuShareTimeline',
@@ -33,7 +33,6 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
             // 设置一个标记
             wx.ok = false;
             wx.ready(callback);
-
 }
 
         wx.error(function(res) {
@@ -43,8 +42,11 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
         });
         return this;
 
+
 },
-    bindShare: function(cfg)i {
+
+    
+    bindShare: function(cfg) {
         var option = {
             title: cfg.title || '微信分享title',
             link: cfg.link || '微信分享link',
