@@ -38,9 +38,11 @@ export default {
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
     }
-     weixin.init(this.wxReady); 
-    this.$nextTick(function () {
-    })
+    /*_this.latitude = parseFloat(31.283814);
+     _this.longitude = parseFloat(121.502191);
+    var _location = gps.trans2BD(_this.latitude, _this.longitude);
+    console.log(_location);*/
+    weixin.init(this.wxReady);
   },
   methods: {
     mapShow() {

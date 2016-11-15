@@ -7,16 +7,16 @@ var GPS = {
       return [wgLat, wgLon];
     }
 
-    dLat = this.transformLat(wgLon - 105.0, wgLat - 35.0);
-    dLon = this.transformLon(wgLon - 105.0, wgLat - 35.0);
-    radLat = wgLat / 180.0 * Math.PI;
-    magic = Math.sin(radLat);
+    var dLat = this.transformLat(wgLon - 105.0, wgLat - 35.0);
+    var dLon = this.transformLon(wgLon - 105.0, wgLat - 35.0);
+    var radLat = wgLat / 180.0 * Math.PI;
+    var magic = Math.sin(radLat);
     magic = 1 - this.ee * magic * magic;
-    sqrtMagic = Math.sqrt(magic);
+    var sqrtMagic = Math.sqrt(magic);
     dLat = (dLat * 180.0) / ((this.a * (1 - this.ee)) / (magic * sqrtMagic) * Math.PI);
     dLon = (dLon * 180.0) / (this.a / sqrtMagic * Math.cos(radLat) * Math.PI);
-    mgLat = wgLat + dLat;
-    mgLon = wgLon + dLon;
+    var mgLat = wgLat + dLat;
+    var mgLon = wgLon + dLon;
     return [mgLat, mgLon];
   },
   outOfChina: function(lat, lon) {
@@ -60,6 +60,5 @@ var GPS = {
     var bdLat = z * Math.sin(theta) + 0.006;
     return [bdLat, bdLon];
   }
-
 }
 module.exports = GPS;
