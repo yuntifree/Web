@@ -52,9 +52,13 @@ export default {
       var point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,15);
-      var myIcon = new BMap.Icon("./assets/images/marker.png", new BMap.Size(14,22));
-      var marker = new BMap.Marker(point,{icon:myIcon});        // 创建标注
-      map.addOverlay(marker);
+      var pt = new BMap.Point(_this.longitude, _this.latitude);
+      //var myIcon = new BMap.Icon("http://developer.baidu.com/map/jsdemo/img/fox.gif", new BMap.Size(14,22));
+      //var marker2 = new BMap.Marker(pt,{icon:myIcon});        // 创建标注
+      //map.addOverlay(marker2);
+      var myIcon = new BMap.Icon("./static/marker.png", new BMap.Size(150,75));
+      var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+      map.addOverlay(marker2)
       //控件
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
