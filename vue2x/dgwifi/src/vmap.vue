@@ -50,12 +50,12 @@ export default {
       var point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,15);
-      var marker = new BMap.Marker(point);        // 创建标注
+      var myIcon = new BMap.Icon("./assets/images/marker.png", new BMap.Size(14,22));
+      var marker = new BMap.Marker(point,{icon:myIcon});        // 创建标注
       map.addOverlay(marker);
       //控件
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
-      //getApAddress(point.lng,point.lat);
 
       //事件
       map.addEventListener("dragend", function(){
@@ -110,7 +110,7 @@ export default {
         success: function (res) {
           _this.latitude = parseFloat(res.latitude);
           _this.longitude = parseFloat(res.longitude);
-          var _location = new gps().trans2BD(_this.latitude, _this.longitude);
+          var _location = gps.trans2BD(_this.latitude, _this.longitude);
           _this.latitude = _location[0];
           _this.longitude = _location[1];
           CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
