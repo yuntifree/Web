@@ -1,17 +1,21 @@
 module.exports = {
-    init: function(callback) {
+
+init: function(callback) {
         // check wx
         if (window.wx === undefined || window.wx_cfg === undefined) {
             console.log('wx init failed');
+            //alert(window.wx_cfg);
             return null;
-        }
 
-        wx_cfg.debug = false;
+}
+            
+        wx_cfg.debug = true;
         wx_cfg.jsApiList = [
             'checkJsApi',
             'onMenuShareTimeline',
             'onMenuShareAppMessage',
             'onMenuShareQQ',
+            'getLocation',
             // 'onMenuShareWeibo',
             // 'onMenuShareQZone',
             // 'chooseImage',
@@ -25,6 +29,7 @@ module.exports = {
         if (callback) {
             // 设置一个标记
             wx.ok = false;
+            alert('wxready');
             wx.ready(callback);
         }
 

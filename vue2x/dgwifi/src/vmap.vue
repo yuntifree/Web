@@ -106,7 +106,6 @@ export default {
       this.maptips.show = true;
     },
     wxReady() {
-      alert('wxReady');
       wx && wx.getLocation({
         success: function (res) {
           _this.latitude = res.latitude;
