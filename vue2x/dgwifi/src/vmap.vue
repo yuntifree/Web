@@ -53,12 +53,9 @@ export default {
       //标注
       map.centerAndZoom(point,15);
       var pt = new BMap.Point(_this.longitude, _this.latitude);
-      //var myIcon = new BMap.Icon("http://developer.baidu.com/map/jsdemo/img/fox.gif", new BMap.Size(14,22));
-      //var marker2 = new BMap.Marker(pt,{icon:myIcon});        // 创建标注
-      //map.addOverlay(marker2);
-      var myIcon = new BMap.Icon("./static/marker.png", new BMap.Size(150,75));
-      var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-      map.addOverlay(marker2)
+      var myIcon = new BMap.Icon("./static/navigation.png", new BMap.Size(60,60));
+      var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+      map.addOverlay(marker)
       //控件
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
@@ -91,8 +88,9 @@ export default {
             }
             for (var i = 0; i < len; i ++) {
                 var spot = new BMap.Point(_this.apAddress[i].longitude, _this.apAddress[i].latitude);
-                var marker = new BMap.Marker(spot);
-                map.addOverlay(marker);
+                var myIcon2 = new BMap.Icon("./static/navigation.png", new BMap.Size(60,60));
+                var marker2 = new BMap.Marker(spot,{icon:myIcon2});
+                map.addOverlay(marker2);
                 marker.addEventListener("click",attribute)
                 marker.selIdx = i;
             }
