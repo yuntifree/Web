@@ -38,7 +38,7 @@ export default {
       CGI.setCookie('UNION', union, 7);
     }
     this.$nextTick(function () {
-      CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
+       CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
         _this.mapShow();
       })
     })
@@ -46,18 +46,18 @@ export default {
   methods: {
     mapShow() {
      var _this = this;
-
      weixin.init(()=>{
+      alert(_this.longitude+','+_this.latitude);
        wx && wx.getLocation({
          success: function (res) {
            _this.latitude = res.latitude;
            _this.longitude = res.longitude;
+           alert(_this.longitude+','+_this.latitude)
          },
          cancel: function (res) {
          }
        });
      });
-     console.log(_this.longitude+','+_this.latitude)
       var map = new BMap.Map('map');
       var point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
@@ -126,6 +126,6 @@ html,
 body,
 .mapp {
     width: 100%;
-    height:100%
+    height:100%;
 }
 </style>
