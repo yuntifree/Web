@@ -89,7 +89,7 @@
                 class="g-fl"><img :src="imgs" class="img-list">
             </li>
           </ul>
-          <p class="item-desc"><span>{{item.source}}</span><span>{{item.ctime}}</span></p>
+          <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
         </div>
       </template>
       <!--新闻有1、2张图片-->
@@ -98,7 +98,7 @@
          <dt class="g-fr list-img1"><img :src="item.images[0]"></dt>
          <dd class="list1-info g-fl">
            <p class="item-title list1-item-title lines-ellipsis">{{item.title}}</p>
-           <p class="item-desc"><span>{{item.source}}</span><span>{{item.ctime}}</span></p>
+           <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
          </dd>
        </dl>
       </template>
@@ -114,7 +114,7 @@
       <template v-if="!item.images">
         <div>
           <p class="item-title g-ellipsis">{{item.title}}</p>
-          <p class="item-desc"><span>{{item.source}}</span><span>{{item.ctime}}</span></p>
+          <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
         </div>
       </template>
     </div>
@@ -195,6 +195,9 @@ export default {
     tipBox(val) {
       this.tips.msg = val;
       this.tips.show = true;
+    },
+    formatTime(ctime) {
+      return ctime.substr(0, ctime.length - 3)
     }
   },
   events: {
