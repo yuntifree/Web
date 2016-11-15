@@ -1,15 +1,18 @@
 module.exports = {
 
+
 init: function(callback) {
         // check wx
-        if (window.wx === undefined || window.wx_cfg === undefined) {
+
+
+if (window.wx === undefined || window.wx_cfg === undefined) {
             console.log('wx init failed');
             //alert(window.wx_cfg);
             return null;
 
 }
             
-        wx_cfg.debug = true;
+        wx_cfg.debug = false;
         wx_cfg.jsApiList = [
             'checkJsApi',
             'onMenuShareTimeline',
@@ -29,9 +32,9 @@ init: function(callback) {
         if (callback) {
             // 设置一个标记
             wx.ok = false;
-            alert('wxready');
             wx.ready(callback);
-        }
+
+}
 
         wx.error(function(res) {
             if (wx_cfg.debug) {
@@ -39,8 +42,9 @@ init: function(callback) {
             }
         });
         return this;
-    },
-    bindShare: function(cfg) {
+
+},
+    bindShare: function(cfg)i {
         var option = {
             title: cfg.title || '微信分享title',
             link: cfg.link || '微信分享link',
