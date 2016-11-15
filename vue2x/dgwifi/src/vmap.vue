@@ -9,6 +9,7 @@
 import CGI from './lib/cgi.js'
 import tip from './components/lib/tip.vue'
 import weixin from './lib/wx.js'
+import gps from './common/gpstransform.js'
 
 var query = CGI.query();
 var uid = ~~(query.uid) || 1;
@@ -106,12 +107,14 @@ export default {
       this.maptips.show = true;
     },
     wxReady() {
-        alert('wx');
         wx && wx.getLocation({
         success: function (res) {
           _this.latitude = res.latitude;
           _this.longitude = res.longitude;
-          alert(_this.longitude+','+_this.latitude)
+          alert(_this.longitude+','+_this.latitude);
+          //new WGS84_to_GCJ02().transform(31.283814, 121.502191) ;
+          gps.WGS84_to_GCJ02.transform(_this.longitude, _this.latitude)
+          alert(_this.longitude+',,'+_this.latitude)
         },
         cancel: function (res) {
         }
