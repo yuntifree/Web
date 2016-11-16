@@ -15,7 +15,7 @@ var query = CGI.query();
 var uid = ~~(query.uid) || 1;
 var token = query.token || '7329cf254871429d803c5826c8d9db1d';
 var union = query.union || '';
-var first = true;
+//var first = true;
 export default {
   data() {
     return {
@@ -37,16 +37,55 @@ export default {
     // 存下union
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
-    }
-    /*_this.latitude = parseFloat(31.283814);
-     _this.longitude = parseFloat(121.502191);
-    var _location = gps.trans2BD(_this.latitude, _this.longitude);
-    console.log(_location);*/
+    }    
     weixin.init(this.wxReady);
+    
+    /*next();
+    var first = true;
+    var mySet = new Set();
+    function next() {
+      var param = {
+        longitude: 113.90387023396529,
+        latitude: 22.93310386339828,
+        uid:uid,
+        token:token
+      }
+      var timer = setInterval(()=>{
+        CGI.post('get_nearby_aps',param,(resp)=>{
+          if (resp.errno===0) {
+            _this.apAddress = resp.data.infos;
+            var len = _this.apAddress.length;
+            if (first) {
+              addlonglat();
+            } else {
+              console.log(len);
+              for (var i = 0; i < len; i++) {
+                  var a = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
+                  if (!mySet.has(a)) {
+                    _this.apAddress[i].addset = a;
+                    mySet.add(_this.apAddress[i]);
+                  }
+                }
+                clearInterval(timer);   
+              }
+            }
+          first = false; 
+          }) 
+      },1000) 
+      function addlonglat() {
+        var len = _this.apAddress.length;
+        for (var i=0;i<len;i++) {
+          _this.apAddress[i].addset = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
+          mySet.add(_this.apAddress[i]);
+        }
+      }  
+    }*/
   },
   methods: {
     mapShow() {
      var _this = this;
+     var first = true;
+     var mySet = new Set(_this.apAddress);
       var map = new BMap.Map('map');
       alert('map:'+_this.longitude+','+_this.latitude);
       _this.longitude = 113.90387023396529;
@@ -80,24 +119,33 @@ export default {
         }
         CGI.post('get_nearby_aps',param,(resp)=>{
           if (resp.errno===0) {
-            _this.apAddress = new Set(resp.data.infos);
-            alert(_this.apAddress);
+            _this.apAddress = resp.data.infos;
             var len = _this.apAddress.length;
-            var allOverlay = map.getOverlays();
-            if (!first && allOverlay.length>0) {
+            var slen = mySet.length;
+            //var allOverlay = map.getOverlays();
+            /*if (!first && allOverlay.length>0) {
                 for(var j=0;j<allOverlay.length;j++) {
                     map.removeOverlay(allOverlay[j]);
                 }
+            }*/
+            if (first) {
+              addlonglat();
+            } else {
+              for (var i = 0; i < len; i++) {
+                var a = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
+                if (!mySet[j].has(a)) {
+                  _this.apAddress[i].addset = a;
+                  mySet.add(_this.apAddress[i]);
+                  var spot = new BMap.Point(_this.apAddress[i].longitude, _this.apAddress[i].latitude);
+                  var myIcon2 = new BMap.Icon("./static/navigation.png", new BMap.Size(60,60));
+                  var marker2 = new BMap.Marker(spot,{icon:myIcon2});
+                  map.addOverlay(marker2);
+                  marker.addEventListener("click",attribute)
+                  marker.selIdx = i;
+                }   
+              }
+              first = false;
             }
-            for (var i = 0; i < len; i ++) {
-                var spot = new BMap.Point(_this.apAddress[i].longitude, _this.apAddress[i].latitude);
-                var myIcon2 = new BMap.Icon("./static/navigation.png", new BMap.Size(60,60));
-                var marker2 = new BMap.Marker(spot,{icon:myIcon2});
-                map.addOverlay(marker2);
-                marker.addEventListener("click",attribute)
-                marker.selIdx = i;
-            }
-            first = false;
           }
         })
       }
@@ -106,6 +154,14 @@ export default {
         var p = e.target;
         console.log('click');
         _this.tipBox('位置:'+_this.apAddress[p.selIdx].address);
+      };
+
+      function addlonglat() {
+        var len = _this.apAddress.length;
+        for (var i=0;i<len;i++) {
+          _this.apAddress.addset = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
+          mySet.add(_this.apAddress[i]);
+        }
       }
     },
     tipBox(val) {
