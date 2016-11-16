@@ -100,7 +100,7 @@ export default {
       //控件
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
-      getApAddress(_this.longitude,_this.latitudei);
+      getApAddress(_this.longitude,_this.latitude);
       //事件
       map.addEventListener("dragend", function(){
         var bs = map.getBounds();   //获取可视区域
@@ -121,7 +121,6 @@ export default {
           if (resp.errno===0) {
             _this.apAddress = resp.data.infos;
             var len = _this.apAddress.length;
-            var slen = mySet.length;
             //var allOverlay = map.getOverlays();
             /*if (!first && allOverlay.length>0) {
                 for(var j=0;j<allOverlay.length;j++) {
@@ -138,7 +137,7 @@ export default {
                   _this.apAddress[i].addset = a;
                   mySet.add(ads);
                   addMarker(ads.longitude,ads.latitude,i)
-                }   
+                }
               }
               first = false;
             }
@@ -148,7 +147,6 @@ export default {
      //获取覆盖物位置
      function attribute(e){
         var p = e.target;
-        console.log('click');
         _this.tipBox('位置:'+_this.apAddress[p.selIdx].address);
       };
 
@@ -157,17 +155,18 @@ export default {
         for (var i=0;i<len;i++) {
           _this.apAddress.addset = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
           mySet.add(_this.apAddress[i]);
+          addMarker(_this.apAddress[i].longitude,_this.apAddress[i].latitude,i);
         }
       };
 
       function addMarker(lng,lat,idx) {
-        alert(lng+','+lat+','+idx);
+        //alert(lng+','+lat+','+idx);
         var spot = new BMap.Point(lng, lat);
-        var myIcon2 = new BMap.Icon("./static/navigation.png", new BMap.Size(60,60));
+        var myIcon2 = new BMap.Icon("./static/market.png", new BMap.Size(60,60));
         var marker2 = new BMap.Marker(spot,{icon:myIcon2});
         map.addOverlay(marker2);
-        marker.addEventListener("click",attribute);
-        marker.selIdx = idx;
+        marker2.addEventListener("click",attribute);
+        marker2.selIdx = idx;
       }
     },
     tipBox(val) {
