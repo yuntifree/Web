@@ -1,7 +1,7 @@
 <template>
   <div id="mapp" class="mapp">
     <div id="map" class="map"  style="width:100%;height:100%"></div>
-    <span class="origin" @click="mapShow"><img src="../static/navigation.png"></span>
+    <span class="origin" v-if="originShow" @click="goOrigin"><img src="../static/navigation.png"></span>
     <tip :tipinfo="maptips" @tip-show="maptips.show=false"></tip>
   </div>
 </template>
@@ -16,7 +16,7 @@ var query = CGI.query();
 var uid = ~~(query.uid) || 1;
 var token = query.token || '7329cf254871429d803c5826c8d9db1d';
 var union = query.union || '';
-//var first = true;
+var map;
 export default {
   data() {
     return {
@@ -27,7 +27,8 @@ export default {
         duration: 2500,
       },
       latitude:0.0,
-      longitude:0.0
+      longitude:0.0,
+      originShow: false,
     }
   },
   components: {
@@ -87,7 +88,7 @@ export default {
      var _this = this;
      var first = true;
      var mySet = new Set(_this.apAddress);
-      var map = new BMap.Map('map');
+     map = new BMap.Map('map');
       alert('map:'+_this.longitude+','+_this.latitude);
       _this.longitude = 113.90387023396529;
       _this.latitude = 22.93310386339828;
@@ -97,6 +98,7 @@ export default {
       var pt = new BMap.Point(_this.longitude, _this.latitude);
       var myIcon = new BMap.Icon("./static/target.png", new BMap.Size(60,60));
       var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+      _this.originShow = true;
       map.addOverlay(marker)
       //控件
       map.addControl(new BMap.NavigationControl());
@@ -169,6 +171,10 @@ export default {
         marker2.addEventListener("click",attribute);
         marker2.selIdx = idx;
       }
+    },
+    goOrigin() {
+      var point = new BMap.Point(_this.longitude, _this.latitude);
+      map.centerAndZoom(point,15);
     },
     tipBox(val) {
       this.maptips.msg = val;
