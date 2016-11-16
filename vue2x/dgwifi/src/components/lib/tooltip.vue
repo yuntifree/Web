@@ -10,6 +10,7 @@
   margin-top:1rem;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  border-radius:0.12rem;
 }
 .maptip-tit {
   padding: 0.36rem 0.32rem 0.2rem 1.1rem;

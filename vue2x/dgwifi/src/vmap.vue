@@ -22,8 +22,8 @@ export default {
   data() {
     return {
       maptips: {
-        show: true,
-        msg: '123',
+        show: false,
+        msg: '',
         distance: 0.0,
         duration: 2500,
       },
@@ -151,10 +151,10 @@ export default {
      //获取覆盖物位置
      function attribute(e){
         var p = e.target;
-        var adsL = this.apAddress[p.selIdx];
-        var pointB = new BMap.point(adsL.longitude,adsL.latitude);
-        this.maptips.distance = map.getDistance(point,pointB)).toFixed(2);
-        _this.tipBox('位置:'+adsL.address);
+        var adsL = _this.apAddress[p.selIdx];
+        var pointB = new BMap.Point(adsL.longitude,adsL.latitude);
+        var distance  = map.getDistance(point,pointB).toFixed(2);
+        _this.tipBox('位置:'+adsL.address,distance);
       };
 
       function addlonglat() {
@@ -179,8 +179,9 @@ export default {
     goOrigin() {
       map.centerAndZoom(point,15);
     },
-    tipBox(val) {
+    tipBox(val,dist) {
       this.maptips.msg = val;
+      this.maptips.distance = dist;
       this.maptips.show = true;
     },
     wxReady() {
