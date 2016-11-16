@@ -68,6 +68,8 @@ export default {
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
 
+      getApAddress(_this.longitude, _this.latitude);
+
       //事件
       map.addEventListener("dragend", function(){
         var bs = map.getBounds();   //获取可视区域
