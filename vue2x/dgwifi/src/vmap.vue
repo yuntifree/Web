@@ -35,76 +35,39 @@ export default {
   components: {
     maptip
   },
+  created() {
+    weixin.init(this.wxReady);
+  },
   mounted() {
-    var _this = this;
     // 存下union
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
-    }    
-    weixin.init(this.wxReady);
-    
-    /*next();
-    var first = true;
-    var mySet = new Set();
-    function next() {
-      var param = {
-        longitude: 113.90387023396529,
-        latitude: 22.93310386339828,
-        uid:uid,
-        token:token
-      }
-      var timer = setInterval(()=>{
-        CGI.post('get_nearby_aps',param,(resp)=>{
-          if (resp.errno===0) {
-            _this.apAddress = resp.data.infos;
-            var len = _this.apAddress.length;
-            if (first) {
-              addlonglat();
-            } else {
-              console.log(len);
-              for (var i = 0; i < len; i++) {
-                  var a = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
-                  if (!mySet.has(a)) {
-                    _this.apAddress[i].addset = a;
-                    mySet.add(_this.apAddress[i]);
-                  }
-                }
-                clearInterval(timer);   
-              }
-            }
-          first = false; 
-          }) 
-      },1000) 
-      function addlonglat() {
-        var len = _this.apAddress.length;
-        for (var i=0;i<len;i++) {
-          _this.apAddress[i].addset = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
-          mySet.add(_this.apAddress[i]);
-        }
-      }  
-    }*/
+    }
   },
   methods: {
     mapShow() {
-     var _this = this;
-     var first = true;
-     var mySet = new Set(_this.apAddress);
-     map = new BMap.Map('map');
-      alert('map:'+_this.longitude+','+_this.latitude);
+      var _this = this;
+      var first = true;
+      var apSet = new Set();
+
+      map = new BMap.Map('map');
+      // debug
       _this.longitude = 113.90387023396529;
       _this.latitude = 22.93310386339828;
       point = new BMap.Point(_this.longitude, _this.latitude);
+
       //标注
-      map.centerAndZoom(point,15);
-      var pt = new BMap.Point(_this.longitude, _this.latitude);
-      var myIcon = new BMap.Icon("./static/target.png", new BMap.Size(60,60));
-      var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+      map.centerAndZoom(point, 15);
+      //var pt = new BMap.Point(_this.longitude, _this.latitude);
+      var myIcon = new BMap.Icon("./static/target.png", new BMap.Size(60, 60));
+      var marker = new BMap.Marker(point, {icon:myIcon});  // 创建标注
       _this.originShow = true;
       map.addOverlay(marker)
+
       //控件
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
-      getApAddress(_this.longitude,_this.latitude);
+
       //事件
       map.addEventListener("dragend", function(){
         var bs = map.getBounds();   //获取可视区域
@@ -114,7 +77,8 @@ export default {
         var lat = (bssw.lat+bsne.lat)/2;
         getApAddress(lng,lat);
       });
-     function  getApAddress(lng,lat){
+
+      function  getApAddress(lng,lat){
          var param = {
           longitude: lng,
           latitude: lat,
@@ -122,48 +86,30 @@ export default {
           token:token
         }
         CGI.post('get_nearby_aps',param,(resp)=>{
-          if (resp.errno===0) {
-            _this.apAddress = resp.data.infos;
-            var len = _this.apAddress.length;
-            //var allOverlay = map.getOverlays();
-            /*if (!first && allOverlay.length>0) {
-                for(var j=0;j<allOverlay.length;j++) {
-                    map.removeOverlay(allOverlay[j]);
-                }
-            }*/
-            if (first) {
-              addlonglat();
-            } else {
-              for (var i = 0; i < len; i++) {
-                var ads =_this.apAddress[i] 
-                var a = ads.longitude+','+ads.latitude;
-                if (!mySet.has(a)) {
-                  _this.apAddress[i].addset = a;
-                  mySet.add(ads);
-                  addMarker(ads.longitude,ads.latitude,i)
-                }
-              }
-              first = false;
-            }
+          if (resp.errno === 0) {
+            addlonglat(resp.data.infos);
           }
         })
       }
-     //获取覆盖物位置
-     function attribute(e){
+      //获取覆盖物位置
+      function attribute(e){
         var p = e.target;
         var adsL = _this.apAddress[p.selIdx];
         var pointB = new BMap.Point(adsL.longitude,adsL.latitude);
-        var distance  = map.getDistance(point,pointB).toFixed(2);
+        var distance  = map.getDistance(point, pointB).toFixed(2);
         _this.tipBox('位置:'+adsL.address,distance);
       };
 
-      function addlonglat() {
-        var len = _this.apAddress.length;
-        for (var i=0;i<len;i++) {
-          _this.apAddress.addset = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
-          mySet.add(_this.apAddress[i]);
-          addMarker(_this.apAddress[i].longitude,_this.apAddress[i].latitude,i);
-        }
+      function addlonglat(infos) {
+        var key;
+        infos.forEach((item)=>{
+          key = item.longitude + ',' + item.latitude;
+          if (!apSet.has(key)) {
+            apSet.add(key);
+            _this.apAddress.push(item);
+            addMarker(item.longitude, item.latitude, _this.apAddress.length - 1);
+          }
+        })
       };
 
       function addMarker(lng,lat,idx) {
@@ -198,6 +144,7 @@ export default {
           })
         },
         cancel: function (res) {
+          alert('定位失败~');
         }
       });
     },
