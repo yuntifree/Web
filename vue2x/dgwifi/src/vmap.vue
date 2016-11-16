@@ -173,7 +173,7 @@ export default {
       }
     },
     goOrigin() {
-      var point = new BMap.Point(_this.longitude, _this.latitude);
+      var point = new BMap.Point(this.longitude,this.latitude);
       map.centerAndZoom(point,15);
     },
     tipBox(val) {
