@@ -72,6 +72,8 @@
   font-size: 0.2rem;
   color: #b4b4b4;
   background-color: #e5f3fb;
+  border-bottom-left-radius: 0.12rem;
+  border-bottom-right-radius: 0.12rem;
 }
 /*.map-triangle{
   display: inline-block;

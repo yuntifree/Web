@@ -12,7 +12,7 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
 
 }
             
-        wx_cfg.debug = true;
+        wx_cfg.debug = false;
         wx_cfg.jsApiList = [
             'checkJsApi',
             'onMenuShareTimeline',
