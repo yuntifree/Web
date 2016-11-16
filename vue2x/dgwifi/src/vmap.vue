@@ -30,6 +30,7 @@ export default {
       latitude:0.0,
       longitude:0.0,
       originShow: false,
+      apAddress: [],
     }
   },
   components: {
@@ -47,7 +48,6 @@ export default {
   methods: {
     mapShow() {
       var _this = this;
-      var first = true;
       var apSet = new Set();
 
       map = new BMap.Map('map');
