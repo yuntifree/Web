@@ -39,7 +39,7 @@ export default {
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
     }    
-    //weixin.init(this.wxReady);
+    weixin.init(this.wxReady);
     
     /*next();
     var first = true;
