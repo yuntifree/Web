@@ -1,6 +1,7 @@
 <template>
   <div id="mapp" class="mapp">
     <div id="map" class="map"  style="width:100%;height:100%"></div>
+    <span class="origin" @click="mapShow"><img src="../static/navigation.png"></span>
     <tip :tipinfo="maptips" @tip-show="maptips.show=false"></tip>
   </div>
 </template>
@@ -38,7 +39,7 @@ export default {
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
     }    
-    weixin.init(this.wxReady);
+    //weixin.init(this.wxReady);
     
     /*next();
     var first = true;
@@ -201,5 +202,18 @@ body,
 .mapp {
     width: 100%;
     height:100%;
+    position: relative;
+}
+.origin {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  display: block;
+  width: 0.72rem;
+  height: 0.72rem;
+  z-index: 200;
+}
+.origin img{
+  width: 100%;
 }
 </style>
