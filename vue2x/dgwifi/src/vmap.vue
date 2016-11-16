@@ -2,13 +2,13 @@
   <div id="mapp" class="mapp">
     <div id="map" class="map"  style="width:100%;height:100%"></div>
     <span class="origin" v-if="originShow" @click="goOrigin"><img src="../static/navigation.png"></span>
-    <tip :tipinfo="maptips" @tip-show="maptips.show=false"></tip>
+    <maptip :tipinfo="maptips" @tip-show="maptips.show=false"></maptip>
   </div>
 </template>
 
 <script>
 import CGI from './lib/cgi.js'
-import tip from './components/lib/tip.vue'
+import maptip from './components/lib/tooltip.vue'
 import weixin from './lib/wx.js'
 import gps from './common/gpstransform.js'
 
@@ -17,13 +17,14 @@ var uid = ~~(query.uid) || 1;
 var token = query.token || '7329cf254871429d803c5826c8d9db1d';
 var union = query.union || '';
 var map;
+var point;
 export default {
   data() {
     return {
       maptips: {
-        show: false,
+        show: true,
         msg: '123',
-        tooltip: true,
+        distance: 0.0,
         duration: 2500,
       },
       latitude:0.0,
@@ -32,7 +33,7 @@ export default {
     }
   },
   components: {
-    tip
+    maptip
   },
   mounted() {
     var _this = this;
@@ -40,7 +41,7 @@ export default {
     if (union.length > 0) {
       CGI.setCookie('UNION', union, 7);
     }    
-    weixin.init(this.wxReady);
+    //weixin.init(this.wxReady);
     
     /*next();
     var first = true;
@@ -92,7 +93,7 @@ export default {
       alert('map:'+_this.longitude+','+_this.latitude);
       _this.longitude = 113.90387023396529;
       _this.latitude = 22.93310386339828;
-      var point = new BMap.Point(_this.longitude, _this.latitude);
+      point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,15);
       var pt = new BMap.Point(_this.longitude, _this.latitude);
@@ -150,7 +151,10 @@ export default {
      //获取覆盖物位置
      function attribute(e){
         var p = e.target;
-        _this.tipBox('位置:'+_this.apAddress[p.selIdx].address);
+        var adsL = this.apAddress[p.selIdx];
+        var pointB = new BMap.point(adsL.longitude,adsL.latitude);
+        this.maptips.distance = map.getDistance(point,pointB)).toFixed(2);
+        _this.tipBox('位置:'+adsL.address);
       };
 
       function addlonglat() {
@@ -173,7 +177,6 @@ export default {
       }
     },
     goOrigin() {
-      var point = new BMap.Point(this.longitude,this.latitude);
       map.centerAndZoom(point,15);
     },
     tipBox(val) {
