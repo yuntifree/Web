@@ -132,16 +132,12 @@ export default {
               addlonglat();
             } else {
               for (var i = 0; i < len; i++) {
-                var a = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
-                if (!mySet[j].has(a)) {
+                var ads =_this.apAddress[i] 
+                var a = ads.longitude+','+ads.latitude;
+                if (!mySet.has(a)) {
                   _this.apAddress[i].addset = a;
-                  mySet.add(_this.apAddress[i]);
-                  var spot = new BMap.Point(_this.apAddress[i].longitude, _this.apAddress[i].latitude);
-                  var myIcon2 = new BMap.Icon("./static/navigation.png", new BMap.Size(60,60));
-                  var marker2 = new BMap.Marker(spot,{icon:myIcon2});
-                  map.addOverlay(marker2);
-                  marker.addEventListener("click",attribute)
-                  marker.selIdx = i;
+                  mySet.add(ads);
+                  addMarker(ads.longitude,ads.latitude,i)
                 }   
               }
               first = false;
@@ -162,6 +158,16 @@ export default {
           _this.apAddress.addset = _this.apAddress[i].longitude+','+_this.apAddress[i].latitude;
           mySet.add(_this.apAddress[i]);
         }
+      };
+
+      function addMarker(lng,lat,idx) {
+        alert(lng+','+lat+','+idx);
+        var spot = new BMap.Point(lng, lat);
+        var myIcon2 = new BMap.Icon("./static/navigation.png", new BMap.Size(60,60));
+        var marker2 = new BMap.Marker(spot,{icon:myIcon2});
+        map.addOverlay(marker2);
+        marker.addEventListener("click",attribute);
+        marker.selIdx = idx;
       }
     },
     tipBox(val) {
