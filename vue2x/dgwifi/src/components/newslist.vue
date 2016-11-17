@@ -70,6 +70,9 @@
 .loading {
   line-height: 0.8rem;
 }
+.visited {
+ color: #848484;
+}
 </style>
 <template>
 <div>
@@ -78,12 +81,11 @@
       infinite-scroll-distance="30">
     <div v-for="item in items"
         class="item-container"
-        @click="link(item.dst)"
-        >
+        @click="link(item)">
       <!--新闻有3张图片-->
       <template v-if="item.images.length>2 && !item.stype">
         <div class="list-img3">
-          <p class="item-title">{{item.title}}</p>
+          <p class="item-title" :class="{visited: item.visited}">{{item.title}}</p>
           <ul class="g-clearfix item-imgs">
             <li v-for="imgs in item.images"
                 class="g-fl"><img :src="imgs" class="img-list">
@@ -97,7 +99,7 @@
         <dl class="g-clearfix">
          <dt class="g-fr list-img1"><img :src="item.images[0]"></dt>
          <dd class="list1-info g-fl">
-           <p class="item-title list1-item-title lines-ellipsis">{{item.title}}</p>
+           <p class="item-title list1-item-title lines-ellipsis" :class="{visited: item.visited}">{{item.title}}</p>
            <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
          </dd>
        </dl>
@@ -105,7 +107,7 @@
       <!--广告-->
       <template  v-if="item.images && item.stype">
         <div>
-          <p class="item-title g-ellipsis">{{item.title}}</p>
+          <p class="item-title g-ellipsis" :class="{visited: item.visited}">{{item.title}}</p>
           <div class="adv-img"><img :src="item.images[0]"></div>
           <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
         </div>
@@ -113,7 +115,7 @@
       <!--无图片新闻-->
       <template v-if="!item.images">
         <div>
-          <p class="item-title g-ellipsis">{{item.title}}</p>
+          <p class="item-title g-ellipsis" :class="{visited: item.visited}">{{item.title}}</p>
           <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
         </div>
       </template>
@@ -169,6 +171,9 @@ export default {
       }
       CGI.post('hot', param, (resp)=>{
         if (resp.errno === 0) {
+          resp.data.infos.forEach((item)=>{
+            item.visited = false;
+          })
           this.items = this.items.concat(resp.data.infos);
           if (param.seq==0) {
             this.ready = true;
@@ -189,8 +194,9 @@ export default {
         },1000)
       }
     },
-    link(src) {
-      location.href=src;
+    link(item) {
+      item.visited = true;
+      location.href=item.dst;
     },
     tipBox(val) {
       this.tips.msg = val;
