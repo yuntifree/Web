@@ -1,0 +1,336 @@
+/*
+YUI 3.18.1 (build f7e7bcb)
+Copyright 2014 Yahoo! Inc. All rights reserved.
+Licensed under the BSD License.
+http://yuilibrary.com/license/
+*/
+
+html{
+  color:#000;
+  background:#FFF;
+}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,a{
+  margin:0;
+  padding:0;
+  font-family: "Arial","Microsoft YaHei","微软雅黑","宋体";
+}
+*{
+  margin:0;
+  padding:0;
+  font-family: "Arial","Microsoft YaHei","微软雅黑","宋体";
+  box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+table{
+  border-collapse:collapse;
+  border-spacing:0;
+}
+fieldset,img{
+  border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var{
+  font-style:normal;
+  font-weight:normal;
+}
+ol,ul{
+  list-style:none;
+}
+caption,th{
+  text-align:left;
+}
+h1,h2,h3,h4,h5,h6{
+  font-size:100%;
+  font-weight:normal;
+}
+q:before,q:after{
+  content:'';
+}
+abbr,acronym{
+  border:0;
+  font-variant:normal;
+}
+sup{
+  vertical-align:text-top;
+}
+sub{
+  vertical-align:text-bottom;
+}
+
+a,i,em{
+  font-style: normal;
+  text-decoration: none;
+}
+input,textarea,select,button{
+  border:0;
+  outline: 0;
+  background: transparent;
+  font-family: 'Microsoft YaHei',arial,helvetica,sans-serif;
+  box-shadow: none;
+  -webkit-box-shadow:none;
+  resize:none;
+}
+legend{
+  color:#000;
+}
+html,body {
+  width: 100%;
+  overflow-x: hidden;
+}
+#yui3-css-stamp.cssreset{ display:none}
+/*清除浮动*/
+.g-cl{clear: both;}
+
+.g-clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.g-clearfix {
+  zoom: 1;
+}
+
+.g-fl{
+  float: left;
+}
+
+.g-fr{
+  float: right
+}
+
+.g-tal{
+  text-align: left;
+}
+.g-tac {
+    text-align: center;
+}
+
+.g-tar{
+  text-align: right;
+}
+
+.t-right {
+    text-align: right;
+}
+
+
+.g-ellipsis{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+
+.g-head{
+  width: 1100px;
+  height: 120px;
+  margin: 0 auto;
+  padding-top: 8px;
+  border-bottom:1px solid #e4e4e4;
+}
+.g-logo{
+  width: 104px;
+  height: 104px;
+  float: left;
+  background: url('../images/logo.png') no-repeat 0 0;
+}
+.g-nav{
+  width: 1200px;
+  height: 80px;
+  margin:0 auto;
+  line-height: 80px;
+  font-size: 24px;
+  color: #5d6981;
+}
+
+.g-logo a{
+  text-indent: -999em;
+  height: 104px;
+  display: block;
+  width: 104px;
+}
+
+.g-menu{
+  height: 104px;
+  padding-top: 37px;
+}
+
+.g-menu ul{
+  width: 100%;
+  height: 100%;
+}
+
+.g-menu li{
+  float: left;
+}
+.g-menu li a{
+  width: 80px;
+  height: 30px;
+  display: inline-block;
+  color: #6b6b6b;
+  text-align: center;
+  line-height: 30px;
+  font-size: 16px;
+}
+
+.g-menu li a:hover,
+.g-menu li a.cur{
+  color:#ffff;
+  background-color: #009cfb;
+  border-radius: 10px;
+}
+
+.app-info{
+  width: 1100px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%)
+}
+
+.g-phone{
+  width: 33%;
+  height: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.g-phone img{
+  width: 100%;
+}
+.m-index-footer{
+  width: 1200px;
+  padding:80px 0;
+  margin:0 auto;
+}
+
+.m-index-footer-l{
+  width: 260px;
+}
+
+.m-index-footer-l h1{
+  width: 100%;
+  height: 53px;
+}
+.m-index-footer-l div a{
+  width: 30%;
+  line-height: 40px;
+  text-align: center;
+  display: inline-block;
+  color: #545454;
+}
+
+.m-index-footer-m{
+  width: 640px;
+  height: 100%;
+  float: left;
+  padding:0 50px;
+  line-height: 30px;
+  text-align: justify;
+  font-size: 16px;
+  color: #929292;
+}
+
+.m-index-footer-r{
+  width: 260px;
+  margin-left:2%;
+  height: 100%;
+}
+
+.m-index-footer-r h2{
+  line-height: 30px;
+  text-align: center;
+  font-size: 20px;
+  color: #49a5f2;
+  margin-bottom: 20px;
+}
+
+.m-index-footer-r dl{
+  width: 100%;
+  height: 150px;
+}
+
+.m-index-footer-r dt,
+.m-index-footer-r dd{
+  width: 48%;
+}
+
+.m-index-footer-r dt div{
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #49a5f2;
+  color: #fff;
+  position: relative;
+  border-radius: 5px;
+  position: relative;
+}
+
+.m-contact i{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  position: absolute;
+  top:50%;
+  margin-top: -10px;
+}
+
+.m-footer-qq i{
+  background-position: 0 -146px;
+  left: 22px;
+}
+
+.m-footer-qq a{
+  margin-left: 46px;
+  color: #fff;
+}
+
+.m-index-footer-r dt .m-footer-blog{
+  background-color: #F94F5B;
+  margin-top: 38px;
+}
+
+.m-footer-blog i{
+  width: 26px;
+  height: 26px;
+  background-position: -38px -142px;
+  margin-left: 13px;
+  margin-top: -16px;
+}
+
+.m-footer-blog a{
+  margin-left: 45px;
+  color: #fff;
+}
+
+.m-cord {
+  margin:0 auto;
+}
+
+.m-publicNum{
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+.m-index-footerBox{
+  width: 100%;
+}
+
+.m-index-adress{
+  width: 100%;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+a {text-decoration: none;}
+
+.m-index-adress p{
+  text-align: center;
+  font-size: 12px;
+  color: #929292;
+}
+
+.m-index-adress a:visited, .m-index-adress a:link {
+  color: #929292;
+}
