@@ -331,6 +331,8 @@ a {text-decoration: none;}
   color: #929292;
 }
 
+a:visited, a:link { color: #fff;}
+
 .m-index-adress a:visited, .m-index-adress a:link {
   color: #929292;
 }
