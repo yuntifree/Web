@@ -1,7 +1,18 @@
 <template>
   <div id="mapp" class="mapp">
-    <div id="map" class="map"  style="width:100%;height:100%"></div>
-    <span class="origin" v-if="originShow" @click="goOrigin"><img src="../static/navigation.png"></span>
+    <template v-if="loadMap">
+      <div id="map" class="map"  style="width:100%;height:100%"></div>
+      <span class="origin"  @click="goOrigin"><img src="../static/navigation.png"></span>
+    </template>
+    <template v-else>
+        <div class="map-search">
+          <img src="../static/search.png">
+        </div>
+        <p class="g-tac search-location">
+          <span class="searching">正在定位...</span><br/>
+          <span>一大波免费wifi正汹涌而来</span>
+        </p>
+    </template>
     <maptip :tipinfo="maptips" @tip-show="maptips.show=false"></maptip>
   </div>
 </template>
@@ -29,7 +40,7 @@ export default {
       },
       latitude:0.0,
       longitude:0.0,
-      originShow: false,
+      loadMap: false,
     }
   },
   components: {
@@ -99,7 +110,7 @@ export default {
       var pt = new BMap.Point(_this.longitude, _this.latitude);
       var myIcon = new BMap.Icon("./static/target.png", new BMap.Size(60,60));
       var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-      _this.originShow = true;
+      _this.loadMap = true;
       map.addOverlay(marker)
       //控件
       map.addControl(new BMap.NavigationControl());
@@ -223,7 +234,40 @@ body,
   height: 0.72rem;
   z-index: 200;
 }
-.origin img{
+.map-search {
+  width: 1.36rem;
+  height: 1.36rem;
+  position: absolute;
+  top:35%;
+  left: 50%;
+  margin-left:-0.68rem;
+}
+.origin img,
+.map-search img{
   width: 100%;
+}
+.search-location {
+  font-size: 0.24rem;
+  color: #828282;
+  line-height: 200%;
+  position: absolute;
+  left: 50%;
+  bottom: 17%;
+  transform: translateX(-50%);
+}
+.searching {
+  position: relative;
+  padding-left: 0.48rem;
+}
+.searching:before {
+  display: block;
+  content: ' ';
+  width: 0.4rem;
+  height: 0.4rem;
+  position: absolute;
+  top: -0.1rem;;
+  left:0;
+  background: url('./assets/images/location.png');
+  background-size: contain;
 }
 </style>
