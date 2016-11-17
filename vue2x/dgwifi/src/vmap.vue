@@ -66,15 +66,11 @@ export default {
       _this.longitude = 113.90387023396529;
       _this.latitude = 22.93310386339828;
       point = new BMap.Point(_this.longitude, _this.latitude);
-
       //标注
       map.centerAndZoom(point,15);
-      var pt = new BMap.Point(_this.longitude, _this.latitude);
       var myIcon = new BMap.Icon("./static/target.png", new BMap.Size(60,60));
-      var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-      _this.loadMap = true;
+      var marker = new BMap.Marker(point,{icon:myIcon});  // 创建标注
       map.addOverlay(marker)
-
       //控件
       map.addControl(new BMap.NavigationControl());
       map.addControl(new BMap.OverviewMapControl());
@@ -153,7 +149,10 @@ export default {
           _this.latitude = _location[0];
           _this.longitude = _location[1];
           CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
-             _this.mapShow();
+            _this.loadMap = true;
+            _this.$nextTick(()=>{
+               _this.mapShow();       
+            })
           })
         },
         cancel: function (res) {
