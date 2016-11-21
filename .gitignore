@@ -2,6 +2,5 @@
 node_modules/
 dist/
 debug/
-oss/
 npm-debug.log
 package.json
