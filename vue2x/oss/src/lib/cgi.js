@@ -1,5 +1,5 @@
-//var ajax = require('./ajax')
-var ajax = $.ajax;
+var ajax = require('./ajax')
+//var ajax = $.ajax;
 
 module.exports = {
   //HOST: __DEV__ ? 'http://114.55.36.175':'',

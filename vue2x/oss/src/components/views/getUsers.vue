@@ -114,7 +114,6 @@ export default {
   },
   mounted() {
     this.$nextTick(()=> {
-      console.log(this.$refs.tableContent);
       this.tableHeight = this.$refs.tableContent.offsetHeight;
     })
   },

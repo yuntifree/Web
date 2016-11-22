@@ -1,6 +1,7 @@
 import Vue from 'vue'
-Vue.use(Vuex);
 import Vuex from 'vuex'
+Vue.use(Vuex);
+
 const state = {
   // 登录状态
   logined: false,
