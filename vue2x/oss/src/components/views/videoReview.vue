@@ -4,6 +4,11 @@
 .dropdown-menu>li>a button[disabled] {
   color: #ccc;
 }
+.el-button,
+.el-button+.el-button {
+    margin-left: 10px;
+}
+
 </style>
 <template>
   <div class="mana_container">
@@ -13,8 +18,6 @@
           <button type="button" class="btn btn-info btn-left outline-none">
             视频状态<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">未审核</option><option :value="{ number: 1 }">上 线</option><option :value="{ number: 2 }">下 线</option></select></button>
           </button>
-          <button type="button" class="btn btn-default btn-left outline-none" :disabled="selIdx==-1" @click="review(0)"><i class="iconfont icon-accept"></i>通过</button>
-          <button type="button" class="btn btn-default btn-left btn-refuse outline-none" :disabled="selIdx==-1" @click="review(1)"><i class="iconfont icon-forbid"></i>拒绝</button>
         </div>
         <div>
           <div class="quick_search">
@@ -25,36 +28,24 @@
            <button class="btn btn-default btn-sm outline-none" @click="getData(true)"><i class="iconfont icon-renzheng"></i>显示所有</button>
         </div>
       </header>
-      <!--右键菜单-->
-      <div id="context-menu">
-        <ul name="dropdown-menu" class="dropdown-menu">
-          <li v-for="op in ops" @click="onMenu(op.cmd)"><a>{{op.title}}</a></li>
-        </ul>
-      </div>
-      <div class="tab_container">
+      <!--table-->
+      <div class="tab_container" ref="tableContent">
         <div id="tab1" class="tab_content tab-fixed" v-if="dataReady">
           <template>
             <el-table
               :data="videos"
-              height="500"
+              :height="tableHeight"
               border
-              highlight-current-row
-              @row-click="editvideos"
-              style="width: 100%">
+              highlight-current-row>
               <el-table-column
                 prop="id"
                 label="文章ID">
               </el-table-column>
-              <el-table-column 
-                label="图片"
-                prop="img">
-                <!--div>
-                  <img :src="row.img" style="width:100px;height:auto">
-                </div-->
               </el-table-column>
               <el-table-column
-                prop="title"
-                label="标题">
+                inline-template 
+                label="图片">
+                  <img style="width:100%;height:auto;" :src="row.img"/>
               </el-table-column>
               <el-table-column
                 prop="title"
@@ -71,6 +62,18 @@
               <el-table-column
                 prop="ctime"
                 label="时间">
+              </el-table-column>
+              <el-table-column
+                inline-template
+                :context="_self"
+                fixed="right"
+                label="操作"
+                width="100">
+                <span>
+                  <el-button @click="editvideos($index,row)" type="text" size="small">审核</el-button>
+                  <el-button @click="review($index,row,0)" type="text" size="small">上线</el-button>
+                  <el-button @click="review($index,row,1)" type="text" size="small">下线</el-button>
+                </span>
               </el-table-column>
             </el-table>
           </template>
@@ -98,11 +101,26 @@
               <el-input v-model="videosInfo.title"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="editPost">确定</el-button>
+              <el-button type="primary" @click="editPost(event,false)">确定</el-button>
               <el-button @click="modal.editShow=false">取消</el-button>
             </el-form-item>
           </el-form>
         </div>
+      </div>
+      <!--dialog-->
+      <el-dialog v-model="modal.dialogShow"  :title="dialogCfg.title" size="tiny">
+        <span>{{dialogCfg.text}}</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click.native="modal.dialogShow=false">取 消</el-button>
+          <el-button type="primary" @click.native="editPost(event,true)">确 定</el-button>
+        </span>
+      </el-dialog>
+      <!--alert-->
+      <div v-show="alertShow">
+        <el-alert
+          :title="alertMsg"
+          type="dark">
+        </el-alert>
       </div>
     </article>
   </div>
@@ -124,44 +142,44 @@ export default {
 
       modal: {
         editShow: false,
+        dialogShow: false
       },
-      modalCfg: {
+      dialogCfg: {
         title: '',
         text: '',
-        callback: () => {},
       },
       selected: {
         number:0
       },
-      detailInfo: {},
-      tips: {
-        showTip: false,
-        msgTip: '',
-      },
+      alertShow: false,
+      alertMsg: '',
       search: '',
-      showTop: false,
-      ops: [{
-        title: '审核',
-        cmd: 'editvideos'
-      },{
-        title: '通过',
-        cmd: 'pass'
-      },{
-        title: '拒绝',
-        cmd: 'reject'
-      }],
       videosInfo: {
         title: '',
         reject: 0,
         modify: 0,
       },
       editInfo: {},
+      tableHeight:0,
     }
   },
-  components: {
+  watch: {
+    alertShow() {
+      if (this._timeout) clearTimeout(this._timeout)
+      if (this.alertShow) {
+        this._timeout = setTimeout(()=> this.alertShow = false, 1500);
+      } else {
+        return this.alertShow;
+      }
+    }
   },
   created() {
     this.getData(true);
+  },
+  mounted() {
+    this.$nextTick(()=> {
+      this.tableHeight = this.$refs.tableContent.offsetHeight;
+    })
   },
   methods: {
     getData(reload) {
@@ -179,25 +197,17 @@ export default {
         if (resp.errno === 0) {
           var data = resp.data;
           this.videos = data.infos;
+          if (this.videos.length>0) {
+            this.videos.forEach( (item,index)=> {
+              item.idx = index;
+            })
+          }
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
           this.dataReady = true;
         } else {
-          this.tip(resp.desc);
+          this.alertInfo(resp.desc);
         }
       });
-    },
-    onMenu(cmd) {
-      switch (cmd) {
-        case 'editvideos':
-          this.editvideos();
-          break;
-        case 'pass':
-          this.review(0);
-          break;
-        case 'reject':
-          this.review(1);
-          break;
-      }
     },
     reviewStastus(val) {
       var ret;
@@ -214,62 +224,56 @@ export default {
       }
       return ret;
     },
-    editvideos(row) { 
+    editvideos(idx,row) { 
+      this.selIdx = idx;
       CGI.objClear(this.videosInfo);
+      this.videosInfo.reject = 0;
       this.videosInfo.title = row.title;
       this.editInfo = CGI.clone(row);
       this.modal.editShow = true;
     },
-    editPost() {
+    editPost(event,confirm) {
       var param = {};
-      if (this.videosInfo.title !== this.editInfo.title) {
-        param.title = this.videosInfo.title;
-        param.modify = 1;
+      if (confirm) {
+        param.id = this.editInfo.id;
+        param.reject = ~~this.videosInfo.reject;
+      } else {
+        if (this.videosInfo.title !== this.editInfo.title) {
+          param.title = this.videosInfo.title;
+          param.modify = 1;
+        }
+        param.reject = ~~this.videosInfo.reject;
+        param.id = this.editInfo.id;
       }
-      param.reject = ~~this.videosInfo.reject;
-      param.id = this.editInfo.id;
+      
       CGI.post(this.$store.state,'review_video',param,(resp)=> {
         if (resp.errno === 0) {
           //index没改
           this.videos.splice(this.selIdx,1);
           this.modal.editShow = false;
+          this.modal.dialogShow = false;
+          this.selIdx = -1;
         } else {
-          console.log(resp.desc);
+          this.alertInfo(resp.desc);
         }
       })
     },
-    review(ops) {
-      var idx = this.selIdx;
-      var name = this.videos[idx].id;
-      var title = this.modalCfg.title;
-      var text = this.modalCfg.text;
+    review(idx,row,ops) {
+      this.selIdx = idx;
+      var title = '';
+      var text = '';
       if (ops) {
-        title = '拒绝通过';
-        text = '确认要拒绝' + name + '的审核吗？'; 
+        title = '拒绝';
+        text = '确认要拒绝' + row.id + '的审核吗？'; 
       } else {
-        title = '审核通过';
-        text = '确认要通过' + name + '的审核吗？';
+        title = '通过';
+        text = '确认要通过' + row.id + '的审核吗？';
       }
-      this.modalCfg.title = title;
-      this.modalCfg.text = text;
-      this.modal.confirmShow = true;
-      this.modalCfg.callback = () => {
-        var param = {
-          id: this.videos[idx].id,
-          reject: ops
-        }
-
-        this.modal.confirmShow = false;
-
-        CGI.post(this.$store.state, 'review_video', param, (resp) => {
-          if (resp.errno === 0) {
-            this.selIdx = -1;
-            this.videos.splice(idx,1);
-          } else {
-            this.tip(resp.desc);
-          }
-        })
-      }
+      this.dialogCfg.title = title;
+      this.dialogCfg.text = text;
+      this.videosInfo.reject = ops;
+      this.editInfo = CGI.clone(row);
+      this.modal.dialogShow = true;
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -279,51 +283,10 @@ export default {
       this.getData(false);
       console.log(`当前页: ${val}`);
     },
-    /*doSearch(first) {
-      var param = {
-        search: this.search,
-        start: this.pageCfg.start,
-        limit: this.pageCfg.limit
-      }
-
-      // valid
-      this.search = this.search.trim();
-      if (first) {
-        if (this.search.length === 0) {
-          this.showTop = true;
-          return;
-        }
-        param.start = this.pageCfg.start = 0;
-        param.page = this.pageCfg.currentPage = 1;
-      }
-
-      CGI.post(this.$store.state, 'get_audit_auth', param, (resp) => {
-        if (resp.errno === 0) {
-          var data = resp.data;
-          this.videos = data.users;
-          this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
-          if (data.users === null) {
-            this.tips.showTip = true;
-            this.tips.msgTip = '库里没有任何相关信息，请尝试其他搜索！'
-          }
-        } else {
-          this.tip(resp.desc);
-        }
-      });
-    },
-    detail(detailUid) {
-      this.modal.detailShow = true;
-      var param = {
-        tuid: detailUid
-      };
-      CGI.post(this.$store.state, 'get_user_details', param, (resp)=> {
-        if (resp.errno === 0){
-          this.detailInfo = resp.data;
-        } else {
-          this.tip(resp.desc);
-        }
-      })
-    },*/
-  },
+    alertInfo(val) {
+      this.alertShow = true;
+      this.alertMsg = val;
+    }
+  }
 }
 </script>

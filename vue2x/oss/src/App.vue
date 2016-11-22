@@ -206,7 +206,7 @@ button>i {
 }
 
 .img120 {
-  @include containerSize(120px,120px);
+  @include containerSize(120px,auto);
 }
 
 .img50 {
@@ -264,6 +264,19 @@ button>i {
   border: 1px solid rgba(0,0,0,.2);
   box-shadow:0 3px 9px rgba(0,0,0,0.5);
   border-radius: 6px;
+  padding: 10px;
+}
+.el-alert {
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.el-alert--dark {
+  background-color: rgba(0,0,0,0.8);
+}
+.el-table .cell {
   padding: 10px;
 }
 </style>

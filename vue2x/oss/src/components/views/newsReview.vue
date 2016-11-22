@@ -1,8 +1,11 @@
-<style lang="scss">
+<style lang="scss" scope>
 @import '../../assets/css/table.css';
 @import '../../assets/css/common.scss';
 .dropdown-menu>li>a button[disabled] {
   color: #ccc;
+}
+.el-icon-close:before {
+ content: '';
 }
 </style>
 <template>
@@ -13,8 +16,6 @@
           <button type="button" class="btn btn-info btn-left outline-none">
             文章状态<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">未审核</option><option :value="{ number: 1 }">上 线</option><option :value="{ number: 2 }">下 线</option></select></button>
           </button>
-          <button type="button" class="btn btn-default btn-left outline-none" :disabled="selIdx==false" @click="review(0)"><i class="iconfont icon-accept"></i>通过</button>
-          <button type="button" class="btn btn-default btn-left btn-refuse outline-none" :disabled="selIdx==false" @click="review(1)"><i class="iconfont icon-forbid"></i>拒绝</button>
         </div>
         <div>
           <div class="quick_search">
@@ -25,24 +26,14 @@
            <button class="btn btn-default btn-sm outline-none" @click="getData(true)"><i class="iconfont icon-renzheng"></i>显示所有</button>
         </div>
       </header>
-      <!--右键菜单-->
-      <div id="context-menu">
-        <ul name="dropdown-menu" class="dropdown-menu">
-          <li v-for="op in ops" @click="onMenu(op.cmd)"><a>{{op.title}}</a></li>
-        </ul>
-      </div>
-      <div class="tab_container">
+      <div class="tab_container" ref="tableContent">
         <div id="tab1" class="tab_content tab-fixed" v-if="dataReady">
           <template>
             <el-table
               :data="news"
-              height="500"
+              :height="tableHeight"
               border
-              highlight-current-row
-              @row-click="edit">
-              </el-table-column>
-              <el-table-column
-                type="index">
+              highlight-current-row>
               </el-table-column>
               <el-table-column
                 prop="id"
@@ -73,8 +64,16 @@
                 label="阅读数">
               </el-table-column>
               <el-table-column
-                prop="reading"
-                label="阅读数">
+                inline-template
+                :context="_self"
+                fixed="right"
+                label="操作"
+                width="100">
+                <span>
+                  <el-button @click="edit($index,row)" type="text" size="small">审核</el-button>
+                  <el-button @click="review($index,row,0)" type="text" size="small">上线</el-button>
+                  <el-button @click="review($index,row,1)" type="text" size="small">下线</el-button>
+                </span>
               </el-table-column>
             </el-table>
           </template>
@@ -107,26 +106,44 @@
               </el-checkbox-group>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="editNews">确定</el-button>
+              <el-button type="primary" @click="editPost(event,false)">确定</el-button>
               <el-button @click="modal.editShow=false">取消</el-button>
             </el-form-item>
           </el-form>
         </div>
+      </div>
+      <!--dialog-->
+      <el-dialog v-model="modal.dialogShow"  :title="dialogCfg.title" size="tiny">
+        <span>{{dialogCfg.text}}</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click.native="modal.dialogShow = false">取 消</el-button>
+          <el-button type="primary" @click.native="editPost(event,true)">确 定</el-button>
+        </span>
+      </el-dialog>
+      <!--alert-->
+      <div v-show="alertShow">
+        <el-alert
+          :title="alertMsg"
+          type="dark">
+        </el-alert>
       </div>
     </article>
   </div>
 </template>
 <script>
 import CGI from '../../lib/cgi.js'
-var editTitle='';
 export default {
   data() {
     return {
       dataReady: true,
       news: [],
-
       modal: {
         editShow: false,
+        dialogShow: false,
+      },
+      dialogCfg: {
+        title: '',
+        text: '',
       },
       pageCfg: {
         total: 1,
@@ -134,21 +151,11 @@ export default {
         start: 0,
         currentPage: 1,
       },
-      selIdx: false,
+      selIdx: -1,
 
       selected: {
         number:0
       },
-      ops: [{
-        title: '编辑',
-        cmd: 'edit'
-      },{
-        title: '通过',
-        cmd: 'pass'
-      },{
-        title: '拒绝',
-        cmd: 'reject'
-      }],
       search: '',
       tagsInfo: [],
       checkedTags: [],
@@ -159,22 +166,28 @@ export default {
         tags: [],
       },
       editInfo: {},
-      newsStatus: [{
-        text: '未审核',
-        value: '0'
-      },{
-        text: '上线',
-        value: '1'
-      },{
-        text: '下线',
-        value: '1'
-      }]
+      alertShow: false,
+      alertMsg: '',
+      tableHeight: '0px'
     }
   },
-  components: {
+  watch: {
+    alertShow() {
+      if (this._timeout) clearTimeout(this._timeout)
+      if (this.alertShow) {
+        this._timeout = setTimeout(()=> this.alertShow = false, 1500);
+      } else {
+        return this.alertShow;
+      }
+    }
   },
   created() {
     this.getData(true);
+  },
+  mounted() {
+    this.$nextTick(()=> {
+      this.tableHeight = this.$refs.tableContent.offsetHeight;
+    })
   },
   methods: {
     getData(reload) {
@@ -195,47 +208,20 @@ export default {
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
           this.dataReady = true;
         } else {
-          this.tip(resp.desc);
+          this.alertInfo(resp.desc);
         }
       });
     },
-    onMenu(cmd) {
-      switch (cmd) {
-        case 'edit':
-          this.edit();
-          break;
-        case 'pass':
-          this.review(0);
-          break;
-        case 'reject':
-          this.review(1);
-          break;
-      }
-    },
-    reviewStastus(val) {
-      var ret;
-      switch(val) {
-        case 0:
-          ret = '未审核';
-          break;
-        case 1:
-          ret = '上线';
-          break;
-        case 2:
-          ret = '下线';
-          break;
-      }
-      return ret;
-    },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      console.log('每页 ${val} 条');
     },
     handleCurrentChange(val) {
       this.pageCfg.start = (val-1)*30;
       this.getData(false);
-      console.log(`当前页: ${val}`);
+      console.log('当前页: ${val}');
     },
-    edit(row,events,seq) {
+    edit(idx,row,seq) {
+      this.selIdx = idx;
       var param = {
         seq: seq || 0,
         num:5
@@ -248,94 +234,73 @@ export default {
             this.tagsInfo.tags = this.tagsInfo.tags.concat(resp.data.tags);
             this.tagsInfo.hasmore = resp.data.hasmore;
           }
+          CGI.objClear(this.newsInfo);
           this.newsInfo.title = row.title;
           this.editInfo =  CGI.clone(row);
           this.modal.editShow = true;
         } else {
-          console.log(resp.desc);
+          this.alertInfo(resp.desc);
         }
       })
     },
-    editNews() { 
+    editPost(event,confirm) { 
       var param = {};
-      var paramTags = [];
-      console.log(this.newsInfo.title+'\n'+editTitle);
-      if (this.newsInfo.title !== this.editInfo.title) {
-        param.title = this.newsInfo.title;
-        param.modify = 1;
-      }
-      if (this.checkedTags.length > 0) {
-        var clen = this.checkedTags.length;
-        var tlen = this.tagsInfo.tags.length;
-        for (var i=0;i<clen;i++) {
-          for (var j=0;j<tlen;j++) {
-            if (this.checkedTags[i] == this.tagsInfo.tags[j].content) {
-              paramTags.push(this.tagsInfo.tags[j].id);
+      if (confirm) {
+        param.id = this.editInfo.id;
+        param.reject = ~~this.newsInfo.reject;
+      } else {
+        var paramTags = [];
+        if (this.newsInfo.title !== this.editInfo.title) {
+          param.title = this.newsInfo.title;
+          param.modify = 1;
+        }
+        if (this.checkedTags.length > 0) {
+          var clen = this.checkedTags.length;
+          var tlen = this.tagsInfo.tags.length;
+          for (var i=0;i<clen;i++) {
+            for (var j=0;j<tlen;j++) {
+              if (this.checkedTags[i] == this.tagsInfo.tags[j].content) {
+                paramTags.push(this.tagsInfo.tags[j].id);
+              }
             }
           }
         }
+        param.tags = paramTags;
+        param.reject = ~~this.newsInfo.reject;
+        param.id = this.editInfo.id;
       }
-      param.tags = paramTags;
-      param.reject = ~~this.newsInfo.reject;
-      param.id = this.editInfo.id;
       CGI.post(this.$store.state,'review_news',param,(resp)=> {
         if (resp.errno === 0) {
-          this.selIdx = -1;
           this.news.splice(this.selIdx,1);
           this.modal.editShow = false;
+          this.modal.dialogShow = false;
+          this.selIdx = -1;
         } else {
-          console.log(resp.desc);
+          this.alertInfo(resp.desc);
         }
       })
     },
-    /*review(ops) {
-      var idx = this.selIdx;
-      var name = this.news[idx].name;
-      var title = this.modalCfg.title;
-      var text = this.modalCfg.text;
+    review(idx,row,ops) {
+      this.selIdx = idx;
+      var title = '';
+      var text = '';
       if (ops) {
         title = '拒绝通过';
-        text = '确认要拒绝' + name + '的审核吗？'; 
+        text = '确认要拒绝' + row.id + '的审核吗？'; 
       } else {
         title = '审核通过';
-        text = '确认要通过' + name + '的审核吗？';
+        text = '确认要通过' + row.id + '的审核吗？';
       }
-      this.modalCfg.title = title;
-      this.modalCfg.text = text;
-      this.modal.confirmShow = true;
-      this.modalCfg.callback = () => {
-        var param = {
-          id: this.news[idx].id,
-          reject: ops
-        }
-
-        this.modal.confirmShow = false;
-        this.modal.textShow = false;
-
-        CGI.post(this.$store.state, 'review_news', param, (resp) => {
-          if (resp.errno === 0) {
-            this.selIdx = -1;
-            switch (ops) {
-              case 1:
-                this.news[idx].flag = 1;
-                this.select(idx);
-                break;
-              case 2:
-                this.news[idx].flag = 2;
-                this.select(idx);
-                break;
-            }
-            this.news[idx].applystate = ops;
-          } else {
-            this.tip(resp.desc);
-          }
-        })
-      }
+      this.dialogCfg.title = title;
+      this.dialogCfg.text = text;
+      this.newsInfo.reject = ops;
+      this.editInfo =  CGI.clone(row);
+      this.modal.dialogShow = true;
     },
-    tip(val) {
-      this.tips.showTip = true;
-      this.tips.msgTip = val;
-    }*/
-  },
+    alertInfo(val) {
+      this.alertShow = true;
+      this.alertMsg = val;
+    }
+  }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="mana_container" v-if="mounted">
+  <div class="mana_container">
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
@@ -15,19 +15,13 @@
           <button class="btn btn-default btn-sm outline-none"><i class="iconfont icon-renzheng"></i>高级搜索</button>
         </div>
       </header>
-      <!--begin:右键菜单-->
-      <div id="context-menu">
-        <ul name="dropdown-menu" class="dropdown-menu">
-          <li v-for="op in ops" @click="onMenu(op.cmd)"><a>{{op.title}}</a></li>
-        </ul>
-      </div>
       <!--end:右键菜单-->
-      <div class="tab_container" id="tab_container">
-        <div class="tab_content tab-fixed">
+      <div class="tab_container" ref="tableContent">
+        <div class="tab_content tab-fixed" v-if="dataReady">
           <template>
             <el-table
               :data="users"
-              height="500"
+              :height="tableHeight"
               border
               style="width: 100%,height:100%">
               <el-table-column
@@ -58,7 +52,14 @@
         layout="prev, pager, next, jumper"
         :total="pageCfg.total">
       </el-pagination>
-    </div>
+      <div v-show="alertShow">
+        <el-alert
+          :title="alertMsg"
+          type="dark">
+        </el-alert>
+      </div>
+    </article>
+  </div>
 </template>
 <script>
 //import details from '../lib/detail.vue'
@@ -70,6 +71,7 @@ var searchParams = {};
 export default {
   data() {
     return {
+      dataReady: false,
       pageCfg: {
         total: 1,
         currentPage: 1,
@@ -92,20 +94,28 @@ export default {
 
       mounted: false,
       selIdx: -1,
+      tableHeight:0,
+      alertShow: false,
+      alertMsg: '',
     }
   },
-  components: {
+  watch: {
+    alertShow() {
+      if (this._timeout) clearTimeout(this._timeout)
+      if (this.alertShow) {
+        this._timeout = setTimeout(()=> this.alertShow = false, 1500);
+      } else {
+        return this.alertShow;
+      }
+    }
   },
   created() {
     this.getData(true);
   },
   mounted() {
     this.$nextTick(()=> {
-      $('#context-menu').on('show.bs.context', (e) => {
-        console.log(1);
-        this.selIdx = $(e.target).data('idx');
-        //this.msgShopping(this.users[this.selIdx].shopping);
-      }); //右键
+      console.log(this.$refs.tableContent);
+      this.tableHeight = this.$refs.tableContent.offsetHeight;
     })
   },
   methods: {
@@ -124,21 +134,11 @@ export default {
           var data = resp.data;
           this.users = data.infos;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
-          this.mounted = true;
+          this.dataReady = true;
         } else {
-          console.log(resp.desc);
+          this.alertInfo(resp.desc);
         }
       });
-    },
-    onMenu(cmd) {
-      switch (cmd) {
-        case 'editUser':
-          //this.editUser();
-          break;
-        case 'rest':
-          //this.rest();
-          break;
-      }
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -147,6 +147,10 @@ export default {
       this.pageCfg.start = (val-1)*30;
       this.getData(false);
       console.log(`当前页: ${val}`);
+    },
+    alertInfo(val) {
+      this.alertShow = true;
+      this.alertMsg = val;
     },
     refresh() {
       this.getData(false);

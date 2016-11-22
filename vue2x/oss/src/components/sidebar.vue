@@ -42,11 +42,11 @@ export default {
           title: "视频审核",
           name: "videoReview",
           icon: "user"
-          },{
+          },/*{
           title: "模板管理",
           name: "templateReview",
           icon: "user"
-          },{
+          },*/{
           title: "AP监控",
           name: "apReview",
           icon: "user"

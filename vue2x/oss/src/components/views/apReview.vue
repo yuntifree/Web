@@ -11,24 +11,16 @@
           <div class="quick_search">
             <i class="iconfont icon-search"></i>
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名"
-              v-model="search" @keyup.enter="doSearch(true)">
+              v-model="search">
           </div>
-          <button class="btn btn-default btn-sm outline-none"><i class="iconfont icon-renzheng"></i>高级搜索</button>
         </div>
       </header>
-      <!--begin:右键菜单-->
-      <div id="context-menu">
-        <ul name="dropdown-menu" class="dropdown-menu">
-          <li v-for="op in ops" @click="onMenu(op.cmd)"><a>{{op.title}}</a></li>
-        </ul>
-      </div>
-      <!--end:右键菜单-->
-      <div class="tab_container" id="tab_container">
-        <div class="tab_content tab-fixed" v-if="">
+      <div class="tab_container" ref="tableContent">
+        <div class="tab_content tab-fixed" v-if="dataReady">
         <template>
             <el-table
               :data="infos"
-              height="500"
+              :height="tableHeight"
               border
               highlight-current-row>
               </el-table-column>
@@ -92,20 +84,11 @@ export default {
         limit: 30,
       },
 
-      //右键功能
-      ops: [{
-        title: '修改用户',
-        cmd: 'editUser'
-      },{
-        title: '重置密码',
-        cmd: 'rest'
-      }],
-
       // table data
       infos: [],
       columns: columns,
       apAddress: [],
-      appReady: false,
+      dataReady: false,
       selIdx: -1,
       showTop: false,
       mapShow: false,
@@ -114,20 +97,18 @@ export default {
         msgTip: '',
       },
 
-      search: ''
+      search: '',
+      tableHeight:0,
     }
-  },
-  components: {
   },
   created() {
     this.getData(true);
   },
   mounted() {
-    $('#context-menu').on('show.bs.context', (e) => {
-      this.selIdx = $(e.target).data('idx');
-      //this.msgShopping(this.infos[this.selIdx].shopping);
-    }); //右键
-    CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
+    this.$nextTick(()=> {
+      this.tableHeight = this.$refs.tableContent.offsetHeight;
+      CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
+    })
   },
   methods: {
     getData(reload) {
@@ -148,7 +129,7 @@ export default {
           var data = resp.data;
           this.infos = data.infos;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
-          this.appReady = true;
+          this.dataReady = true;
         } else {
           this.tip(resp.desc);
         }

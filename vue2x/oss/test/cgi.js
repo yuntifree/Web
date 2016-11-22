@@ -10,7 +10,6 @@ var testData = require('./testdata');
 // post transformer
 router.post('/*', function(req, res, next) {
     var action = req.params[0];
-    console.log(req.body);
     if (action == 'get_edition') {
         next();
     } else {
@@ -21,7 +20,6 @@ router.post('/*', function(req, res, next) {
                 if (err || !res1.ok) {
                     var resp = makeResp(res1.status, 'error: '+res1.status, {});
                     res.jsonp(resp);
-                    console.log(resp);
                 } else {
                     res.send(res1.text);
                 }
