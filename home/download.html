@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta charset="utf-8">
+    <title>下载东莞无线</title>
+    <script>
+      // 获取终端的相关信息
+      var Terminal = {
+          // 辨别移动终端类型
+          platform : function(){
+              var u = navigator.userAgent, app = navigator.appVersion;
+              return {
+                  // android终端或者uc浏览器
+                  android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                  // 是否为iPhone或者QQHD浏览器
+                  ios: u.indexOf('iPhone') > -1,
+                  // 是否iPad
+                  iPad: u.indexOf('iPad') > -1
+              };
+          }(),
+          // 辨别移动终端的语言：zh-cn、en-us、ko-kr、ja-jp...
+          language : (navigator.browserLanguage || navigator.language).toLowerCase()
+      }
+      var query = (function() {
+        var url = window.document.location.href.toString();
+        var u = url.split('?');
+        if (typeof(u[1]) === 'string') {
+            u = u[1].split('&');
+            var get = {};
+            for (var i in u) {
+                var j = u[i].split('=');
+                get[j[0]] = j[1];
+            }
+            return get;
+        } else {
+            return {};
+        }
+      })();
+      // 根据不同的终端，跳转到不同的地址
+      var theUrl = 'https://m.baidu.com';
+      // android系统APP
+      if (Terminal.platform.android){
+          // 这里区分渠道
+          // switch(From){
+          //     case 'baidu':
+          //         theUrl = '你的APP：baidu定制版';
+          //         break;
+          //     case 'google':
+          //         theUrl = '你的APP：google定制版';
+          //         break;
+          //     default:
+          //         theUrl = '你的APP：官方版'
+          // }
+        theUrl = 'http://down.360safe.com/360ap/360freewifi_beta.apk';
+      } else if (Terminal.platform.ios) {
+        theUrl = 'http://itunes.apple.com/app/id942885362?mt=8'
+      }
+      location.href = theUrl;
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
