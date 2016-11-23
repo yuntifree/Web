@@ -160,7 +160,11 @@ export default {
         modify: 0,
       },
       editInfo: {},
-      tableHeight:0,
+    }
+  },
+  computed: {
+    tableHeight() {
+      return this.$store.state.tableHeight;
     }
   },
   watch: {
@@ -173,13 +177,8 @@ export default {
       }
     }
   },
-  created() {
-    this.getData(true);
-  },
   mounted() {
-    this.$nextTick(()=> {
-      this.tableHeight = this.$refs.tableContent.offsetHeight;
-    })
+    this.getData(true);
   },
   methods: {
     getData(reload) {

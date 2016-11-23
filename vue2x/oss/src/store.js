@@ -11,6 +11,7 @@ const state = {
   paths: ['用户管理', '用户信息'],
   // 左侧菜单
   menus: [],
+  tableHeight: 0,
 }
 
 export default new Vuex.Store({

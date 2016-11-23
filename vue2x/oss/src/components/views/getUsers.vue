@@ -22,8 +22,7 @@
             <el-table
               :data="users"
               :height="tableHeight"
-              border
-              style="width: 100%,height:100%">
+              border>
               <el-table-column
                 prop="id"
                 label="id">
@@ -62,7 +61,6 @@
   </div>
 </template>
 <script>
-//import details from '../lib/detail.vue'
 import CGI from '../../lib/cgi.js'
 import md5 from 'md5'
 
@@ -94,9 +92,13 @@ export default {
 
       mounted: false,
       selIdx: -1,
-      tableHeight:0,
       alertShow: false,
       alertMsg: '',
+    }
+  },
+  computed: {
+    tableHeight() {
+      return this.$store.state.tableHeight;
     }
   },
   watch: {
@@ -109,13 +111,11 @@ export default {
       }
     }
   },
-  created() {
-    this.getData(true);
-  },
   mounted() {
     this.$nextTick(()=> {
-      this.tableHeight = this.$refs.tableContent.offsetHeight;
-    })
+      this.$store.state.tableHeight = this.$refs.tableContent.offsetHeight;
+    });
+    this.getData(true);
   },
   methods: {
     getData(reload) {

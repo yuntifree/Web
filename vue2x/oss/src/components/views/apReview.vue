@@ -98,15 +98,16 @@ export default {
       },
 
       search: '',
-      tableHeight:0,
     }
   },
-  created() {
-    this.getData(true);
+  computed: {
+    tableHeight() {
+      return this.$store.state.tableHeight;
+    }
   },
   mounted() {
+    this.getData(true);
     this.$nextTick(()=> {
-      this.tableHeight = this.$refs.tableContent.offsetHeight;
       CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
     })
   },

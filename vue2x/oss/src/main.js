@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
+//import VueRouter from 'vue-router'
 
 import App from './App'
 
@@ -7,6 +8,7 @@ import CGI from './lib/cgi.js'
 import store from './store'
 
 Vue.use(ElementUI);
+//Vue.use(VueRouter)
 
 CGI.checkLogin(store.state);
 
