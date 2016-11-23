@@ -4,6 +4,56 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta charset="utf-8">
     <title>下载东莞无线</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <style type="text/css">
+      .shade {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      .guide {
+        display: none;
+        width: 85%;
+        height: auto;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        margin: 30px auto;
+      }
+      .guide-text {
+        line-height: 200%;
+        font-size: 14px;
+        float: left; 
+      }
+      .guide-text img {
+        transform: translateY(2px);
+      }
+      .guide-img {
+        width: 70px;
+        height: auto;
+        display: block;
+        float: right;
+      }
+      .guide-img img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shade">
+      <div class="guide g-clearfix" id="androidGuide">
+        <p class="guide-text">请点击右上角按钮，<br/>选择“在浏览器中打开”来下载</p>
+        <span class="guide-img"><img src="images/Arrow.png"></span>
+      </div>
+      <div class="guide g-clearfix" id="iosGuide">
+        <p class="guide-text">请点击右上角按钮，<br/>选择在Sarari “ <img src="images/safari.png" width="14px" height="14px"> ” 中打开 来下载</p>
+        <span class="guide-img"><img src="images/Arrow.png"></span>
+      </div>
+    </div>
     <script>
       // 获取终端的相关信息
       var Terminal = {
@@ -37,8 +87,17 @@
             return {};
         }
       })();
+      function isWeiXin(){
+          var ua = window.navigator.userAgent.toLowerCase();
+          if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+              return true;
+          }else{
+              return false;
+          }
+      }
       // 根据不同的终端，跳转到不同的地址
       var theUrl = 'https://m.baidu.com';
+      console.log(isWeiXin());
       // android系统APP
       if (Terminal.platform.android){
           // 这里区分渠道
@@ -52,13 +111,19 @@
           //     default:
           //         theUrl = '你的APP：官方版'
           // }
-        theUrl = 'http://down.360safe.com/360ap/360freewifi_beta.apk';
+        if (isWeiXin()) {
+          document.getElementById('androidGuide').style.display = "block";
+        } else {
+          theUrl = 'http://down.360safe.com/360ap/360freewifi_beta.apk';          
+        }
       } else if (Terminal.platform.ios) {
-        theUrl = 'http://itunes.apple.com/app/id942885362?mt=8'
+        if (isWeiXin()) {
+          document.getElementById('iosGuide').style.display = "block";
+        } else {
+          document.getElementById('iosGuide').style.display = "block";
+        }
       }
-      location.href = theUrl;
+      //location.href = theUrl;
     </script>
-  </head>
-  <body>
   </body>
 </html>
