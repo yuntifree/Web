@@ -18,14 +18,13 @@
   }
   
   .guide {
-    display: none;
     width: 85%;
     height: auto;
     padding: 10px;
     background-color: #fff;
     border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    margin: 30px auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    margin: 15px auto;
   }
   
   .guide-text {
@@ -176,13 +175,15 @@
       <p class="qrcode-text g-tac">关注东莞wifi,获取最新资讯</p>
     </div>
   </div>
-  <div class="shade">
-    <div class="guide g-clearfix" id="androidGuide">
+  <div class="shade" id="androidGuide">
+    <div class="guide g-clearfix">
       <p class="guide-text">请点击右上角按钮，
         <br/>选择“在浏览器中打开”来下载</p>
       <span class="guide-img"><img src="images/arrow.png"></span>
     </div>
-    <div class="guide g-clearfix" id="iosGuide">
+  </div>
+  <div class="shade" id="iosGuide">
+    <div class="guide g-clearfix">
       <p class="guide-text">请点击右上角按钮，
         <br/>选择在Sarari “ <img src="images/safari.png" width="14px" height="14px"> ” 中打开 来下载</p>
       <span class="guide-img"><img src="images/arrow.png"></span>
@@ -259,7 +260,7 @@
       }
     }
   }
-  //load();
+  load();
   </script>
 </body>
 
