@@ -1,126 +1,266 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta charset="utf-8">
-    <title>下载东莞无线</title>
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <style type="text/css">
-      .shade {
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        position: fixed;
-        top: 0;
-        left: 0;
-      }
-      .guide {
-        display: none;
-        width: 85%;
-        height: auto;
-        padding: 10px;
-        background-color: #fff;
-        border-radius: 6px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        margin: 30px auto;
-      }
-      .guide-text {
-        line-height: 200%;
-        font-size: 14px;
-        float: left; 
-      }
-      .guide-text img {
-        transform: translateY(2px);
-      }
-      .guide-img {
-        width: 70px;
-        height: auto;
-        display: block;
-        float: right;
-      }
-      .guide-img img {
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="shade">
-      <div class="guide g-clearfix" id="androidGuide">
-        <p class="guide-text">请点击右上角按钮，<br/>选择“在浏览器中打开”来下载</p>
-        <span class="guide-img"><img src="images/arrow.png"></span>
-      </div>
-      <div class="guide g-clearfix" id="iosGuide">
-        <p class="guide-text">请点击右上角按钮，<br/>选择在Sarari “ <img src="images/safari.png" width="14px" height="14px"> ” 中打开 来下载</p>
-        <span class="guide-img"><img src="images/arrow.png"></span>
+
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8">
+  <title>下载东莞无线</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style type="text/css">
+  .shade {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  
+  .guide {
+    display: none;
+    width: 85%;
+    height: auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 30px auto;
+  }
+  
+  .guide-text {
+    line-height: 200%;
+    font-size: 14px;
+    float: left;
+  }
+  
+  .guide-text img {
+    transform: translateY(2px);
+  }
+  
+  .guide-img {
+    width: 70px;
+    height: auto;
+    display: block;
+    float: right;
+  }
+  
+  .guide-img img {
+    width: 100%;
+  }
+  .banner,
+  .banner>img {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .banner-over {
+    width: 94%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 3%;
+  }
+  .over-img {
+    width: 99px;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 15%;
+  }
+  .banner-over span {
+    display: block;
+    width: 109px;
+    line-height: 30px;
+    font-size: 12px;
+    color: #008ffd;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+  }
+  .down-ios {
+    bottom: 26%;
+  }
+  .down-android {
+    bottom: 8%;
+  }
+  .wifi-text {
+    padding: 30px 0;
+  }
+  .text-title {
+    font-size: 18px;
+    color: #4a4a4a;
+    line-height: 200%;
+  }
+  .text-desc {
+    font-size: 10px;
+    color: #9b9b9b;
+  }
+  .wifi-list {
+    width: 100%;
+    height: auto;
+    background-color: #def2fe;
+    padding-top: 40px;
+    padding-bottom: 60px;
+  }
+  .wifi-list li {
+    width: 100%;
+    height: auto;
+    margin: 0px auto 50px;
+  }
+  .wifi-list li:last-child {
+    margin-bottom: 0;
+  }
+  .list-img {
+    display: block;
+    width: 40%;
+    height: auto;
+    margin: 0 auto 5px;
+  }
+  .list-text {
+    font-size: 12px;
+    color: #4a4a4a;
+  }
+  .wifi-qrcode {
+    padding: 25px 0 52px 0;
+    background-color: #0091fd;
+  }
+  .wifi-qrcode img {
+    width: 81px;
+    height: 81px;
+    display: block;
+    margin: 0 auto;
+  }
+  .qrcode-text {
+    font-size: 10px;
+    color: #fff;
+    margin-top:  10px;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="section">
+    <div class="banner">
+      <img src="images/banner.png">
+      <div class="banner-over">
+        <img class="over-img" src="images/text.png">
+        <span class="down-ios">iOS下载</span>
+        <span class="down-android">Android下载</span>
       </div>
     </div>
-    <script>
-      // 获取终端的相关信息
-      var Terminal = {
-          // 辨别移动终端类型
-          platform : function(){
-              var u = navigator.userAgent, app = navigator.appVersion;
-              return {
-                  // android终端或者uc浏览器
-                  android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
-                  // 是否为iPhone或者QQHD浏览器
-                  ios: u.indexOf('iPhone') > -1,
-                  // 是否iPad
-                  iPad: u.indexOf('iPad') > -1
-              };
-          }(),
-          // 辨别移动终端的语言：zh-cn、en-us、ko-kr、ja-jp...
-          language : (navigator.browserLanguage || navigator.language).toLowerCase()
+    <div class="wifi-text">
+      <h2 class="text-title g-tac">不只是WIFI</h2>
+      <P class="text-desc g-tac">你所想到的，我们都为你做到</P>
+    </div>
+    <ul class="wifi-list">
+      <li>
+        <img class="list-img" src="http://file.yunxingzh.com/img1.png">
+        <p class="list-text g-tac">身边wifi无处不在，无所不知</p>
+      </li>
+      <li>
+        <img class="list-img" src="http://file.yunxingzh.com/img2.png">
+        <p class="list-text g-tac">东莞头条、新闻热事每天精彩呈送</p>
+      </li>
+      <li>
+        <img class="list-img" src="http://file.yunxingzh.com/img3.png">
+        <p class="list-text g-tac">为你提供身边最全生活服务信息</p>
+      </li>
+    </ul>
+    <div class="wifi-qrcode">
+      <img src="http://file.yunxingzh.com/qrcode.png">
+      <p class="qrcode-text g-tac">关注东莞wifi,获取最新资讯</p>
+    </div>
+  </div>
+  <div class="shade">
+    <div class="guide g-clearfix" id="androidGuide">
+      <p class="guide-text">请点击右上角按钮，
+        <br/>选择“在浏览器中打开”来下载</p>
+      <span class="guide-img"><img src="images/arrow.png"></span>
+    </div>
+    <div class="guide g-clearfix" id="iosGuide">
+      <p class="guide-text">请点击右上角按钮，
+        <br/>选择在Sarari “ <img src="images/safari.png" width="14px" height="14px"> ” 中打开 来下载</p>
+      <span class="guide-img"><img src="images/arrow.png"></span>
+    </div>
+  </div>
+  <script>
+  // 获取终端的相关信息
+  var Terminal = {
+    // 辨别移动终端类型
+    platform: function() {
+      var u = navigator.userAgent,
+        app = navigator.appVersion;
+      return {
+        // android终端或者uc浏览器
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+        // 是否为iPhone或者QQHD浏览器
+        ios: u.indexOf('iPhone') > -1,
+        // 是否iPad
+        iPad: u.indexOf('iPad') > -1
+      };
+    }(),
+    // 辨别移动终端的语言：zh-cn、en-us、ko-kr、ja-jp...
+    language: (navigator.browserLanguage || navigator.language).toLowerCase()
+  }
+  var query = (function() {
+    var url = window.document.location.href.toString();
+    var u = url.split('?');
+    if (typeof(u[1]) === 'string') {
+      u = u[1].split('&');
+      var get = {};
+      for (var i in u) {
+        var j = u[i].split('=');
+        get[j[0]] = j[1];
       }
-      var query = (function() {
-        var url = window.document.location.href.toString();
-        var u = url.split('?');
-        if (typeof(u[1]) === 'string') {
-            u = u[1].split('&');
-            var get = {};
-            for (var i in u) {
-                var j = u[i].split('=');
-                get[j[0]] = j[1];
-            }
-            return get;
-        } else {
-            return {};
-        }
-      })();
-      function isWeiXin(){
-          var ua = window.navigator.userAgent.toLowerCase();
-          if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-              return true;
-          }else{
-              return false;
-          }
+      return get;
+    } else {
+      return {};
+    }
+  })();
+
+  function isWeiXin() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  // 根据不同的终端，跳转到不同的地址
+  // android系统APP
+  function load() {
+    if (Terminal.platform.android) {
+      // 这里区分渠道
+      // switch(From){
+      //     case 'baidu':
+      //         theUrl = '你的APP：baidu定制版';
+      //         break;
+      //     case 'google':
+      //         theUrl = '你的APP：google定制版';
+      //         break;
+      //     default:
+      //         theUrl = '你的APP：官方版'
+      // }
+      if (isWeiXin()) {
+        document.getElementById('androidGuide').style.display = "block";
+      } else {
+        location.href = 'http://down.360safe.com/360ap/360freewifi_beta.apk';
       }
-      // 根据不同的终端，跳转到不同的地址
-      // android系统APP
-      if (Terminal.platform.android){
-          // 这里区分渠道
-          // switch(From){
-          //     case 'baidu':
-          //         theUrl = '你的APP：baidu定制版';
-          //         break;
-          //     case 'google':
-          //         theUrl = '你的APP：google定制版';
-          //         break;
-          //     default:
-          //         theUrl = '你的APP：官方版'
-          // }
-        if (isWeiXin()) {
-          document.getElementById('androidGuide').style.display = "block";
-        } else {
-          location.href = 'http://down.360safe.com/360ap/360freewifi_beta.apk';          
-        }
-      } else if (Terminal.platform.ios) {
-        if (isWeiXin()) {
-          document.getElementById('iosGuide').style.display = "block";
-        } else {
-          location.href = 'http://itunes.apple.com/app/id942885362?mt=8'
-        }
+    } else if (Terminal.platform.ios) {
+      if (isWeiXin()) {
+        document.getElementById('iosGuide').style.display = "block";
+      } else {
+        location.href = 'http://itunes.apple.com/app/id942885362?mt=8'
       }
-    </script>
-  </body>
+    }
+  }
+  //load();
+  </script>
+</body>
+
 </html>
