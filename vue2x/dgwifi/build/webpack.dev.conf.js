@@ -43,6 +43,12 @@ module.exports = merge(baseWebpackConfig, {
       template: 'error.html',
       inject: true,
       chunks: ['error'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'welfare.html',
+      template: 'welfare.html',
+      inject: true,
+      chunks: ['welfare'],
     })
   ]
 })

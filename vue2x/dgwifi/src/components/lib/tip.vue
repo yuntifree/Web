@@ -38,7 +38,6 @@ export default {
 	},
 	watch: {
 		show(val) {
-			console.log(val);// +','+!!this.tipinfo.duration)
 			if (this._timeout) clearTimeout(this._timeout);
 			if (val && !!this.tipinfo.duration) {
 			    //this._timeout = setTimeout(()=> this.show = false, this.duration);

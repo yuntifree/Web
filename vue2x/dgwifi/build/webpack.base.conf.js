@@ -14,7 +14,9 @@ module.exports = {
   entry: {
     app: './src/main.js',
     jmap: './src/jmap.js',
-    error: './src/error.js'
+    error: './src/error.js',
+    welfare: './src/welfare.js',
+    //welfare: './src/welfare.js'
   },
   output: {
     path: config.build.assetsRoot,
