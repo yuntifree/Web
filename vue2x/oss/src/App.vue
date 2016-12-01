@@ -26,6 +26,8 @@ import getUsers from './components/views/getUsers.vue'
 import newsReview from './components/views/newsReview.vue'
 import apReview from './components/views/apReview.vue'
 import videoReview from './components/views/videoReview.vue'
+import setBanner from './components/views/setBanner.vue'
+import uploadImg from './components/views/uploadImg.vue'
 
 export default {
   name: 'app',
@@ -55,7 +57,9 @@ export default {
     Login,
     newsReview,
     videoReview,
-    apReview
+    apReview,
+    setBanner,
+    uploadImg
   },
   // for share components View using.
   mounted() {
@@ -272,11 +276,13 @@ button>i {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 100;
 }
 .el-alert--dark {
   background-color: rgba(0,0,0,0.8);
 }
 .el-table .cell {
   padding: 10px;
+  text-align: center;
 }
 </style>

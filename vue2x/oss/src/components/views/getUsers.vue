@@ -24,20 +24,24 @@
               :height="tableHeight"
               border>
               <el-table-column
-                prop="id"
+                inline-template
                 label="id">
+                <div>{{row.id||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="emie"
+                inline-template
                 label="emie">
+                <div>{{row.emie||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="phone"
+                inline-template
                 label="电话">
+                <div>{{row.phone||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="remark"
+                inline-template
                 label="备注">
+                <div>{{row.remark||'-'}}</div>
               </el-table-column>
             </el-table>
           </template>
@@ -112,9 +116,11 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(()=> {
-      this.$store.state.tableHeight = this.$refs.tableContent.offsetHeight;
-    });
+    if (!this.tableHeight) {
+      this.$nextTick(()=> {
+        this.$store.state.tableHeight = this.$refs.tableContent.offsetHeight;
+      });
+    }
     this.getData(true);
   },
   methods: {

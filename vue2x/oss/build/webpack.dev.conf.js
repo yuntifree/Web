@@ -19,7 +19,8 @@ module.exports = merge(baseWebpackConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env,
-      '__DEV__': true
+      '__DEV__': true,
+      '__CDN__': '"http://file.yunxingzh.com"'
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.optimize.OccurenceOrderPlugin(),

@@ -41,19 +41,23 @@ export default {
           title: "新闻审核",
           name: "newsReview",
           icon: "user"
-          },{
+        },{
           title: "视频审核",
           name: "videoReview",
           icon: "user"
-          },/*{
-          title: "模板管理",
-          name: "templateReview",
-          icon: "user"
-          },*/{
+        },{
           title: "AP监控",
           name: "apReview",
           icon: "user"
-          }]
+        },{
+          title: "Banner管理",
+          name: "setBanner",
+          icon: "user"
+        },{
+          title: "图片上传",
+          name: "uploadImg",
+          icon: "user"
+        }]
         }
       ]
     }

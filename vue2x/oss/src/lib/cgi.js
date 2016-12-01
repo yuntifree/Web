@@ -293,7 +293,12 @@ module.exports = {
       }
     }
   },
-
+  emptyObj(obj) {
+    for(var key in obj){
+      return false
+    };
+    return true
+  },
   checkTel(tel) {
     var isPhone = /^([0-9]{3,4})?[0-9]{7,8}$/;
     var isMob = /^((\+?86)|(\(\+86\)))?(1[0-9]{10})$/;

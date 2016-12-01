@@ -36,32 +36,39 @@
               highlight-current-row>
               </el-table-column>
               <el-table-column
-                prop="id"
+                inline-template
                 label="文章ID">
+                <div>{{row.id||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="title"
+                inline-template
                 label="标题">
+                <div>{{row.title||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="modalName"
+                inline-template
                 label="模板名称">
+                <div>{{row.modalName||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="source"
+                inline-template
                 label="来源">
+                <div>{{row.source||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="ctime"
+                inline-template
                 label="时间">
+                <div>{{row.ctime||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="operator"
+                inline-template
                 label="操作人员">
+                <div>{{row.operator||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="reading"
+                inline-template
                 label="阅读数">
+                <div>{{row.reading||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -186,6 +193,11 @@ export default {
     }
   },
   mounted() {
+    if (!this.tableHeight) {
+      this.$nextTick(()=> {
+        this.$store.state.tableHeight = this.$refs.tableContent.offsetHeight;
+      });
+    }
     this.getData(true);
   },
   methods: {

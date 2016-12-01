@@ -38,8 +38,9 @@
               border
               highlight-current-row>
               <el-table-column
-                prop="id"
+                inline-template
                 label="文章ID">
+                <div>{{row.id||'-'}}</div>
               </el-table-column>
               </el-table-column>
               <el-table-column
@@ -48,20 +49,24 @@
                   <img style="width:100%;height:auto;" :src="row.img"/>
               </el-table-column>
               <el-table-column
-                prop="title"
+                inline-template
                 label="标题">
+                <div>{{row.title||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="souce"
+                inline-template
                 label="来源">
+                <div>{{row.source||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="duration"
+                inline-template
                 label="时长">
+                <div>{{row.duration||'-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="ctime"
+                inline-template
                 label="时间">
+                <div>{{row.ctime}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -178,6 +183,11 @@ export default {
     }
   },
   mounted() {
+    if (!this.tableHeight) {
+      this.$nextTick(()=> {
+        this.$store.state.tableHeight = this.$refs.tableContent.offsetHeight;
+      });
+    }
     this.getData(true);
   },
   methods: {

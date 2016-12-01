@@ -25,28 +25,34 @@
               highlight-current-row>
               </el-table-column>
               <el-table-column
-                prop="id"
+                inline-template
                 label="id">
+                <div>{{row.id || '-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="ssid"
-                label="ssid">
+                inline-template
+                label="mac">
+                <div>{{row.mac || '-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="address"
+                inline-template
                 label="位置">
+                <div>{{row.address || '-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="online ? '在线' : '下线’"
+                inline-template
                 label="状态">
+                <div>{{row.online ? '在线' : '下线' || '-'}}</div>
               </el-table-column>
               <el-table-column
-                prop="ctime"
-                label="online">
+                inline-template
+                label="在线人数">
+                <div>{{row.count || '0'}}</div>
               </el-table-column>
               <el-table-column
-                prop="bindwidth"
+                inline-template
                 label="带宽">
+                <div>{{row.bandwidth || '-'}}</div>
               </el-table-column>
             </el-table>
           </template>
@@ -106,6 +112,11 @@ export default {
     }
   },
   mounted() {
+    if (!this.tableHeight) {
+      this.$nextTick(()=> {
+        this.$store.state.tableHeight = this.$refs.tableContent.offsetHeight;
+      });
+    }
     this.getData(true);
     this.$nextTick(()=> {
       CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{})
