@@ -276,7 +276,7 @@ button>i {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 100;
+  z-index: 500;
 }
 .el-alert--dark {
   background-color: rgba(0,0,0,0.8);

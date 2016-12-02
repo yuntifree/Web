@@ -44,6 +44,11 @@
               </el-table-column>
               <el-table-column
                 inline-template
+                label="优先级">
+                <div>{{row.priority||0}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
                 label="状态">
                 <div>{{row.online?'上线':'下线'}}</div>
               </el-table-column>
@@ -120,6 +125,7 @@ export default {
         editShow: false,
         dialogShow: false,
         addShow: false,
+        delShow: false,
       },
       dialogCfg: {
         title: '',
@@ -283,26 +289,38 @@ export default {
       this.dialogCfg.text = text;
       this.reviewInfo = row;
       this.reviewOps = ops;
+      this.modal.delShow = false;
       this.modal.dialogShow = true;
     },
     onlineOps() {
       var param = {
-        id: this.reviewInfo.id,
-        online: this.reviewOps
+        id: this.reviewInfo.id
+      };
+      if (this.modal.delShow) {
+        param.delete = 1;
+      } else {
+        param.online = this.reviewOps;
       }
       CGI.post(this.$store.state, 'mod_banner', param, (resp)=> {
        if (resp.errno === 0) {
-          this.infos[this.selIdx] = param.online; 
-         this.modal.dialogShow = false;
-         this.selIdx = -1;
+        if (this.modal.delShow) {
+          this.infos.splice(this.selIdx,1);
+        } else {
+        this.infos[this.selIdx].online = param.online;           
+        }
+        this.modal.dialogShow = false;
+        this.selIdx = -1;
        } else {
          this.alertInfo(resp.desc);
        }
      })
     },
     delPost(idx,row) {
+      this.selIdx = idx;
       this.dialogCfg.title = '删除';
       this.dialogCfg.text = '确认要删除吗？';
+      this.reviewInfo = row;
+      this.modal.delShow = true;
       this.modal.dialogShow = true;
     },
     alertInfo(val) {

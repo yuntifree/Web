@@ -93,7 +93,7 @@ module.exports = {
   },
 
   login(state, data) {
-    console.log(state);
+    //console.log(state);
     state.uid = data.uid;
     state.token = data.token;
 
@@ -102,7 +102,7 @@ module.exports = {
     sessionStorage.sidebar = JSON.stringify(data.sidebar);
 
     state.logined = true;
-    console.log(state.logined);
+    //console.log(state.logined);
   },
 
   logout(state) {
