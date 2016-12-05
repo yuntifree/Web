@@ -5,10 +5,8 @@
         <uploader></uploader>
 
         <div class="container-flow">
-          <div class="row">
-            <div class="col-sm-2">图片地址：</div>
-            <div class="clo-sm-10">{{imgUrl}}</div>
-          </div>
+          <div>图片地址：</div>
+          <p class="up-img" v-for="img in imgUrl">{{img}}</p>
         </div>
       </div>
     </article>
@@ -21,17 +19,17 @@
   export default{
     data(){
       return {
-        imgUrl: '',
+
       }
     },
     components: {
       uploader,
     },
-    /*events: {
-      'upload-done': function(imageUrl) {
-        this.imgUrl = imageUrl;
-      },
-    }*/
+    computed: {
+      imgUrl() {
+        return this.$store.state.imgUrl
+      }
+    }
   }
 </script>
 <style>
@@ -40,5 +38,8 @@
   }
   .upload-img-box .container-flow {
     margin-top: 20px;
+  }
+  .up-img {
+    margin:  0;
   }
 </style>

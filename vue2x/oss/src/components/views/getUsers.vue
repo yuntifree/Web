@@ -35,6 +35,11 @@
               </el-table-column>
               <el-table-column
                 inline-template
+                label="活跃时间">
+                <div>{{row.active||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
                 label="电话">
                 <div>{{row.phone||'-'}}</div>
               </el-table-column>
@@ -42,6 +47,31 @@
                 inline-template
                 label="备注">
                 <div>{{row.remark||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="连接次数">
+                <div>{{row.times||0}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="连接时长(秒)">
+                <div>{{row.duration||'0'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="使用流量">
+                <div>{{row.emie||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="最后连接时间">
+                <div>{{row.utime||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="最后连接地点">
+                <div>{{row.address||'-'}}</div>
               </el-table-column>
             </el-table>
           </template>

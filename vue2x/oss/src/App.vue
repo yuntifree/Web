@@ -24,6 +24,7 @@ import Login from './login.vue'
 // import views
 import getUsers from './components/views/getUsers.vue'
 import newsReview from './components/views/newsReview.vue'
+import tagsReview from './components/views/tagsReview.vue'
 import apReview from './components/views/apReview.vue'
 import videoReview from './components/views/videoReview.vue'
 import setBanner from './components/views/setBanner.vue'
@@ -56,6 +57,7 @@ export default {
     getUsers,
     Login,
     newsReview,
+    tagsReview,
     videoReview,
     apReview,
     setBanner,

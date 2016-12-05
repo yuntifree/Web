@@ -12,6 +12,7 @@ const state = {
   // 左侧菜单
   menus: [],
   tableHeight: 0,
+  imgUrl: [],
 }
 
 export default new Vuex.Store({
