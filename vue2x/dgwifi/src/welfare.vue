@@ -139,7 +139,6 @@ export default {
           var _location = gps.trans2BD(_this.latitude, _this.longitude);
           _this.latitude = _location[0];
           _this.longitude = _location[1];
-          alert(_this.latitude+ ',' +_this.longitude)
         },
         cancel: function (res) {
           alert('定位失败~');

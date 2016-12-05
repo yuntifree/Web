@@ -63,8 +63,8 @@ export default {
 
       map = new BMap.Map('map');
       // debug
-      _this.longitude = 113.90387023396529;
-      _this.latitude = 22.93310386339828;
+      //_this.longitude = 113.90387023396529;
+      //_this.latitude = 22.93310386339828;
       point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,15);
