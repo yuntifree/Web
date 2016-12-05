@@ -3,8 +3,8 @@
 .item-container {
   width: 94%;
   margin: 0 auto;
-  border-bottom: 2px solid #e7e7e7;
-  padding: 0.16rem 0 0.15rem;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 0.24rem 0;
 }
 .item-title {
   line-height: 150%;
@@ -128,8 +128,8 @@
 import tip from './lib/tip.vue'
 import CGI from '../lib/cgi'
 var query = CGI.query();
-var uid = ~~(query.uid) || 1;
-var token = query.token || '7329cf254871429d803c5826c8d9db1d';
+var uid = ~~(query.uid) || 137;
+var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
 var union = query.union || '';
 
 export default {
