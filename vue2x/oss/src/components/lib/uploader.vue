@@ -113,12 +113,9 @@ export default {
           FileUploaded(up, file, info) {
             if (info.status == 200) {
               document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '完成';
-              //console.log(uploadName);
               uploadName.forEach(function(val, idx) {
                 uploadName[idx] = 'http://img.yunxingzh.com/' + val;
-                // console.log(val);
               })
-              console.log(uploadName);
               self.$store.state.imgUrl = uploadName;
               self.upDone++;
             } else {
