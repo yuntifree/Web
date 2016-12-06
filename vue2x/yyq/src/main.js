@@ -13,7 +13,6 @@ import hot from './components/hot.vue'
 import evaluate from './components/evaluate.vue'
 import detail from './components/detail.vue'
 
-
 const router = new VueRouter({
   mode: 'history',
   base: __dirname,
@@ -40,10 +39,8 @@ const router = new VueRouter({
       name: 'detail',
       component: detail,
     },{
-      path: '/hello/:id',
+      path: "*",
       redirect: '/hello/newest',
-      name: 'default',
-      component: hello,
     }]
 })
 
@@ -55,7 +52,7 @@ new Vue({
   components: { App },
   mounted() {
     this.$nextTick(()=> {
-      router.push({ name: 'default', params: { id: 'newest'}});
+      //router.push({ name: 'default', params: { id: 'newest'}});
     })
   }
 })
