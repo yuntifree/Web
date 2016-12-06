@@ -7,12 +7,6 @@
           <i :class="['iconfont', 'icon-' + item.icon]"></i>
           <a :href="item.url">{{item.title}}</a>
         </li>
-        <!--router-link v-for="item in menu.menus" :to="foo">
-          <li  :class="{checked: selItem == item.title}" @click="onSelect(menu.title, item.title, item.name)">
-            <i :class="['iconfont', 'icon-' + item.icon]"></i>
-            <a :href="item.url">{{item.title}}</a>
-          </li>
-        </router-link-->
       </ul>
     </template>
     <footer class="sidebar-footer">
@@ -74,8 +68,8 @@ export default {
         view: view,
         paths: [title, subtitle]
       });
-      this.selItem = subtitle;
-      //this.$dispatch('view-change', view, subtitle);
+      this.selItem = this.$store.state.selItem = subtitle;
+      this.$store.state.viewName = view;
     }
   },
   mounted() {

@@ -13,6 +13,8 @@ const state = {
   menus: [],
   tableHeight: 0,
   imgUrl: [],
+  viewName: '',
+  selItem: '',
 }
 
 export default new Vuex.Store({

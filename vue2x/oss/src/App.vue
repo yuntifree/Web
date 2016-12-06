@@ -66,6 +66,8 @@ export default {
   // for share components View using.
   mounted() {
     this.$nextTick(()=> {
+      this.$store.state.viewName = this.currentView;
+      this.$store.state.selItem = this.$store.state.paths[1];
       //this.$emit('view-change', this.currentView, this.$store.state.paths[1]);
     })
   },
