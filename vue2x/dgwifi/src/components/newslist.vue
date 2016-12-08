@@ -215,12 +215,6 @@ export default {
     formatTime(ctime) {
       return ctime.substr(0, ctime.length - 3)
     }
-  },
-  events: {
-    'tip-show': function() {
-      console.log('tip close');
-      this.tips.show = false;
-    }
   }
 }
 </script>

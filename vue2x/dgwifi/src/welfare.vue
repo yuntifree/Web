@@ -3,33 +3,45 @@
 .welfare-container {
   @include containerSize(100%, 100%);
   overflow: hidden;
-  padding-top: 1.2rem;
+  padding-top: 0.6rem;
+}
+.welfare-slogon {
+  display: block;
+  width: 40%;
+  height: auto;
+  margin: 0 auto 0.4rem;
 }
 .welfare-text {
   font-size: 0.28rem;
   color: #787878;
   line-height: 180%;
+  position: relative;
+}
+.text-bg {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  left: 0;
+  bottom: -0.6rem;
 }
 .welfare-main {
-  width: 77%;
-  height: auto;
-  padding: 0.28rem 0.42rem 0.56rem;
-  margin: 1.24rem auto 0.3rem;
-  border-radius: 0.16rem;
-  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px #979797;
+  margin: 1.01rem auto 0.3rem;
 }
 .main-img {
   display: block;
   margin: 0 auto;
   @include containerSize(0.88rem, 0.88rem);
 }
+.input-info {
+  width: 65.6%;
+  margin: 0 auto;
+}
 .input-img {
   display: block;
   padding: 0.28rem 0;
 }
 .input-img img {
-  @include containerSize(0.4rem, 0.4rem);
+  @include containerSize(0.52rem, 0.52rem);
 }
 .input-info input {
   display: block;
@@ -40,29 +52,36 @@
 }
 .btn-join {
   display: block;
-  @include containerSize(90%, 0.88rem);
+  @include containerSize(70%, 0.88rem);
   line-height: 0.88rem;
   text-align: center;
   background-color: #009cfb;
   border-radius: 0.16rem;
-  margin: 0.4rem auto 0;
+  margin: 0.72rem auto 0;
   color: #fff;
   font-size: 0.32rem;
 }
 </style>
 <template>
   <div class="welfare-container">
+    <img class="welfare-slogon" src="http://img.yunxingzh.com/2ba93aa0-ab3a-48b1-afd9-2923cfbcb966.png">
     <p class="g-tac welfare-text">
-      3万个免费WiFi<br/>打造全民WiFi服务<br/>你的生活，将因为我的到来，而万分精彩
+      东莞无线是由东莞市政府全力打造的公益项目<br/>
+      旨在帮助东莞市民随时随地，一键免费上网<br/>
+      目前已覆盖全市政府/医院/学校等公共区域<br/>
+      我们希望您一起加入WiFi公益项目<br/>
+      只需将富余的WiFi密码分享给大家<br/>
+      便为构建东莞智慧城市出了一份力
+      <img class="text-bg" src="http://img.yunxingzh.com/6b0c29f5-f230-475c-9297-89da57e0e131.png">
     </p>
     <div class="welfare-main">
-      <img class="main-img" src="../static/ico_addwifi.png">
+      <!--img class="main-img" src="../static/ico_addwifi.png"-->
       <div class="input-info g-clearfix">
-        <label class="input-img g-fl" for="name"><img src="../static/ico_wifiname.png"></label>
+        <label class="input-img g-fl" for="name"><img src="../static/ico_wificode.png"></label>
         <input class="g-fl g-tac" id="name" type="text" placeholder="请输入无线网络名称" v-model.trim="ssid">
       </div>
       <div class="input-info g-clearfix">
-        <label class="input-img g-fl" for="pwd"><img src="../static/ico_wificode.png"></label>
+        <label class="input-img g-fl" for="pwd"><img src="../static/ico_wifiname.png"></label>
         <input class="g-fl g-tac" id="pwd" type="text" placeholder="请输入无线网络密码" v-model.trim="pwd">
       </div>
       <button class="btn-join" @click="clickJoin">参与公益</button>
