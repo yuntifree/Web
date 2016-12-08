@@ -49,6 +49,7 @@
   padding: 0.28rem 0;
   border-bottom:  solid 1px #969696;
   font-size: 0.24rem;
+  border-radius: 0;
 }
 .btn-join {
   display: block;
