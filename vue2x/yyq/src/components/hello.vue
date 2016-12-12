@@ -17,8 +17,13 @@ export default {
       msg: 'Welcome to Your Vue.js App'
     }
   },
+  computed: {
+    cur() {
+      //return this.$store.state.active;
+    }
+  },
   mounted() {
-  }
+  },
 }
 </script>
 
@@ -30,5 +35,8 @@ export default {
 }
 .flex-space li {
   flex:  1;
+}
+.router-link-active {
+  color: orange;
 }
 </style>

@@ -21,7 +21,7 @@ module.exports = function(bFont) {
 				if (width / dpr > 640) {
 					width = 640 * dpr;
 				}
-				docEl.style.fontSize = 100 * (width / 640) + 'px';
+				docEl.style.fontSize = 100 * (width / 750) + 'px';
 			};
 			recalc();
 			if (!document.addEventListener) return;

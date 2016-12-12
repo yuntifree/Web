@@ -76,7 +76,9 @@
 <div id="newslist">
   <div v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
-      infinite-scroll-distance="30">
+      infinite-scroll-distance="30"
+      ref="container"
+      id="scrollTag">
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -194,7 +196,11 @@ export default {
       }
     },
     link(item) {
-      var param = {
+      console.log(this.$refs.container);
+      console.log(this.$refs.container.scrollY);
+      //localStorage;
+      //this.setHeight = storage.setItem("c",3);
+      /*var param = {
         id: item.id,
         type: 0,
         uid: uid,
@@ -207,7 +213,7 @@ export default {
           console.log(resp.desc);
         }
       })
-      location.href=item.dst;
+      location.href=item.dst;*/
     },
     tipBox(val) {
       this.tips.msg = val;
