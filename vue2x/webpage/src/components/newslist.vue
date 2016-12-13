@@ -46,6 +46,9 @@
   color: $color84;
   line-height: 0.34rem;
 }
+.item-visited {
+  color: $color84;
+}
 .item-desc span:first-child {
   margin-right: 0.4rem;
 }
@@ -77,18 +80,17 @@
   <div v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="30"
-      ref="container"
-      id="scrollTag">
+      ref="container">
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
       <!--新闻有3张图片-->
       <template v-if="item.images.length>2 && !item.stype">
         <div class="list-img3">
-          <p class="item-title">{{item.title}}</p>
+          <p class="item-title" :class="{'item-visited':item.visited}">{{item.title}}</p>
           <ul class="g-clearfix item-imgs">
             <li v-for="imgs in item.images"
-                class="g-fl"><img :src="imgs" class="img-list">
+                class="g-fl"><img v-lazy="imgs" class="img-list">
             </li>
           </ul>
           <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
@@ -97,9 +99,9 @@
       <!--新闻有1、2张图片-->
       <template v-if="item.images.length==1 || item.images.length==2 && !item.stype">
         <dl class="g-clearfix">
-         <dt class="g-fr list-img1"><img :src="item.images[0]"></dt>
+         <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
          <dd class="list1-info g-fl">
-           <p class="item-title list1-item-title lines-ellipsis" >{{item.title}}</p>
+           <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
            <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
          </dd>
        </dl>
@@ -107,15 +109,15 @@
       <!--广告-->
       <template  v-if="item.images && item.stype">
         <div>
-          <p class="item-title g-ellipsis">{{item.title}}</p>
-          <div class="adv-img"><img :src="item.images[0]"></div>
+          <p class="item-title g-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
+          <div class="adv-img"><img v-lazy="item.images[0]"></div>
           <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
         </div>
       </template>
       <!--无图片新闻-->
       <template v-if="!item.images">
         <div>
-          <p class="item-title g-ellipsis">{{item.title}}</p>
+          <p class="item-title g-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
           <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
         </div>
       </template>
@@ -148,6 +150,7 @@ export default {
       ready: false,
       loading: false,
       nomore: false,
+      useCache: false
     }
   },
   components: {
@@ -159,7 +162,25 @@ export default {
       if (union.length > 0) {
         CGI.setCookie('UNION', union, 7);
       }
-      this.getData()
+      var scrollY = sessionStorage.getItem('scrollY');
+      if (scrollY != null) {
+        var cache = sessionStorage.getItem('cache');
+        if (cache && cache.length > 0) {
+          var list = JSON.parse(cache);
+          if (list) {
+            this.items = list;
+            this.useCache = true;
+            console.log('use cache, scroll ' + scrollY);
+            this.$nextTick(function() {
+              window.scroll(0, scrollY);
+            })
+          }
+        }
+        sessionStorage.clear();
+      }
+      if (!this.useCache) {
+        this.getData()
+      }
     })
   },
   methods: {
@@ -172,8 +193,9 @@ export default {
       }
       CGI.post('hot', param, (resp)=>{
         if (resp.errno === 0) {
+          this.pageCount++;
           resp.data.infos.forEach((item)=>{
-            item.visited = false;
+            this.$set(item, "visited", false);
           })
           this.items = this.items.concat(resp.data.infos);
           if (param.seq==0) {
@@ -187,6 +209,11 @@ export default {
       });
     },
     loadMore() {
+      if (this.useCache) {
+        this.useCache = false;
+        return;
+      }
+
       this.loading = true;
       var len = this.items.length-1;
       if (!this.nomore && len >= 0) {
@@ -196,24 +223,16 @@ export default {
       }
     },
     link(item) {
-      console.log(this.$refs.container);
-      console.log(this.$refs.container.scrollY);
-      //localStorage;
-      //this.setHeight = storage.setItem("c",3);
-      /*var param = {
-        id: item.id,
-        type: 0,
-        uid: uid,
-        token: token,
-      };
-      CGI.post('report_click',param,(resp)=>{
-        if (resp.errno === 0) {
-          console.log(resp.errno)
-        } else {
-          console.log(resp.desc);
-        }
-      })
-      location.href=item.dst;*/
+      item.visited = true;
+      var scrollY = window.scrollY;
+      var pageHeight = document.documentElement.clientHeight;
+      var delta = scrollY % pageHeight;
+      scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
+      sessionStorage.setItem('scrollY', scrollY);
+
+      sessionStorage.setItem('cache', JSON.stringify(this.items));
+
+      location.href = item.dst;
     },
     tipBox(val) {
       this.tips.msg = val;

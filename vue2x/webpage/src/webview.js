@@ -2,9 +2,11 @@ import Vue from 'vue'
 import Webview from './webview.vue'
 import VueRouter from 'vue-router'
 import infiniteScroll from 'vue-infinite-scroll'
+import VueLazyload from 'vue-lazyload'
 
 Vue.use(VueRouter)
 Vue.use(infiniteScroll)
+Vue.use(VueLazyload)
 
 
 var initFont = require('./common/font.js')
@@ -23,21 +25,21 @@ const router = new VueRouter({
       path: '/tab',
       name: 'tab',
       component: tab,
-      children: [{ 
+      children: [{
         path: 'newslist',
         name: 'newslist',
-        component: newslist 
-        },{ 
+        component: newslist
+        },{
         path: 'videos',
         name: 'videos',
-        component: videos 
-        },{ 
+        component: videos
+        },{
         path: 'service',
         name: 'service',
-        component: service 
+        component: service
         }]
-    },{ 
-      path: '*', 
+    },{
+      path: '*',
       redirect: '/tab/newslist',
     }]
 })
