@@ -45,6 +45,7 @@
     "shelljs": "^0.7.4",
     "url-loader": "^0.5.7",
     "vue-infinite-scroll": "^2.0.0",
+    "vue-lazyload": "^0.9.5",
     "vue-loader": "^9.4.0",
     "vue-style-loader": "^1.0.0",
     "vue-swipe": "^2.0.0",

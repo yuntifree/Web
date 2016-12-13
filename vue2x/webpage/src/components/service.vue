@@ -103,23 +103,23 @@ export default {
       lists:[{
         img: '../../static/cooperation.png',
         text: '招聘',
-        dst: 'http://jump.luna.58.com/i/29Zo'
+        dst: 'http://jump.luna.58.com/i/29a5'
       },{
         img: '../../static/secong_hand.png',
         text: '二手',
-        dst: 'http://jump.luna.58.com/i/29Zp'
+        dst: 'http://jump.luna.58.com/i/29a7'
       },{
         img: '../../static/housing.png',
         text: '租房',
-        dst: 'http://jump.luna.58.com/i/29Zq'
+        dst: 'http://jump.luna.58.com/i/29a4'
       },{
         img: '../../static/housekeeping.png',
         text: '家政',
-        dst: 'http://jump.luna.58.com/i/29Zr'
+        dst: 'http://jump.luna.58.com/i/29a6'
       },{
         img: '../../static/more.png',
         text: '更多',
-        dst: 'http://jump.luna.58.com/i/29Zs'
+        dst: 'http://jump.luna.58.com/i/29a3'
       }],
       tips: {
         show: false,

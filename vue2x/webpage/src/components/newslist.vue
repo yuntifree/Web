@@ -134,8 +134,6 @@ import CGI from '../lib/cgi'
 var query = CGI.query();
 var uid = ~~(query.uid) || 137;
 var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
-var union = query.union || '';
-
 export default {
   name: 'newslist',
   data() {
@@ -159,9 +157,6 @@ export default {
   mounted() {
     this.$nextTick(function () {
       // 存下union
-      if (union.length > 0) {
-        CGI.setCookie('UNION', union, 7);
-      }
       var scrollY = sessionStorage.getItem('scrollY');
       if (scrollY != null) {
         var cache = sessionStorage.getItem('cache');
@@ -170,7 +165,6 @@ export default {
           if (list) {
             this.items = list;
             this.useCache = true;
-            console.log('use cache, scroll ' + scrollY);
             this.$nextTick(function() {
               window.scroll(0, scrollY);
             })

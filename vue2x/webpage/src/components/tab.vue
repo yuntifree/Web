@@ -5,7 +5,11 @@
       <li class="g-tac"><router-link to="/tab/videos">视频</router-link></li>
       <li class="g-tac"><router-link to="/tab/service">本地服务</router-link></li>
     </ul>
-    <router-view></router-view>
+    <transition>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 

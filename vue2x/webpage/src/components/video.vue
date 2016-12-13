@@ -1,8 +1,12 @@
 <template>
-  <div class="videos">
+  <div class="videos" 
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="30"
+      ref="container">
     <div class="video-list" v-for="item in items">
-      <div class="vedio-inner" @click="videoLink(item.dst)">
-        <img class="vedio-img" :src="item.images[0]">
+      <div class="vedio-inner" @click="videoLink(item)">
+        <img class="vedio-img" v-lazy="item.images[0]">
         <div class="video-text g-clearfix">
           <p class="g-fl"><span class="video-text-source">{{item.source}}</span><span>{{item.ctime}}</span></p>
           <p class="g-fr">{{item.play}}次播放</p>
@@ -11,7 +15,7 @@
       </div>
       <p class="video-title ellipsis">{{item.title}}</p>
     </div>
-    <div v-show="loading" class="loading">努力加载中</div>
+    <p class="item-desc g-tac loading" v-if="loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
   </div>
 </template>
 
@@ -25,6 +29,7 @@ export default {
     return {
       loading: false,
       items: [],
+      useCache: false,
       tips: {
         show: false,
         msg: '',
@@ -34,7 +39,27 @@ export default {
     }
   },
   mounted() {
-    this.getData();
+    this.$nextTick(function () {
+      // 存下union
+      var scrollY = sessionStorage.getItem('scrollY');
+      if (scrollY != null) {
+        var cache = sessionStorage.getItem('cache');
+        if (cache && cache.length > 0) {
+          var list = JSON.parse(cache);
+          if (list) {
+            this.items = list;
+            this.useCache = true;
+            this.$nextTick(function() {
+              window.scroll(0, scrollY);
+            })
+          }
+        }
+        sessionStorage.clear();
+      }
+      if (!this.useCache) {
+        this.getData()
+      }
+    })
   },
   methods: {
     getData(seq) {
@@ -46,14 +71,41 @@ export default {
       }
       CGI.post('hot', param, (resp)=> {
         if (resp.errno == 0) {
+          resp.data.infos.forEach((item)=>{
+            this.$set(item, "visited", false);
+          })
           this.items = this.items.concat(resp.data.infos);
+          this.nomore = resp.data.hasmore ? false : true;
+          this.loading = false;
         } else {
           this.tipBox(resp.desc);
         }
       })
     },
-    videoLink(url) {
-      location.href = url;
+    loadMore() {
+      if (this.useCache) {
+        this.useCache = false;
+        return;
+      }
+
+      this.loading = true;
+      var len = this.items.length-1;
+      if (!this.nomore && len >= 0) {
+        setTimeout(()=>{
+          this.getData(this.items[len].seq);
+        },1000)
+      }
+    },
+    videoLink(item) {
+      item.visited = true;
+      var scrollY = window.scrollY;
+      var pageHeight = document.documentElement.clientHeight;
+      var delta = scrollY % pageHeight;
+      scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
+      sessionStorage.setItem('scrollY', scrollY);
+
+      sessionStorage.setItem('cache', JSON.stringify(this.items));
+      location.href = item.url;
     },
     tipBox(val) {
       this.tips.msg = val;
