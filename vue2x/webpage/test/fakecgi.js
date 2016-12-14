@@ -1,7 +1,7 @@
 var express = require('express');
 var agent = require('superagent');
 var router = express.Router();
-var HOST = 'http://120.25.133.234/'
+var HOST = 'http://api.yunxingzh.com/'
 
 // test data
 var prices = [{

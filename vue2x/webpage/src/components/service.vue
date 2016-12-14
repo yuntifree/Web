@@ -68,13 +68,13 @@
     <div class="item flex-wrp-space">
       <div class="item-list"
             v-for="list in lists"
-            @click="urlLink(list.dst)"> 
+            @click="urlLink(list.dst)">
         <img :src="list.img">
         <p>{{list.text}}</p>
       </div>
     </div>
-    <div class="serv-list" 
-          v-for="ser in services"> 
+    <div class="serv-list"
+          v-for="ser in services">
       <div class="ser-title flex-wrp">
         <img class="ser-tit-icon" :src="ser.icon">
         <p>{{ser.title}}</p>
@@ -101,23 +101,23 @@ export default {
       services: [],
       loading: false,
       lists:[{
-        img: '/'+__routerName__+'/static/cooperation.png',
+        img: __public__ + 'static/cooperation.png',
         text: '招聘',
         dst: 'http://jump.luna.58.com/i/29a5'
       },{
-        img: './static/secong_hand.png',
+        img: __public__ + 'static/secong_hand.png',
         text: '二手',
         dst: 'http://jump.luna.58.com/i/29a7'
       },{
-        img: './static/housing.png',
+        img: __public__ + 'static/housing.png',
         text: '租房',
         dst: 'http://jump.luna.58.com/i/29a4'
       },{
-        img: './static/housekeeping.png',
+        img: __public__ + 'static/housekeeping.png',
         text: '家政',
         dst: 'http://jump.luna.58.com/i/29a6'
       },{
-        img: './static/more.png',
+        img: __public__ + 'static/more.png',
         text: '更多',
         dst: 'http://jump.luna.58.com/i/29a3'
       }],

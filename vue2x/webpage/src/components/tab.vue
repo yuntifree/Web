@@ -1,9 +1,9 @@
 <template>
   <div class="tab">
     <ul class="flex-space">
-      <li class="g-tac"><router-link to="/webpage/newslist">新闻</router-link></li>
-      <li class="g-tac"><router-link to="/webpage/videos">视频</router-link></li>
-      <li class="g-tac"><router-link to="/webpage/service">本地服务</router-link></li>
+      <li class="g-tac"><router-link :to="{name:'newslist'}">新闻</router-link></li>
+      <li class="g-tac"><router-link :to="{name:'videos'}">视频</router-link></li>
+      <li class="g-tac"><router-link :to="{name:'service'}">本地服务</router-link></li>
     </ul>
     <transition>
       <keep-alive>
