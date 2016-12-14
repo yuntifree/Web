@@ -31,7 +31,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env,
       '__DEV__': false,
-      '__public__': '"'+config.dev.assetsPublicPath+'"'
+      '__public__': '"'+config.build.assetsPublicPath+'"'
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {

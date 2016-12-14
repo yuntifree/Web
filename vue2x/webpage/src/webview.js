@@ -19,12 +19,13 @@ import service from './components/service.vue'
 
 
 const router = new VueRouter({
-  mode: 'history',
-  base: __dirname,
+  mode: 'hash',
+  base: __public__,
   routes: [
     {
-      path: '/webpage',
-      name: 'webpage',
+      path: '',
+      name: 'home',
+      redirect: 'newslist',
       component: tab,
       children: [{
         path: 'newslist',
@@ -41,7 +42,7 @@ const router = new VueRouter({
         }]
     },{
       path: '*',
-      redirect: '/webpage/newslist',
+      redirect: 'newslist',
     }]
 })
 
