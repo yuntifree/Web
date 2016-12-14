@@ -17,13 +17,14 @@ import newslist from './components/newslist.vue'
 import videos from './components/video.vue'
 import service from './components/service.vue'
 
+
 const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
     {
-      path: '/tab',
-      name: 'tab',
+      path: '/webpage',
+      name: 'webpage',
       component: tab,
       children: [{
         path: 'newslist',
@@ -40,7 +41,7 @@ const router = new VueRouter({
         }]
     },{
       path: '*',
-      redirect: '/tab/newslist',
+      redirect: '/webpage/newslist',
     }]
 })
 
