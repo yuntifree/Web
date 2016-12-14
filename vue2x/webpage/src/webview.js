@@ -23,8 +23,8 @@ const router = new VueRouter({
   base: __dirname,
   routes: [
     {
-      path: '/webpage',
-      name: 'webpage',
+      path: '/'+__routerName__,
+      name: __routerName__,
       component: tab,
       children: [{
         path: 'newslist',
@@ -41,7 +41,7 @@ const router = new VueRouter({
         }]
     },{
       path: '*',
-      redirect: '/webpage/newslist',
+      redirect: '/'+__routerName__+'/newslist',
     }]
 })
 
