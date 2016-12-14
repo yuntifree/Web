@@ -23,8 +23,8 @@ const router = new VueRouter({
   base: __dirname,
   routes: [
     {
-      path: '/'+__routerName__,
-      name: __routerName__,
+      path: '/webpage',
+      name: 'webpage',
       component: tab,
       children: [{
         path: 'newslist',
@@ -41,7 +41,7 @@ const router = new VueRouter({
         }]
     },{
       path: '*',
-      redirect: '/'+__routerName__+'/newslist',
+      redirect: '/webpage/newslist',
     }]
 })
 
@@ -52,6 +52,7 @@ new Vue({
   template: '<Webview/>',
   components: { Webview },
   mounted() {
+    //console.log(__routerName__);
     this.$nextTick(()=> {
       //router.push({ name: 'default', params: { id: 'newest'}});
     })

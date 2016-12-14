@@ -20,7 +20,7 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': config.dev.env,
       '__DEV__': true,
-      '__routerName__':config.dev.routerName,
+      '__routerName__':'""',
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.optimize.OccurenceOrderPlugin(),

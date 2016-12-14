@@ -31,7 +31,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env,
       '__DEV__': false,
-      '__routerName__':config.build.routerName,
+      '__routerName__':'"webpage"
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {

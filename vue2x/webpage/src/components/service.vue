@@ -101,7 +101,7 @@ export default {
       services: [],
       loading: false,
       lists:[{
-        img: './static/cooperation.png',
+        img: '/'+__routerName__+'/static/cooperation.png',
         text: '招聘',
         dst: 'http://jump.luna.58.com/i/29a5'
       },{
