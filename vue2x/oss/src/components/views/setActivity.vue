@@ -73,14 +73,14 @@
         <div class="edit-form" style="width:600px">
           <el-form ref="form" :model="addInfo" label-width="80px">
             <el-form-item label="name">
-              <el-input v-model="addInfo.key" placeholder="请输入名称"></el-input>
+              <el-input v-model.trim="addInfo.key" placeholder="请输入名称"></el-input>
             </el-form-item>
             <el-form-item label="value">
               <el-input
                 type="textarea"
                 placeholder="请输入内容"
                 :autosize="{ minRows: 2, maxRows: 4}"
-                v-model="addInfo.val">
+                v-model.trim="addInfo.val">
               </el-input>
             </el-form-item> 
             <el-form-item>
@@ -201,28 +201,40 @@ export default {
     },
     addPost() {
       var param = {};
-      // if (this.modal.editShow) {
-      //   param = CGI.objModified(this.infos[this.selIdx], this.addInfo);
-      // } else {
-        param = this.addInfo;
-      //}
-      console.log(this.modal.Show);
-      console.log(JSON.stringify(this.addInfo) + ',' +JSON.stringify(param));
-      CGI.post(this.$store.state, 'set_conf', param, (resp)=> {
-        if (resp.errno == 0) {
-          if (this.modal.editShow) {
-            this.alertInfo('修改成功');
-            CGI.extend(this.infos[this.selIdx], this.addInfo);
-            this.selIdx = -1;
+      param = this.addInfo;
+      var objVal;
+      if (this.addInfo.key.length <=0) {
+        this.alertInfo('请输入name');
+        return;
+      }
+      if (this.addInfo.val.length <=0) {
+        this.alertInfo('请输入内容');
+        return;
+      }
+      try {
+        objVal = JSON.parse(this.addInfo.val)  
+      } catch(e) {
+        objVal = null;
+      }
+      if (objVal) {
+        CGI.post(this.$store.state, 'set_conf', param, (resp)=> {
+          if (resp.errno == 0) {
+            if (this.modal.editShow) {
+              this.alertInfo('修改成功');
+              CGI.extend(this.infos[this.selIdx], this.addInfo);
+              this.selIdx = -1;
+            } else {
+              this.alertInfo('新增成功');
+              this.infos.unshift(this.addInfo);
+            }         
+            this.modal.addShow = false;
           } else {
-            this.alertInfo('新增成功');
-            this.infos.unshift(this.addInfo);
-          }         
-          this.modal.addShow = false;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      })
+            this.alertInfo(resp.desc);
+          }
+        })        
+      } else {
+        this.alertInfo('请输入正确JSON格式');
+      }
     },
     editAct(idx, row) {
       this.selIdx = idx;
