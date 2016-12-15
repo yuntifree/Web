@@ -3,6 +3,5 @@ node_modules/
 dist/
 debug/
 yyq/
-activity/
 wxProgram/
 npm-debug.log
