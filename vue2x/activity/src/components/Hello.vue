@@ -58,5 +58,6 @@ export default {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
 }
 </style>
