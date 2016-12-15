@@ -29,6 +29,7 @@ import apReview from './components/views/apReview.vue'
 import videoReview from './components/views/videoReview.vue'
 import setBanner from './components/views/setBanner.vue'
 import uploadImg from './components/views/uploadImg.vue'
+import setActivity from './components/views/setActivity.vue'
 
 export default {
   name: 'app',
@@ -61,7 +62,8 @@ export default {
     videoReview,
     apReview,
     setBanner,
-    uploadImg
+    uploadImg,
+    setActivity
   },
   // for share components View using.
   mounted() {

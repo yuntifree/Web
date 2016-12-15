@@ -7,13 +7,16 @@
 .el-icon-close:before {
  content: '';
 }
+.el-textarea__inner {
+  resize: none;
+}
 </style>
 <template>
   <div class="mana_container">
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
-          <button class="btn btn-left outline-none" @click="addtags">增加</button>
+          <button class="btn btn-left outline-none" @click="addAct">增加</button>
         </div>
         <div>
           <div class="quick_search">
@@ -28,7 +31,7 @@
         <div id="tab1" class="tab_content tab-fixed" v-if="dataReady">
           <template>
             <el-table
-              :data="tags"
+              :data="infos"
               :height="tableHeight"
               border
               highlight-current-row>
@@ -36,12 +39,12 @@
               <el-table-column
                 inline-template
                 label="标签ID">
-                <div>{{row.id||'-'}}</div>
+                <div>{{row.key||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
                 label="内容">
-                <div>{{row.content||'-'}}</div>
+                <div>{{row.val||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -50,7 +53,8 @@
                 label="操作"
                 width="100">
                 <span>
-                  <el-button @click="deltags($index,row)" type="text" size="small">删除</el-button>
+                  <el-button @click="editAct($index,row)" type="text" size="small">编辑</el-button>
+                  <el-button @click="delAct($index,row)" type="text" size="small">删除</el-button>
                 </span>
               </el-table-column>
             </el-table>
@@ -68,9 +72,17 @@
       <div class="shade" v-if="modal.addShow" >
         <div class="edit-form" style="width:600px">
           <el-form ref="form" :model="addInfo" label-width="80px">
-            <el-form-item label="content">
-              <el-input v-model="addInfo.content"></el-input>
+            <el-form-item label="name">
+              <el-input v-model="addInfo.key" placeholder="请输入名称"></el-input>
             </el-form-item>
+            <el-form-item label="value">
+              <el-input
+                type="textarea"
+                placeholder="请输入内容"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                v-model="addInfo.val">
+              </el-input>
+            </el-form-item> 
             <el-form-item>
               <el-button type="primary" @click="addPost">确定</el-button>
               <el-button @click="modal.addShow=false">取消</el-button>
@@ -102,9 +114,10 @@ export default {
   data() {
     return {
       dataReady: true,
-      tags: [],
+      infos: [],
       modal: {
         addShow: false,
+        editShow: false,
         dialogShow: false,
       },
       dialogCfg: {
@@ -118,17 +131,12 @@ export default {
         currentPage: 1,
       },
       selIdx: -1,
-
-      selected: {
-        number:0
-      },
       search: '',
-      tagsInfo: [],
-      checkedTags: [],
       addInfo: {
-        content: '',
+        key: '',
+        val: ''
       },
-      tagsInfo: {},
+      acrInfo: {},
       alertShow: false,
       alertMsg: '',
     }
@@ -165,13 +173,12 @@ export default {
       var param = {
         seq: this.pageCfg.start,
         num: 30,
-        type: this.selected.number
       }
 
-      CGI.post(this.$store.state, 'get_tags', param, (resp) => {
+      CGI.post(this.$store.state, 'get_conf', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
-          this.tags = data.tags;
+          this.infos = data.infos;
           this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
           this.dataReady = true;
         } else {
@@ -187,43 +194,58 @@ export default {
       this.getData(false);
       console.log('当前页: ${val}');
     },
-    addtags() {
+    addAct() {
       CGI.objClear(this.addInfo);
+      this.modal.editShow = false;
       this.modal.addShow = true;
     },
     addPost() {
-      var content = [];
-      content.push(this.addInfo.content);
-      var param = {
-        tags: content
-      }
-      CGI.post(this.$store.state, 'add_tags', param, (resp)=> {
+      var param = {};
+      // if (this.modal.editShow) {
+      //   param = CGI.objModified(this.infos[this.selIdx], this.addInfo);
+      // } else {
+        param = this.addInfo;
+      //}
+      console.log(this.modal.Show);
+      console.log(JSON.stringify(this.addInfo) + ',' +JSON.stringify(param));
+      CGI.post(this.$store.state, 'set_conf', param, (resp)=> {
         if (resp.errno == 0) {
-          this.alertInfo('新增成功');
-          this.addInfo.id = resp.data.ids[0];
-          this.tags.unshift(this.addInfo);
+          if (this.modal.editShow) {
+            this.alertInfo('修改成功');
+            CGI.extend(this.infos[this.selIdx], this.addInfo);
+            this.selIdx = -1;
+          } else {
+            this.alertInfo('新增成功');
+            this.infos.unshift(this.addInfo);
+          }         
           this.modal.addShow = false;
         } else {
           this.alertInfo(resp.desc);
         }
       })
     },
-    deltags(idx, row) {
+    editAct(idx, row) {
+      this.selIdx = idx;
+      CGI.extend(this.addInfo, row);
+      this.modal.editShow = true;
+      this.modal.addShow = true;
+    },
+    delAct(idx, row) {
       this.selIdx = idx;
       this.dialogCfg.title = '删除';
-      this.dialogCfg.text = '确认要删除' + row.id;
-      this.tagsInfo = CGI.clone(row);
+      this.dialogCfg.text = '确认要删除' + row.key;
+      this.actInfo = CGI.clone(row);
       this.modal.dialogShow = true;
     },
     delPost() {
-      var ids = [];
-      ids.push(this.tagsInfo.id);
+      var keys = [];
+      keys.push(this.actInfo.key);
       var param = {
-        ids: ids
+        keys: keys
       }
-      CGI.post(this.$store.state, 'del_tags', param, (resp)=> {
+      CGI.post(this.$store.state, 'del_conf', param, (resp)=> {
         if (resp.errno === 0) {
-          this.tags.splice(this.selIdx, 1);
+          this.infos.splice(this.selIdx, 1);
           this.modal.dialogShow = false;
           this.alertInfo('删除成功');
           this.selIdx = -1;

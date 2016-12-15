@@ -55,6 +55,10 @@ export default {
             title: "图片上传",
             name: "uploadImg",
             icon: "user"
+          },{
+            title: "活动配置",
+            name: "setActivity",
+            icon: "user"
           }]
         }
       ]
