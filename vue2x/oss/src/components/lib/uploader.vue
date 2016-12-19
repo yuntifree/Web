@@ -13,6 +13,7 @@
 import CGI from '../../lib/cgi.js'
 
 var uploadName = [];
+var obj = {};
 
 export default {
   data() {
@@ -51,32 +52,33 @@ export default {
               // 这里偷懒少了超时逻辑，必要的时候补回来
               //self.filenames = makeParam(self.prevnames, self.filenames);
               self.prevnames = self.filenames;
-              console.log(self.filenames);
               CGI.post(self.$store.state, 'get_oss_image_policy', {
                 // debug: 1,
                 formats: get_suffix(self.filenames)
               }, (resp) => {
                 if (resp.errno === 0) {
-                  var obj = resp.data;
+                  obj = resp.data;
                   obj['names'].forEach(function(val) {
                     uploadName.push(val)
                   })
+                  doUpload(uploader, 0);
                   //uploadName = obj['dir'] + obj['name'];
-                  uploadName.forEach(function(val) {
-                    var new_multipart_params = {
-                      'key': val,
-                      'policy': obj['policy'],
-                      'OSSAccessKeyId': obj['accessid'],
-                      'success_action_status': '200', //让服务端返回200,不然，默认会返回204
-                      'callback': obj['callback'],
-                      'signature': obj['signature'],
-                    };
-                    uploader.setOption({
-                      'url': obj['host'],
-                      'multipart_params': new_multipart_params
-                    });
-                    uploader.start();
-                  });
+                  // uploadName.forEach(function(val) {
+                  //   console.log(val);
+                  //   var new_multipart_params = {
+                  //     'key': val,
+                  //     'policy': obj['policy'],
+                  //     'OSSAccessKeyId': obj['accessid'],
+                  //     'success_action_status': '200', //让服务端返回200,不然，默认会返回204
+                  //     'callback': obj['callback'],
+                  //     'signature': obj['signature'],
+                  //   };
+                  //   uploader.setOption({
+                  //     'url': obj['host'],
+                  //     'multipart_params': new_multipart_params
+                  //   });
+                  //   uploader.start();
+                  // });
                 }
               })
               return false;
@@ -84,7 +86,7 @@ export default {
           },
 
           FilesAdded(up, files) {
-            console.log(self.filenames.length + ','+self.upDone);
+            //console.log(self.filenames.length + ','+self.upDone);
             if (self.filenames.length == self.upDone) {
               var inner = document.getElementById('ossfile').innerHTML = '';
               self.filenames = [];
@@ -96,7 +98,6 @@ export default {
             plupload.each(files, function(file) {
               document.getElementById('ossfile').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')<b></b>' + '<div class="progress"><div  class="progress-bar progress-bar-info progress-bar-striped" style="width: 0%"></div></div>' + '</div>';
               self.filenames.push(file.name);
-              console.log(self.prevnames);
             });
           },
 
@@ -113,11 +114,17 @@ export default {
           FileUploaded(up, file, info) {
             if (info.status == 200) {
               document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '完成';
-              uploadName.forEach(function(val, idx) {
-                uploadName[idx] = 'http://img.yunxingzh.com/' + val;
-              })
-              self.$store.state.imgUrl = uploadName;
               self.upDone++;
+              if (self.filenames.length == self.upDone) {
+                console.log(uploadName);
+                uploadName.forEach(function(val, idx) {
+                  uploadName[idx] = 'http://img.yunxingzh.com/' + val;
+                })
+                console.log(uploadName);
+                self.$store.state.imgUrl = uploadName;                
+              } else {
+                doUpload(uploader, self.upDone);
+              }
             } else {
               //self.upDone = false;
               document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = info.response;
@@ -131,6 +138,22 @@ export default {
       uploader.init();
     })
   }
+}
+
+function doUpload(uploader, idx) {
+  var new_multipart_params = {
+    'key': uploadName[idx],
+    'policy': obj['policy'],
+    'OSSAccessKeyId': obj['accessid'],
+    'success_action_status': '200', //让服务端返回200,不然，默认会返回204
+    'callback': obj['callback'],
+    'signature': obj['signature'],
+  };
+  uploader.setOption({
+    'url': obj['host'],
+    'multipart_params': new_multipart_params
+  });
+  uploader.start();            
 }
 
 function get_suffix(filenames) {
