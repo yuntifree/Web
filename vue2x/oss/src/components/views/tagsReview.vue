@@ -69,7 +69,7 @@
         <div class="edit-form" style="width:600px">
           <el-form ref="form" :model="addInfo" label-width="80px">
             <el-form-item label="content">
-              <el-input v-model="addInfo.content"></el-input>
+              <el-input v-model.trim="addInfo.content"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="addPost">确定</el-button>
@@ -192,6 +192,10 @@ export default {
       this.modal.addShow = true;
     },
     addPost() {
+      if (this.addInfo.content.length <= 0) {
+        this.alertInfo('请输入标签名');
+        return;
+      }
       var content = [];
       content.push(this.addInfo.content);
       var param = {

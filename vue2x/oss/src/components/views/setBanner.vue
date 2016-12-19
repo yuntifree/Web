@@ -233,6 +233,9 @@ export default {
         action = 'add_banner';
       } else {
         param = CGI.objModified(this.infos[this.selIdx], this.postInfo);
+        if(!param['online']) {
+          param.online = this.infos[this.selIdx].online
+        } 
         if ( CGI.emptyObj(param)) {
           this.modal.editShow = false;
           this.selIdx = -1;
@@ -271,9 +274,19 @@ export default {
         return ret = false;
       } else {
         return ret;
-      }
-      
+      } 
     },
+    /*paramCheck(arr, info) {
+      var ret = true;
+      for(var i=0; i<arr.lenth; i++) {
+        if (arr[i].length <= 0) {
+          this.alertinfo(info[i]);
+          ret = false;
+          break;
+        }
+      }
+      return ret;
+    },*/
     review(idx,row,ops) {
       this.selIdx = idx;
       var title = '';

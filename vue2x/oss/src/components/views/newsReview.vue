@@ -255,6 +255,10 @@ export default {
       })
     },
     editPost(event,confirm) { 
+      if (this.editInfo.title.length <= 0) {
+        this.alertInfo('请输入title');
+        return;
+      }
       var param = {};
       if (confirm) {
         param.id = this.editInfo.id;
