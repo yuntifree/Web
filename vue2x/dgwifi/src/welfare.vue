@@ -67,7 +67,7 @@
   <div class="welfare-container">
     <img class="welfare-slogon" src="http://img.yunxingzh.com/2ba93aa0-ab3a-48b1-afd9-2923cfbcb966.png">
     <p class="g-tac welfare-text">
-      东莞无线是由东莞市政府全力打造的公益项目<br/>
+      东莞无限是由东莞市政府全力打造的公益项目<br/>
       旨在帮助东莞市民随时随地，一键免费上网<br/>
       目前已覆盖全市政府/医院/学校等公共区域<br/>
       我们希望您一起加入WiFi公益项目<br/>
@@ -79,11 +79,11 @@
       <!--img class="main-img" src="../static/ico_addwifi.png"-->
       <div class="input-info g-clearfix">
         <label class="input-img g-fl" for="name"><img src="../static/ico_wificode.png"></label>
-        <input class="g-fl g-tac" id="name" type="text" placeholder="请输入无线网络名称" v-model.trim="ssid">
+        <input class="g-fl g-tac" id="name" type="text" placeholder="请输入无限网络名称" v-model.trim="ssid">
       </div>
       <div class="input-info g-clearfix">
         <label class="input-img g-fl" for="pwd"><img src="../static/ico_wifiname.png"></label>
-        <input class="g-fl g-tac" id="pwd" type="text" placeholder="请输入无线网络密码" v-model.trim="pwd">
+        <input class="g-fl g-tac" id="pwd" type="text" placeholder="请输入无限网络密码" v-model.trim="pwd">
       </div>
       <button class="btn-join" @click="clickJoin">参与公益</button>
     </div>
@@ -122,11 +122,11 @@ export default {
   methods: {
     clickJoin() {
       if (this.ssid.length < 0) {
-        this.tipBox('请输入无线网络名称');
+        this.tipBox('请输入无限网络名称');
         return;
       }
       if (this.pwd.length < 0) {
-        this.tipBox('请输入无线网络密码');
+        this.tipBox('请输入无限网络密码');
         return;
       }
       var param = {
