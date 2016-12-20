@@ -62,23 +62,6 @@ export default {
                     uploadName.push(val)
                   })
                   doUpload(uploader, 0);
-                  //uploadName = obj['dir'] + obj['name'];
-                  // uploadName.forEach(function(val) {
-                  //   console.log(val);
-                  //   var new_multipart_params = {
-                  //     'key': val,
-                  //     'policy': obj['policy'],
-                  //     'OSSAccessKeyId': obj['accessid'],
-                  //     'success_action_status': '200', //让服务端返回200,不然，默认会返回204
-                  //     'callback': obj['callback'],
-                  //     'signature': obj['signature'],
-                  //   };
-                  //   uploader.setOption({
-                  //     'url': obj['host'],
-                  //     'multipart_params': new_multipart_params
-                  //   });
-                  //   uploader.start();
-                  // });
                 }
               })
               return false;

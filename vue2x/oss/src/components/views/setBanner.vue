@@ -7,6 +7,11 @@
 .el-icon-close:before {
  content: '';
 }
+.height120 {
+  width: 120px;
+  max-height: 120px;
+  overflow: hidden;
+}
 </style>
 <template>
   <div class="mana_container">
@@ -14,7 +19,7 @@
       <header class="app_header">
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
-            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">banner</option><option :value="{ number: 1 }">广告</option></select></button>
+            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">banner</option><option :value="{ number: 1 }">广告</option><option :value="{ number: 2 }">活动</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
         </div>
       </header>
@@ -34,8 +39,16 @@
               </el-table-column>
               <el-table-column
                 inline-template
-                label="banner">
-                <div><img style="width:120px;height:auto;" :src="row.img"></div>
+                label="title">
+                <div>{{row.title ||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="图片">
+                <div class="height120">
+                  <img v-if="row.img" style="width:120px;height:auto;" :src="row.img">
+                  <span v-else>-</span>
+                </div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -80,7 +93,10 @@
       <div class="shade" v-if="modal.editShow">
         <div class="edit-form" style="width:600px">
           <el-form ref="form" :model="postInfo" label-width="80px">
-            <el-form-item label="img">
+            <el-form-item v-if="selected.number!==0" label="title">
+              <el-input v-model.trim="postInfo.title"></el-input>
+            </el-form-item>
+            <el-form-item v-if="selected.number!==2" label="img">
               <el-input v-model.trim="postInfo.img"></el-input>
             </el-form-item>
             <el-form-item label="跳转地址">
@@ -145,6 +161,7 @@ export default {
       tagsInfo: [],
       checkedTags: [],
       postInfo: {
+        title: '',
         img: '',
         dst: '',
         online: 0,
@@ -230,13 +247,14 @@ export default {
       var addBanner = !!this.modal.addShow;
       if (addBanner) {
         param = this.postInfo;
+        param.type = this.selected.number;
         action = 'add_banner';
       } else {
         param = CGI.objModified(this.infos[this.selIdx], this.postInfo);
         if(!param['online']) {
-          param.online = this.infos[this.selIdx].online
+          param.online = this.infos[this.selIdx].online || 0;
         } 
-        if ( CGI.emptyObj(param)) {
+        if (CGI.emptyObj(param)) {
           this.modal.editShow = false;
           this.selIdx = -1;
           return;
@@ -263,30 +281,29 @@ export default {
         }
       })
     },
+    priorityEdit() {
+      var param = {
+
+      }
+    },
     postParam() {
       var ret = true;
-      if (this.postInfo.img.length == 0) {
+      console.log(this.selected.number !== 0 && this.postInfo.img.length <= 0)
+      if (this.selected.number !== 0 && this.postInfo.title.length <= 0) {
+        this.alertInfo('请输入title');
+        return ret = false;
+      }
+      if (this.selected.number !== 2 && this.postInfo.img.length <= 0) {
         this.alertInfo('请输入图片地址');
         return ret = false;
       }
-      if (this.postInfo.dst.length == 0) {
+      if (this.postInfo.dst.length <= 0) {
         this.alertInfo('请输入跳转地址');
         return ret = false;
       } else {
         return ret;
       } 
     },
-    /*paramCheck(arr, info) {
-      var ret = true;
-      for(var i=0; i<arr.lenth; i++) {
-        if (arr[i].length <= 0) {
-          this.alertinfo(info[i]);
-          ret = false;
-          break;
-        }
-      }
-      return ret;
-    },*/
     review(idx,row,ops) {
       this.selIdx = idx;
       var title = '';
