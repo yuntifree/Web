@@ -16,9 +16,13 @@ import newest from './components/latest.vue'
 import hot from './components/hot.vue'
 import evaluate from './components/evaluate.vue'
 import detail from './components/detail.vue'
+import records from './components/records.vue'
+import history from './components/betHistoty.vue'
+import goodshare from './components/goodShare.vue'
+import intro from './components/intro.vue'
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: __dirname,
   routes: [
     {
@@ -42,11 +46,41 @@ const router = new VueRouter({
       path: '/detail',
       name: 'detail',
       component: detail,
+      children: [{
+        path: 'records',
+        name: 'records',
+        component: records
+      },{
+        path: 'intro',
+        name: 'intro',
+        component: intro
+      },{
+        path: 'history',
+        name: 'history',
+        component: history
+      },{
+        path: 'goodshare',
+        name: 'goodshare',
+        component: goodshare
+      }]
+    },{
+      path: '/goodsDetail',
+      name: 'goodsDetail',
+      redirect: '/detail/records'
     },{
       path: '*',
       redirect: '/hello/newest',
     }]
 })
+router.beforeEach((to, from, next) => {
+  // to 和 from 都是 路由信息对象
+  next(()=> {
+    if (store.state.uid == 0) {
+      console.log(0)
+    }
+  })
+})
+console.log();
 
 
 new Vue({
@@ -57,7 +91,6 @@ new Vue({
   components: { App },
   mounted() {
     this.$nextTick(()=> {
-      //router.push({ name: 'default', params: { id: 'newest'}});
     })
   }
 })

@@ -4,6 +4,9 @@ if (!process.env.NODE_ENV) process.env.NODE_ENV = JSON.parse(config.dev.env.NODE
 var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
+//解析reqbody部分
+var bodyParser = require('body-parser')
+
 var opn = require('opn')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = process.env.NODE_ENV === 'testing'
@@ -17,6 +20,10 @@ var port = process.env.PORT || config.dev.port
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -36,14 +43,16 @@ compiler.plugin('compilation', function (compilation) {
   })
 })
 
+app.use('/', require('../test/fakecgi'));
+
 // proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
+/*Object.keys(proxyTable).forEach(function (context) {
   var options = proxyTable[context]
   if (typeof options === 'string') {
     options = { target: options }
   }
   app.use(proxyMiddleware(context, options))
-})
+})*/
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())

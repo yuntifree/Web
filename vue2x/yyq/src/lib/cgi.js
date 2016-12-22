@@ -1,7 +1,7 @@
 var ajax = require('./ajax');
 
 module.exports = {
-    HOST: __DEV__ ? '' : 'http://120.25.133.234/',
+    HOST: __DEV__ ? '' : 'http://120.76.236.185/',
     CGI: '/',
 
     /**
@@ -43,9 +43,8 @@ module.exports = {
     post: function(action, param, callback) {
         var p = {
             uid: ~~param.uid,
-            data: param,
-            web: 1,
-            term: 2
+            token: param.token,
+            data: param
         };
 
         var url = this.CGI + action;
