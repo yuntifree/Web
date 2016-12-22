@@ -23,11 +23,13 @@ import Login from './login.vue'
 
 // import views
 import getUsers from './components/views/getUsers.vue'
+import whiteList from './components/views/whitelist.vue'
 import newsReview from './components/views/newsReview.vue'
 import tagsReview from './components/views/tagsReview.vue'
 import apReview from './components/views/apReview.vue'
 import videoReview from './components/views/videoReview.vue'
 import setBanner from './components/views/setBanner.vue'
+import adban from './components/views/adban.vue'
 import uploadImg from './components/views/uploadImg.vue'
 import setActivity from './components/views/setActivity.vue'
 
@@ -57,11 +59,13 @@ export default {
     sidebar,
     getUsers,
     Login,
+    whiteList,
     newsReview,
     tagsReview,
     videoReview,
     apReview,
     setBanner,
+    adban,
     uploadImg,
     setActivity
   },

@@ -1,13 +1,25 @@
 <template>
   <aside id="sidebar" class="column">
-    <template v-for="menu in sidebars">
-      <h3>{{menu.title}}</h3>
-      <ul class="toggle">
-        <li v-for="item in menu.menus" :class="{checked: selItem == item.title}" @click="onSelect(menu.title, item.title, item.name)">
-          <i :class="['iconfont', 'icon-' + item.icon]"></i>
-          <a :href="item.url">{{item.title}}</a>
-        </li>
-      </ul>
+    <template>
+      <div v-for="(menu,idx) in sidebars">
+        <h3 @click="showMenu(idx,true)">{{menu.title}}</h3>
+        <ul class="toggle" v-show="menu.show">
+          <li v-for="item in menu.menus" :class="{checked: selItem == item.title}" @click="onSelect(menu.title, item.title, item.name)">
+            <i :class="['iconfont', 'icon-' + item.icon]"></i>
+            <a :href="item.url">{{item.title}}</a>
+          </li>
+        </ul>
+      </div>
+      <h3>{{yyqSidebars.title}}</h3>
+      <div v-for="(menu,idx) in yyqSidebars.innermenus">
+        <h3 class="yyq-title" @click="showMenu(idx,false)">{{menu.innertitle}}</h3>
+        <ul class="toggle" v-show="menu.show">
+          <li v-for="item in menu.menus" :class="{checked: selItem == item.title}" @click="onSelect(menu.innertitle, item.title, item.name)">
+            <i :class="['iconfont', 'icon-' + item.icon]"></i>
+            <a :href="item.url">{{item.title}}</a>
+          </li>
+        </ul>
+      </div>
     </template>
     <footer class="sidebar-footer">
       <p><strong>Copyright &copy; 2016 云行智慧</strong></p>
@@ -24,13 +36,19 @@ export default {
       sidebars: [
         {
           title: "用户管理",
+          show: false,
           menus: [{
           title: "用户信息",
           name: "getUsers",
           icon: "user"
+          },{
+          title: "白名单管理",
+          name: "whiteList",
+          icon: "user"
           }]
         },{
           title: "运营管理",
+          show: false,
           menus: [{
             title: "新闻审核",
             name: "newsReview",
@@ -52,6 +70,14 @@ export default {
             name: "setBanner",
             icon: "user"
           },{
+            title: "闪屏广告管理",
+            name: "adban",
+            icon: "user"
+          }]
+        },{
+          title:"后台管理",
+          show: false,
+          menus: [{
             title: "图片上传",
             name: "uploadImg",
             icon: "user"
@@ -61,7 +87,103 @@ export default {
             icon: "user"
           }]
         }
-      ]
+      ],
+      yyqSidebars: {
+        title: '一元抢',
+        innermenus: [{
+          innertitle: "用户数据",
+          show: false,
+          menus: [{
+            title: "白名单管理",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "用户活跃统计",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "用户反馈",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "用户公告",
+            name: "newsReview",
+            icon: "user"
+          }]
+        },{
+          innertitle: "商品数据",
+          show: false,
+          menus: [{
+            title: "商品详情",
+            name: "newsReview",
+            icon: "user"
+          }]
+        },{
+          innertitle: "商品销售数据",
+          show: false,
+          menus: [{
+            title: "开抢中商品",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "等待开抢商品",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "等待确认地址商品",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "已确认地址商品",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "待晒单商品",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "已晒单商品",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "已结束商品",
+            name: "newsReview",
+            icon: "user"
+          }]
+        },{
+          innertitle: "充值数据",
+          show: false,
+          menus: [{
+            title: "充值账单",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "充值统计",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "抢购统计",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "商品抢购统计",
+            name: "newsReview",
+            icon: "user"
+          }]
+        },{
+          innertitle: "晒单数据",
+          show: false,
+          menus: [{
+            title: "晒单审核",
+            name: "newsReview",
+            icon: "user"
+          },{
+            title: "晒单图片审核",
+            name: "newsReview",
+            icon: "user"
+          }]
+        }]
+      }
     }
   },
   methods: {
@@ -74,6 +196,13 @@ export default {
       });
       this.selItem = this.$store.state.selItem = subtitle;
       this.$store.state.viewName = view;
+    },
+    showMenu(idx, type) {
+      if (type) {
+        this.sidebars[idx].show = !this.sidebars[idx].show;
+      } else {
+        this.yyqSidebars.innermenus[idx].show = !this.yyqSidebars.innermenus[idx].show;
+      }
     }
   },
   mounted() {
@@ -105,7 +234,10 @@ aside#sidebar {
   width: 90%;
   line-height: 32px;
 }
-
+#sidebar .yyq-title {
+  margin: 0 0 0 10%;
+  color: #666;
+}
 .toggleLink {
   color: #999999;
   font-size: 10px;

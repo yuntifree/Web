@@ -111,20 +111,10 @@ export default {
         limit: 30,
       },
 
-      //右键功能
-      ops: [{
-        title: '修改用户',
-        cmd: 'editUser'
-      },{
-        title: '重置密码',
-        cmd: 'rest'
-      }],
-
       // table data
       users: [],
       columns: columns,
 
-      mounted: false,
       selIdx: -1,
       alertShow: false,
       alertMsg: '',
