@@ -197,8 +197,7 @@ export default {
         if (resp.errno == 0) {
           this.alertInfo('新增成功');
           console.log(JSON.stringify(resp.data));
-          /*this.addInfo.id = resp.data.id;
-          this.infos.unshift(this.addInfo);*/
+          this.getData(0);
           this.modal.addShow = false;
         } else {
           this.alertInfo(resp.desc);
