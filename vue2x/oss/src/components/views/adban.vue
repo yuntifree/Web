@@ -12,6 +12,7 @@
             <i class="iconfont icon-search"></i>
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名">
           </div>
+          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
         </div>
       </header>
       <!--end:右键菜单-->
@@ -175,7 +176,7 @@ export default {
         if (resp.errno === 0) {
           var data = resp.data;
           this.infos = data.infos;
-          this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
+          this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
           this.alertInfo(resp.desc);

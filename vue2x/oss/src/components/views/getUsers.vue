@@ -12,7 +12,7 @@
             <i class="iconfont icon-search"></i>
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名">
           </div>
-          <button class="btn btn-default btn-sm outline-none"><i class="iconfont icon-renzheng"></i>高级搜索</button>
+          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
         </div>
       </header>
       <!--end:右键菜单-->
@@ -158,7 +158,7 @@ export default {
         if (resp.errno === 0) {
           var data = resp.data;
           this.users = data.infos;
-          this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
+          this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
           this.alertInfo(resp.desc);

@@ -23,7 +23,7 @@
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名"
               v-model="search" @keyup.enter="doSearch(true)">
           </div>
-           <button class="btn btn-default btn-sm outline-none" @click="getData(true)"><i class="iconfont icon-renzheng"></i>显示所有</button>
+          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
         </div>
       </header>
       <div class="tab_container" ref="tableContent">

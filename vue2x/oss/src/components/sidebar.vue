@@ -36,7 +36,7 @@ export default {
       sidebars: [
         {
           title: "用户管理",
-          show: false,
+          show: true,
           menus: [{
           title: "用户信息",
           name: "getUsers",
@@ -44,6 +44,10 @@ export default {
           },{
           title: "白名单管理",
           name: "whiteList",
+          icon: "user"
+          },{
+          title: "用户反馈",
+          name: "feedback",
           icon: "user"
           }]
         },{
@@ -90,6 +94,7 @@ export default {
       ],
       yyqSidebars: {
         title: '一元抢',
+        show: false,
         innermenus: [{
           innertitle: "用户数据",
           show: false,
@@ -190,10 +195,10 @@ export default {
     onSelect(title, subtitle, view) {
       this.$store.state.view = view;
       this.$store.state.paths = [title, subtitle];
-      sessionStorage.menus = JSON.stringify({
+      /*sessionStorage.menus = JSON.stringify({
         view: view,
         paths: [title, subtitle]
-      });
+      });*/
       this.selItem = this.$store.state.selItem = subtitle;
       this.$store.state.viewName = view;
     },

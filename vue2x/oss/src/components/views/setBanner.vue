@@ -22,6 +22,9 @@
             类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">banner</option><option :value="{ number: 1 }">广告</option><option :value="{ number: 2 }">活动</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
         </div>
+        <div>
+          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
+        </div>
       </header>
       <div class="tab_container" ref="tableContent">
         <div id="tab1" class="tab_content tab-fixed" v-if="dataReady">
@@ -67,6 +70,11 @@
               </el-table-column>
               <el-table-column
                 inline-template
+                label="过期时间">
+                <div>{{row.expire | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
                 :context="_self"
                 fixed="right"
                 label="操作"
@@ -104,6 +112,18 @@
             </el-form-item>
             <el-form-item label="优先级" v-show="!modal.addShow">
               <el-input type="number" v-model.number="postInfo.priority"></el-input>
+            </el-form-item>
+            <el-form-item v-if="!modal.addShow" label="过期时间">
+                <el-input disabled v-model="postInfo.expire"></el-input>
+              </el-form-item>
+            <el-form-item label="设置过期时间">
+              <el-col :span="11">
+                <el-date-picker type="date" placeholder="选择日期" v-model="dateInfo.date1" style="width: 100%;"></el-date-picker>
+              </el-col>
+              <el-col class="line" :span="2">-</el-col>
+              <el-col :span="11">
+                <el-time-picker type="fixed-time" placeholder="选择时间" v-model="dateInfo.date2" style="width: 100%;"></el-time-picker>
+              </el-col>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="editPost">确定</el-button>
@@ -165,7 +185,12 @@ export default {
         img: '',
         dst: '',
         online: 0,
-        priority: 0,
+        priority: 0, 
+        expire: ''
+      },
+      dateInfo: {
+        date1: '',
+        date2: ''
       },
       reviewInfo: {},
       reviewOps: 0,
@@ -212,7 +237,7 @@ export default {
         if (resp.errno === 0) {
           var data = resp.data;
           this.infos = data.infos;
-          this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
+          this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
           this.alertInfo(resp.desc);
@@ -235,6 +260,7 @@ export default {
     edit(idx,row) {
       this.selIdx = idx;
       CGI.extend(this.postInfo,row);
+      console.log(this.postInfo.expire);
       this.modal.addShow = false;
       this.modal.editShow = true;
     },
@@ -244,9 +270,10 @@ export default {
       }
       var action = '';
       var param = {};
-      var addBanner = !!this.modal.addShow;
+      var addBanner = this.modal.addShow;
       if (addBanner) {
         param = this.postInfo;
+        param.expire = this.makeDate();
         param.type = this.selected.number;
         action = 'add_banner';
       } else {
@@ -259,12 +286,21 @@ export default {
           this.selIdx = -1;
           return;
         }
-        if (param['priority']) {
-          param.priority = ~~param.priority;
+        if (!this.infos[this.selIdx].priority) {
+          if (this.postInfo.priority !==0) {
+            param.priority = ~~this.postInfo.priority;
+          }
         }
+
+        if (this.dateInfo.date1.length >0 && this.dateInfo.date1.length >0) {
+          var dateTime = this.makeDate();
+          if (dateTime !== this.infos[this.selIdx].expire) {
+            param.expire = dateTime;
+          }
+        }       
         param.id = this.infos[this.selIdx].id;
         action = 'mod_banner';
-      }
+      } 
       CGI.post(this.$store.state, action, param, (resp)=> {
         if (resp.errno === 0) {
           if (addBanner) {
@@ -273,6 +309,9 @@ export default {
             this.infos.push(u);
           } else {
             CGI.extend(this.infos[this.selIdx], this.postInfo);
+            if (param.priority) {
+              this.infos[this.selIdx].priority = param.priority;
+            }
           }
           this.modal.editShow = false;
           this.selIdx = -1;
@@ -281,14 +320,13 @@ export default {
         }
       })
     },
-    priorityEdit() {
-      var param = {
-
-      }
+    makeDate() {
+      var date = CGI.dateFormat(this.dateInfo.date1, 'yyyy-MM-dd');
+      var time = CGI.dateFormat(this.dateInfo.date2, 'hh:mm:ss');
+      return date +' '+ time;
     },
     postParam() {
       var ret = true;
-      console.log(this.selected.number !== 0 && this.postInfo.img.length <= 0)
       if (this.selected.number !== 0 && this.postInfo.title.length <= 0) {
         this.alertInfo('请输入title');
         return ret = false;
@@ -300,9 +338,18 @@ export default {
       if (this.postInfo.dst.length <= 0) {
         this.alertInfo('请输入跳转地址');
         return ret = false;
-      } else {
-        return ret;
       } 
+      if (this.modal.addShow) {
+        if (this.dateInfo.date1.length <= 0) {
+          this.alertInfo('请选择过期日期');
+          return ret = false;
+        }
+        if (this.dateInfo.date2.length <= 0) {
+          this.alertInfo('请选择过期时间');
+          return ret = false;
+        }
+      }
+      return ret;
     },
     review(idx,row,ops) {
       this.selIdx = idx;

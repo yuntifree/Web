@@ -24,6 +24,7 @@ import Login from './login.vue'
 // import views
 import getUsers from './components/views/getUsers.vue'
 import whiteList from './components/views/whitelist.vue'
+import feedback from './components/views/feedback.vue'
 import newsReview from './components/views/newsReview.vue'
 import tagsReview from './components/views/tagsReview.vue'
 import apReview from './components/views/apReview.vue'
@@ -60,6 +61,7 @@ export default {
     getUsers,
     Login,
     whiteList,
+    feedback,
     newsReview,
     tagsReview,
     videoReview,
@@ -74,7 +76,6 @@ export default {
     this.$nextTick(()=> {
       this.$store.state.viewName = this.currentView;
       this.$store.state.selItem = this.$store.state.paths[1];
-      //this.$emit('view-change', this.currentView, this.$store.state.paths[1]);
     })
   },
 }
@@ -294,5 +295,29 @@ button>i {
 .el-table .cell {
   padding: 10px;
   text-align: center;
+}
+.el-date-editor {
+  border: 1px solid #c0ccda;
+  border-radius: 4px;
+}
+.el-date-editor:hover {
+    border-color: #8492a6;
+}
+.el-date-editor__editor {
+  width: 90%;
+}
+.el-icon-date,
+.el-icon-time {
+  color: #c0ccda;
+}
+.is-active {
+  border-color: #20a0ff !important;;
+}
+.line {
+  text-align: center;
+}
+.btn-ssm {
+  padding: 2px 10px;
+  border:1px solid #ccc
 }
 </style>

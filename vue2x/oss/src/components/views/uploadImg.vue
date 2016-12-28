@@ -3,7 +3,6 @@
     <article class="module width_3_quarter">
       <div class="upload-img-box">
         <uploader></uploader>
-
         <div class="container-flow">
           <div>图片地址：</div>
           <p class="up-img" v-for="img in imgUrl">{{img}}</p>

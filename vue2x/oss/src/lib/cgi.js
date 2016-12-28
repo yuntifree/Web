@@ -329,7 +329,7 @@ module.exports = {
     }
     return ret;
   },
-  totalPages(total, limit) {
+  /*totalPages(total, limit) {
     var ret = 1;
     if (total % limit == 0) {
       ret = total / limit;
@@ -337,7 +337,7 @@ module.exports = {
       ret = ~~(total / limit) + 1;
     }
     return ret;
-  },
+  },*/
 
   // v-validator Format
   vFormat: {

@@ -25,7 +25,7 @@
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名"
               v-model="search">
           </div>
-           <button class="btn btn-default btn-sm outline-none" @click="getData(true)"><i class="iconfont icon-renzheng"></i>显示所有</button>
+          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
         </div>
       </header>
       <!--table-->
@@ -211,7 +211,7 @@ export default {
               item.idx = index;
             })
           }
-          this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
+          this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
           this.alertInfo(resp.desc);

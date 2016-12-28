@@ -13,6 +13,7 @@
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名"
               v-model="search">
           </div>
+           <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
         </div>
       </header>
       <div class="tab_container" ref="tableContent">
@@ -140,7 +141,7 @@ export default {
         if (resp.errno === 0) {
           var data = resp.data;
           this.infos = data.infos;
-          this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
+          this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
           this.tip(resp.desc);

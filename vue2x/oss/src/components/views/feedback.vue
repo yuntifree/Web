@@ -3,8 +3,8 @@
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
-          <button class="btn btn-default btn-sm outline-none" @click="addAds">
-          <i class="iconfont icon-add"></i>添加
+          <button class="btn btn-default btn-sm outline-none">
+          <i class="iconfont icon-add"></i>添加用户
           </button>
         </div>
         <div>
@@ -20,7 +20,7 @@
         <div class="tab_content tab-fixed" v-if="dataReady">
           <template>
             <el-table
-              :data="infos"
+              :data="users"
               :height="tableHeight"
               border>
               <el-table-column
@@ -35,18 +35,18 @@
               </el-table-column>
               <el-table-column
                 inline-template
-                :context="_self"
-                label="操作"
-                width="100">
-                <span>
-                  <el-button @click="delAds($index,row)" type="text" size="small">删除</el-button>
-                </span>
+                label="content">
+                <div>{{row.content||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="ctime">
+                <div>{{row.ctime||'-'}}</div>
               </el-table-column>
             </el-table>
           </template>
         </div>
       </div>
-      <!--翻页-->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -55,27 +55,6 @@
         layout="prev, pager, next, jumper"
         :total="pageCfg.total">
       </el-pagination>
-      <div class="shade" v-if="modal.addShow" >
-        <div class="edit-form" style="width:600px">
-          <el-form ref="form" :model="addInfo" label-width="80px">
-            <el-form-item label="uids">
-              <el-input v-model="addInfo.uids"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="addPost()">确定</el-button>
-              <el-button @click="modal.addShow=false">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
-      <el-dialog v-model="modal.dialogShow"  :title="dialogCfg.title" size="tiny">
-        <span>{{dialogCfg.text}}</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click.native="modal.dialogShow = false">取 消</el-button>
-          <el-button type="primary" @click.native="delPost">确 定</el-button>
-        </span>
-      </el-dialog>
-
       <div v-show="alertShow">
         <el-alert
           :title="alertMsg"
@@ -103,25 +82,10 @@ export default {
       },
 
       // table data
-      infos: [],
+      users: [],
       columns: columns,
 
-      modal: {
-        addShow: false,
-        dialogShow: false,
-      },
-      dialogCfg: {
-        title: '',
-        text: '',
-      },
       selIdx: -1,
-      alertShow: false,
-      alertMsg: '',
-      addInfo: {
-        type: 0,
-        uids: '',
-      },
-      delInfo: {},
       alertShow: false,
       alertMsg: '',
     }
@@ -157,78 +121,19 @@ export default {
       }
 
       var param = {
-        type: 0,
         seq: this.pageCfg.start || 0,
         num: 30,
       };
-      CGI.post(this.$store.state, 'get_white_list', param, (resp) => {
+      CGI.post(this.$store.state, 'get_feedback', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
-          this.infos = data.infos;
+          this.users = data.infos;
           this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
           this.alertInfo(resp.desc);
         }
       });
-    },
-    addAds() {
-      CGI.objClear(this.addInfo);
-      this.modal.addShow = true;
-    },
-    addPost() {
-      var uids = [];
-      if (this.addInfo.uids.length <=0) {
-        this.alertInfo('请输入uid');
-        return;
-      } else {
-        uids = [];
-        this.addInfo.uids.split(',').forEach((val)=> {
-          if (val.length > 0) {
-            uids.push(~~val);
-          }
-        })
-        console.log(uids);
-      }
-      var param = {
-        type: this.addInfo.type,
-        uids: uids
-      };
-      CGI.post(this.$store.state, 'add_white_list', param, (resp)=> {
-        if (resp.errno == 0) {
-          this.alertInfo('新增成功');
-          console.log(JSON.stringify(resp.data));
-          this.getData(0);
-          this.modal.addShow = false;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      })
-    },
-    delAds(idx, row) {
-      this.selIdx = idx;
-      this.dialogCfg.title = '删除';
-      this.dialogCfg.text = '确认要删除' + row.uid +'吗';
-      this.delInfo = CGI.clone(row);
-      this.modal.dialogShow = true;
-    },
-    delPost() {
-      var ids = [];
-      ids.push(this.delInfo.uid);
-      var param = {
-        type: 0,
-        uids: ids
-      }
-      CGI.post(this.$store.state, 'del_white_list', param, (resp)=> {
-        if (resp.errno === 0) {
-          this.infos.splice(this.selIdx, 1);
-          this.modal.dialogShow = false;
-          this.alertInfo('删除成功');
-          this.selIdx = -1;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      })
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
