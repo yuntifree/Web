@@ -64,7 +64,7 @@
 
 <template>
   <div class="hello">
-    <p><router-link to="/detail">详情页</router-link></p>
+    <p>{{hot}}</p>
     <div class="marquee-warp">
       <ul class="warp-list" ref="carousel">
         <li v-for="list in warpList">{{list}}</li>
@@ -110,18 +110,21 @@ export default {
   mounted() {
     console.log(this.$store.state);
     this.$nextTick(()=> {
+      this.getData(0);
       this.carousel();
     })
   },
   methods: {
     getData(seq) {
       var param = {
+        uid: this.$store.state.uid,
+        token: this.$store.state.token,
         seq: seq,
         num: 20
       }
-      CGI.post('get_latest', param, (resp)=> {
+      CGI.post('get_hotlist', param, (resp)=> {
         if (resp.errno == 0) {
-          this.hot = resp.data;
+          this.hot = JSON.stringify(resp.data);
         } else {
           this.alertInfo(resp.desc);
         }
