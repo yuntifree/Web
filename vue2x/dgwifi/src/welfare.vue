@@ -75,7 +75,7 @@
       便为构建东莞智慧城市出了一份力
       <img class="text-bg" src="http://img.yunxingzh.com/6b0c29f5-f230-475c-9297-89da57e0e131.png">
     </p>
-    <div class="welfare-main">
+    <div class="input-main">
       <!--img class="main-img" src="../static/ico_addwifi.png"-->
       <div class="input-info g-clearfix">
         <label class="input-img g-fl" for="name"><img src="../static/ico_wificode.png"></label>

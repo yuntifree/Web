@@ -68,7 +68,7 @@
     left: 0;
     top: 15%;
   }
-  .banner-over span {
+  .banner-over a {
     display: block;
     width: 109px;
     line-height: 30px;
@@ -148,8 +148,8 @@
       <img src="http://img.yunxingzh.com/97da6491-5aec-4711-b274-a280ee3bd8fb.png">
       <div class="banner-over">
         <img class="over-img" src="http://img.yunxingzh.com/5dff85eb-5ef1-406c-a776-005a59abcd45.png">
-        <span class="down-ios">iOS下载</span>
-        <span class="down-android">Android下载</span>
+        <a class="down-ios" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless">iOS下载</a>
+        <a class="down-android" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless">Android下载</a>
       </div>
     </div>
     <div class="wifi-text">
@@ -189,7 +189,7 @@
       <span class="guide-img"><img src="images/arrow.png"></span>
     </div>
   </div>
-  <script>
+  <!--script>
   // 获取终端的相关信息
   var Terminal = {
     // 辨别移动终端类型
@@ -250,18 +250,17 @@
       if (isWeiXin()) {
         document.getElementById('androidGuide').style.display = "block";
       } else {
-        location.href = 'http://down.360safe.com/360ap/360freewifi_beta.apk';
+        location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless';
       }
     } else if (Terminal.platform.ios) {
       if (isWeiXin()) {
         document.getElementById('iosGuide').style.display = "block";
       } else {
-        location.href = 'http://itunes.apple.com/app/id942885362?mt=8'
+        location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
       }
     }
-  }
-  load();
-  </script>
+  }*/
+  </script-->
 </body>
 
 </html>
