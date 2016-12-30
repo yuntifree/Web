@@ -53,6 +53,7 @@ export default {
 }
 .bg-img {
     @include containerSize(100%,auto);
+    display: block;
 }
 .btn-img {
   position: absolute;

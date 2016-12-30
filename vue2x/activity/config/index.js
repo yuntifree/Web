@@ -1,5 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+require('shelljs/global')
 var online = env.BUILD_ENV == 'deploy';
 // 这里改工程名
 var distPath = online ? 'activity' : 'dist';

@@ -260,7 +260,8 @@ export default {
     edit(idx,row) {
       this.selIdx = idx;
       CGI.extend(this.postInfo,row);
-      console.log(this.postInfo.expire);
+      this.dateInfo.date1 = '';
+      this.dateInfo.date2 = '';
       this.modal.addShow = false;
       this.modal.editShow = true;
     },
@@ -276,6 +277,7 @@ export default {
         param.expire = this.makeDate();
         param.type = this.selected.number;
         action = 'add_banner';
+        console.log(param.expire);
       } else {
         param = CGI.objModified(this.infos[this.selIdx], this.postInfo);
         if(!param['online']) {
@@ -291,11 +293,14 @@ export default {
             param.priority = ~~this.postInfo.priority;
           }
         }
-
-        if (this.dateInfo.date1.length >0 && this.dateInfo.date1.length >0) {
-          var dateTime = this.makeDate();
-          if (dateTime !== this.infos[this.selIdx].expire) {
-            param.expire = dateTime;
+        var date = CGI.dateFormat(this.dateInfo.date1,'yyyy-MM-dd');
+        var time = CGI.dateFormat(this.dateInfo.date2,'hh:mm:ss');
+        if (date !== 'Invalid date') {
+          if (time !== 'Invalid date') {
+            param.expire = date +' '+ time;
+          } else {
+            this.alertInfo('请输入过期时间');
+            return;
           }
         }       
         param.id = this.infos[this.selIdx].id;
@@ -311,6 +316,9 @@ export default {
             CGI.extend(this.infos[this.selIdx], this.postInfo);
             if (param.priority) {
               this.infos[this.selIdx].priority = param.priority;
+            }
+            if (param.expire) {
+              this.infos[this.selIdx].expire = param.expire;
             }
           }
           this.modal.editShow = false;
