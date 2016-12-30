@@ -96,10 +96,9 @@
           }
       }
       // 根据不同的终端，跳转到不同的地址
-      var theUrl = 'https://m.baidu.com';
-      console.log(isWeiXin());
+      var theUrl = 'http://yunxingzh.com/app/';
       // android系统APP
-      if (Terminal.platform.android){
+      /*if (Terminal.platform.android){
           // 这里区分渠道
           // switch(From){
           //     case 'baidu':
@@ -122,8 +121,9 @@
         } else {
           theUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
         }
-      }
-      //location.href = theUrl;
+      }*/
+      theUrl = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
+      location.href = theUrl;
     </script>
   </body>
 </html>
