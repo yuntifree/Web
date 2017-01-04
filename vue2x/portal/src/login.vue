@@ -173,7 +173,7 @@ export default {
     getCode() {
       var param = {};
       if (this.checkPhone()) {
-        param.phone = this.checkPhone();
+        param.phone = this.phone;
       } else {
         return;
       }
@@ -199,15 +199,14 @@ export default {
       var ret = false;
       if (this.phone.length <= 0) {
         this.alertInfo('请先输入手机号');
-        return;
       } else {
         if (CGI.checkTel(this.phone)) {
-          return ret =  this.phone;
+          ret = true;
         } else {
           this.alertInfo('请输入正确的手机号');
-          return;
         }
       }
+      return ret;
     },
     startTrip() {
       var param = {
