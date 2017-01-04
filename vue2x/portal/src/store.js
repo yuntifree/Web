@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 const state = {
-  info: {},
+  uid: 0,
+  token: '',
 }
 
 export default new Vuex.Store({

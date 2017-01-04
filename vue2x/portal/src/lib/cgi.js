@@ -55,6 +55,7 @@ module.exports = {
                 url: url,
                 contentType: 'application/json',
                 dataType: 'json',
+                timeout: 5000,
                 data: JSON.stringify(p),
                 success: function(data) {
                     callback(data);
@@ -155,8 +156,10 @@ module.exports = {
             u = u[1].split('&');
             var get = {};
             for (var i in u) {
-                var j = u[i].split('=');
-                get[j[0]] = j[1];
+                if (typeof(u[i]) === 'string') {
+                    var j = u[i].split('=');
+                    get[j[0]] = j[1];                    
+                }
             }
             return get;
         } else {

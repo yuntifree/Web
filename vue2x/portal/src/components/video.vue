@@ -1,5 +1,5 @@
 <template>
-  <div class="videos" 
+  <div class="videos top88" 
       v-infinite-scroll="loadMorevideo"
       infinite-scroll-disabled="videoloading"
       infinite-scroll-distance="30">
@@ -139,7 +139,6 @@ export default {
   width: 94%;
   margin: 0 auto;
   border-bottom: 2px solid #e7e7e7;
-  padding-top: 0.88rem;
 }
 .menu {
   flex: 1;

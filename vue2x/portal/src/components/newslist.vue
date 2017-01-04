@@ -76,10 +76,12 @@
 
 </style>
 <template>
-<div id="newslist">
+<div class="newslist">
   <div v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
-      infinite-scroll-distance="30">
+      infinite-scroll-distance="30"
+      :class="{ top88: downShow}">
+    <download v-if="downShow"></download>
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -115,7 +117,7 @@
           </div>
         </template>
       </template>
-      
+
       <!--无图片新闻-->
       <template v-if="!item.images">
         <div>
@@ -132,12 +134,10 @@
 </template>
 <script>
 import tip from './lib/tip.vue'
+import download from './lib/download.vue'
 import CGI from '../lib/cgi'
 var query = CGI.query();
-var uid = ~~(query.uid) || 137;
-var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
 export default {
-  name: 'newslist',
   data() {
     return {
       tips: {
@@ -154,9 +154,16 @@ export default {
   },
   components: {
     tip,
+    download
+  },
+  computed: {
+    downShow() {
+      var ret = sessionStorage.getItem('portal_newsDownload')
+      return eval(ret.toLowerCase());
+    }
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(()=>{
       // 存下union
       var scrollY = sessionStorage.getItem('scrollY');
       if (scrollY != null) {
@@ -191,8 +198,8 @@ export default {
   methods: {
     getData(seq) {
       var param = {
-        uid: uid,
-        token: token,
+        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
+        token: this.$store.state.token || sessionStorage.getItem('portal_token'),
         seq:seq || 0,
         type:0
       }

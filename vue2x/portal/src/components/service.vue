@@ -4,7 +4,6 @@
   @include containerSize(100%, auto);
   min-height: 100%;
   background-color: #f5f5f5;
-  padding-top: 0.88rem;
 }
 .service-list {
  padding: 0.24rem 0 0.4rem;
@@ -34,7 +33,7 @@
 }
 </style>
 <template>
-  <div class="service">
+  <div class="service top88">
     <download></download>
     <div class="service-list" v-for="list in lists">
       <h2 class="list-title" v-text="list.title"></h2>

@@ -209,9 +209,9 @@ import CGI from './lib/cgi.js'
 import adsData from '../test/adsdata.js'
 
 var query = CGI.query();
-var wlanacname = query.wlanacname || '2043.0769.200.00';
-var wlanuserip = query.wlanuserip || '10.96.72.28';
-var wlanacip = query.wlanacip || '120.197.159.10';
+var wlanacname = query.wlanacname || '';  //'2043.0769.200.00';
+var wlanuserip = query.wlanuserip || '';  //'10.96.72.28';
+var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
 
 export default {
@@ -286,23 +286,34 @@ export default {
         wlanacip: wlanacip,
         wlanusermac: wlanusermac,
       };
-
-      if (this.checkPhone()) {
-        param.phone = this.phone;
-        if (this.pwd.length <= 0) {
-          this.alertInfo('请输入验证码');
-        } else {
-          param.code = this.pwd;
-          CGI.post('portal_login', param, (resp)=> {
-            if (resp.errno === 0) {
-              localStorage.portal_phone = param.phone;
-              localStorage.portal_code = param.code;
-            } else {
-              this.alertInfo(resp.desc);
-            }
-          });
+      if (this.oneClick) {
+        param.phone = localStorage.portal_phone;
+        param.code = localStorage.portal_code;
+        this.portalLogin(param);
+      } else {
+        if (this.checkPhone()) {
+          param.phone = this.phone;
+          if (this.pwd.length <= 0) {
+            this.alertInfo('请输入验证码');
+          } else {
+            param.code = this.pwd;
+            this.portalLogin(param);
+          }
         }
-      }
+      } 
+    },
+    portalLogin(param) {
+      CGI.post('portal_login', param, (resp)=> {
+        if (resp.errno === 0) {
+          localStorage.portal_phone = param.phone;
+          localStorage.portal_code = param.code;
+          var info = resp.data;
+          var url = "http://localhost:8080/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
+          window.open(url);
+        } else {
+          this.alertInfo(resp.desc);
+        }
+      });
     },
     openUrl(url) {
       location.href = url;

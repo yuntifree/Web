@@ -184,7 +184,7 @@
           <img src="http://img.yunxingzh.com/5bd91184-f4cb-40f1-9013-07fb636e288b.png">
         </div>
       </div>
-      <newslist></newslist>
+      <newslist v-if="dataReady"></newslist>
     </div>
     </div>
 </template>
@@ -195,8 +195,9 @@ import tip from './lib/tip.vue'
 import CGI from '../lib/cgi.js'
 
 var query = CGI.query();
-//var loginfrom = query.loginfrom;
-var loginfrom = true;
+var loginfrom = query.loginfrom || 0;
+var uid = ~~(query.uid) || 0;
+var token = query.token || '';
 export default {
   name: 'info',
   data() {
@@ -208,6 +209,8 @@ export default {
         msg: '',
         duration: 1500,
       },
+      first: true,
+      dataReady: false,
       weatherIcon: ['http://img.yunxingzh.com/c7f30e46-f5aa-4a16-a611-1c7b99f5ec01.png',
                     'http://img.yunxingzh.com/2c8898ab-78c2-4002-b8a7-ae0579e8bb66.png',
                     'http://img.yunxingzh.com/881bfc97-7849-44a2-b585-c197a6917e96.png',
@@ -253,13 +256,22 @@ export default {
         this.countdown();
       }
       this.getData();
+      this.$store.state.uid = uid;
+      this.$store.state.token = token;
+      sessionStorage.setItem('portal_newsDownload', 'false');
+      this.dataReady = true;
+      if (loginfrom) {
+        this.$router.replace({name:'home'});
+        sessionStorage.setItem('portal_uid', uid);
+        sessionStorage.setItem('portal_token', token); 
+      }
     })
   },
   methods: {
     getData() {
       var param = {
-        uid: 137,
-        token: '6ba9ac5a422d4473b337d57376dd3488'
+        uid: uid || ~~(sessionStorage.getItem('portal_uid')),
+        token: token || sessionStorage.getItem('portal_token')
       }
       CGI.post('get_weather_news', param, (resp)=> {
         if (resp.errno === 0) {
@@ -274,6 +286,8 @@ export default {
       var _this = this;
       switch (idx){
         case 0:
+          this.$store.state.newsDownload = true;
+          sessionStorage.setItem('portal_newsDownload', 'true');
           _this.$router.push({name: 'newslist'});
           break;
         case 1:
