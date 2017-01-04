@@ -46,7 +46,7 @@
   padding: 0.1rem 0;
   border-bottom: 1px solid #c8c8c8;
   font-size: 0.32rem;
-  color: #c8c8c8; 
+  color: #c8c8c8;
 }
 .query-code {
   padding-left: 0.14rem;
@@ -57,7 +57,7 @@
   -webkit-transform: translateY(-50%);
   font-size: 0.28rem;
   color: #00a0fb;
-  border-left: 1px solid #00a0fb; 
+  border-left: 1px solid #00a0fb;
 }
 .btn {
   width: 100%;
@@ -116,7 +116,7 @@
         <i class="query-code" @click="getCode">{{timeTxt}}</i>
       </div>
       <button class="btn" @click="startTrip">开启智慧城市之旅</button>
-    </div> 
+    </div>
     <div class="login-bottom">
       <div class="wrap">
         <swipe class="my-swipe">
@@ -171,38 +171,33 @@ export default {
   },
   methods: {
     getCode() {
+      if (!this.checkPhone()) return;
+
       var param = {};
-      if (this.checkPhone()) {
-        param.phone = this.phone;
-      } else {
-        return;
-      }
+      param.phone = this.phone;
       CGI.post('get_check_code', param, (resp)=> {
         if (resp.errno === 0) {
-          console.log(resp.data);
+          var seconds = 60;
+          this.timer = setInterval(()=> {
+            seconds--;
+            this.timeTxt = ((seconds < 10) ? "0" + seconds : seconds) + "s";
+            if (seconds == 0) {
+              this.timeTxt = '获取验证码';
+              clearInterval(this.timer);
+            };
+          }, 1000)
         } else  {
           this.alertInfo(resp.desc);
         }
       });
-      var seconds = 60;
-      var _this = this; 
-      var timer = setInterval(function(){
-        seconds--;
-        _this.timeTxt = ((seconds < 10) ? "0" + seconds : seconds) + "s";
-        if(seconds == 0){
-          _this.timeTxt = '获取验证码';
-          clearInterval(timer);
-        };
-      },1000)
     },
     checkPhone() {
       var ret = false;
       if (this.phone.length <= 0) {
         this.alertInfo('请先输入手机号');
       } else {
-        if (CGI.checkTel(this.phone)) {
-          ret = true;
-        } else {
+        ret = CGI.checkTel(this.phone);
+        if (!ret) {
           this.alertInfo('请输入正确的手机号');
         }
       }
@@ -213,28 +208,24 @@ export default {
         wlanacname: wlanacname,
         wlanuserip: wlanuserip,
         wlanacip: wlanacip,
-        wlanusermac: wlanusermac, 
+        wlanusermac: wlanusermac,
       };
+
       if (this.checkPhone()) {
         param.phone = this.phone;
         if (this.pwd.length <= 0) {
           this.alertInfo('请输入验证码');
-          return;
         } else {
           param.code = this.pwd;
+          CGI.post('portal_login', param, (resp)=> {
+            if (resp.errno === 0) {
+              localStorage.info = JSON.stringify(resp.data);
+            } else {
+              this.alertInfo(resp.desc);
+            }
+          });
         }
-      } else {
-        return;
       }
-      CGI.post('portal_login', param, (resp)=> {
-        if (resp.errno === 0) {
-          this.$store.state.info = resp.data;
-          localStorage.info = resp.data;
-          console.log(localStorage.info);
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      });
     },
     openUrl(url) {
       location.href = url;
