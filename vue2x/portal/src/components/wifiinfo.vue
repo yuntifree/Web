@@ -10,6 +10,31 @@
   position: relative;
   padding-top: 0.3rem;
 }
+.info-logo {
+  @include containerSize(0.98rem, auto);
+  display: block;
+  position: absolute;
+  top: 0.2rem;
+  left: 0.24rem;
+}
+.info-weather {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.24rem;
+  color: #fff;
+}
+.weacher-icon {
+  @include containerSize(0.36rem, 0.36rem);
+  display: block;
+}
+.weather-temp {
+  line-height: 0.36rem;
+  margin: 0 0.1rem;
+}
+.weather-info,
+.weather-temp{
+  line-height: 0.36rem;
+}
 .circle-link {
   @include containerSize(2.38rem, 2.38rem);
   margin: 0 auto;
@@ -66,6 +91,7 @@
 .link-text {
   font-size: 0.24rem;
   color: #fff;
+  margin-top: 0.18rem;
 }
 .menu-title {
   position: relative;
@@ -122,12 +148,18 @@
 <template>
   <div class="info">
     <div class="info-top">
+      <img class="info-logo"　src="http://img.yunxingzh.com/91dc8c9f-1658-46a5-a9fd-52c2e66df151.png">
+      <div class="info-weather g-clearfix">
+        <img class="weacher-icon g-fl" :src="weatherImg">
+        <span class="weather-temp g-fl">{{weather.temp}}&#176;C</span>
+        <span class="weather-info g-fl">{{weather.info}}</span>
+      </div>
       <div class="circle-link">
         <span class="oval"></span>
         <span class="oval-copy-1"></span>
         <img class="oval-around" :class="{'oval-animate':showCfg}"src="http://img.yunxingzh.com/180afd13-7e6b-4006-9d00-d80e227c46fe.png">
         <span class="oval-copy-2 g-tac">
-          <b v-if="showCfg">5<i>秒</i></b>
+          <b v-if="showCfg">{{timeTxt}}<i>秒</i></b>
           <img v-else class="oval-copy-3"　src="http://img.yunxingzh.com/e04e6e9d-d24b-4e00-be57-1224efd426df.png">
         </span>
       </div>
@@ -141,7 +173,7 @@
         </div>
       </div>
       <ul class="menu-list g-clearfix">
-        <li class="g-fl list-item" v-for="list in menuList" @click="openLink(menulist)">
+        <li class="g-fl list-item" v-for="(list,index) in menuList" @click="openLink(list.url,index)">
           <img :src="list.icon">
           <span class="g-tac title-name" v-text="list.text"></span>
         </li>
@@ -160,23 +192,37 @@
 <script>
 import newslist from './newslist.vue'
 import tip from './lib/tip.vue'
+import CGI from '../lib/cgi.js'
+
+var query = CGI.query();
+//var loginfrom = query.loginfrom;
+var loginfrom = true;
 export default {
   name: 'info',
   data() {
     return {
       showCfg: false,
+      timeTxt: 5,
+      tips: {
+        show: false,
+        msg: '',
+        duration: 1500,
+      },
+      weatherIcon: ['http://img.yunxingzh.com/c7f30e46-f5aa-4a16-a611-1c7b99f5ec01.png',
+                    'http://img.yunxingzh.com/2c8898ab-78c2-4002-b8a7-ae0579e8bb66.png',
+                    'http://img.yunxingzh.com/881bfc97-7849-44a2-b585-c197a6917e96.png',
+                    'http://img.yunxingzh.com/3a961ff5-2530-4c10-b17c-aff36013b5db.png'],
+      weather: {},
+      weatherImg: '',
       menuList: [{
         icon: 'http://img.yunxingzh.com/c5f0475a-3f1f-4c80-9f33-90bd33af7d75.png',
         text: '政务',
-        url: '',
       },{
         icon: 'http://img.yunxingzh.com/548d971b-dac4-4bf7-bbac-5b69e4f325c0.png',
         text: '查询',
-        url: '',
       },{
         icon: 'http://img.yunxingzh.com/553143fc-6d6d-4aad-be8a-5715a7eab367.png',
         text: '视频',
-        url: '',
       },{
         icon: 'http://img.yunxingzh.com/efd20edd-7a3d-4c62-a523-90110da4ba74.png',
         text: '招聘',
@@ -202,13 +248,57 @@ export default {
   },
   mounted() {
     this.$nextTick(()=> {
-      console.log(JSON.stringify(this.$store.state));
+      if (loginfrom) {
+        this.showCfg = true;
+        this.countdown();
+      }
+      this.getData();
     })
   },
   methods: {
-    openLink(url) {
-      location.href = url;
-    }
+    getData() {
+      var param = {
+        uid: 137,
+        token: '6ba9ac5a422d4473b337d57376dd3488'
+      }
+      CGI.post('get_weather_news', param, (resp)=> {
+        if (resp.errno === 0) {
+          this.weather = resp.data.weather;
+          this.weatherImg = this.weatherIcon[this.weather.type];
+        } else {
+          this.alertInfo(resp.desc);
+        }
+      })
+    },
+    openLink(url,idx) {
+      var _this = this;
+      switch (idx){
+        case 0:
+          _this.$router.push({name: 'newslist'});
+          break;
+        case 1:
+          _this.$router.push({name: 'service'});
+          break;
+        case 2:
+          _this.$router.push({name: 'video'});
+          break;
+        default: 
+          location.href = url;
+      } 
+    },
+    countdown() {
+      this.timer = setInterval(()=> {
+        this.timeTxt--;
+        if (this.timeTxt == 0) {
+          this.showCfg = false;
+          clearInterval(this.timer);
+        };
+      }, 1000)
+    },
+    alertInfo(val) {
+      this.tips.msg = val;
+      this.tips.show = true;
+    },
   }
 }
 </script>

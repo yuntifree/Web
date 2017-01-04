@@ -7,6 +7,7 @@
 	top: 0;
 	background: $baseColor;
 	padding:0.14rem 0.24rem;
+  z-index: 5;
 }
 
 .down-logo {

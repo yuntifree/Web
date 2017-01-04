@@ -9,7 +9,7 @@
 .item-title {
   line-height: 150%;
   font-size: 0.32rem;
-  color: $baseColor;
+  color: $color43;
 }
 .item-imgs {
   margin: 0.15rem 0;
@@ -144,7 +144,6 @@ export default {
         show: false,
         msg: '',
         duration: 1500,
-        tooltip: false,
       },
       items: [],
       ready: false,

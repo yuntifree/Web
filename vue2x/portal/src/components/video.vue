@@ -3,6 +3,7 @@
       v-infinite-scroll="loadMorevideo"
       infinite-scroll-disabled="videoloading"
       infinite-scroll-distance="30">
+    <download></download>
     <div class="video-list" v-for="item in items">
       <div class="video-inner" @click="videoLink(item)">
         <img class="video-img" v-lazy="item.images[0]">
@@ -20,6 +21,7 @@
 
 <script>
 import tip from './lib/tip.vue'
+import download from './lib/download.vue'
 import CGI from '../lib/cgi'
 
 export default {
@@ -28,6 +30,7 @@ export default {
     return {
       videoloading: false,
       items: [],
+      tabs: [],
       useCache: false,
       tips: {
         show: false,
@@ -36,6 +39,10 @@ export default {
         tooltip: false,
       },
     }
+  },
+  components: {
+    tip,
+    download
   },
   beforeRouteLeave(to, from, next) {
     this.videoloading = true;
@@ -132,6 +139,7 @@ export default {
   width: 94%;
   margin: 0 auto;
   border-bottom: 2px solid #e7e7e7;
+  padding-top: 0.88rem;
 }
 .menu {
   flex: 1;

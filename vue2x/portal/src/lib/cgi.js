@@ -43,7 +43,8 @@ module.exports = {
     post: function(action, param, callback) {
         var p = {
             data: param,
-            term: 2
+            term: 2,
+            version: 1
         };
 
         var url = this.CGI + action;

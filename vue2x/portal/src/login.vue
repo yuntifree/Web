@@ -14,6 +14,9 @@
   left: 50%;
   margin-left: -0.6rem;
 }
+.oneclick-logo {
+  top:1.24rem;
+}
 .top-text {
   width: 100%;
   font-size: 0.36rem;
@@ -22,6 +25,9 @@
   left: 50%;
   bottom: 0.34rem;
   transform: translateX(-50%);
+}
+.oneclick-text {
+  bottom: 1.42rem;
 }
 .input-main {
   width: 70%;
@@ -46,6 +52,12 @@
   padding: 0.1rem 0;
   border-bottom: 1px solid #c8c8c8;
   font-size: 0.32rem;
+  color: #000;
+}
+.input-info input::placeholder {
+  color: #c8c8c8;
+}
+.input-info input::-webkit-input-placeholder {
   color: #c8c8c8;
 }
 .query-code {
@@ -77,7 +89,7 @@
 }
 .wrap {
   @include containerSize(94%, 2rem);
-  margin: 0 auto;
+  margin: 0.4rem auto 0;
 }
 .my-swipe {
   color: #fff;
@@ -96,28 +108,87 @@
   @include containerSize(100%, auto);
   display: block;
 }
+.company-info {
+  @include containerSize(70%, auto);
+  margin: 0 auto;
+}
+.comp-logo {
+  @include containerSize(0.48rem, 0.48rem);
+}
+.comp-logo img{
+  display: block;
+  @include containerSize(0.48rem, auto);
+}
+.comp-text{
+  @include containerSize(88%, auto);
+  margin-left: 2%;
+}
+.comp-text-name {
+  height: 0.36rem;
+  line-height: 0.36rem;
+  font-size: 0.28rem;
+  color: #4a4a4a;
+  text-align: justify;
+}
+.comp-text-english {
+  display: block;
+  line-height: 0.18rem;
+  font-size: 0.24rem;
+  color: #4a4a4a;
+  transform: scale(0.6);
+  -webkit-transform: scale(0.6) translateX(-1.5rem);
+  white-space:nowrap;
+}
+.comp-text-slogan {
+  line-height: 0.32rem;
+  font-size: 0.24rem;
+  letter-spacing: 0.2rem;
+  color: #4a4a4a;
+  transform: scale(0.83);
+  -webkit-transform:scale(0.83);
+}
 </style>
 
 <template>
   <div id="login">
-    <div class="login-top">
-      <img class="login-top-bg" src="http://img.yunxingzh.com/9a4e139c-dbdc-4793-9a83-84e59b8d0d0b.png">
-      <img class="login-logo" src="http://img.yunxingzh.com/26248937-3d7f-4baf-976e-f699db55fb13.png">
-      <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
-    </div>
-    <div class="input-main">
-      <div class="input-info g-clearfix">
-        <label class="input-img g-fl" for="name"><img src="../static/loading_icon_phone.png"></label>
-        <input class="g-fr" id="name" type="text" placeholder="请输入手机号" v-model.trim="phone">
+    <template v-if="!oneClick">
+      <div class="login-top">
+        <img class="login-top-bg" src="http://img.yunxingzh.com/9a4e139c-dbdc-4793-9a83-84e59b8d0d0b.png">
+        <img class="login-logo" src="http://img.yunxingzh.com/26248937-3d7f-4baf-976e-f699db55fb13.png">
+        <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
       </div>
-      <div class="input-info g-clearfix">
-        <label class="input-img g-fl" for="pwd"><img src="../static/loading_icon_key.png"></label>
-        <input class="g-fr" id="pwd" type="text" placeholder="请输入验证码" v-model.trim="pwd">
-        <i class="query-code" @click="getCode">{{timeTxt}}</i>
+      <div class="input-main">
+        <div class="input-info g-clearfix">
+          <label class="input-img g-fl" for="name"><img src="../static/loading_icon_phone.png"></label>
+          <input class="g-fr" id="name" type="text" placeholder="请输入手机号" v-model.trim="phone">
+        </div>
+        <div class="input-info g-clearfix">
+          <label class="input-img g-fl" for="pwd"><img src="../static/loading_icon_key.png"></label>
+          <input class="g-fr" id="pwd" type="text" placeholder="请输入验证码" v-model.trim="pwd">
+          <i class="query-code" @click="getCode">{{timeTxt}}</i>
+        </div>
+        <button class="btn" @click="startTrip">开启智慧城市之旅</button>
       </div>
-      <button class="btn" @click="startTrip">开启智慧城市之旅</button>
-    </div>
+    </template>
+    <template v-else>
+      <div class="login-top">
+        <img class="login-top-bg" src="http://img.yunxingzh.com/7fb4d018-bbec-41da-b3da-22b3210dcd5c.png">
+        <img class="login-logo oneclick-logo" src="http://img.yunxingzh.com/26248937-3d7f-4baf-976e-f699db55fb13.png">
+        <p class="g-tac top-text oneclick-text">欢迎使用东莞无限免费WiFi</p>
+      </div>
+      <div class="input-main">
+        <button class="btn" @click="startTrip">一键登录</button>
+      </div>
+    </template>
     <div class="login-bottom">
+      <dl class="g-clearfix company-info">
+        <dt class="g-fl comp-logo"><img src="http://img.yunxingzh.com/26248937-3d7f-4baf-976e-f699db55fb13.png"></dt>
+        <dd class="g-fl comp-text">
+          <span class="comp-text-name">东莞智慧城市投资建设运营有限公司</span>
+          <span class="comp-text-english">Dongguan smart city investment construction and Operation Co.Ltd.</span>
+          <span class="comp-text-slogan"><span>智慧东莞</span><span class="g-fr">活力东莞</span></span>
+        </dd>
+      </dl>
       <div class="wrap">
         <swipe class="my-swipe">
           <swipe-item class="slide1" v-for="list in adsData.ads">
@@ -125,7 +196,6 @@
           </swipe-item>
         </swipe>
       </div>
-      <p class="bottom-text g-tac">东莞智慧城市投资建设运营有限公司</p>
     </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
@@ -148,6 +218,7 @@ export default {
   name: 'login',
   data() {
     return {
+      oneClick: false,
       phone: '',
       pwd: '',
       timeTxt: '获取验证码',
@@ -167,6 +238,11 @@ export default {
   },
   mounted() {
     this.$nextTick(()=> {
+      if (localStorage.portal_phone && localStorage.portal_code) {
+        this.oneClick = true;
+      } else {
+        this.oneClick = false;
+      }
     })
   },
   methods: {
@@ -219,7 +295,8 @@ export default {
           param.code = this.pwd;
           CGI.post('portal_login', param, (resp)=> {
             if (resp.errno === 0) {
-              localStorage.info = JSON.stringify(resp.data);
+              localStorage.portal_phone = param.phone;
+              localStorage.portal_code = param.code;
             } else {
               this.alertInfo(resp.desc);
             }
