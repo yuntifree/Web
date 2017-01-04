@@ -190,9 +190,9 @@ export default {
         seconds--;
         _this.timeTxt = ((seconds < 10) ? "0" + seconds : seconds) + "s";
         if(seconds == 0){
-        _this.timeTxt = '获取验证码';
-        clearInterval(timer);
-      };
+          _this.timeTxt = '获取验证码';
+          clearInterval(timer);
+        };
       },1000)
     },
     checkPhone() {
@@ -216,7 +216,7 @@ export default {
         wlanusermac: wlanusermac, 
       };
       if (this.checkPhone()) {
-        param.phone = this.checkPhone();
+        param.phone = this.phone;
         if (this.pwd.length <= 0) {
           this.alertInfo('请输入验证码');
           return;
