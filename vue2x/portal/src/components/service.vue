@@ -4,6 +4,7 @@
   @include containerSize(100%, auto);
   min-height: 100%;
   background-color: #f5f5f5;
+  padding-top: 0.88rem;
 }
 .service-list {
  padding: 0.24rem 0 0.4rem;
@@ -34,6 +35,7 @@
 </style>
 <template>
   <div class="service">
+    <download></download>
     <div class="service-list" v-for="list in lists">
       <h2 class="list-title" v-text="list.title"></h2>
       <ul class="service-menu g-clearfix">
@@ -47,6 +49,7 @@
 </template>
 
 <script>
+import download from './lib/download.vue'
 import tip from './lib/tip.vue'
 import CGI from '../lib/cgi'
 
@@ -116,6 +119,10 @@ export default {
         duration: 1500,
       },
     }
+  },
+  components: {
+    tip,
+    download
   },
   mounted() {
     this.getData();
