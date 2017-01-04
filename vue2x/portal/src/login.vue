@@ -232,7 +232,7 @@ export default {
           localStorage.info = resp.data;
           console.log(localStorage.info);
         } else {
-          this.alertInfo(respdesc);
+          this.alertInfo(resp.desc);
         }
       });
     },
