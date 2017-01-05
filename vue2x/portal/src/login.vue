@@ -83,9 +83,10 @@
 }
 .login-bottom {
   @include containerSize(100%, auto);
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  margin-top: 2.8rem;
+  //position: absolute;
+  //left: 0;
+  //bottom: 0;
 }
 .wrap {
   @include containerSize(94%, 2rem);
