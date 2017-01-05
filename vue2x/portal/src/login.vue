@@ -21,17 +21,22 @@
   width: 100%;
   font-size: 0.36rem;
   color: #5a5a5a;
-  position: absolute;
-  left: 50%;
-  bottom: 0.34rem;
-  transform: translateX(-50%);
+  text-align: center;
+  margin-top: 0.48rem;
+  // position: absolute;
+  // left: 50%;
+  // bottom: 0.34rem;
+  // transform: translateX(-50%);
 }
 .oneclick-text {
+  position: absolute;
+  left: 50%;
   bottom: 1.42rem;
+  transform: translateX(-50%);
 }
 .input-main {
   width: 70%;
-  margin: 1.4rem auto 0;
+  margin: 1.2rem auto 0;
 }
 .input-info {
   width: 100%;
@@ -83,13 +88,10 @@
 }
 .login-bottom {
   @include containerSize(100%, auto);
-  margin-top: 2.8rem;
-  //position: absolute;
-  //left: 0;
-  //bottom: 0;
+  margin-top: 2.4rem;
 }
 .wrap {
-  @include containerSize(94%, 2rem);
+  @include containerSize(100%, 2rem);
   margin: 0.4rem auto 0;
 }
 .my-swipe {
@@ -106,8 +108,8 @@
   line-height:0.5rem;
 }
 .swipe-img {
-  @include containerSize(100%, auto);
   display: block;
+  @include containerSize(100%, auto);
 }
 .company-info {
   @include containerSize(70%, auto);
@@ -152,10 +154,10 @@
 
 <template>
   <div id="login">
-    <template v-if="!oneClick">
+    <template v-if="!neClick">
       <div class="login-top">
-        <img class="login-top-bg" src="../static/images/img_bg.png">
-        <img class="login-logo" src="../static/images/ico_login_logo.png">
+        <img class="login-top-bg" src="../static/images/img_bg3.png">
+        <!--img class="login-logo" src="../static/images/ico_login_logo.png"-->
         <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
       </div>
       <div class="input-main">
@@ -173,8 +175,8 @@
     </template>
     <template v-else>
       <div class="login-top">
-        <img class="login-top-bg" src="../static/images/img_bg2.png">
-        <img class="login-logo oneclick-logo" src="../static/images/ico_login_logo.png">
+        <img class="login-top-bg" src="../static/images/img_bg4.png">
+        <!--img class="login-logo oneclick-logo" src="../static/images/ico_login_logo.png"-->
         <p class="g-tac top-text oneclick-text">欢迎使用东莞无限免费WiFi</p>
       </div>
       <div class="input-main">
