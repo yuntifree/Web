@@ -7,7 +7,7 @@
     <title>东莞无限</title>
     <script type="text/javascript">
       var wlanusermac = query().wlanusermac;
-      var macList =['14f65a9f590c','d065ca2f5bc6','4c32758a5a4d','a858408a9300'];
+      var macList =['14f65a9f590c','d065ca2f5bc6','4c32758a5a4d','a858408a9300','a65330575f35','945330575f35'];
       var url = '';
       for (var i=0; i<macList.length; i++) {
         if (wlanusermac == macList[i]){
@@ -16,7 +16,7 @@
         if (wlanusermac !== macList[i] && i == macList.length-1) {
           url = 'http://192.168.100.4:880/wsmp/customize/dgwifi2/login.html' + document.location.search+'&wsmp-theme=1001&wsmp-page=0&wsmp-time=-1&wsmp-portal=103&clcid=0x409';
           //console.log(url);
-          location.href = url;
+          //location.href = url;
         }
       }
       function query() {
