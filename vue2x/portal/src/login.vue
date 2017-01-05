@@ -320,7 +320,7 @@ export default {
           localStorage.portal_phone = param.phone;
           localStorage.portal_code = param.code;
           var info = resp.data;
-          var url = "http://localhost:8080/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
+          var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
           window.open(url);
         } else {
           this.alertInfo(resp.desc);
