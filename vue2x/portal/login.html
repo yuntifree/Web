@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+i<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -7,7 +7,7 @@
     <title>东莞无限</title>
     <script type="text/javascript">
       var wlanusermac = query().wlanusermac;
-      var macList =['14f65a9f590c','d065ca2f5bc6'];
+      var macList =['14f65a9f590c','d065ca2f5bc6','945330575f35'];
       var url = '';
       for (var i=0; i<macList.length; i++) {
         if (wlanusermac == macList[i]){
@@ -15,7 +15,8 @@
         } 
         if (wlanusermac !== macList[i] && i == macList.length-1) {
           url = 'http://192.168.100.4:880/wsmp/customize/dgwifi2/login.html' + document.location.search;
-          location.href = url;
+          console.log(url);
+          //location.href = url;
         }
       }
       function query() {
