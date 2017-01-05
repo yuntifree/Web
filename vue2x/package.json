@@ -36,6 +36,8 @@
     "inject-loader": "^2.0.1",
     "isparta-loader": "^2.0.0",
     "json-loader": "^0.5.4",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
     "node-sass": "^3.11.2",
     "opn": "^4.0.2",
     "ora": "^0.3.0",

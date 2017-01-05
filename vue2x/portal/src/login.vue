@@ -153,17 +153,17 @@
   <div id="login">
     <template v-if="!oneClick">
       <div class="login-top">
-        <img class="login-top-bg" src="http://img.yunxingzh.com/9a4e139c-dbdc-4793-9a83-84e59b8d0d0b.png">
-        <img class="login-logo" src="http://img.yunxingzh.com/26248937-3d7f-4baf-976e-f699db55fb13.png">
+        <img class="login-top-bg" src="../static/images/img_bg.png">
+        <img class="login-logo" src="../static/images/ico_login_logo.png">
         <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
       </div>
       <div class="input-main">
         <div class="input-info g-clearfix">
-          <label class="input-img g-fl" for="name"><img src="../static/loading_icon_phone.png"></label>
+          <label class="input-img g-fl" for="name"><img src="../static/images/loading_icon_phone.png"></label>
           <input class="g-fr" id="name" type="text" placeholder="请输入手机号" v-model.trim="phone">
         </div>
         <div class="input-info g-clearfix">
-          <label class="input-img g-fl" for="pwd"><img src="../static/loading_icon_key.png"></label>
+          <label class="input-img g-fl" for="pwd"><img src="../static/images/loading_icon_key.png"></label>
           <input class="g-fr" id="pwd" type="text" placeholder="请输入验证码" v-model.trim="pwd">
           <i class="query-code" @click="getCode">{{timeTxt}}</i>
         </div>
@@ -172,8 +172,8 @@
     </template>
     <template v-else>
       <div class="login-top">
-        <img class="login-top-bg" src="http://img.yunxingzh.com/7fb4d018-bbec-41da-b3da-22b3210dcd5c.png">
-        <img class="login-logo oneclick-logo" src="http://img.yunxingzh.com/26248937-3d7f-4baf-976e-f699db55fb13.png">
+        <img class="login-top-bg" src="../static/images/img_bg2.png">
+        <img class="login-logo oneclick-logo" src="../static/images/ico_login_logo.png">
         <p class="g-tac top-text oneclick-text">欢迎使用东莞无限免费WiFi</p>
       </div>
       <div class="input-main">
@@ -182,7 +182,7 @@
     </template>
     <div class="login-bottom">
       <dl class="g-clearfix company-info">
-        <dt class="g-fl comp-logo"><img src="http://img.yunxingzh.com/26248937-3d7f-4baf-976e-f699db55fb13.png"></dt>
+        <dt class="g-fl comp-logo"><img src="../static/images/ico_login_logo_small.png"></dt>
         <dd class="g-fl comp-text">
           <span class="comp-text-name">东莞智慧城市投资建设运营有限公司</span>
           <span class="comp-text-english">Dongguan smart city investment construction and Operation Co.Ltd.</span>
