@@ -5,6 +5,7 @@ Vue.use(Vuex);
 const state = {
   uid: 0,
   token: '',
+  infiniteLoading: '',
 }
 
 export default new Vuex.Store({
