@@ -10,9 +10,12 @@
       var macList =['14f65a9f590c','d065ca2f5bc6'];
       var url = '';
       for (var i=0; i<macList.length; i++) {
+        console.log(i);
         if (wlanusermac !== macList[i]) {
           url = 'http://192.168.100.4:880/wsmp/customize/dgwifi2/login.html' + document.location.search;
           location.href = url;
+        } else {
+          break;
         }
       }
       function query() {
