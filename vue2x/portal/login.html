@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="format-detection" content="telephone=no, email=no">
     <title>东莞无限</title>
+    <script type="text/javascript">
+      var wlanusermac = query().wlanusermac;
+      var macList =['14f65a9f590c'];
+      var url = '';
+      for (var i=0; i<macList.length; i++) {
+        if (wlanusermac !== macList[i]) {
+          url = 'http://192.168.100.4:880/wsmp/customize/dgwifi2/login.html' + document.location.search;
+          location.href = url;
+        }
+      }
+      function query() {
+        var url = window.document.location.href.toString();
+        var u = url.split('?');
+        if (typeof(u[1]) === 'string') {
+            u = u[1].split('&');
+            var get = {};
+            for (var i in u) {
+                if (typeof(u[i]) === 'string') {
+                    var j = u[i].split('=');
+                    get[j[0]] = j[1];                    
+                }
+            }
+            return get;
+        } else {
+            return {};
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="login"></div>

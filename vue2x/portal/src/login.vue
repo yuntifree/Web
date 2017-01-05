@@ -237,7 +237,7 @@ export default {
     SwipeItem,
     tip,
   },
-  created() {
+  /*created() {
     var macList =['14f65a9f590c'];
     var url = '';
     for (var i=0; i<macList.length; i++) {
@@ -246,7 +246,7 @@ export default {
         location.href = url;
       }
     }
-  },
+  },*/
   mounted() {
     this.$nextTick(()=> {
       if (localStorage.portal_phone && localStorage.portal_code) {
