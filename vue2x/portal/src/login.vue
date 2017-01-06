@@ -316,7 +316,7 @@ export default {
             this.portalLogin(param);
           }
         }
-      } 
+      }
     },
     portalLogin(param) {
       CGI.post('portal_login', param, (resp)=> {

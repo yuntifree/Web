@@ -150,15 +150,14 @@ module.exports = {
         return fmt;
     },
     query: function() {
-        var url = window.document.location.href.toString();
-        var u = url.split('?');
-        if (typeof(u[1]) === 'string') {
-            u = u[1].split('&');
+        var url = window.document.location.search.toString().substr(1);
+        if (typeof(url) === 'string') {
+            var u = url.split('&');
             var get = {};
             for (var i in u) {
                 if (typeof(u[i]) === 'string') {
                     var j = u[i].split('=');
-                    get[j[0]] = j[1];                    
+                    get[j[0]] = j[1];
                 }
             }
             return get;
