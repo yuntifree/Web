@@ -45,13 +45,13 @@
       </ul>
     </div>
     <p class="example-list-item" v-for="item in list" v-text="item"></p>
-    <infinite-loading :on-infinite="onInfinite" ref="scrollLoading" :state="stateinfo"></infinite-loading>
+    <!--infinite-loading :on-infinite="onInfinite" ref="scrollLoading" :state="stateinfo"></infinite-loading-->
   </div>
 </template>
 
 <script>
 import download from './lib/download.vue'
-import infiniteLoading from './lib/vue-infinite-loading.vue'
+//import infiniteLoading from './lib/vue-infinite-loading.vue'
 import tip from './lib/tip.vue'
 import CGI from '../lib/cgi'
 
@@ -127,7 +127,7 @@ export default {
   components: {
     tip,
     download,
-    infiniteLoading
+    //infiniteLoading
   },
   mounted() {
     this.getData();
