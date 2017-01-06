@@ -29,6 +29,7 @@
   left: 50%;
   bottom: 1.42rem;
   transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
 }
 .input-main {
   width: 70%;
