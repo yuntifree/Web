@@ -325,7 +325,6 @@ export default {
           localStorage.portal_code = param.code;
           var info = resp.data;
           var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
-          alert(url);
           location.href = url;
         } else {
           this.alertInfo(resp.desc);
