@@ -127,8 +127,17 @@
 }
 .list-item {
   @include containerSize(0.84rem, auto);
-  margin-left: 0.6rem;
   margin-bottom: 0.3rem;
+}
+@media only screen and (max-width: 768px) {
+    .list-item {
+        margin-left: 9%;
+    }
+}
+@media only screen and (min-width: 769px){
+    .list-item {
+        margin-left: 12%;
+    }
 }
 .list-item:nth-child(5n+1) {
   margin-left: 0;

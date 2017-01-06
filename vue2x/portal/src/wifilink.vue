@@ -1,5 +1,5 @@
 <template>
-  <div id="wifilink">
+  <div class="wifilink">
     <transition>
       <keep-alive>
         <router-view></router-view>
@@ -16,6 +16,10 @@ export default {
 
 <style lang="scss">
 @import './assets/css/reset.css';
+.wifilink {
+  max-width: 768px;
+  margin: 0 auto;
+}
 .flex-space {
   display: flex;
   justify-content: space-between;

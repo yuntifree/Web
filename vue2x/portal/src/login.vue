@@ -23,10 +23,6 @@
   color: #5a5a5a;
   text-align: center;
   margin-top: 0.48rem;
-  // position: absolute;
-  // left: 50%;
-  // bottom: 0.34rem;
-  // transform: translateX(-50%);
 }
 .oneclick-text {
   position: absolute;
@@ -154,10 +150,9 @@
 
 <template>
   <div id="login">
-    <template v-if="!neClick">
+    <template v-if="!oneClick">
       <div class="login-top">
         <img class="login-top-bg" src="../static/images/img_bg3.png">
-        <!--img class="login-logo" src="../static/images/ico_login_logo.png"-->
         <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
       </div>
       <div class="input-main">
@@ -176,7 +171,6 @@
     <template v-else>
       <div class="login-top">
         <img class="login-top-bg" src="../static/images/img_bg4.png">
-        <!--img class="login-logo oneclick-logo" src="../static/images/ico_login_logo.png"-->
         <p class="g-tac top-text oneclick-text">欢迎使用东莞无限免费WiFi</p>
       </div>
       <div class="input-main">
@@ -323,7 +317,7 @@ export default {
           localStorage.portal_code = param.code;
           var info = resp.data;
           var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
-          window.open(url);
+          location.href = url;
         } else {
           this.alertInfo(resp.desc);
         }

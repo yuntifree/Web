@@ -44,11 +44,14 @@
         </li>
       </ul>
     </div>
+    <p class="example-list-item" v-for="item in list" v-text="item"></p>
+    <infinite-loading :on-infinite="onInfinite" ref="scrollLoading" :state="stateinfo"></infinite-loading>
   </div>
 </template>
 
 <script>
 import download from './lib/download.vue'
+import infiniteLoading from './lib/vue-infinite-loading.vue'
 import tip from './lib/tip.vue'
 import CGI from '../lib/cgi'
 
@@ -58,6 +61,8 @@ export default {
     return {
       services: [],
       loading: false,
+      list:[0,1,2,3,4],
+      stateinfo: 'complete',
       lists: [{
         title: '智慧政务',
         items: [{
@@ -121,7 +126,8 @@ export default {
   },
   components: {
     tip,
-    download
+    download,
+    infiniteLoading
   },
   mounted() {
     this.getData();
@@ -139,6 +145,17 @@ export default {
           this.tipBox(resp.desc);
         }
       })
+    },
+    onInfinite() {
+      setTimeout(() => {
+        const temp = [];
+        for (let i = this.list.length + 1; i <= this.list.length + 20; i++) {
+          temp.push(i);
+        }
+        this.list = this.list.concat(temp);
+        this.stateinfo = 'loaded'
+        console.log(this.stateinfo);
+      }, 1000);
     },
     urlLink(url) {
       location.href = url;
