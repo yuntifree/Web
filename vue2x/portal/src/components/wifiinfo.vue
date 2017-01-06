@@ -174,6 +174,7 @@
       </div>
       <p class="g-tac link-text">{{showCfg ? '正在连接免费WiFi...' : '已连接东莞无限免费WiFi'}}</p>
     </div>
+    <p>{{queryParam}}</p>
     <div>
       <div class="menu-title">
         <i class="menu-line"></i>
@@ -226,6 +227,7 @@ export default {
                     'http://img.yunxingzh.com/3a961ff5-2530-4c10-b17c-aff36013b5db.png'],
       weather: {},
       weatherImg: '',
+      queryParam: '',
       menuList: [{
         icon: 'http://img.yunxingzh.com/c5f0475a-3f1f-4c80-9f33-90bd33af7d75.png',
         text: '政务',
@@ -282,6 +284,7 @@ export default {
         uid: uid || ~~(sessionStorage.getItem('portal_uid')),
         token: token || sessionStorage.getItem('portal_token')
       }
+      this.queryParam = JSON.stringify(param);
       CGI.post('get_weather_news', param, (resp)=> {
         if (resp.errno === 0) {
           this.weather = resp.data.weather;
