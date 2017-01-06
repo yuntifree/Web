@@ -171,7 +171,7 @@
           <i class="query-code" @click="getCode">{{timeTxt}}</i>
         </div>
         <button class="btn" @click="startTrip">开启智慧城市之旅</button>
-        <!--p class="search">{{search}}</p-->
+        <p class="search">{{search}}</p>
       </div>
     </template>
     <template v-else>
@@ -258,7 +258,6 @@ export default {
       } else {
         this.oneClick = false;
       }
-      this.search = document.location.search;
     })
   },
   methods: {
@@ -325,7 +324,8 @@ export default {
           localStorage.portal_code = param.code;
           var info = resp.data;
           var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
-          location.href = url;
+          this.search = JSON.stringify(resp.data +',' +url);
+          //location.href = url;
         } else {
           this.alertInfo(resp.desc);
           //  var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=137&token=6ba9ac5a422d4473b337d57376dd3488";
