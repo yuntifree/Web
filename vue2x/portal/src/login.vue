@@ -310,6 +310,7 @@ export default {
           }
         }
       } 
+    console.log(param);  
     },
     portalLogin(param) {
       CGI.post('portal_login', param, (resp)=> {
