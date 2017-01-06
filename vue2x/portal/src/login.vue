@@ -309,8 +309,7 @@ export default {
             this.portalLogin(param);
           }
         }
-      } 
-    console.log(param);  
+      }
     },
     portalLogin(param) {
       CGI.post('portal_login', param, (resp)=> {
