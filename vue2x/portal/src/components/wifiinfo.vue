@@ -208,6 +208,7 @@ var query = CGI.query();
 var loginfrom = query.loginfrom || 0;
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
+console.log(uid);
 export default {
   name: 'info',
   data() {

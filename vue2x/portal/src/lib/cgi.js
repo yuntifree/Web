@@ -150,7 +150,9 @@ module.exports = {
         return fmt;
     },
     query: function() {
-        var url = window.document.location.search.toString().substr(1);
+        //var url = window.document.location.search.toString().substr(1);
+        var url = window.document.location.href.toString();
+        url = url.substr(url.indexOf('?')+1);
         if (typeof(url) === 'string') {
             var u = url.split('&');
             var get = {};

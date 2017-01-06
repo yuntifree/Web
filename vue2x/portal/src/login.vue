@@ -217,7 +217,6 @@ var wlanuserip = query.wlanuserip || '';  //'10.96.72.28';
 var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
 var urlreplace = ~~(query.urlreplace);
-console.log(query.wlanacip);
 
 export default {
   name: 'login',
