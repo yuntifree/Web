@@ -154,7 +154,7 @@
 
 <template>
   <div id="login">
-    <template v-if="!neClick">
+    <template v-if="!oneClick">
       <div class="login-top">
         <img class="login-top-bg" src="../static/images/img_bg3.png">
         <!--img class="login-logo" src="../static/images/ico_login_logo.png"-->
@@ -323,7 +323,8 @@ export default {
           localStorage.portal_code = param.code;
           var info = resp.data;
           var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
-          window.open(url);
+          alert(url);
+          location.href = url;
         } else {
           this.alertInfo(resp.desc);
         }
@@ -339,7 +340,6 @@ export default {
   }
 }
 </script>
-
 
 
 
