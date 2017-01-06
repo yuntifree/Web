@@ -317,9 +317,12 @@ export default {
           localStorage.portal_code = param.code;
           var info = resp.data;
           var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
+          alert(url);
           location.href = url;
         } else {
           this.alertInfo(resp.desc);
+          //  var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=137&token=6ba9ac5a422d4473b337d57376dd3488";
+          // location.href = url;
         }
       });
     },
@@ -333,7 +336,6 @@ export default {
   }
 }
 </script>
-
 
 
 
