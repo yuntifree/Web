@@ -147,6 +147,10 @@
   transform: scale(0.83);
   -webkit-transform:scale(0.83);
 }
+.search {
+  word-break:break-all; 
+  width:200px;
+}
 </style>
 
 <template>
@@ -167,6 +171,7 @@
           <i class="query-code" @click="getCode">{{timeTxt}}</i>
         </div>
         <button class="btn" @click="startTrip">开启智慧城市之旅</button>
+        <p class="search">{{search}}</p>
       </div>
     </template>
     <template v-else>
@@ -221,7 +226,7 @@ export default {
       phone: '',
       pwd: '',
       timeTxt: '获取验证码',
-      warpList:['text1text1text1text1text1'],
+      search:'',
       adsData: adsData,
       tips: {
         show: false,
@@ -252,6 +257,7 @@ export default {
       } else {
         this.oneClick = false;
       }
+      this.search = document.location.search;
     })
   },
   methods: {
