@@ -267,6 +267,7 @@ export default {
       param.phone = this.phone;
       CGI.post('get_check_code', param, (resp)=> {
         if (resp.errno === 0) {
+          this.alertInfo('获取成功');
           var seconds = 60;
           this.timer = setInterval(()=> {
             seconds--;

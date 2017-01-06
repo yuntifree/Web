@@ -181,7 +181,6 @@ export default {
 .video-title {
   display: block;
   width: 100%;
-  /*padding-top: 0.24rem;*/
   font-size: 0.32rem;
   line-height: 0.44rem;
   color:  #262626;

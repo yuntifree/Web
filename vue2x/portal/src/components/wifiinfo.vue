@@ -174,7 +174,7 @@
       </div>
       <p class="g-tac link-text">{{showCfg ? '正在连接免费WiFi...' : '已连接东莞无限免费WiFi'}}</p>
     </div>
-    <p>{{queryParam}}</p>
+    <!--p>{{queryParam}}</p-->
     <div>
       <div class="menu-title">
         <i class="menu-line"></i>
