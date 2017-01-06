@@ -171,7 +171,7 @@
           <i class="query-code" @click="getCode">{{timeTxt}}</i>
         </div>
         <button class="btn" @click="startTrip">开启智慧城市之旅</button>
-        <p class="search">{{search}}</p>
+        <!--p class="search">{{search}}</p-->
       </div>
     </template>
     <template v-else>

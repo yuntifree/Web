@@ -20,10 +20,9 @@
         }
       }
       function query() {
-        var url = window.document.location.href.toString();
-        var u = url.split('?');
+        var url = window.document.location.search.toString().substr(1);
         if (typeof(u[1]) === 'string') {
-            u = u[1].split('&');
+            var u = url.split('&');
             var get = {};
             for (var i in u) {
                 if (typeof(u[i]) === 'string') {
