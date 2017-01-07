@@ -12,7 +12,7 @@ var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 module.exports = {
   entry: {
-    webview: './src/webview.js',
+    index: './src/index.js',
     login: './src/login.js',
     wifilink: './src/wifilink.js',
   },

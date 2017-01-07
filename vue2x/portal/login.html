@@ -21,7 +21,7 @@
       }
       function query() {
         var url = window.document.location.search.toString().substr(1);
-        if (typeof(u[1]) === 'string') {
+        if (typeof(url) === 'string') {
             var u = url.split('&');
             var get = {};
             for (var i in u) {
