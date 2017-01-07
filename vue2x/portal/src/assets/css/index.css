@@ -218,7 +218,6 @@ legend{
   margin-top: 0.36rem;
   background-color: #00a0fb;
   font-size: 0.36rem;
-  font-weight: 500;
   color: #fff;
 }
 .login-bottom {
@@ -261,11 +260,13 @@ legend{
   background-color: #34b6f5;
   position: relative;
 }
-.login-main {
+
+/*pc*/
+.pc-login-main {
   width: 400px;
   height: 300px;
   padding: 0 20px;
-  background-color: #ffffff;
+  background-color: #fff;
   box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
   -webkit-box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
   -ms-box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
@@ -274,26 +275,73 @@ legend{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
+  margin-top: -150px;
+  margin-left: -200px;
 }
-.login-dglogo {
+.pc-login-dglogo {
   display: block;
-  @include containerSize(100px, auto);
+  width: 117px;
+  height: auto;
   margin: 0 auto;
 }
-.dgpc-text {
+.onepc-login-dglogo {
+  margin: 26px auto 10px;
+}
+.pc-dgpc-text {
   font-size: 20px;
   color: #5a5a5a;
 }
-.input-info {
+.pc-input-info {
   width: 360px;
   padding: 20px 0 0;
   position: relative;
 }
-
+.pc-input-img {
+  display: block;
+  width: 20px;
+  height: 30px;
+  padding: 5px 0;
+}
+.pc-input-img img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.pc-input-info input {
+  width: 340px;
+  height: auto;
+  padding: 5px 0;
+  border-bottom: 1px solid #c8c8c8;
+  font-size: 16px;
+  color: #000;
+}
+.pc-input-info input::placeholder {
+  color: #c8c8c8;
+}
+.pc-input-info input::-webkit-input-placeholder {
+  color: #c8c8c8;
+}
+.pc-query-code {
+  padding-left: 7px;
+  position: absolute;
+  top: 65%;
+  right: 0;
+  font-size: 14px;
+  color: #00a0fb;
+  border-left: 1px solid #00a0fb;
+}
+.pc-btn {
+  display: block;
+  width: 260px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 6px;
+  margin: 28px auto;
+  font-size: 18px;
+}
+.onepc-btn {
+  margin: 60px auto 0;
+}
 
 
 

@@ -1,12 +1,7 @@
 <style lang="scss" scoped>
 @import './assets/css/reset.css', './assets/css/common.scss';
-.loginpc {
-  @include containerSize(100%, 100%);
-  overflow: hidden;
-  background-color: #34b6f5;
-  position: relative;
-}
-.login-main {
+
+.pc-login-main {
   @include containerSize(400px, 300px);
   padding: 0 20px;
   background-color: #ffffff;
@@ -19,7 +14,7 @@
   -ms-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
 }
-.login-dglogo {
+.pc-login-dglogo {
   display: block;
   @include containerSize(100px, auto);
   margin: 0 auto;
@@ -28,34 +23,34 @@
   font-size: 20px;
   color: #5a5a5a;
 }
-.input-info {
+.pc-input-info {
   width: 360px;
   padding: 20px 0 0;
   position: relative;
 }
-.input-img {
+.pc-input-img {
   display: block;
   @include containerSize(20px, 30px);
   padding: 5px 0;
 }
-.input-img img{
+.pc-input-img img{
   @include containerSize(100%, 100%);
   display: block;
 }
-.input-info input {
+.pc-input-info input {
   @include containerSize(340px, auto);
   padding: 5px 0;
   border-bottom: 1px solid #c8c8c8;
   font-size: 16px;
   color: #000;
 }
-.input-info input::placeholder {
+.pc-input-info input::placeholder {
   color: #c8c8c8;
 }
-.input-info input::-webkit-input-placeholder {
+.pc-input-info input::-webkit-input-placeholder {
   color: #c8c8c8;
 }
-.query-code {
+.pc-query-code {
   padding-left: 7px;
   position: absolute;
   top: 65%;
