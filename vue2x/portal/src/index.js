@@ -18,9 +18,8 @@ var sessionPhone = localStorage.portal_phone;
 var sessionCode = localStorage.portal_code;
 
 (function() {
-	var height = window.screen.height - 60; 
+	var height = window.screen.height - 60;
 	$('html').css('height', height);
-	font(true);
 	if ((sessionPhone && sessionCode)) {
 		$('.mob-login').append(template('tplOnelogin', {}));
 		$('.mob-login').append(template('tplBottom', ads));
@@ -34,8 +33,8 @@ var sessionCode = localStorage.portal_code;
 
 function initUI() {
 	font(true);
-	getCode();
-	startTrip();
+	$('.query-code').click(getCode);
+	$('.btn').click(startTrip);
 }
 
 function tipShow(val) {
@@ -61,33 +60,31 @@ function checkPhone(phone) {
 
 //获取手机验证码
 function getCode() {
-	$('.query-code').click(function() {
-		var phone = $('.ipt-phone').val().trim();
-		if (!checkPhone(phone)) return;
-	  var param = {
-	  	phone: phone
-	  };
-	  CGI.post('get_check_code', param, (resp)=> {
-	    if (resp.errno === 0) {
-	      tipShow('获取成功');
-	      var seconds = 60;
-	      timer = setInterval(()=> {
-	        seconds--;
-	        var timeTxt = ((seconds < 10) ? "0" + seconds : seconds) + "s"
-	        $('.query-code').text(timeTxt);
-	        if (seconds == 0) {
-	          $('.query-code').text('获取验证码');
-	          clearInterval(timer);
-	        };
-	      }, 1000)
-	    } else  {
-	      this.alertInfo(resp.desc);
-	    }
-	  });
-	})
+	var phone = $('.ipt-phone').val().trim();
+	if (!checkPhone(phone)) return;
+  var param = {
+  	phone: phone
+  };
+  CGI.post('get_check_code', param, (resp)=> {
+    if (resp.errno === 0) {
+      tipShow('获取成功');
+      var seconds = 60;
+      timer = setInterval(()=> {
+        seconds--;
+        var timeTxt = ((seconds < 10) ? "0" + seconds : seconds) + "s"
+        $('.query-code').text(timeTxt);
+        if (seconds == 0) {
+          $('.query-code').text('获取验证码');
+          clearInterval(timer);
+        };
+      }, 1000)
+    } else  {
+      this.alertInfo(resp.desc);
+    }
+  });
 }
+
 function startTrip() {
-	$('.btn').click(function() {
 	var param = {
 	  wlanacname: wlanacname,
 	  wlanuserip: wlanuserip,
@@ -112,14 +109,15 @@ function startTrip() {
 	    }
 	  }
 	}
-})
-
 }
+
 function portalLogin(param) {
 	CGI.post('portal_login', param, (resp)=> {
 	  if (resp.errno === 0) {
-	    localStorage.portal_phone = param.phone;
-	    localStorage.portal_code = param.code;
+	  	if (window.localStorage) {
+	  		localStorage.portal_phone = param.phone;
+	  		localStorage.portal_code = param.code;
+	  	}
 	    var info = resp.data;
 	    var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
 	    location.href = url;
