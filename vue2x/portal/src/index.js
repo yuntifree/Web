@@ -14,19 +14,28 @@ var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
 
 //本地存储的号码与验证码
-var sessionPhone = localStorage.portal_phone;
-var sessionCode = localStorage.portal_code;
+var sessionPhone = localStorage.portal_phone || '';
+var sessionCode = localStorage.portal_code || '';
 
 (function() {
 	var height = window.screen.height - 60; 
 	$('html').css('height', height);
-	font(true);
-	if ((sessionPhone && sessionCode)) {
-		$('.mob-login').append(template('tplOnelogin', {}));
-		$('.mob-login').append(template('tplBottom', ads));
+	if (isPC()) {
+		if ((sessionPhone && sessionCode)) {
+			$('.login').append(template('tplOnelogin', {}));
+			$('.login').append(template('tplBottom', ads));
+		} else {
+			$('.login').append(template('tplPc',{}));
+			$('.login').append(template('tplIptpc',{}));
+		}
 	} else {
-		$('.mob-login').append(template('tplIptlogin', {}));
-		$('.mob-login').append(template('tplBottom', ads));
+		if ((sessionPhone && sessionCode)) {
+			$('.login').append(template('tplOnelogin', {}));
+			$('.login').append(template('tplBottom', ads));
+		} else {
+			$('.login').append(template('tplIptlogin', {}));
+			$('.login').after(template('tplBottom', ads));
+		}
 	}
 	//是否是一键登录
 	initUI()
@@ -36,6 +45,22 @@ function initUI() {
 	font(true);
 	getCode();
 	startTrip();
+}
+
+function isPC() {
+  var userAgentInfo = navigator.userAgent;
+	var Agents = ["Android", "iPhone",
+	  "SymbianOS", "Windows Phone",
+	  "iPad", "iPod"
+	];
+	var flag = true;
+	for (var v = 0; v < Agents.length; v++) {
+	  if (userAgentInfo.indexOf(Agents[v]) > 0) {
+	    flag = false;
+	    break;
+	  }
+	}
+	return flag;
 }
 
 function tipShow(val) {

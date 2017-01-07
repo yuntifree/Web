@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import login from './login.vue'
+import login from './loginPc.vue'
 import VueLazyload from 'vue-lazyload'
 import store from './store.js'
 

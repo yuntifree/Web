@@ -131,7 +131,10 @@ legend{
 .g-tac {
     text-align: center;
 }
-
+.login {
+  width: 100%;
+  height: 100%;
+}
 .login-top,
 .login-top-bg {
   width: 100%;
@@ -250,6 +253,47 @@ legend{
   border-radius: 5px;
   display: none;
 }
+
+.pc-container{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #34b6f5;
+  position: relative;
+}
+.login-main {
+  width: 400px;
+  height: 300px;
+  padding: 0 20px;
+  background-color: #ffffff;
+  box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
+  -webkit-box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
+  -ms-box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
+  -o-box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
+  -ms-box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+}
+.login-dglogo {
+  display: block;
+  @include containerSize(100px, auto);
+  margin: 0 auto;
+}
+.dgpc-text {
+  font-size: 20px;
+  color: #5a5a5a;
+}
+.input-info {
+  width: 360px;
+  padding: 20px 0 0;
+  position: relative;
+}
+
 
 
 
