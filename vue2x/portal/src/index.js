@@ -4,7 +4,7 @@ var font = require('./common/font.js')
 var CGI = require('./lib/cgi.js')
 var template = require('./common/template.js');
 var ads = {
-  img: '../dist/static/images/act_banner.png',
+  img: '../static/images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
 }
 //倒计时
@@ -48,7 +48,7 @@ function initUI() {
 	font(true);
 	$('.query-code').click(getCode);
 	$('.btn').click(startTrip);
-  $('app-ads').click(appDownload)
+  $('.app-ads').click(appDownload)
 }
 
 function isPC() {
