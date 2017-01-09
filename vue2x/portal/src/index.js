@@ -48,6 +48,7 @@ function initUI() {
 	font(true);
 	$('.query-code').click(getCode);
 	$('.btn').click(startTrip);
+  $('app-ads').click(appDownload)
 }
 
 function isPC() {
@@ -158,6 +159,11 @@ function portalLogin(param) {
 	  	$('.ipt-code').focus();
 	  }
 	})
+}
+
+function appDownload() {
+  console.log(1);
+  location.href = ads.url;
 }
 
 
