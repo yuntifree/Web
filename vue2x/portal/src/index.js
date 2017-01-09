@@ -3,7 +3,10 @@ require('./common/zepto.min.js');
 var font = require('./common/font.js')
 var CGI = require('./lib/cgi.js')
 var template = require('./common/template.js');
-var ads = require('../test/adsdata.js')
+var ads = {
+  img: '../dist/static/images/act_banner.png',
+  url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
+}
 //倒计时
 var timer;
 
