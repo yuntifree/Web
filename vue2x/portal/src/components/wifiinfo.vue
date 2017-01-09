@@ -170,6 +170,7 @@
         <span class="oval"></span>
         <span class="oval-copy-1"></span>
         <img class="oval-around" v-show="showCfg" :class="{'oval-animate':showCfg}" src="http://img.yunxingzh.com/180afd13-7e6b-4006-9d00-d80e227c46fe.png">
+        <!--img class="oval-around" v-show="showCfg" src="http://img.yunxingzh.com/6c7b3c00-c9a6-4dbd-8ad6-b01707bb2b38.gif"-->
         <span class="oval-copy-2 g-tac">
           <b v-if="showCfg">{{timeTxt}}<i>秒</i></b>
           <img v-else class="oval-copy-3"　src="http://img.yunxingzh.com/e04e6e9d-d24b-4e00-be57-1224efd426df.png">
@@ -302,21 +303,24 @@ export default {
       })
     },
     openLink(url,idx) {
+
       switch (idx){
         case 0:
           this.$store.state.newsname = 'newslist';
+          this.$store.state.tabidx = idx;
           this.$router.push({name: 'news'});
           break;
         case 1:
           this.$store.state.newsname = 'hotspot';
-          this.$router.push({name: 'news'});
+          this.$store.state.tabidx = idx;
+          this.$router.push({name: 'hotspot'});
           break;
         case 2:
-          this.$store.state.tabIdx = 2;
+          this.$store.state.tabidx = 2;
           this.$router.push({name: 'service'});
           break;
         default: 
-          this.$store.state.tabIdx = 3;
+          this.$store.state.tabidx = 3;
           location.href = url;
       } 
     },

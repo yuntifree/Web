@@ -178,7 +178,7 @@ export default {
         uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
         token: this.$store.state.token || sessionStorage.getItem('portal_token'),
         seq:seq || 0,
-        type: 4
+        type: 0
       }
       CGI.post('hot', param, (resp)=>{
         if (resp.errno === 0) {

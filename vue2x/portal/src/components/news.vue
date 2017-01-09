@@ -8,7 +8,6 @@
 
 <script>
 import newslist from './lib/newslist.vue'
-import hotspot  from './lib/hotspot.vue'
 import tab from './lib/tab.vue'
 import download from './lib/download.vue'
 export default {
@@ -21,7 +20,6 @@ export default {
   components: {
     download,
     tab,
-    hotspot,
     newslist
   },
   activated() {
@@ -29,13 +27,14 @@ export default {
   },
   methods: {
     tabChange(idx) {
-      this.$store.state.selidx = idx;
       this.tabIdx = idx;
       switch (idx) {
         case 0: 
+          this.$store.state.tabidx = 0;
           this.$router.push({name: 'news'});
           break;
         case 1:
+          this.$store.state.tabidx = 1;
           this.$router.push({name: 'hotspot'});
           break;
         case 2:

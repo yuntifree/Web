@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     tabChange(idx) {
-      this.$store.state.selidx = idx;
+      this.$store.state.tabidx = idx;
       this.tabIdx = idx;
       switch (idx) {
         case 0: 
