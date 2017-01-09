@@ -45,8 +45,9 @@ module.exports = {
             uid: ~~param.uid,
             data: param,
             web: 1,
-            term: 2
-        };
+            term: 2,
+            version:1
+    };
 
         var url = this.CGI + action;
 
