@@ -77,16 +77,19 @@
 .oval-animate {
   animation:mymove linear 3s infinite;
   -webkit-animation:mymove linear 3s infinite;
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
 }
 
 @keyframes mymove{
-  from {transform: rotate(0deg) translate(-50%, -50%);transform-origin: 0 0}
-  to {transform: rotate(360deg) translate(-50%, -50%);transform-origin: 0 0}
+  0% {
+    transform: rotate(0deg) translate(-50%, -50%);transform-origin: 0 0}
+  100% {transform: rotate(360deg) translate(-50%, -50%);transform-origin: 0 0}
 }
 
 @-webkit-keyframes mymove {
-  from {transform: rotate(0deg) translate(-50%, -50%);transform-origin: 0 0}
-  to {transform: rotate(360deg) translate(-50%, -50%);transform-origin: 0 0}
+  0% {-webkit-transform: rotate(0deg) translate(-50%, -50%);-webkit-transform-origin: 0 0}
+  100% {-webkit-transform: rotate(360deg) translate(-50%, -50%);-webkit-transform-origin: 0 0}
 }
 .link-text {
   font-size: 0.24rem;
@@ -321,7 +324,7 @@ export default {
       this.timer = setInterval(()=> {
         this.timeTxt--;
         if (this.timeTxt == 0) {
-          this.showCfg = false;
+          //this.showCfg = false;
           clearInterval(this.timer);
         };
       }, 1000)
