@@ -269,7 +269,7 @@ legend{
 .pc-login-main {
   width: 400px;
   height: 300px;
-  padding: 0 20px;
+  padding: 0 77px;
   background-color: #fff;
   box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
   -webkit-box-shadow: 0 20px 20px 0 rgba(80, 80, 80, 0.5);
@@ -289,14 +289,16 @@ legend{
   margin: 0 auto;
 }
 .onepc-login-dglogo {
-  margin: 26px auto 10px;
+  margin: 26px auto 20px;
 }
 .pc-dgpc-text {
-  font-size: 20px;
+  font-size: 16px;
   color: #5a5a5a;
 }
+.pcone-dgpc-text {
+}
 .pc-input-info {
-  width: 360px;
+  width: 246px;
   padding: 20px 0 0;
   position: relative;
 }
@@ -312,7 +314,7 @@ legend{
   display: block;
 }
 .pc-input-info input {
-  width: 340px;
+  width: 220px;
   height: auto;
   padding: 5px 0;
   border-bottom: 1px solid #c8c8c8;
@@ -336,7 +338,7 @@ legend{
 }
 .pc-btn {
   display: block;
-  width: 260px;
+  width: 246px;
   height: 40px;
   line-height: 40px;
   border-radius: 6px;
@@ -345,6 +347,34 @@ legend{
 }
 .onepc-btn {
   margin: 60px auto 0;
+}
+.qr-code {
+  width: 74px;
+  height: auto;
+  position: absolute;
+  top: 35%;
+  right: 5%;
+}
+.wechat-code {
+  top: 58%;
+}
+.qr-code img {
+  display: block;
+  width: 74px;
+  height: 74px;
+}
+.qr-code p {
+  font-size: 14px;
+  color: #fff;
+}
+.pccompay-text {
+  display: block;
+  width: 226px;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  bottom: 57px;
+  margin-left: -113px;
 }
 
 

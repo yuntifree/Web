@@ -5,7 +5,8 @@ Vue.use(Vuex);
 const state = {
   uid: 0,
   token: '',
-  infiniteLoading: '',
+  newsname: 0,
+  tabidx: 0,
 }
 
 export default new Vuex.Store({

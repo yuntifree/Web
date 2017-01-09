@@ -166,7 +166,7 @@
       <div class="circle-link">
         <span class="oval"></span>
         <span class="oval-copy-1"></span>
-        <img class="oval-around" :class="{'oval-animate':showCfg}"src="http://img.yunxingzh.com/180afd13-7e6b-4006-9d00-d80e227c46fe.png">
+        <img class="oval-around" v-show="showCfg" :class="{'oval-animate':showCfg}" src="http://img.yunxingzh.com/180afd13-7e6b-4006-9d00-d80e227c46fe.png">
         <span class="oval-copy-2 g-tac">
           <b v-if="showCfg">{{timeTxt}}<i>秒</i></b>
           <img v-else class="oval-copy-3"　src="http://img.yunxingzh.com/e04e6e9d-d24b-4e00-be57-1224efd426df.png">
@@ -194,21 +194,22 @@
           <img src="http://img.yunxingzh.com/5bd91184-f4cb-40f1-9013-07fb636e288b.png">
         </div>
       </div>
-      <newslist v-if="dataReady"></newslist>
+      <newslist></newslist>
     </div>
-    </div>
+    <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
+  </div>
 </template>
 
 <script>
-import newslist from './newslist.vue'
+import news from './news.vue'
 import tip from './lib/tip.vue'
+import newslist from './lib/newslist.vue'
 import CGI from '../lib/cgi.js'
 
 var query = CGI.query();
 var loginfrom = query.loginfrom || 0;
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
-console.log(uid);
 export default {
   name: 'info',
   data() {
@@ -231,13 +232,13 @@ export default {
       queryParam: '',
       menuList: [{
         icon: 'http://img.yunxingzh.com/c5f0475a-3f1f-4c80-9f33-90bd33af7d75.png',
-        text: '政务',
+        text: '东莞',
+      },{
+        icon: 'http://img.yunxingzh.com/126167e8-917a-4d5d-91e7-537e28c0ad03.png',
+        text: '热点',
       },{
         icon: 'http://img.yunxingzh.com/548d971b-dac4-4bf7-bbac-5b69e4f325c0.png',
         text: '查询',
-      },{
-        icon: 'http://img.yunxingzh.com/553143fc-6d6d-4aad-be8a-5715a7eab367.png',
-        text: '视频',
       },{
         icon: 'http://img.yunxingzh.com/efd20edd-7a3d-4c62-a523-90110da4ba74.png',
         text: '招聘',
@@ -296,20 +297,21 @@ export default {
       })
     },
     openLink(url,idx) {
-      var _this = this;
       switch (idx){
         case 0:
-          this.$store.state.newsDownload = true;
-          sessionStorage.setItem('portal_newsDownload', 'true');
-          _this.$router.push({name: 'newslist'});
+          this.$store.state.newsname = 'newslist';
+          this.$router.push({name: 'news'});
           break;
         case 1:
-          _this.$router.push({name: 'service'});
+          this.$store.state.newsname = 'hotspot';
+          this.$router.push({name: 'news'});
           break;
         case 2:
-          _this.$router.push({name: 'video'});
+          this.$store.state.tabIdx = 2;
+          this.$router.push({name: 'service'});
           break;
         default: 
+          this.$store.state.tabIdx = 3;
           location.href = url;
       } 
     },

@@ -33,26 +33,25 @@
 }
 </style>
 <template>
-  <div class="service top88">
+  <div class="service top176">
     <download></download>
+    <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
     <div class="service-list" v-for="list in lists">
       <h2 class="list-title" v-text="list.title"></h2>
       <ul class="service-menu g-clearfix">
-        <li class="g-fl menu-item" v-for="item in list.items">
+        <li class="g-fl menu-item" v-for="item in list.items" @click="urlLink(item.url)">
           <img :src="item.icon">
           <p class="g-tac item-text" v-text="item.text"></p>
         </li>
       </ul>
     </div>
-    <p class="example-list-item" v-for="item in list" v-text="item"></p>
-    <!--infinite-loading :on-infinite="onInfinite" ref="scrollLoading" :state="stateinfo"></infinite-loading-->
   </div>
 </template>
 
 <script>
 import download from './lib/download.vue'
-//import infiniteLoading from './lib/vue-infinite-loading.vue'
 import tip from './lib/tip.vue'
+import tab from './lib/tab.vue'
 import CGI from '../lib/cgi'
 
 export default {
@@ -61,7 +60,6 @@ export default {
     return {
       services: [],
       loading: false,
-      list:[0,1,2,3,4],
       stateinfo: 'complete',
       lists: [{
         title: '智慧政务',
@@ -70,21 +68,21 @@ export default {
           text: '社保查询',
           url: 'http://61.145.199.189/sbwx/web2/dgsbxxcx/loginPage'
         },{
-          icon: 'http://img.yunxingzh.com/99a408f9-3856-415a-863b-63bc530f8867.png',
-          text: '公积金查询',
-          url: ''
-        },{
-          icon: 'http://img.yunxingzh.com/2522812d-7d1b-475d-b511-cc8c42a953b8.png',
-          text: '工商查询',
-          url: ''
-        },{
           icon: 'http://img.yunxingzh.com/5f11f5ce-99f6-466a-8a80-858ced1b61d5.png',
           text: '违章查询',
           url: 'http://112.74.64.177:8080/Traffic/ViolationByVehicleLicense'
         },{
           icon: 'http://img.yunxingzh.com/9102b006-b048-4d41-ba8e-697477d7cae8.png',
-          text: '发票真伪查询',
+          text: '发票真伪',
           url: 'http://mtax.gdltax.gov.cn/appserver/assets/bsfw/fpcy.html?cityid=441900'
+        },{
+          icon: 'http://img.yunxingzh.com/b07178d0-3de9-42dc-ba3d-4c9a62936b0f.png',
+          text: '积分入户',
+          url: 'http://shenbao.dg.gov.cn/dgcsfw_zfb/csfw/dg_rlzy/pages/jfrh-serach-zfb.jsp'
+        },{
+          icon: 'http://img.yunxingzh.com/1d9dc2c5-baf6-4283-aea2-5864fe560ed8.png',
+          text: '积分入学',
+          url: 'http://shenbao.dg.gov.cn/dgcsfw_zfb/csfw/dg_rlzy/pages/jfrx-serach-zfb.jsp'
         }]
       },{
         title: '交通出行',
@@ -122,21 +120,25 @@ export default {
         msg: '',
         duration: 1500,
       },
+      tabIdx: 2
     }
   },
   components: {
     tip,
     download,
-    //infiniteLoading
+    tab
   },
   mounted() {
     this.getData();
   },
+  activated() {
+    this.tabIdx = 2;
+  },
   methods: {
     getData(seq) {
       var param = {
-        uid: 137,
-        token: '6ba9ac5a422d4473b337d57376dd3488',
+        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
+        token: this.$store.state.token || sessionStorage.getItem('portal_token'),
       }
       CGI.post('services', param, (resp)=> {
         if (resp.errno == 0) {
@@ -146,17 +148,6 @@ export default {
         }
       })
     },
-    onInfinite() {
-      setTimeout(() => {
-        const temp = [];
-        for (let i = this.list.length + 1; i <= this.list.length + 20; i++) {
-          temp.push(i);
-        }
-        this.list = this.list.concat(temp);
-        this.stateinfo = 'loaded'
-        console.log(this.stateinfo);
-      }, 1000);
-    },
     urlLink(url) {
       location.href = url;
     },
@@ -164,6 +155,22 @@ export default {
       this.tips.msg = val;
       this.tips.show = true;
     },
+    tabChange(idx) {
+      this.$store.state.tabidx = idx;
+      console.log('tab save: ' + idx)
+      switch (idx) {
+        case 0: 
+          this.$router.push({name: 'news'});
+          break;
+        case 1:
+          this.$router.push({name: 'hotspot'});
+          break;
+        case 2:
+          break;
+        case 3:
+          location.href = 'http://jump.luna.58.com/i/29a3'
+      }
+    }
   }
 }
 </script>

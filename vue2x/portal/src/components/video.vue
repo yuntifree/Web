@@ -1,8 +1,5 @@
 <template>
-  <div class="videos top88" 
-      v-infinite-scroll="loadMorevideo"
-      infinite-scroll-disabled="videoloading"
-      infinite-scroll-distance="30">
+  <div class="videos top88">
     <download></download>
     <div class="video-list" v-for="item in items">
       <div class="video-inner" @click="videoLink(item)">
@@ -15,7 +12,8 @@
       </div>
       <p class="video-title ellipsis">{{item.title}}</p>
     </div>
-    <p class="item-desc g-tac loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
+    <p class="item-desc g-tac" v-show="!loading" @click="loadMorevideo">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
+    <p class="item-desc g-tac" v-show="loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
   </div>
 </template>
 
@@ -32,6 +30,8 @@ export default {
       items: [],
       tabs: [],
       useCache: false,
+      loading: false,
+      nomore: false,
       tips: {
         show: false,
         msg: '',
@@ -44,7 +44,7 @@ export default {
     tip,
     download
   },
-  beforeRouteLeave(to, from, next) {
+  /*beforeRouteLeave(to, from, next) {
     this.videoloading = true;
     next(true);
   },
@@ -53,7 +53,7 @@ export default {
       // 通过 `vm` 访问组件实例
       vm.videoloading = false;
     })
-  },
+  },*/
   mounted() {
     this.$nextTick(function () {
       // 存下union
@@ -79,9 +79,10 @@ export default {
   },
   methods: {
     getData(seq) {
+      this.loading = true;
       var param = {
-        uid: 137,
-        token: '6ba9ac5a422d4473b337d57376dd3488',
+        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
+        token: this.$store.state.token || sessionStorage.getItem('portal_token'),
         seq: seq || 0,
         type: 1
       }
@@ -91,8 +92,8 @@ export default {
             this.$set(item, "visited", false);
           })
           this.items = this.items.concat(resp.data.infos);
+          this.loading = false;
           this.nomore = resp.data.hasmore ? false : true;
-          this.$store.state.newsloading = false;
         } else {
           this.tipBox(resp.desc);
         }
@@ -103,15 +104,18 @@ export default {
         this.useCache = false;
         return;
       }
-
-      this.$store.state.videoloading = true;
-      var len = this.items.length-1;
-      if (!this.nomore && len >= 0) {
-        setTimeout(()=>{
-          this.getData(this.items[len].seq);
-          console.log('video loadMore')
-        },1000)
-      }
+      if (!this.nomore) {
+        this.$store.state.videoloading = true;
+        var len = this.items.length-1;
+        if (!this.nomore && len >= 0) {
+          setTimeout(()=>{
+            this.getData(this.items[len].seq);
+            console.log('video loadMore')
+          },1000)
+        }
+      } else {
+        this.alertInfo('全都在这没有更多了');
+      }   
     },
     videoLink(item) {
       item.visited = true;
@@ -122,8 +126,8 @@ export default {
       sessionStorage.setItem('scrollY', scrollY);
 
       sessionStorage.setItem('cache', JSON.stringify(this.items));
-      location.href = item.url;
-      console.log(item.url);
+      location.href = item.dst;
+      console.log(item.dst);
     },
     tipBox(val) {
       this.tips.msg = val;

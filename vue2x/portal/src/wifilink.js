@@ -17,8 +17,8 @@ initFont(true);
 
 import wifiinfo from './components/wifiinfo'
 import service from './components/service'
-import video from './components/video.vue'
-import newslist from './components/newslist.vue'
+import news from './components/news'
+import hotspot from './components/hotspot.vue'
 
 
 const router = new VueRouter({
@@ -33,12 +33,14 @@ const router = new VueRouter({
       path: '/service',
       name: 'service',
       component: service,
-    },{path: '/video',
-      name: 'video',
-      component: video,
-    },{path: '/newslist',
-      name: 'newslist',
-      component: newslist,
+    },{
+      path: '/news',
+      name: 'news',
+      component: news,
+    },{
+      path: '/hotspot',
+      name: 'hotspot',
+      component: hotspot,
     },{
       path: '*',
       redirect: 'wifiinfo',

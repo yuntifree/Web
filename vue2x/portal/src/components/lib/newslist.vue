@@ -1,5 +1,5 @@
 <style lang="scss">
-@import '../assets/css/common.scss';
+@import '../../assets/css/common.scss';
 .item-container {
   width: 94%;
   margin: 0 auto;
@@ -44,7 +44,7 @@
 .item-desc {
   font-size: 0.24rem;
   color: $color84;
-  line-height: 0.34rem;
+  line-height: 0.8rem;
 }
 .item-visited {
   color: $color84;
@@ -70,18 +70,13 @@
   border: 1px solid #f6c042;
   border-radius: 0.08rem;
 }
-.loading {
-  line-height: 0.8rem;
-}
 
 </style>
 <template>
 <div class="newslist">
-  <div v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="30"
-      :class="{ top88: downShow}">
-    <download v-if="downShow"></download>
+  <div> 
+    <!--download v-if="downShow"></download>
+    <tab  v-if="downShow" @tab-change="getData"></tab-->
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -128,15 +123,13 @@
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
-  <p class="item-desc g-tac loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
-  <p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p>
+  <p class="item-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
+  <p class="item-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
 </div>
 </template>
 <script>
-import tip from './lib/tip.vue'
-import download from './lib/download.vue'
-import CGI from '../lib/cgi'
-var query = CGI.query();
+import tip from './tip.vue'
+import CGI from '../../lib/cgi'
 export default {
   data() {
     return {
@@ -154,13 +147,6 @@ export default {
   },
   components: {
     tip,
-    download
-  },
-  computed: {
-    downShow() {
-      var ret = sessionStorage.getItem('portal_newsDownload')
-      return eval(ret.toLowerCase());
-    }
   },
   mounted() {
     this.$nextTick(()=>{
@@ -185,23 +171,14 @@ export default {
       }
     })
   },
-  beforeRouteLeave(to, from, next) {
-    this.loading = true;
-    next(true);
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-      vm.loading = false;
-    })
-  },
   methods: {
     getData(seq) {
+      this.loading = true;
       var param = {
         uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
         token: this.$store.state.token || sessionStorage.getItem('portal_token'),
         seq:seq || 0,
-        type:0
+        type: 0
       }
       CGI.post('hot', param, (resp)=>{
         if (resp.errno === 0) {
@@ -209,12 +186,15 @@ export default {
           resp.data.infos.forEach((item)=>{
             this.$set(item, "visited", false);
           })
-          this.items = this.items.concat(resp.data.infos);
           if (param.seq==0) {
             this.ready = true;
+            this.items = resp.data.infos;
+          } else {
+            this.items = this.items.concat(resp.data.infos);
           }
           this.nomore = resp.data.hasmore ? false : true;
           this.loading = false;
+          this.$store.state.type = param.type;
         } else {
           this.tipBox(resp.desc);
         }
@@ -225,13 +205,16 @@ export default {
         this.useCache = false;
         return;
       }
-      var len = this.items.length-1;
-      if (!this.nomore && len >= 0) {
-        setTimeout(()=>{
-          this.getData(this.items[len].seq);
-          console.log('loadmore');
-        },1000)
-      }
+      if (this.nomore) {
+        this.alertInfo('全都在这没有更多了');
+      } else {
+        var len = this.items.length-1;
+        if (!this.nomore && len >= 0) {
+          setTimeout(()=>{
+            this.getData(this.items[len].seq);
+          },1000)
+        }
+      }    
     },
     link(item) {
       item.visited = true;
