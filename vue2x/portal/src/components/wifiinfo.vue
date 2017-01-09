@@ -262,6 +262,15 @@ export default {
     tip,
     newslist,
   },
+  created() {
+    this.$store.state.uid = uid;
+    this.$store.state.token = token;
+    if (loginfrom) {
+      this.$router.replace({name:'home'});
+      sessionStorage.setItem('portal_uid', uid);
+      sessionStorage.setItem('portal_token', token); 
+    }
+  },
   mounted() {
     this.$nextTick(()=> {
       if (loginfrom) {
@@ -269,28 +278,21 @@ export default {
         this.countdown();
       }
       this.getData();
-      this.$store.state.uid = uid;
-      this.$store.state.token = token;
-      sessionStorage.setItem('portal_newsDownload', 'false');
       this.dataReady = true;
-      if (loginfrom) {
-        this.$router.replace({name:'home'});
-        sessionStorage.setItem('portal_uid', uid);
-        sessionStorage.setItem('portal_token', token); 
-      }
     })
   },
   methods: {
     getData() {
       var param = {
-        uid: uid || ~~(sessionStorage.getItem('portal_uid')),
-        token: token || sessionStorage.getItem('portal_token')
+        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
+        token: this.$store.state.token || sessionStorage.getItem('portal_token')
       }
       this.queryParam = JSON.stringify(param);
       CGI.post('get_weather_news', param, (resp)=> {
         if (resp.errno === 0) {
           this.weather = resp.data.weather;
-          this.weatherImg = this.weatherIcon[this.weather.type];
+          var weatherType = this.weather.type || 0; 
+          this.weatherImg = this.weatherIcon[weatherType];
         } else {
           this.alertInfo(resp.desc);
         }
