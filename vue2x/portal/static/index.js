@@ -71,10 +71,7 @@ var JPlaceHolder = {
     });
   }
 };
-//执行
-/*jQuery(function(){
-    JPlaceHolder.init();    
-});*/
+
 (function() {
   String.prototype.trim = function() {
     return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -108,7 +105,8 @@ function initUI() {
   $('.ipt-phone').focus();
   JPlaceHolder.init();
   $('.query-code').click(getCode);
-  $('.btn').click(startTrip);
+  $('.btn').get(0).addEventListener('touchstart', tripStart, false);
+  $('.btn').get(0).addEventListener('touchend', tripEnd, false)
   $('.app-ads').click(appDownload)
 }
 
@@ -205,12 +203,13 @@ function getCode() {
     }
   });
 }
+function tripStart(e) {
+    $('.btn').css('backgroundColor','#0187ee');
 
-function startTrip() {
-  $('.btn').css('backgroundColor','#0187ee');
-  setTimeout(function() {
-    $('.btn').css('backgroundColor','#00a0fb');
-  },300);
+}
+
+function tripEnd(e) {
+  $('.btn').css('backgroundColor','#00a0fb');
   var param = {
     wlanacname: wlanacname,
     wlanuserip: wlanuserip,
