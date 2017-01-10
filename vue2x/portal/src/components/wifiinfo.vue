@@ -36,19 +36,27 @@
   line-height: 0.36rem;
 }
 .circle-link {
-  @include containerSize(2.38rem, 2.38rem);
+  @include containerSize(2.4rem, 2.4rem);
   margin: 0 auto;
   position: relative;
+  padding-top: 0.2rem;
 }
 .circle-link span,
-.circle-link img {
+.circle-link .oval-copy-3 {
   display: block;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  -moz-border-radius: 50%;
 }
 .oval {
   @include containerSize(100%, 100%);
@@ -57,6 +65,10 @@
 .oval-copy-1,
 .oval-around {
   @include containerSize(2rem, 2rem);
+}
+.oval-around {
+  display: block;
+  margin: 0 auto;
 }
 .oval-copy-1 {
   border: solid 1px rgba(255,255,255,0.2);
@@ -77,20 +89,42 @@
 .oval-animate {
   animation:mymove linear 3s infinite;
   -webkit-animation:mymove linear 3s infinite;
+  -ms-animation:mymove linear 3s infinite;
+  -o-animation:mymove linear 3s infinite;
+  -moz-animation:mymove linear 3s infinite;
   transform-origin: 0 0;
   -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
 }
 
 @keyframes mymove{
   0% {
-    transform: rotate(0deg) translate(-50%, -50%);transform-origin: 0 0}
-  100% {transform: rotate(360deg) translate(-50%, -50%);transform-origin: 0 0}
+    transform: rotate(0deg); transform-origin: 50% 50%;}
+  100% {transform: rotate(360deg);transform-origin: 50% 50%;}
 }
 
 @-webkit-keyframes mymove {
-  0% {-webkit-transform: rotate(0deg) translate(-50%, -50%);-webkit-transform-origin: 0 0}
-  100% {-webkit-transform: rotate(360deg) translate(-50%, -50%);-webkit-transform-origin: 0 0}
+  0% {-webkit-transform: rotate(0deg);-webkit-transform-origin: 50% 50%;}
+  100% {-webkit-transform: rotate(360deg);-webkit-transform-origin: 50% 50%;}
 }
+@-moz-keyframes mymove{
+  0% {
+    -moz-transform: rotate(0deg); -moz-transform-origin: 50% 50%;}
+  100% {-moztransform: rotate(360deg);-moz-transform-origin: 50% 50%;}
+}
+@-ms-keyframes mymove{
+  0% {
+    -ms-transform: rotate(0deg); -ms-transform-origin: 50% 50%;}
+  100% {-ms-transform: rotate(360deg);-ms-transform-origin: 50% 50%;}
+}
+@-o-keyframes mymove{
+  0% {
+    -o-transform: rotate(0deg); -o-transform-origin: 50% 50%;}
+  100% {-o-transform: rotate(360deg);-o-transform-origin: 50% 50%;}
+}
+
 .link-text {
   font-size: 0.24rem;
   color: #fff;
@@ -113,6 +147,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
 .toutiao-text {
   top: 50%;
@@ -170,7 +207,6 @@
         <span class="oval"></span>
         <span class="oval-copy-1"></span>
         <img class="oval-around" v-show="showCfg" :class="{'oval-animate':showCfg}" src="http://img.yunxingzh.com/180afd13-7e6b-4006-9d00-d80e227c46fe.png">
-        <!--img class="oval-around" v-show="showCfg" src="http://img.yunxingzh.com/6c7b3c00-c9a6-4dbd-8ad6-b01707bb2b38.gif"-->
         <span class="oval-copy-2 g-tac">
           <b v-if="showCfg">{{timeTxt}}<i>秒</i></b>
           <img v-else class="oval-copy-3"　src="http://img.yunxingzh.com/e04e6e9d-d24b-4e00-be57-1224efd426df.png">
@@ -214,6 +250,7 @@ var query = CGI.query();
 var loginfrom = query.loginfrom || 0;
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
+
 export default {
   name: 'info',
   data() {

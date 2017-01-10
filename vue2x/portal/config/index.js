@@ -7,7 +7,6 @@ module.exports = {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../'+ distPath +'/index.html'),
-    login: path.resolve(__dirname, '../'+ distPath +'/login.html'),
     wifilink: path.resolve(__dirname, '../'+ distPath +'/wifilink.html'),
     assetsRoot: path.resolve(__dirname, '../' + distPath),
     assetsSubDirectory: 'static',
