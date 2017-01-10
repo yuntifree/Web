@@ -175,8 +175,8 @@ export default {
     getData(seq) {
       this.loading = true;
       var param = {
-        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
-        token: this.$store.state.token || sessionStorage.getItem('portal_token'),
+        uid: this.$store.state.uid || ~~(localStorage.getItem('portal_uid')),
+        token: this.$store.state.token || localStorage.getItem('portal_token'),
         seq:seq || 0,
         type: 0
       }

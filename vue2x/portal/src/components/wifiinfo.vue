@@ -250,7 +250,6 @@ var query = CGI.query();
 var loginfrom = query.loginfrom || 0;
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
-
 export default {
   name: 'info',
   data() {
@@ -307,9 +306,9 @@ export default {
     this.$store.state.uid = uid;
     this.$store.state.token = token;
     if (loginfrom) {
+      localStorage.setItem('portal_uid', uid);
+      localStorage.setItem('portal_token', token); 
       this.$router.replace({name:'home'});
-      sessionStorage.setItem('portal_uid', uid);
-      sessionStorage.setItem('portal_token', token); 
     }
   },
   mounted() {
@@ -325,8 +324,8 @@ export default {
   methods: {
     getData() {
       var param = {
-        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
-        token: this.$store.state.token || sessionStorage.getItem('portal_token')
+        uid: this.$store.state.uid || ~~(localStorage.getItem('portal_uid')),
+        token: this.$store.state.token || localStorage.getItem('portal_token')
       }
       this.queryParam = JSON.stringify(param);
       CGI.post('get_weather_news', param, (resp)=> {
@@ -365,7 +364,7 @@ export default {
       this.timer = setInterval(()=> {
         this.timeTxt--;
         if (this.timeTxt == 0) {
-          //this.showCfg = false;
+          this.showCfg = false;
           clearInterval(this.timer);
         };
       }, 1000)

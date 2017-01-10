@@ -4,7 +4,7 @@ var font = require('./common/font.js')
 var CGI = require('./lib/cgi.js')
 var template = require('./common/template.js');*/
 var ads = {
-  img: '../static/images/act_banner.png',
+  img: '/static/images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
 }
 
@@ -215,7 +215,6 @@ function startTrip() {
   };
   var phone = $('.ipt-phone').val().trim();
   var code = $('.ipt-code').val().trim();
-
   if (sessionPhone && sessionCode) {
     param.phone = sessionPhone;
     param.code = sessionCode;
