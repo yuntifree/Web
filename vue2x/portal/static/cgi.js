@@ -1,5 +1,5 @@
 var ajax = $.ajax;
-var __DEV__ = false;
+var __DEV__ = true;
 window.CGI = {
     HOST: __DEV__ ? '' : 'http://120.76.236.185/',
     CGI: '/',
