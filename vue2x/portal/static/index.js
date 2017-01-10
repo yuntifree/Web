@@ -4,6 +4,7 @@ var font = require('./common/font.js')
 var CGI = require('./lib/cgi.js')
 var template = require('./common/template.js');*/
 
+
 var ads = {
   img: 'static/images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
@@ -71,6 +72,7 @@ var JPlaceHolder = {
       });
     });
   }
+
 };
 //执行
 /*jQuery(function(){
@@ -102,6 +104,7 @@ var JPlaceHolder = {
   //是否是一键登录
   initUI()
 })()
+
 
 function initUI() {
   //alert(1);
@@ -208,6 +211,10 @@ function getCode() {
 }
 
 function startTrip() {
+  $('.btn').css('backgroundColor','#0187ee');
+  setTimeout(function() {
+    $('.btn').css('backgroundColor','#00a0fb');
+  },300);
   var param = {
     wlanacname: wlanacname,
     wlanuserip: wlanuserip,
@@ -216,7 +223,6 @@ function startTrip() {
   };
   var phone = $('.ipt-phone').val().trim();
   var code = $('.ipt-code').val().trim();
-
   if (sessionPhone && sessionCode) {
     param.phone = sessionPhone;
     param.code = sessionCode;
@@ -230,8 +236,10 @@ function startTrip() {
         param.code = code;
         portalLogin(param);
       }
-    }
-  }
+}
+
+}
+
 }
 
 function portalLogin(param) {
@@ -270,7 +278,8 @@ function portalLogin(param) {
         location.href = 'http://yunxingzh.com/dist/wifilink.html';
       }*/
     }
-  })
+
+})
 }
 
 function appDownload() {

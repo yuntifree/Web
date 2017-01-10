@@ -75,8 +75,6 @@
 <template>
 <div class="newslist">
   <div> 
-    <!--download v-if="downShow"></download>
-    <tab  v-if="downShow" @tab-change="getData"></tab-->
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -175,8 +173,8 @@ export default {
     getData(seq) {
       this.loading = true;
       var param = {
-        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
-        token: this.$store.state.token || sessionStorage.getItem('portal_token'),
+        uid: this.$store.state.uid || ~~(localStorage.getItem('portal_uid')),
+        token: this.$store.state.token || localStorage.getItem('portal_token'),
         seq:seq || 0,
         type: 4
       }

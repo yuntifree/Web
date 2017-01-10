@@ -34,7 +34,7 @@ time, mark, audio, video,label{
   padding:0;
  /*  font-family: "Microsoft YaHei","微软雅黑","宋体","Arial"; */
  font-family: PingFangSC,'Microsoft YaHei',Helvetica,Arial,sans-serif;
-  tap-highlight-color:rgba(255,0,0,0);
+  /*tap-highlight-color:rgba(255,0,0,0);*/
   box-sizing:border-box;
   -webkit-box-sizing:border-box;
   -moz-box-sizing:border-box;

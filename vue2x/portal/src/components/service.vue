@@ -129,13 +129,13 @@ export default {
     tab
   },
   mounted() {
-    this.getData();
+    //his.getData();
   },
   activated() {
     this.tabIdx = 2;
   },
   methods: {
-    getData(seq) {
+    /*getData(seq) {
       var param = {
         uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
         token: this.$store.state.token || sessionStorage.getItem('portal_token'),
@@ -147,7 +147,7 @@ export default {
           this.tipBox(resp.desc);
         }
       })
-    },
+    },*/
     urlLink(url) {
       location.href = url;
     },
