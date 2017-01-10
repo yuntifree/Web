@@ -1,6 +1,5 @@
 require('./assets/css/index.css')
 require('./common/zepto.min.js');
-var font = require('./common/font.js')
 var CGI = require('./lib/cgi.js')
 var template = require('./common/template.js');
 var ads = {
@@ -9,6 +8,12 @@ var ads = {
 }
 //倒计时
 var timer;
+
+window.alert(1);
+//console bug
+window.console = window.console || {  
+    log: function(){},
+}
 
 var query = CGI.query();
 var wlanacname = query.wlanacname || '';  //'2043.0769.200.00';
@@ -162,7 +167,6 @@ function portalLogin(param) {
 }
 
 function appDownload() {
-  console.log(1);
   location.href = ads.url;
 }
 

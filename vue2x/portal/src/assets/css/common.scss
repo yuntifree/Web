@@ -34,3 +34,13 @@ $color84: #848484;
   bottom: 0;
   right: 0;
 }
+@mixin prefix($property, $value) {
+  -webkit-#{property}: $value;
+  -moz-#{property}: $value;
+  -o-#{property}: $value;
+  -ms-#{property}: $value;
+  #{property}: $value;
+}
+@mixin borderRadius($value) {
+  @inlcude prefix(border-radius, $value);
+}
