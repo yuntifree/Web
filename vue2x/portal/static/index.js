@@ -105,9 +105,13 @@ function initUI() {
   $('.ipt-phone').focus();
   JPlaceHolder.init();
   $('.query-code').click(getCode);
-  $('.btn').get(0).addEventListener('touchstart', tripStart, false);
-  $('.btn').get(0).addEventListener('touchend', tripEnd, false)
   $('.app-ads').click(appDownload)
+  if (isPC()) {
+    $('.pc-btn').click(tripEnd);
+  } else {
+    $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
+    $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
+  }
 }
 
 function font(bFont) {
@@ -122,10 +126,6 @@ function font(bFont) {
       var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
 
       $(docEl).data('dpr', dpr);
-      //var metaEl = document.createElement('meta');
-      //metaEl.name = 'viewport';
-      //metaEl.content = 'initial-scale=1,maximum-scale=1, minimum-scale=1';
-      //docEl.firstElementChild.appendChild(metaEl);
       var recalc = function() {
         var width = docEl.clientWidth;
         if (width / dpr > 640) {
