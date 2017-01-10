@@ -207,6 +207,10 @@ function getCode() {
 }
 
 function startTrip() {
+  $('.btn').css('backgroundColor','#0187ee');
+  setTimeout(function() {
+    $('.btn').css('backgroundColor','#00a0fb');
+  },300);
   var param = {
     wlanacname: wlanacname,
     wlanuserip: wlanuserip,
