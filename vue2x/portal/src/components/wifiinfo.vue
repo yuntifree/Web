@@ -365,7 +365,7 @@ export default {
       this.timer = setInterval(()=> {
         this.timeTxt--;
         if (this.timeTxt == 0) {
-          //this.showCfg = false;
+          this.showCfg = false;
           clearInterval(this.timer);
         };
       }, 1000)

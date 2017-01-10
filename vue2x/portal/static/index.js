@@ -3,8 +3,9 @@ require('./common/zepto.min.js');
 var font = require('./common/font.js')
 var CGI = require('./lib/cgi.js')
 var template = require('./common/template.js');*/
+
 var ads = {
-  img: '../static/images/act_banner.png',
+  img: 'static/images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
 }
 
