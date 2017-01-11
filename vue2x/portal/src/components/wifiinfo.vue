@@ -213,7 +213,7 @@
 </style>
 <template>
   <div class="info">
-    <div v-if="!checkView">
+    <div>
       <div class="info-top">
         <img class="info-logo"　src="http://img.yunxingzh.com/91dc8c9f-1658-46a5-a9fd-52c2e66df151.png">
         <div class="info-weather g-clearfix">
@@ -255,10 +255,6 @@
         <newslist></newslist>
       </div>
     </div>
-    <div v-else class="check-internet">
-      <img src="http://img.yunxingzh.com/f4815940-b2da-4a6c-ab91-4811553f459f.png">
-      <p>请检查您的浏览器环境</p>
-    </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
@@ -279,7 +275,6 @@ export default {
     return {
       showCfg: false,
       timeTxt: 5,
-      checkView: false,
       tips: {
         show: false,
         msg: '',
