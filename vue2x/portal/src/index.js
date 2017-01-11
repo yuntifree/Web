@@ -155,7 +155,7 @@ function portalLogin(param) {
 	  		localStorage.portal_code = param.code;
 	  	}
 	    var info = resp.data;
-	    var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' +info.token;
+	    var url = "http://yunxingzh.com/dist/wifilink.html?loginfrom=true&uid=" + info.uid + '&token=' +info.token +'&s=1';
 	    location.href = url;
 	  } else {
 	  	tipShow(resp.desc);
