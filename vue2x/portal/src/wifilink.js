@@ -26,7 +26,7 @@ const router = new VueRouter({
   base: __public__,
   routes: [
     {
-      path: '',
+      path: '/home',
       name: 'home',
       component: wifiinfo,
     },{
@@ -43,7 +43,7 @@ const router = new VueRouter({
       component: hotspot,
     },{
       path: '*',
-      redirect: 'wifiinfo',
+      redirect: 'home',
     }
   ]
 })

@@ -215,8 +215,8 @@ export default {
       CGI.post(this.$store.state, 'get_news', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
-          this.news = data.news;
-          this.pageCfg.total = CGI.totalPages(data.total, this.pageCfg.limit);
+          this.news = data.infos;
+          this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
           this.alertInfo(resp.desc);
