@@ -223,15 +223,19 @@ export default {
       var pageHeight = document.documentElement.clientHeight;
       var delta = scrollY % pageHeight;
       scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
-      sessionStorage.setItem('scrollY', scrollY);
-      sessionStorage.setItem('cache', JSON.stringify(this.items));
-
+      if (sessionStorage) { 
+        try {
+          sessionStorage.setItem('scrollY', scrollY);
+          sessionStorage.setItem('cache', JSON.stringify(this.items));
+        } catch(e) {
+        }
+      }  
       location.href = item.dst;
     },
     tipBox(val) {
       this.tips.msg = val;
       this.tips.show = true;
-    },
+    i},
     formatTime(ctime) {
       return ctime.substr(0, ctime.length - 3)
     }

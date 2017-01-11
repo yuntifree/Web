@@ -81,7 +81,7 @@ var JPlaceHolder = {
       var data = resp.data;
       autologin = data.autologin;
       if (isPC()) {
-        var height = $(window).height();
+        var height = $(window).height()-60;
         $('html').css('height', height);
         if (autologin) {
           $('.login').append(template('tplPcone', {}));
@@ -89,7 +89,7 @@ var JPlaceHolder = {
           $('.login').append(template('tplPc', {}));
         }
       } else {
-        var height = window.screen.availHeight;
+        var height = window.screen.availHeight-60;
         $('html').css('height', height);
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));

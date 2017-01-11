@@ -273,6 +273,7 @@ var query = CGI.query();
 var uid = ~~(query.uid) || 138;
 var token = query.token || '6ba9ac5a422d4473b337d57376dd34';
 var s = query.s;
+alert(s);
 export default {
   name: 'info',
   data() {
