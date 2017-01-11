@@ -193,6 +193,23 @@
   font-size: 0.28rem;
   color: #3c3c3c;
 }
+.check-internet {
+  @include containerSize(3.2rem, 3.4rem);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -1.6rem;
+  margin-left: -1.7rem;
+}
+.check-internet img{
+  @include containerSize(2.04rem, 2.04rem);
+  display: block;
+  margin: 0 auto;
+}
+.check-internet p {
+  font-size: 0.32rem;
+  color: #9b9b9b;
+}
 </style>
 <template>
   <div class="info">
@@ -238,7 +255,10 @@
         <newslist></newslist>
       </div>
     </div>
-    <p v-else>请检查您的浏览器环境</p>
+    <div v-else class="check-internet">
+      <img src="http://img.yunxingzh.com/f4815940-b2da-4a6c-ab91-4811553f459f.png">
+      <p>请检查您的浏览器环境</p>
+    </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
@@ -310,14 +330,16 @@ export default {
     this.$store.state.uid = uid;
     this.$store.state.token = token;
     if (loginfrom) {
-      if (window.localstorage) {
+      console.log(!!(window.localStorage));
+      if (window.localStorage) {
+        console.log(this.checkView);
         try { 
           localStorage.setItem('portal_uid', uid);
           localStorage.setItem('portal_token', token); 
           this.$router.replace({name:'home'});
         }catch(e) {
           this.checkView = true;
-          //return;
+
         }
       } else {
         this.checkView = true;
