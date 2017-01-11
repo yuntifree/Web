@@ -20,6 +20,7 @@ if (localStorage) {
   sessionPhone = localStorage.portal_phone || '';
   sessionCode = localStorage.portal_code || '';
 } else {
+  alert(document.cookie);
   if (document.cookie) {
     sessionPhone = CGI.getCookie('portal_phone') || '';
     sessionCode = CGI.getCookie('portal_code') || '';
