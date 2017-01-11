@@ -306,10 +306,14 @@ export default {
     this.$store.state.uid = uid;
     this.$store.state.token = token;
     if (loginfrom) {
-      localStorage.setItem('portal_uid', uid);
-      localStorage.setItem('portal_token', token); 
-      this.$router.replace({name:'home'});
-    }
+      if (window.localStorage)
+        localStorage.setItem('portal_uid', uid);
+        localStorage.setItem('portal_token', token); 
+        this.$router.replace({name:'home'});
+      } else {
+        alert('请检查您的浏览器环境');
+        return;
+      }
   },
   mounted() {
     this.$nextTick(()=> {
