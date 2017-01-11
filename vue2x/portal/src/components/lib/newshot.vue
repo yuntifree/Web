@@ -128,6 +128,9 @@
 <script>
 import tip from './tip.vue'
 import CGI from '../../lib/cgi'
+var query = CGI.query();
+var uid = ~~(query.uid) || 138;
+var token = query.token || '6ba9ac5a422d4473b337d57376dd34';
 export default {
   name: 'newshot',
   data() {
@@ -175,8 +178,8 @@ export default {
     getData(seq) {
       this.loading = true;
       var param = {
-        uid: this.$store.state.uid || ~~(localStorage.getItem('portal_uid')),
-        token: this.$store.state.token || localStorage.getItem('portal_token'),
+        uid: uid,
+        token: token,
         seq:seq || 0,
         type: 0
       }
