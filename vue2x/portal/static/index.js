@@ -22,6 +22,8 @@ var firsturl = query.alanuserfirsturl || 'http://www.baidu.com';
 //本地存储的号码与验证码
 var sessionPhone = localStorage.portal_phone || '';
 var sessionCode = localStorage.portal_code || '';
+
+//判断浏览器类型
 var JPlaceHolder = {
   //检测
   _check: function() {
@@ -98,8 +100,7 @@ var JPlaceHolder = {
       $('.login').after(template('tplBottom', ads));
     }
   }
-  //是否是一键登录
-  initUI()
+  initUI();
 })()
 
 
