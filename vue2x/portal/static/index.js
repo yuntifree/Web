@@ -82,7 +82,7 @@ var JPlaceHolder = {
   if (isPC()) {
     var height = $(window).height();
     $('html').css('height', height);
-    if ((sessionPhone && sessionCode)) {
+    if (sessionPhone && sessionCode) {
       $('.login').append(template('tplPcone', {}));
     } else {
       $('.login').append(template('tplPc', {}));
@@ -90,7 +90,7 @@ var JPlaceHolder = {
   } else {
     var height = window.screen.availHeight;
     $('html').css('height', height);
-    if ((sessionPhone && sessionCode)) {
+    if (sessionPhone && sessionCode) {
       $('.login').append(template('tplOnelogin', {}));
       $('.login').append(template('tplBottom', ads));
     } else {
@@ -220,13 +220,14 @@ function tripEnd(e) {
     wlanacip: wlanacip,
     wlanusermac: wlanusermac
   };
-  var phone = $('.ipt-phone').val().trim();
-  var code = $('.ipt-code').val().trim();
+
   if (sessionPhone && sessionCode) {
     param.phone = sessionPhone;
     param.code = sessionCode;
     portalLogin(param);
   } else {
+    var phone = $('.ipt-phone').val().trim();
+    var code = $('.ipt-code').val().trim();
     if (checkPhone(phone)) {
       param.phone = phone;
       if (code.length <= 0) {
