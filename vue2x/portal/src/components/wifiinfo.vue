@@ -196,46 +196,49 @@
 </style>
 <template>
   <div class="info">
-    <div class="info-top">
-      <img class="info-logo"　src="http://img.yunxingzh.com/91dc8c9f-1658-46a5-a9fd-52c2e66df151.png">
-      <div class="info-weather g-clearfix">
-        <img class="weacher-icon g-fl" :src="weatherImg">
-        <span class="weather-temp g-fl">{{weather.temp}}&#176;C</span>
-        <span class="weather-info g-fl">{{weather.info}}</span>
-      </div>
-      <div class="circle-link">
-        <span class="oval"></span>
-        <span class="oval-copy-1"></span>
-        <img class="oval-around" v-show="showCfg" :class="{'oval-animate':showCfg}" src="http://img.yunxingzh.com/180afd13-7e6b-4006-9d00-d80e227c46fe.png">
-        <span class="oval-copy-2 g-tac">
-          <b v-if="showCfg">{{timeTxt}}<i>秒</i></b>
-          <img v-else class="oval-copy-3"　src="http://img.yunxingzh.com/e04e6e9d-d24b-4e00-be57-1224efd426df.png">
-        </span>
-      </div>
-      <p class="g-tac link-text">{{showCfg ? '正在连接免费WiFi...' : '已连接东莞无限免费WiFi'}}</p>
-    </div>
-    <!--p>{{queryParam}}</p-->
-    <div>
-      <div class="menu-title">
-        <i class="menu-line"></i>
-        <div class="menu-text">
-          <img src="http://img.yunxingzh.com/0854372e-aff2-46da-b894-a4b82ff50520.png">
+    <div v-if="!checkView">
+      <div class="info-top">
+        <img class="info-logo"　src="http://img.yunxingzh.com/91dc8c9f-1658-46a5-a9fd-52c2e66df151.png">
+        <div class="info-weather g-clearfix">
+          <img class="weacher-icon g-fl" :src="weatherImg">
+          <span class="weather-temp g-fl">{{weather.temp}}&#176;C</span>
+          <span class="weather-info g-fl">{{weather.info}}</span>
         </div>
-      </div>
-      <ul class="menu-list g-clearfix">
-        <li class="g-fl list-item" v-for="(list,index) in menuList" @click="openLink(list.url,index)">
-          <img :src="list.icon">
-          <span class="g-tac title-name" v-text="list.text"></span>
-        </li>
-      </ul>
-      <div class="menu-title title-toutiao">
-        <i class="menu-line"></i>
-        <div class="menu-text toutiao-text">
-          <img src="http://img.yunxingzh.com/5bd91184-f4cb-40f1-9013-07fb636e288b.png">
+        <div class="circle-link">
+          <span class="oval"></span>
+          <span class="oval-copy-1"></span>
+          <img class="oval-around" v-show="showCfg" :class="{'oval-animate':showCfg}" src="http://img.yunxingzh.com/180afd13-7e6b-4006-9d00-d80e227c46fe.png">
+          <span class="oval-copy-2 g-tac">
+            <b v-if="showCfg">{{timeTxt}}<i>秒</i></b>
+            <img v-else class="oval-copy-3"　src="http://img.yunxingzh.com/e04e6e9d-d24b-4e00-be57-1224efd426df.png">
+          </span>
         </div>
+        <p class="g-tac link-text">{{showCfg ? '正在连接免费WiFi...' : '已连接东莞无限免费WiFi'}}</p>
       </div>
-      <newslist></newslist>
+      <!--p>{{queryParam}}</p-->
+      <div>
+        <div class="menu-title">
+          <i class="menu-line"></i>
+          <div class="menu-text">
+            <img src="http://img.yunxingzh.com/0854372e-aff2-46da-b894-a4b82ff50520.png">
+          </div>
+        </div>
+        <ul class="menu-list g-clearfix">
+          <li class="g-fl list-item" v-for="(list,index) in menuList" @click="openLink(list.url,index)">
+            <img :src="list.icon">
+            <span class="g-tac title-name" v-text="list.text"></span>
+          </li>
+        </ul>
+        <div class="menu-title title-toutiao">
+          <i class="menu-line"></i>
+          <div class="menu-text toutiao-text">
+            <img src="http://img.yunxingzh.com/5bd91184-f4cb-40f1-9013-07fb636e288b.png">
+          </div>
+        </div>
+        <newslist></newslist>
+      </div>
     </div>
+    <p v-else>请检查您的浏览器环境</p>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
@@ -256,6 +259,7 @@ export default {
     return {
       showCfg: false,
       timeTxt: 5,
+      checkView: false,
       tips: {
         show: false,
         msg: '',
@@ -306,14 +310,19 @@ export default {
     this.$store.state.uid = uid;
     this.$store.state.token = token;
     if (loginfrom) {
-      if (window.localStorage)
-        localStorage.setItem('portal_uid', uid);
-        localStorage.setItem('portal_token', token); 
-        this.$router.replace({name:'home'});
+      if (window.localstorage) {
+        try { 
+          localStorage.setItem('portal_uid', uid);
+          localStorage.setItem('portal_token', token); 
+          this.$router.replace({name:'home'});
+        }catch(e) {
+          this.checkView = true;
+          //return;
+        }
       } else {
-        alert('请检查您的浏览器环境');
-        return;
+        this.checkView = true;
       }
+    }
   },
   mounted() {
     this.$nextTick(()=> {
@@ -322,7 +331,6 @@ export default {
         this.countdown();
       }
       this.getData();
-      this.dataReady = true;
     })
   },
   methods: {
