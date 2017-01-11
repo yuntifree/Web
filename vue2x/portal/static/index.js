@@ -1,10 +1,3 @@
-/*require('./assets/css/index.css')
-require('./common/zepto.min.js');
-var font = require('./common/font.js')
-var CGI = require('./lib/cgi.js')
-var template = require('./common/template.js');*/
-
-
 var ads = {
   img: 'static/images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
@@ -20,8 +13,18 @@ var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
 var firsturl = query.alanuserfirsturl || 'http://www.baidu.com';
 //本地存储的号码与验证码
-var sessionPhone = localStorage.portal_phone || '';
-var sessionCode = localStorage.portal_code || '';
+var sessionPhone = '';
+var sessionCode = '';
+
+if (localStorage) {
+  sessionPhone = localStorage.portal_phone || '';
+  sessionCode = localStorage.portal_code || '';
+} else {
+  if (document.cookie) {
+    sessionPhone = CGI.getCookie('portal_phone') || '';
+    sessionCode = CGI.getCookie('portal_code') || '';
+  }
+}
 
 //判断浏览器类型
 var JPlaceHolder = {
@@ -100,12 +103,11 @@ var JPlaceHolder = {
       $('.login').after(template('tplBottom', ads));
     }
   }
-  //initUI();
+  initUI();
 })()
 
 
 function initUI() {
-  //alert(1);
   font(true);
   $('.ipt-phone').focus();
   JPlaceHolder.init();
@@ -208,13 +210,13 @@ function getCode() {
     }
   });
 }
-function tripStart(e) {
-    $('.btn').css('backgroundColor','#0187ee');
 
+function tripStart(e) {
+  $('.btn').css('backgroundColor', '#0187ee');
 }
 
 function tripEnd(e) {
-  $('.btn').css('backgroundColor','#00a0fb');
+  $('.btn').css('backgroundColor', '#00a0fb');
   var param = {
     wlanacname: wlanacname,
     wlanuserip: wlanuserip,
@@ -237,10 +239,8 @@ function tripEnd(e) {
         param.code = code;
         portalLogin(param);
       }
-}
-
-}
-
+    }
+  }
 }
 
 function portalLogin(param) {
@@ -249,11 +249,14 @@ function portalLogin(param) {
       if (window.localStorage) {
         localStorage.portal_phone = param.phone;
         localStorage.portal_code = param.code;
+      } else {
+        CGI.setCookie('portal_phone', param.phone, 239);
+        CGI.setCookie('portal_code', param.phone, 239);
       }
       var info = resp.data;
       var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' + info.token;
       var userAgent = navigator.userAgent;
-      var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器  
+      var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
       var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
       $('.ipt-phone').val('');
       $('.ipt-code').val('');
@@ -262,25 +265,14 @@ function portalLogin(param) {
       } else {
         location.href = url;
       }
-      
+
     } else {
       tipShow(resp.desc);
       $('.ipt-code').val('');
       $('.query-code').text('获取验证码');
       clearInterval(timer);
-      /*$('.ipt-phone').val('');
-      $('.ipt-code').val('');
-      var userAgent = navigator.userAgent;
-      var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器  
-      var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
-      if (isIE) {
-        location.href = firsturl;
-      } else {
-        location.href = 'http://yunxingzh.com/dist/wifilink.html';
-      }*/
     }
-
-})
+  })
 }
 
 function appDownload() {
