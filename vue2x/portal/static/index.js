@@ -100,7 +100,7 @@ var JPlaceHolder = {
       $('.login').after(template('tplBottom', ads));
     }
   }
-  initUI();
+  //initUI();
 })()
 
 
