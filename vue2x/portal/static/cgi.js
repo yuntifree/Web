@@ -107,5 +107,19 @@ window.CGI = {
       //var isNum=/^\+?[1-9][0-9]||isNum.test(tel)*$/;
       var ret = isMob.test(tel);
       return ret;
+    },
+
+    setCookie: function(key, val, min) {
+        var t = new Date();
+        t.setTime(t.getTime() + min * 60 * 1000);
+        document.cookie = key + "=" + escape(val) + ";path=/" + (min === 0 ? "" : ";expires=" + t.toGMTString());
+    },
+
+    //读取cookie
+    getCookie: function(name) {
+        var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+        if (arr !== null)
+            return unescape(arr[2]);
+        return null;
     }
 };
