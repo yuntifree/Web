@@ -270,9 +270,9 @@ import newslist from './lib/newslist.vue'
 import CGI from '../lib/cgi.js'
 
 var query = CGI.query();
-var loginfrom = query.loginfrom || 0;
-var uid = ~~(query.uid) || 0;
-var token = query.token || '';
+var uid = ~~(query.uid) || 138;
+var token = query.token || '6ba9ac5a422d4473b337d57376dd34';
+var s = query.s;
 export default {
   name: 'info',
   data() {
@@ -329,26 +329,10 @@ export default {
   created() {
     this.$store.state.uid = uid;
     this.$store.state.token = token;
-    if (loginfrom) {
-      console.log(!!(window.localStorage));
-      if (window.localStorage) {
-        console.log(this.checkView);
-        try { 
-          localStorage.setItem('portal_uid', uid);
-          localStorage.setItem('portal_token', token); 
-          this.$router.replace({name:'home'});
-        }catch(e) {
-          this.checkView = true;
-
-        }
-      } else {
-        this.checkView = true;
-      }
-    }
   },
   mounted() {
     this.$nextTick(()=> {
-      if (loginfrom) {
+      if (s=='1') {
         this.showCfg = true;
         this.countdown();
       }
@@ -358,8 +342,8 @@ export default {
   methods: {
     getData() {
       var param = {
-        uid: this.$store.state.uid || ~~(localStorage.getItem('portal_uid')),
-        token: this.$store.state.token || localStorage.getItem('portal_token')
+        uid: uid,
+        token: token
       }
       this.queryParam = JSON.stringify(param);
       CGI.post('get_weather_news', param, (resp)=> {
@@ -373,7 +357,6 @@ export default {
       })
     },
     openLink(url,idx) {
-
       switch (idx){
         case 0:
           this.$store.state.newsname = 'newslist';
