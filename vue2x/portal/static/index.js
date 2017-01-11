@@ -1,10 +1,3 @@
-/*require('./assets/css/index.css')
-require('./common/zepto.min.js');
-var font = require('./common/font.js')
-var CGI = require('./lib/cgi.js')
-var template = require('./common/template.js');*/
-
-
 var ads = {
   img: 'static/images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
@@ -20,8 +13,13 @@ var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
 var firsturl = query.alanuserfirsturl || 'http://www.baidu.com';
 //本地存储的号码与验证码
-var sessionPhone = localStorage.portal_phone || '';
-var sessionCode = localStorage.portal_code || '';
+var sessionPhone = '';
+var sessionCode = '';
+
+if (localStorage) {
+  sessionPhone = localStorage.portal_phone || '';
+  sessionCode = localStorage.portal_code || '';
+}
 
 //判断浏览器类型
 var JPlaceHolder = {
@@ -100,12 +98,11 @@ var JPlaceHolder = {
       $('.login').after(template('tplBottom', ads));
     }
   }
-  //initUI();
+  initUI();
 })()
 
 
 function initUI() {
-  //alert(1);
   font(true);
   $('.ipt-phone').focus();
   JPlaceHolder.init();
