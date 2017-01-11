@@ -268,7 +268,11 @@ import CGI from '../lib/cgi.js'
 var query = CGI.query();
 var uid = ~~(query.uid) || 138;
 var token = query.token || '6ba9ac5a422d4473b337d57376dd34';
-var s = query.s;
+
+// 通过时间戳来判断是非第一次进入该页面
+var ts = ~~(query.ts);
+var now = ~~((new Date()).getTime()/1000)
+
 export default {
   name: 'info',
   data() {
@@ -327,7 +331,7 @@ export default {
   },
   mounted() {
     this.$nextTick(()=> {
-      if (s=='1') {
+      if (now - ts <= 2) {
         this.showCfg = true;
         this.countdown();
       }
@@ -344,7 +348,7 @@ export default {
       CGI.post('get_weather_news', param, (resp)=> {
         if (resp.errno === 0) {
           this.weather = resp.data.weather;
-          var weatherType = this.weather.type || 0; 
+          var weatherType = this.weather.type || 0;
           this.weatherImg = this.weatherIcon[weatherType];
         } else {
           this.alertInfo(resp.desc);
@@ -367,10 +371,10 @@ export default {
           this.$store.state.tabidx = 2;
           this.$router.push({name: 'service'});
           break;
-        default: 
+        default:
           this.$store.state.tabidx = 3;
           location.href = url;
-      } 
+      }
     },
     countdown() {
       this.timer = setInterval(()=> {

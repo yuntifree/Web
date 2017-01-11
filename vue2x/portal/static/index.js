@@ -12,19 +12,7 @@ var wlanuserip = query.wlanuserip || ''; //'10.96.72.28';
 var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
 var firsturl = query.alanuserfirsturl || 'http://www.baidu.com';
-//本地存储的号码与验证码
-var sessionPhone = '';
-var sessionCode = '';
-
-if (localStorage) {
-  sessionPhone = localStorage.portal_phone || '';
-  sessionCode = localStorage.portal_code || '';
-} else {
-  if (document.cookie) {
-    sessionPhone = CGI.getCookie('portal_phone') || '';
-    sessionCode = CGI.getCookie('portal_code') || '';
-  }
-}
+var autologin = 0;
 
 //判断浏览器类型
 var JPlaceHolder = {
@@ -84,26 +72,38 @@ var JPlaceHolder = {
   String.prototype.trim = function() {
     return this.replace(/(^\s*)|(\s*$)/g, "");
   }
-  if (isPC()) {
-    var height = $(window).height();
-    $('html').css('height', height);
-    if (sessionPhone && sessionCode) {
-      $('.login').append(template('tplPcone', {}));
+  var param = {
+    wlanusermac: wlanusermac
+  };
+
+  CGI.post('check_login', param, function(resp) {
+    if (resp.errno == 0) {
+      var data = resp.data;
+      autologin = data.autologin;
+      if (isPC()) {
+        var height = $(window).height()-60;
+        $('html').css('height', height);
+        if (autologin) {
+          $('.login').append(template('tplPcone', {}));
+        } else {
+          $('.login').append(template('tplPc', {}));
+        }
+      } else {
+        var height = window.screen.availHeight-60;
+        $('html').css('height', height);
+        if (autologin) {
+          $('.login').append(template('tplOnelogin', {}));
+          $('.login').append(template('tplBottom', ads));
+        } else {
+          $('.login').append(template('tplIptlogin', {}));
+          $('.login').after(template('tplBottom', ads));
+        }
+      }
+      initUI();
     } else {
-      $('.login').append(template('tplPc', {}));
+      tipShow(resp.desc);
     }
-  } else {
-    var height = window.screen.availHeight;
-    $('html').css('height', height);
-    if (sessionPhone && sessionCode) {
-      $('.login').append(template('tplOnelogin', {}));
-      $('.login').append(template('tplBottom', ads));
-    } else {
-      $('.login').append(template('tplIptlogin', {}));
-      $('.login').after(template('tplBottom', ads));
-    }
-  }
-  initUI();
+  });
 })()
 
 
@@ -224,10 +224,8 @@ function tripEnd(e) {
     wlanusermac: wlanusermac
   };
 
-  if (sessionPhone && sessionCode) {
-    param.phone = sessionPhone;
-    param.code = sessionCode;
-    portalLogin(param);
+  if (autologin) {
+    oneClickLogin(param);
   } else {
     var phone = $('.ipt-phone').val().trim();
     var code = $('.ipt-code').val().trim();
@@ -246,26 +244,7 @@ function tripEnd(e) {
 function portalLogin(param) {
   CGI.post('portal_login', param, function(resp) {
     if (resp.errno === 0) {
-      if (window.localStorage) {
-        localStorage.portal_phone = param.phone;
-        localStorage.portal_code = param.code;
-      } else {
-        CGI.setCookie('portal_phone', param.phone, 239);
-        CGI.setCookie('portal_code', param.phone, 239);
-      }
-      var info = resp.data;
-      var url = "http://yunxingzh.com/dist/wifilink.html#/?loginfrom=true&uid=" + info.uid + '&token=' + info.token;
-      var userAgent = navigator.userAgent;
-      var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
-      var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
-      $('.ipt-phone').val('');
-      $('.ipt-code').val('');
-      if (isIE) {
-        location.href = firsturl;
-      } else {
-        location.href = url;
-      }
-
+      loginDone(resp.data);
     } else {
       tipShow(resp.desc);
       $('.ipt-code').val('');
@@ -273,6 +252,27 @@ function portalLogin(param) {
       clearInterval(timer);
     }
   })
+}
+
+function oneClickLogin(param) {
+  CGI.post('one_click_login', param, function(resp) {
+    if (resp.errno === 0) {
+      loginDone(resp.data);
+    } else {
+      tipShow(resp.desc);
+    }
+  })
+}
+
+function loginDone(info) {
+  var url = "http://yunxingzh.com/dist/wifilink.html?uid=" + info.uid + '&token=' + info.token + '&ts=' + ~~((new Date()).getTime()/1000)
+  $('.ipt-phone').val('');
+  $('.ipt-code').val('');
+  if (CGI.isIE()) {
+    location.href = firsturl;
+  } else {
+    location.href = url;
+  }
 }
 
 function appDownload() {
