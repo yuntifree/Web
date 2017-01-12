@@ -73,7 +73,8 @@ var JPlaceHolder = {
     return this.replace(/(^\s*)|(\s*$)/g, "");
   }
   var param = {
-    wlanusermac: wlanusermac
+    wlanusermac: wlanusermac,
+    wlanacname: wlanacname
   };
 
   CGI.post('check_login', param, function(resp) {
