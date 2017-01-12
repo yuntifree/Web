@@ -81,7 +81,7 @@ var JPlaceHolder = {
       var data = resp.data;
       autologin = data.autologin;
       if (isPC()) {
-        var height = $(window).height()-60;
+        var height = $(window).height();
         $('html').css('height', height);
         if (autologin) {
           $('.login').append(template('tplPcone', {}));
@@ -190,7 +190,8 @@ function getCode() {
   var phone = $('.ipt-phone').val().trim();
   if (!checkPhone(phone)) return;
   var param = {
-    phone: phone
+    phone: phone,
+    wlanacname: wlanacname
   };
   CGI.post('get_check_code', param, function(resp) {
     if (resp.errno === 0) {

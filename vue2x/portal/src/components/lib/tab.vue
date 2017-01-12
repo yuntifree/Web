@@ -29,12 +29,21 @@ export default {
 <style scoped>
 .flex-space {
   width: 100%;
+  max-width: 750px;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   -wekit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   position: fixed;
   top:  0.88rem;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
 }
 .tab-list{
   width:  25%;

@@ -2,12 +2,19 @@
 @import '../../assets/css/reset.css','../../assets/css/common.scss';
 .download {
 	@include containerSize(100%, 0.88rem);
+  max-width: 750px;
 	position: fixed;
-	left: 0;
 	top: 0;
+  left: 50%;
+  transform:translateX(-50%);
+  -webkit-transform:translateX(-50%);
+  -ms-transform:translateX(-50%);
+  -moz-transform:translateX(-50%);
+  -o-transform:translateX(-50%);
 	background: $baseColor;
 	padding:0.14rem 0.24rem;
   z-index: 5;
+
 }
 
 .down-logo {
@@ -23,6 +30,10 @@
   @include containerSize(1.5rem, 0.6rem);
   line-height: 0.6rem;
   border-radius: 0.16rem;
+  -webkit-border-radius: 0.16rem;
+  -moz-border-radius: 0.16rem;
+  -ms-border-radius: 0.16rem;
+  -o-border-radius: 0.16rem;
   background-color: #ffffff;
   border: solid 1px #008de3;
   color: $baseColor;
