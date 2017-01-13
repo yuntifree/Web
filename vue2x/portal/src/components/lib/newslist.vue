@@ -174,7 +174,6 @@ export default {
   },
   methods: {
     getData(seq) {
-      this.loading = true;
       var param = {
         uid: uid,
         token: token,
@@ -210,7 +209,8 @@ export default {
         this.alertInfo('全都在这没有更多了');
       } else {
         var len = this.items.length-1;
-        if (!this.nomore && len >= 0) {
+        if (!this.nomore && len >= 0) {    
+          this.loading = true;
           setTimeout(()=>{
             this.getData(this.items[len].seq);
           },1000)

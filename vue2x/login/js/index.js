@@ -267,7 +267,7 @@ function oneClickLogin(param) {
 }
 
 function loginDone(info) {
-  var url = "http://yunxingzh.com/dist/wifilink.html?uid=" + info.uid + '&token=' + info.token + '&ts=' + ~~((new Date()).getTime()/1000)
+  var url = "http://yunxingzh.com/p/wifilink.html?uid=" + info.uid + '&token=' + info.token + '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
   if (CGI.isIE()) {
