@@ -90,8 +90,12 @@ var JPlaceHolder = {
           $('.login').append(template('tplPc', {}));
         }
       } else {
-        var height = window.screen.availHeight-60;
-        $('html').css('height', height);
+        var height = window.screen.availHeight;
+        if (CGI.isWeixin()) {
+          $('html').css('height', height);
+        } else {
+          $('html').css('height', height-60);
+        }
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
