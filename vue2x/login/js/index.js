@@ -219,43 +219,28 @@ function tripStart(e) {
 
 function tripEnd(e) {
   $('.btn').css('backgroundColor', '#00a0fb');
-  if (online()) {
-    var url = "http://yunxingzh.com/dist/wifilink.html?uid=" + info.uid + '&token=' + info.token + '&ts=' + ~~((new Date()).getTime()/1000)
-  } else {
-    var param = {
-      wlanacname: wlanacname,
-      wlanuserip: wlanuserip,
-      wlanacip: wlanacip,
-      wlanusermac: wlanusermac
-    };
+  var param = {
+    wlanacname: wlanacname,
+    wlanuserip: wlanuserip,
+    wlanacip: wlanacip,
+    wlanusermac: wlanusermac
+  };
 
-    if (autologin) {
-      oneClickLogin(param);
-    } else {
-      var phone = $('.ipt-phone').val().trim();
-      var code = $('.ipt-code').val().trim();
-      if (checkPhone(phone)) {
-        param.phone = phone;
-        if (code.length <= 0) {
-          tipShow('请输入验证码');
-        } else {
-          param.code = code;
-          portalLogin(param);
-        }
+  if (autologin) {
+    oneClickLogin(param);
+  } else {
+    var phone = $('.ipt-phone').val().trim();
+    var code = $('.ipt-code').val().trim();
+    if (checkPhone(phone)) {
+      param.phone = phone;
+      if (code.length <= 0) {
+        tipShow('请输入验证码');
+      } else {
+        param.code = code;
+        portalLogin(param);
       }
     }
-  }  
-}
-function online() {
-  var ret;
-  CGI.get('http://captive.apple.com/hotspot-detect.html',{}, function(resp) {
-    if ($.ajax().readyState === 4 && $.ajax().status === 4) {
-      ret = true;
-    } else {
-      ret = false;
-    }
-  })
-  return ret;
+  }
 }
 
 function portalLogin(param) {
