@@ -9,7 +9,7 @@ window.CGI = {
    */
 
   get: function(action, param, callback) {
-    var url = this.HOST + this.CGI + action + '?' + this.makeParam(param);
+    var url = action;
     var opt = {
       type: 'GET',
       url: url,
