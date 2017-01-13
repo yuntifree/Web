@@ -1,5 +1,5 @@
 <style lang="scss">
-@import '../../assets/css/common.scss';
+/*@import '../../assets/css/common.scss';
 .item-container {
   width: 94%;
   margin: 0 auto;
@@ -69,7 +69,7 @@
   color: #f6c042;
   border: 1px solid #f6c042;
   border-radius: 0.08rem;
-}
+}*/
 
 </style>
 <template>
@@ -121,8 +121,8 @@
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
-  <p class="item-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
-  <p class="item-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
+  <p class="item-desc more-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
+  <p class="item-desc more-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
 </div>
 </template>
 <script>

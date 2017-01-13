@@ -11,7 +11,7 @@ var wlanacname = query.wlanacname || ''; //'2043.0769.200.00';
 var wlanuserip = query.wlanuserip || ''; //'10.96.72.28';
 var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
-var firsturl = query.alanuserfirsturl || 'http://www.baidu.com';
+var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';
 var autologin = 0;
 
 //判断浏览器类型
@@ -197,6 +197,7 @@ function getCode() {
   CGI.post('get_check_code', param, function(resp) {
     if (resp.errno === 0) {
       tipShow('获取成功');
+      $('.ipt-code').focus();
       var seconds = 60;
       timer = setInterval(function() {
         seconds--;
@@ -250,6 +251,7 @@ function portalLogin(param) {
     } else {
       tipShow(resp.desc);
       $('.ipt-code').val('');
+      $('.ipt-code').focus();
       $('.query-code').text('获取验证码');
       clearInterval(timer);
     }

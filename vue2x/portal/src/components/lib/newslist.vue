@@ -10,6 +10,7 @@
   line-height: 150%;
   font-size: 0.32rem;
   color: $color43;
+  margin-bottom: 0.2rem;
 }
 .item-imgs {
   margin: 0.15rem 0;
@@ -44,7 +45,6 @@
 .item-desc {
   font-size: 0.24rem;
   color: $color84;
-  line-height: 0.8rem;
 }
 .item-visited {
   color: $color84;
@@ -54,7 +54,6 @@
 }
 .list1-item-title {
   line-height: 0.46rem;
-  margin-bottom: 0.12rem;
 }
 .adv-img {
   @include containerSize(100%, auto);
@@ -70,7 +69,9 @@
   border: 1px solid #f6c042;
   border-radius: 0.08rem;
 }
-
+.more-desc {
+  line-height: 0.8rem;
+}
 </style>
 <template>
 <div class="newslist">
@@ -121,16 +122,16 @@
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
-  <p class="item-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
-  <p class="item-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
+  <p class="item-desc more-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
+  <p class=" item-desc more-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
 </div>
 </template>
 <script>
 import tip from './tip.vue'
 import CGI from '../../lib/cgi'
 var query = CGI.query();
-var uid = ~~(query.uid) || 138;
-var token = query.token || '6ba9ac5a422d4473b337d57376dd34';
+var uid = ~~(query.uid) || 137;
+var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
 export default {
   data() {
     return {

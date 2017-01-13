@@ -44,6 +44,7 @@ export default {
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
+  z-index: 5;
 }
 .tab-list{
   width:  25%;
@@ -55,8 +56,9 @@ export default {
   font-size: 0.36rem;
   line-height: 0.88rem;
 }
-.span-bottom {
+.tab-list .span-bottom {
   border-bottom: 1px solid #009cfb;
+  color: #009cfb;
 }
 .router-link-active {
   border-bottom: 1px solid #fff;

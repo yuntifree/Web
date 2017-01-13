@@ -266,13 +266,12 @@ import newslist from './lib/newslist.vue'
 import CGI from '../lib/cgi.js'
 
 var query = CGI.query();
-var uid = ~~(query.uid) || 138;
-var token = query.token || '6ba9ac5a422d4473b337d57376dd34';
+var uid = ~~(query.uid) || 137;
+var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
 
 // 通过时间戳来判断是非第一次进入该页面
 var ts = ~~(query.ts);
 var now = ~~((new Date()).getTime()/1000)
-
 export default {
   name: 'info',
   data() {

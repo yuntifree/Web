@@ -17,7 +17,7 @@ export default {
 <style lang="scss">
 @import './assets/css/reset.css';
 .wifilink {
-  max-width: 768px;
+  max-width: 750px;
   margin: 0 auto;
 }
 .flex-space {
