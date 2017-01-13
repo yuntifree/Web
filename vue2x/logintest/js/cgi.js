@@ -112,5 +112,13 @@ window.CGI = {
     var userAgent = navigator.userAgent;
     var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
     return userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
+  },
+  isWeixin: function() {
+    var ret = false;
+    var ua = window.navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+      ret = true;
+    } //else {}
+    return ret;
   }
 };
