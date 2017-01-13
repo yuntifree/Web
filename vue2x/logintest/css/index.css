@@ -172,7 +172,10 @@ legend{
 }
 .input-main {
   width: 70%;
-  margin: 1.2rem auto 0;
+  margin: 0.4rem auto 0;
+}
+.oneclick-ipt-main {
+  margin-top: 1rem;
 }
 .input-info {
   width: 100%;
