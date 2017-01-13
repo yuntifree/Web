@@ -4,17 +4,29 @@
   @include containerSize(100%, auto);
   min-height: 100%;
   background-color: #f5f5f5;
+  z-index: -1;
 }
 .service-list {
  padding: 0.24rem 0 0.4rem;
+ border-top: 1px solid #d2d2d2;
  border-bottom: 1px solid #d2d2d2;
  background-color: #fff;
  margin-bottom: 0.25rem;
 }
 .list-title {
-  padding-left: 0.64rem;
+  padding-left: 0.6rem;
   font-size: 0.32rem;
   color: #3c3c3c;
+  position: relative;
+}
+.list-title:before{ 
+  @include containerSize(0.06rem,0.32rem);
+  content: "";  /*:before和:after必带技能，重要性为满5颗星*/
+  display: block;
+  background-color: #009cfb;
+  position: absolute;  /*日常绝对定位*/
+  top: 0.04rem;
+  left: 0.32rem;
 }
 .menu-item {
   @include containerSize(1.72rem, auto);
