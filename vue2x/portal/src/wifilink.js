@@ -16,6 +16,7 @@ import wifiinfo from './components/wifiinfo'
 import service from './components/service'
 import news from './components/news'
 import hotspot from './components/hotspot.vue'
+import live from './components/live.vue'
 
 window.onerror =  function handleErr(msg,url,l) {
     var txt;
@@ -47,6 +48,10 @@ const router = new VueRouter({
       path: '/hotspot',
       name: 'hotspot',
       component: hotspot,
+    },{
+      path: '/live',
+      name: 'live',
+      component: live,
     },{
       path: '*',
       redirect: 'home',

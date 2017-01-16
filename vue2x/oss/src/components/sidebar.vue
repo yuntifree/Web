@@ -100,7 +100,7 @@ export default {
           show: false,
           menus: [{
             title: "白名单管理",
-            name: "newsReview",
+            name: "yyqWhite",
             icon: "user"
           },{
             title: "用户活跃统计",

@@ -10,11 +10,12 @@
 import newshot  from './lib/newshot.vue'
 import tab from './lib/tab.vue'
 import download from './lib/download.vue'
+import CGI from '../lib/cgi.js'
 export default {
   name: 'hotspot',
   data() {
     return {
-      tabIdx: -1,
+      tabIdx: -1
     }
   },
   components: {
@@ -29,20 +30,7 @@ export default {
     tabChange(idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      switch (idx) {
-        case 0: 
-          this.$router.push({name: 'news'});
-          break;
-        case 1:
-          this.$router.push({name: 'hotspot'});
-          break;
-        case 2:
-          this.$router.push({name: 'service'});
-          break;
-        case 3:
-          location.href = 'http://jump.luna.58.com/i/29a3';
-          break;
-      }
+      CGI.tabChange(this.$router, idx)
     }
   }
 }

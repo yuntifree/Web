@@ -33,7 +33,8 @@ time, mark, audio, video,label{
   padding:0;
  /*  font-family: "Microsoft YaHei","微软雅黑","宋体","Arial"; */
  font-family: PingFangSC,'Microsoft YaHei',Helvetica,Arial,sans-serif;
-  tap-highlight-color:rgba(255,0,0,0);
+  tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
   box-sizing:border-box;
   -webkit-box-sizing:border-box;
   font-weight: normal;
@@ -44,12 +45,6 @@ time, mark, audio, video,label{
   font-family: 'Microsoft YaHei',Helvetica,Arial,sans-serif;
   box-sizing:border-box;
   -webkit-box-sizing:border-box;
-}
-table{
-  border-collapse:collapse;
-  border-spacing:0;
-}
-fieldset,img{
   border:0;
 }
 address,caption,cite,code,dfn,em,strong,th,var{

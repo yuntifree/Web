@@ -132,13 +132,16 @@ export default {
         msg: '',
         duration: 1500,
       },
-      tabIdx: 2
+      tabIdx: -1
     }
   },
   components: {
     tip,
     download,
     tab
+  },
+  activated() {
+    this.tabIdx = 0;
   },
   mounted() {
     //his.getData();
@@ -169,19 +172,8 @@ export default {
     },
     tabChange(idx) {
       this.$store.state.tabidx = idx;
-      console.log('tab save: ' + idx)
-      switch (idx) {
-        case 0: 
-          this.$router.push({name: 'news'});
-          break;
-        case 1:
-          this.$router.push({name: 'hotspot'});
-          break;
-        case 2:
-          break;
-        case 3:
-          location.href = 'http://jump.luna.58.com/i/29a3'
-      }
+      this.tabIdx = idx;
+      CGI.tabChange(this.$router, idx)
     }
   }
 }

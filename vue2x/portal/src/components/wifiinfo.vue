@@ -294,29 +294,32 @@ export default {
       queryParam: '',
       menuList: [{
         icon: 'http://img.yunxingzh.com/c5f0475a-3f1f-4c80-9f33-90bd33af7d75.png',
-        text: '东莞',
+        text: '东莞'
       },{
         icon: 'http://img.yunxingzh.com/126167e8-917a-4d5d-91e7-537e28c0ad03.png',
-        text: '热点',
+        text: '热点'
       },{
         icon: 'http://img.yunxingzh.com/548d971b-dac4-4bf7-bbac-5b69e4f325c0.png',
-        text: '查询',
+        text: '查询'
+      },{
+        icon: 'http://img.yunxingzh.com/3cf79031-a3f2-437f-8991-6339f6cd54af.png',
+        text: '直播'
       },{
         icon: 'http://img.yunxingzh.com/efd20edd-7a3d-4c62-a523-90110da4ba74.png',
         text: '招聘',
-        url: 'http://jump.luna.58.com/i/29a5',
+        url: 'http://jump.luna.58.com/i/29a5'
       },{
         icon: 'http://img.yunxingzh.com/0dd7ec0a-37f5-4448-a253-acd3320279eb.png',
         text: '二手',
-        url: 'http://jump.luna.58.com/i/29a7',
+        url: 'http://jump.luna.58.com/i/29a7'
       },{
         icon: 'http://img.yunxingzh.com/a3524233-2acc-47c5-92a3-c87c764bb114.png',
         text: '租房',
-        url: 'http://jump.luna.58.com/i/29a4',
+        url: 'http://jump.luna.58.com/i/29a4'
       },{
         icon: 'http://img.yunxingzh.com/73403b79-8eb4-4ccf-b169-25bee5cdbc30.png',
         text: '更多',
-        url: 'http://jump.luna.58.com/i/29a3',
+        url: 'http://jump.luna.58.com/i/29a3'
       }]
     }
   },
@@ -355,25 +358,9 @@ export default {
       })
     },
     openLink(url,idx) {
-      switch (idx){
-        case 0:
-          this.$store.state.newsname = 'newslist';
-          this.$store.state.tabidx = idx;
-          this.$router.push({name: 'news'});
-          break;
-        case 1:
-          this.$store.state.newsname = 'hotspot';
-          this.$store.state.tabidx = idx;
-          this.$router.push({name: 'hotspot'});
-          break;
-        case 2:
-          this.$store.state.tabidx = 2;
-          this.$router.push({name: 'service'});
-          break;
-        default:
-          this.$store.state.tabidx = 3;
-          location.href = url;
-      }
+      this.$store.state.tabidx = idx;
+      this.tabIdx = idx;
+      CGI.tabChange(this.$router, idx)
     },
     countdown() {
       this.timer = setInterval(()=> {

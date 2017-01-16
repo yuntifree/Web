@@ -9,10 +9,10 @@ module.exports = {
      */
 
     get: function(action, param, callback) {
-        var url = this.HOST + this.CGI + action + '?' + this.makeParam(param);
+        //var url = this.HOST + this.CGI + action + '?' + this.makeParam(param);
         var opt = {
             type: 'GET',
-            url: url,
+            url: action,
             contentType: 'application/json',
             cache: false,
             timeout: 2000,
@@ -179,4 +179,17 @@ module.exports = {
       var ret = isMob.test(tel);
       return ret;
     },
+    tabChange: function(router, idx, url) {
+        var names = ['news','hotspot','service','live'];
+        if (idx <= names.length-1) {
+            router.push({name: names[idx]});
+        } else {
+            if (url) {
+                location.href = url;
+            } else {
+                location.href = 'http://jump.luna.58.com/i/29a3';
+            }
+            
+        }
+    }
 };
