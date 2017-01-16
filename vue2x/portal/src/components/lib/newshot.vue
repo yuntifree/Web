@@ -212,6 +212,7 @@ export default {
         this.alertInfo('全都在这没有更多了');
       } else {
         var len = this.items.length-1;
+        this.loading = true;
         if (!this.nomore && len >= 0) {
           setTimeout(()=>{
             this.getData(this.items[len].seq);

@@ -34,18 +34,16 @@ export default {
   name: 'videos',
   data () {
     return {
-      videoloading: false,
       items: [],
-      useCache: false,
-      loading: false,
+      loading: true,
       nomore: false,
-      offset: 10,
+      offset: 0,
       tips: {
         show: false,
         msg: '',
         duration: 1500,
       },
-      tabIdx: -1,
+      tabIdx: -1
     }
   },
   components: {
@@ -58,36 +56,15 @@ export default {
   },
   mounted() {
     this.$nextTick(function () {
-      // 存下union
-      var scrollY = sessionStorage.getItem('scrollY');
-      if (scrollY != null) {
-        var cache = sessionStorage.getItem('cache');
-        if (cache && cache.length > 0) {
-          var list = JSON.parse(cache);
-          if (list) {
-            this.items = list;
-            this.useCache = true;
-            this.$nextTick(function() {
-              window.scroll(0, scrollY);
-            })
-          }
-        }
-        sessionStorage.clear();
-      }
-      if (!this.useCache) {
-        this.getData()
-      }
+      this.getData()
     })
   },
   methods: {
-    getData(seq) {
+    getData() {
       this.loading = true;
       var url = 'http://web.free.wifi.360.cn/internet/huajiao?callback=liveCallback&offset='+this.offset;
       CGI.get(url, {}, (resp)=> {
         if (resp.errno == 0) {
-          resp.data.list.forEach((item)=>{
-            this.$set(item, "visited", false);
-          })
           this.items = this.items.concat(resp.data.list);
           this.offset = resp.data.offset;
           this.loading = false;
@@ -98,34 +75,16 @@ export default {
       })
     },
     loadMorevideo() {
-      if (this.useCache) {
-        this.useCache = false;
-        return;
-      }
-      console.log(this.nomore);
       if (!this.nomore) {
-        this.$store.state.videoloading = true;
-        var len = this.items.length-1;
-        if (!this.nomore && len >= 0) {
-          setTimeout(()=>{
-            this.getData();
-            console.log('video loadMore')
-          },1000)
-        }
+        this.loading = true;
+        setTimeout(()=>{
+          this.getData();
+        },1000)
       } else {
         this.tipBox('全都在这没有更多了');
       }   
     },
     liveLink(item) {
-      item.visited = true;
-      console.log(window.scrollY);
-      var scrollY = window.scrollY;
-      var pageHeight = document.documentElement.clientHeight;
-      var delta = scrollY % pageHeight;
-      scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
-      sessionStorage.setItem('scrollY', scrollY);
-
-      sessionStorage.setItem('cache', JSON.stringify(this.items));
       location.href = 'http://h.huajiao.com/l/index?liveid='+item.live_id;
     },
     tabChange(idx) {
