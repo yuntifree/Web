@@ -253,7 +253,7 @@ function portalLogin(param) {
       clearInterval(timer);*/
       $('.ipt-phone').val('');
       $('.ipt-code').val('');
-      var url = "http://yunxingzh.com/p/wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488"+ '&ts=' + ~~((new Date()).getTime()/1000)+'&s=1';
+      var url = "http://yunxingzh.com/ptest/wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488"+ '&ts=' + ~~((new Date()).getTime()/1000)+'&s=1';
       location.href = url;
     }
   })
@@ -264,7 +264,9 @@ function oneClickLogin(param) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
-      tipShow(resp.desc);
+      //tipShow(resp.desc); 
+      var url = "http://yunxingzh.com/p/wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488"+ '&ts=' + ~~((new Date()).getTime()/1000)+'&s=1';
+      location.href = url;
     }
   })
 }

@@ -176,7 +176,7 @@
 }
 @media only screen and (min-width: 769px){
     .list-item {
-        margin-left: 12%;
+        margin-left: 11%;
     }
 }
 .list-item:nth-child(5n+1) {
