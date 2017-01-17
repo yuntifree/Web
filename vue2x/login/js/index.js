@@ -81,17 +81,15 @@ var JPlaceHolder = {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
+      var height = document.documentElement.clientHeight;
+      $('html').css('height',height);
       if (isPC()) {
-        var height = $(window).height();
-        $('html').css('height', height);
         if (autologin) {
           $('.login').append(template('tplPcone', {}));
         } else {
           $('.login').append(template('tplPc', {}));
         }
       } else {
-        var height = window.screen.availHeight-60;
-        $('html').css('height', height);
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
