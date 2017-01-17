@@ -301,10 +301,10 @@ export default {
       },{
         icon: 'http://img.yunxingzh.com/548d971b-dac4-4bf7-bbac-5b69e4f325c0.png',
         text: '查询'
-      },{
+      }/*,{
         icon: 'http://img.yunxingzh.com/3cf79031-a3f2-437f-8991-6339f6cd54af.png',
         text: '直播'
-      },{
+      }*/,{
         icon: 'http://img.yunxingzh.com/efd20edd-7a3d-4c62-a523-90110da4ba74.png',
         text: '招聘',
         url: 'http://jump.luna.58.com/i/29a5'

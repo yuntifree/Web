@@ -11,7 +11,8 @@ export default {
   name: 'tab',
   data() {
     return {
-      tablist: ['东莞','热点','查询','视频','更多'],
+      //tablist: ['东莞','热点','查询','视频','更多'],
+      tablist: ['东莞','热点','查询','更多'],
     }
   },
   props: {

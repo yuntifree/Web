@@ -180,7 +180,8 @@ module.exports = {
       return ret;
     },
     tabChange: function(router, idx, url) {
-        var names = ['news','hotspot','service','live'];
+        //var names = ['news','hotspot','service','live'];
+        var names = ['news','hotspot','service'];
         if (idx <= names.length-1) {
             router.push({name: names[idx]});
         } else {
