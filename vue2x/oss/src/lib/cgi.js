@@ -99,7 +99,7 @@ module.exports = {
 
     sessionStorage.uid = data.uid;
     sessionStorage.token = data.token;
-    sessionStorage.sidebar = JSON.stringify(data.sidebar);
+    sessionStorage.sidebar = JSON.stringify(data.roleconf);
 
     state.logined = true;
     //console.log(state.logined);

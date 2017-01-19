@@ -277,9 +277,10 @@ export default {
         param.expire = this.makeDate();
         param.type = this.selected.number;
         action = 'add_banner';
-        console.log(param.expire);
       } else {
+        console.log(JSON.stringify(this.postInfo));
         param = CGI.objModified(this.infos[this.selIdx], this.postInfo);
+        console.log(JSON.stringify(this.infos[this.selIdx]));
         if(!param['online']) {
           param.online = this.infos[this.selIdx].online || 0;
         } 
@@ -337,24 +338,24 @@ export default {
       var ret = true;
       if (this.selected.number !== 0 && this.postInfo.title.length <= 0) {
         this.alertInfo('请输入title');
-        return ret = false;
+        ret = false;
       }
       if (this.selected.number !== 2 && this.postInfo.img.length <= 0) {
         this.alertInfo('请输入图片地址');
-        return ret = false;
+        ret = false;
       }
       if (this.postInfo.dst.length <= 0) {
         this.alertInfo('请输入跳转地址');
-        return ret = false;
+        ret = false;
       } 
       if (this.modal.addShow) {
         if (this.dateInfo.date1.length <= 0) {
           this.alertInfo('请选择过期日期');
-          return ret = false;
+          ret = false;
         }
         if (this.dateInfo.date2.length <= 0) {
           this.alertInfo('请选择过期时间');
-          return ret = false;
+          ret = false;
         }
       }
       return ret;

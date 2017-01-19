@@ -2,7 +2,28 @@
 var path = require('path')
 var online = env.BUILD_ENV == 'deploy';
 // 这里改工程名
-var distPath = online ? 'portal201701171637' : 'portaltest201701171637';
+var distPath = online ? 'portal'+dateFormat(new Date(), 'yyyyMMddhhmm') : 'portaltest'+dateFormat(new Date(), 'yyyyMMddhhmm');
+function dateFormat(date, fmt) {
+    //var d = new Date(date);
+    var d = date;
+    var o = {
+        'M+': d.getMonth() + 1, //月份
+        'd+': d.getDate(), //日
+        'h+': d.getHours(), //小时
+        'm+': d.getMinutes(), //分
+        's+': d.getSeconds(), //秒
+        'q+': Math.floor((d.getMonth() + 3) / 3), //季度
+        //'S': d.getMilliseconds() //毫秒
+    };
+
+    //o['S'] = ('000' + o['S']).substr(('' + o['S']).length);
+
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (d.getFullYear() + '').substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp('(' + k + ')').test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+    return fmt;
+}
 module.exports = {
   build: {
     env: require('./prod.env'),

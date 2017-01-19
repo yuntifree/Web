@@ -1,7 +1,7 @@
 <template>
   <aside id="sidebar" class="column">
     <template>
-      <div v-for="(menu,idx) in sidebars">
+      <div v-for="(menu,idx) in menus">
         <h3 @click="showMenu(idx,true)">{{menu.title}}</h3>
         <ul class="toggle" v-show="menu.show">
           <li v-for="item in menu.menus" :class="{checked: selItem == item.title}" @click="onSelect(menu.title, item.title, item.name)">
@@ -10,7 +10,7 @@
           </li>
         </ul>
       </div>
-      <h3>{{yyqSidebars.title}}</h3>
+      <!--h3>{{yyqSidebars.title}}</h3>
       <div v-for="(menu,idx) in yyqSidebars.innermenus">
         <h3 class="yyq-title" @click="showMenu(idx,false)">{{menu.innertitle}}</h3>
         <ul class="toggle" v-show="menu.show">
@@ -19,7 +19,7 @@
             <a :href="item.url">{{item.title}}</a>
           </li>
         </ul>
-      </div>
+      </div-->
     </template>
     <footer class="sidebar-footer">
       <p><strong>Copyright &copy; 2016 云行智慧</strong></p>
@@ -29,190 +29,40 @@
   <!-- end of sidebar -->
 </template>
 <script>
+import CGI from '../lib/cgi.js'
 export default {
   data() {
     return {
       selItem: '',
-      sidebars: [
-        {
-          title: "用户管理",
-          show: true,
-          menus: [{
-          title: "用户信息",
-          name: "getUsers",
-          icon: "user"
-          },{
-          title: "白名单管理",
-          name: "whiteList",
-          icon: "user"
-          },{
-          title: "用户反馈",
-          name: "feedback",
-          icon: "user"
-          }]
-        },{
-          title: "运营管理",
-          show: false,
-          menus: [{
-            title: "新闻审核",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "标签管理",
-            name: "tagsReview",
-            icon: "user"
-          },{
-            title: "视频审核",
-            name: "videoReview",
-            icon: "user"
-          },{
-            title: "AP监控",
-            name: "apReview",
-            icon: "user"
-          },{
-            title: "Banner管理",
-            name: "setBanner",
-            icon: "user"
-          },{
-            title: "闪屏广告管理",
-            name: "adban",
-            icon: "user"
-          }]
-        },{
-          title:"后台管理",
-          show: false,
-          menus: [{
-            title: "图片上传",
-            name: "uploadImg",
-            icon: "user"
-          },{
-            title: "活动配置",
-            name: "setActivity",
-            icon: "user"
-          }]
-        }
-      ],
-      yyqSidebars: {
-        title: '一元抢',
-        show: false,
-        innermenus: [{
-          innertitle: "用户数据",
-          show: false,
-          menus: [{
-            title: "白名单管理",
-            name: "yyqWhite",
-            icon: "user"
-          },{
-            title: "用户活跃统计",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "用户反馈",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "用户公告",
-            name: "newsReview",
-            icon: "user"
-          }]
-        },{
-          innertitle: "商品数据",
-          show: false,
-          menus: [{
-            title: "商品详情",
-            name: "newsReview",
-            icon: "user"
-          }]
-        },{
-          innertitle: "商品销售数据",
-          show: false,
-          menus: [{
-            title: "开抢中商品",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "等待开抢商品",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "等待确认地址商品",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "已确认地址商品",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "待晒单商品",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "已晒单商品",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "已结束商品",
-            name: "newsReview",
-            icon: "user"
-          }]
-        },{
-          innertitle: "充值数据",
-          show: false,
-          menus: [{
-            title: "充值账单",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "充值统计",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "抢购统计",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "商品抢购统计",
-            name: "newsReview",
-            icon: "user"
-          }]
-        },{
-          innertitle: "晒单数据",
-          show: false,
-          menus: [{
-            title: "晒单审核",
-            name: "newsReview",
-            icon: "user"
-          },{
-            title: "晒单图片审核",
-            name: "newsReview",
-            icon: "user"
-          }]
-        }]
-      }
+      menus: [],
     }
+  },
+  props: {
+    sidebars: Array,
+  },
+  mounted() {
+    this.selItem = this.$store.state.paths[1];
+    //console.log(this.$store.state.paths);
+    this.menus = CGI.clone(this.sidebars)
   },
   methods: {
     onSelect(title, subtitle, view) {
       this.$store.state.view = view;
       this.$store.state.paths = [title, subtitle];
-      /*sessionStorage.menus = JSON.stringify({
-        view: view,
-        paths: [title, subtitle]
-      });*/
+      // sessionStorage.menus = JSON.stringify({
+      //   view: view,
+      //   paths: [title, subtitle]
+      // });
       this.selItem = this.$store.state.selItem = subtitle;
       this.$store.state.viewName = view;
     },
     showMenu(idx, type) {
       if (type) {
-        this.sidebars[idx].show = !this.sidebars[idx].show;
+        this.menus[idx].show = !this.menus[idx].show;
       } else {
         this.yyqSidebars.innermenus[idx].show = !this.yyqSidebars.innermenus[idx].show;
       }
     }
-  },
-  mounted() {
-    var initSelItem = this.$store.state.paths[1];
-    this.selItem = initSelItem;
   }
 }
 </script>

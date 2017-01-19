@@ -6,11 +6,11 @@ const state = {
   // 登录状态
   logined: false,
   // 右侧试图
-  view: 'getUsers',
+  view: '',
   // 试图路径
-  paths: ['用户管理', '用户信息'],
+  paths: ['', ''],
   // 左侧菜单
-  menus: [],
+  sidebar: [],
   tableHeight: 0,
   imgUrl: [],
   viewName: '',

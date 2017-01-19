@@ -1,7 +1,7 @@
 <template>
   <div class="videos top176">
     <download></download>
-    <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
+    <tab :selidx="tabIdx"></tab>
     <div class="live-body">
       <div class="liveBox-li"  v-for="item in items" @click="liveLink(item)">
         <a href="javascript:;">

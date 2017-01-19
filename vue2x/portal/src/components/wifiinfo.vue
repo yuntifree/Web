@@ -292,6 +292,8 @@ export default {
       weather: {},
       weatherImg: '',
       queryParam: '',
+      val: [],
+      menu: {},
       menuList: [{
         icon: 'http://img.yunxingzh.com/c5f0475a-3f1f-4c80-9f33-90bd33af7d75.png',
         text: '东莞'
@@ -356,6 +358,14 @@ export default {
           this.alertInfo(resp.desc);
         }
       })
+      /*var p = {
+        key: name,
+      }
+        CGI.post('get_conf', p, (resp)=> {
+          if (resp.errno == 0) {
+            this.val = JSON.parse(resp.data.val);
+          }
+        })*/
     },
     openLink(url,idx) {
       this.$store.state.tabidx = idx;

@@ -33,6 +33,7 @@ import setBanner from './components/views/setBanner.vue'
 import adban from './components/views/adban.vue'
 import uploadImg from './components/views/uploadImg.vue'
 import setActivity from './components/views/setActivity.vue'
+import setWeb from './components/views/setWeb.vue'
 
 export default {
   name: 'app',
@@ -42,7 +43,8 @@ export default {
 
   computed: {
     currentView() {
-      return this.$store.state.view || 'getUsers';
+      console.log(this.$store.state.view);
+      return this.$store.state.view;
     },
     logined() {
       return this.$store.state.logined;
@@ -69,13 +71,13 @@ export default {
     setBanner,
     adban,
     uploadImg,
-    setActivity
+    setActivity,
+    setWeb
   },
   // for share components View using.
   mounted() {
     this.$nextTick(()=> {
       this.$store.state.viewName = this.currentView;
-      this.$store.state.selItem = this.$store.state.paths[1];
     })
   },
 }

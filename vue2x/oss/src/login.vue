@@ -46,11 +46,19 @@ export default {
             // save username into localStorage
             localStorage.username = this.username;
             this.$store.state.uid = data.uid;
-
+            // sidebar
+            this.$store.state.sidebar = data.roleconf;
             // set login
             CGI.login(this.$store.state, data);
-            // sidebar
-            this.$store.state.sidebar = data.sidebar;
+            // sidebar            
+            this.$store.state.paths = [this.$store.state.sidebar[0].title, this.$store.state.sidebar[0].menus[0].title];
+            this.$store.state.selItem = this.$store.state.paths[1];
+            this.$store.state.view = this.$store.state.sidebar[0].menus[0].name;
+            
+            sessionStorage.menus = JSON.stringify({
+              view: this.$store.state.view,
+              paths: this.$store.state.paths
+            });
           } else {
             this.$store.state.logined = false;
             this.errmsg = resp.desc;
