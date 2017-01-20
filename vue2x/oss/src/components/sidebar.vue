@@ -42,17 +42,12 @@ export default {
   },
   mounted() {
     this.selItem = this.$store.state.paths[1];
-    //console.log(this.$store.state.paths);
     this.menus = CGI.clone(this.sidebars)
   },
   methods: {
     onSelect(title, subtitle, view) {
       this.$store.state.view = view;
       this.$store.state.paths = [title, subtitle];
-      // sessionStorage.menus = JSON.stringify({
-      //   view: view,
-      //   paths: [title, subtitle]
-      // });
       this.selItem = this.$store.state.selItem = subtitle;
       this.$store.state.viewName = view;
     },

@@ -61,6 +61,10 @@
     "title": "web上线",
     "name": "setWeb",
     "icon": "yonghuxinxi"
+    },{
+    "title":"Android版本管理",
+    "name": "setAndroid",
+    "icon": "yonghuxinxi"
     }]
   }],
   "0": [{
