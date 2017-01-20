@@ -48,12 +48,12 @@
   <div class="service top176">
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
-    <div class="service-list" v-for="list in lists">
+    <div class="service-list" v-for="list in services">
       <h2 class="list-title" v-text="list.title"></h2>
       <ul class="service-menu g-clearfix">
-        <li class="g-fl menu-item" v-for="item in list.items" @click="urlLink(item.url)">
+        <li class="g-fl menu-item" v-for="item in list.items" @click="urlLink(item)">
           <img :src="item.icon">
-          <p class="g-tac item-text" v-text="item.text"></p>
+          <p class="g-tac item-text" v-text="item.title"></p>
         </li>
       </ul>
     </div>
@@ -66,6 +66,10 @@ import tip from './lib/tip.vue'
 import tab from './lib/tab.vue'
 import CGI from '../lib/cgi'
 
+var query = CGI.query();
+var uid = ~~(query.uid) || 137;
+var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
+
 export default {
   name: 'service',
   data () {
@@ -73,60 +77,7 @@ export default {
       services: [],
       loading: false,
       stateinfo: 'complete',
-      lists: [{
-        title: '智慧政务',
-        items: [{
-          icon: 'http://img.yunxingzh.com/8946a9de-69f9-47b5-b93f-27ba5e87c8f1.png',
-          text: '社保查询',
-          url: 'http://61.145.199.189/sbwx/web2/dgsbxxcx/loginPage'
-        },{
-          icon: 'http://img.yunxingzh.com/5f11f5ce-99f6-466a-8a80-858ced1b61d5.png',
-          text: '违章查询',
-          url: 'http://112.74.64.177:8080/Traffic/ViolationByVehicleLicense'
-        },{
-          icon: 'http://img.yunxingzh.com/9102b006-b048-4d41-ba8e-697477d7cae8.png',
-          text: '发票真伪',
-          url: 'http://mtax.gdltax.gov.cn/appserver/assets/bsfw/fpcy.html?cityid=441900'
-        },{
-          icon: 'http://img.yunxingzh.com/b07178d0-3de9-42dc-ba3d-4c9a62936b0f.png',
-          text: '积分入户',
-          url: 'http://shenbao.dg.gov.cn/dgcsfw_zfb/csfw/dg_rlzy/pages/jfrh-serach-zfb.jsp'
-        },{
-          icon: 'http://img.yunxingzh.com/1d9dc2c5-baf6-4283-aea2-5864fe560ed8.png',
-          text: '积分入学',
-          url: 'http://shenbao.dg.gov.cn/dgcsfw_zfb/csfw/dg_rlzy/pages/jfrx-serach-zfb.jsp'
-        }]
-      },{
-        title: '交通出行',
-        items: [{
-          icon: 'http://img.yunxingzh.com/eb769553-6cdf-412a-8344-9a8bfb0b26e3.png',
-          text: '公交查询',
-          url: 'https://web.chelaile.net.cn/ch5/?cityName=%E4%B8%9C%E8%8E%9E\u0026cityId=008\u0026supportSubway=0\u0026showFav=0\u0026hideFooter=1\u0026cityVersion=0#!/linearound'
-        },{
-          icon: 'http://img.yunxingzh.com/311fbded-df03-4d21-be2d-5b0a82e96ac3.png',
-          text: '火车票',
-          url: 'http://touch.train.qunar.com/'
-        },{
-          icon: 'http://img.yunxingzh.com/93995ef4-0879-4dbd-99bb-f08a9ddb590c.png',
-          text: '汽车票',
-          url: 'http://183.6.161.195:8089/select.html'
-        },{
-          icon: 'http://img.yunxingzh.com/9171fb52-1112-4850-a15d-385892dd0041.png',
-          text: '飞机票',
-          url: 'https://touch.qunar.com/h5/flight/'
-        }]
-      },{
-        title: '医疗服务',
-        items: [{
-          icon: 'http://img.yunxingzh.com/61d99040-acf3-41ae-b443-22b4baf8bb4f.png',
-          text: '预约挂号',
-          url: 'https://wap.91160.com/unit/index.html\u0026city_id=2920'
-        },{
-          icon: 'http://img.yunxingzh.com/4fa213f9-d976-4a54-9ff6-040546501b5d.png',
-          text: '医院查询',
-          url: 'https://wap.91160.com/?city_id=2920'
-        }] 
-      }],
+      services: [],
       tips: {
         show: false,
         msg: '',
@@ -140,20 +91,19 @@ export default {
     download,
     tab
   },
-  activated() {
-    this.tabIdx = 0;
-  },
   mounted() {
-    //his.getData();
+    this.$nextTick(()=> {
+      this.getData();
+    })
   },
   activated() {
     this.tabIdx = 2;
   },
   methods: {
-    /*getData(seq) {
+    getData(seq) {
       var param = {
-        uid: this.$store.state.uid || ~~(sessionStorage.getItem('portal_uid')),
-        token: this.$store.state.token || sessionStorage.getItem('portal_token'),
+        uid: uid,
+        token: token,
       }
       CGI.post('services', param, (resp)=> {
         if (resp.errno == 0) {
@@ -162,18 +112,25 @@ export default {
           this.tipBox(resp.desc);
         }
       })
-    },*/
-    urlLink(url) {
-      location.href = url;
+    },
+    urlLink(item) {
+      var param = {
+        type: 4,
+        id: item.sid,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
+      location.href = item.url;
     },
     tipBox(val) {
       this.tips.msg = val;
       this.tips.show = true;
     },
-    tabChange(idx) {
+    tabChange(list, idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, idx)
+      CGI.tabChange(this.$router, list, idx, false)
     }
   }
 }

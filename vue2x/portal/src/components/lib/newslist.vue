@@ -231,6 +231,13 @@ export default {
         } catch(e) {
         }
       }  
+      var param = {
+        type: 1,
+        id: item.id,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
       location.href = item.dst;
     },
     tipBox(val) {

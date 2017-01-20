@@ -241,7 +241,7 @@
           </div>
         </div>
         <ul class="menu-list g-clearfix">
-          <li class="g-fl list-item" v-for="(list,index) in menuList" @click="openLink(list.url,index)">
+          <li class="g-fl list-item" v-for="(list,index) in menu.menuList" @click="openLink(list,index)">
             <img :src="list.icon">
             <span class="g-tac title-name" v-text="list.text"></span>
           </li>
@@ -268,6 +268,7 @@ import CGI from '../lib/cgi.js'
 var query = CGI.query();
 var uid = ~~(query.uid) || 137;
 var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
+var live = query.live || '';
 
 // 通过时间戳来判断是非第一次进入该页面
 var ts = ~~(query.ts);
@@ -292,37 +293,7 @@ export default {
       weather: {},
       weatherImg: '',
       queryParam: '',
-      val: [],
       menu: {},
-      menuList: [{
-        icon: 'http://img.yunxingzh.com/c5f0475a-3f1f-4c80-9f33-90bd33af7d75.png',
-        text: '东莞'
-      },{
-        icon: 'http://img.yunxingzh.com/126167e8-917a-4d5d-91e7-537e28c0ad03.png',
-        text: '热点'
-      },{
-        icon: 'http://img.yunxingzh.com/548d971b-dac4-4bf7-bbac-5b69e4f325c0.png',
-        text: '查询'
-      }/*,{
-        icon: 'http://img.yunxingzh.com/3cf79031-a3f2-437f-8991-6339f6cd54af.png',
-        text: '直播'
-      }*/,{
-        icon: 'http://img.yunxingzh.com/efd20edd-7a3d-4c62-a523-90110da4ba74.png',
-        text: '招聘',
-        url: 'http://jump.luna.58.com/i/29a5'
-      },{
-        icon: 'http://img.yunxingzh.com/0dd7ec0a-37f5-4448-a253-acd3320279eb.png',
-        text: '二手',
-        url: 'http://jump.luna.58.com/i/29a7'
-      },{
-        icon: 'http://img.yunxingzh.com/a3524233-2acc-47c5-92a3-c87c764bb114.png',
-        text: '租房',
-        url: 'http://jump.luna.58.com/i/29a4'
-      },{
-        icon: 'http://img.yunxingzh.com/73403b79-8eb4-4ccf-b169-25bee5cdbc30.png',
-        text: '更多',
-        url: 'http://jump.luna.58.com/i/29a3'
-      }]
     }
   },
   components: {
@@ -358,19 +329,23 @@ export default {
           this.alertInfo(resp.desc);
         }
       })
-      /*var p = {
-        key: name,
+      var p = {
+        uid: uid,
+        token: token,
+        key: live,
       }
-        CGI.post('get_conf', p, (resp)=> {
-          if (resp.errno == 0) {
-            this.val = JSON.parse(resp.data.val);
-          }
-        })*/
+      CGI.post('get_conf', p, (resp)=> {
+        if (resp.errno == 0) {
+          this.menu = JSON.parse(resp.data.val);
+          this.$store.state.tablist = this.menu.tablist
+          //console.log(this.menu);
+        }
+      })
     },
-    openLink(url,idx) {
+    openLink(list,idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, idx)
+      CGI.tabChange(this.$router, list, true)
     },
     countdown() {
       this.timer = setInterval(()=> {

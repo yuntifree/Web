@@ -27,10 +27,10 @@ export default {
     this.tabIdx = 1;
   },
   methods: {
-    tabChange(idx) {
+    tabChange(list, idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, idx)
+      CGI.tabChange(this.$router, list, idx, false)
     }
   }
 }

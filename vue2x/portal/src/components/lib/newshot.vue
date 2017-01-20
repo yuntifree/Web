@@ -217,7 +217,7 @@ export default {
           setTimeout(()=>{
             this.getData(this.items[len].seq);
           },1000)
-        }
+        }                       
       }    
     },
     link(item) {
@@ -232,6 +232,13 @@ export default {
           sessionStorage.setItem('cache', JSON.stringify(this.items));
         } catch(e){}
       }
+      var param = {
+        type: 1,
+        id: item.id,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
       location.href = item.dst;
     },
     tipBox(val) {

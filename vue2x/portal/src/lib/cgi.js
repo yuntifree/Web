@@ -179,18 +179,28 @@ module.exports = {
       var ret = isMob.test(tel);
       return ret;
     },
-    tabChange: function(router, idx, url) {
+    tabChange: function(router, list, type) {
         //var names = ['news','hotspot','service','live'];
-        var names = ['news','hotspot','service'];
-        if (idx <= names.length-1) {
-            router.push({name: names[idx]});
+        //var names = ['news','hotspot','service'];
+        if (list.routername) {
+            router.push({name: list.routername});
         } else {
-            if (url) {
-                location.href = url;
-            } else {
-                location.href = 'http://jump.luna.58.com/i/29a3';
-            }
-            
+            location.href = list.url;
         }
+        /*var param = {
+            name: list.name,
+        }
+        if (type) {
+            param.type = 8
+        } else {
+            param.type = 7
+        }
+        this.reportClick(param);*/
+    },
+    reportClick: function(p) {
+        this.post('report_click', p, function(resp) {
+            if (resp.errno === 0) {
+            }else {}
+        })
     }
 };

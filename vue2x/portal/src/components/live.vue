@@ -1,7 +1,7 @@
 <template>
   <div class="videos top176">
     <download></download>
-    <tab :selidx="tabIdx"></tab>
+    <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
     <div class="live-body">
       <div class="liveBox-li"  v-for="item in items" @click="liveLink(item)">
         <a href="javascript:;">
@@ -87,10 +87,10 @@ export default {
     liveLink(item) {
       location.href = 'http://h.huajiao.com/l/index?liveid='+item.live_id;
     },
-    tabChange(idx) {
+    tabChange(list, idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, idx)
+      CGI.tabChange(this.$router, list, idx, false)
     },
     tipBox(val) {
       this.tips.msg = val;

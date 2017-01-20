@@ -1,26 +1,51 @@
 <template>
   <div class="tab">
-    <ul class="flex-space">
-      <li class="g-tac tab-list" v-for="(list,idx) in tablist" @click=tabClick(idx)><span :class="{'span-bottom':selidx==idx}">{{list}}</span></li>
+    <ul class="flex-space" v-if="dataReady">
+      <li class="g-tac tab-list" v-for="(list,idx) in val.tablist" @click=tabClick(list,idx)><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
     </ul>
   </div>
 </template>
 
 <script>
+import CGI from '../../lib/cgi.js'
+
+var query = CGI.query();
+var uid = ~~(query.uid) || 137;
+var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
+var live = query.live || '';
 export default {
   name: 'tab',
   data() {
     return {
       //tablist: ['东莞','热点','查询','视频','更多'],
-      tablist: ['东莞','热点','查询','更多'],
+      val: [],
+      dataReady: false
     }
   },
   props: {
     selidx: Number,
   },
+  mounted() {
+    this.$nextTick(()=> {
+      this.getData();
+    })
+  },
   methods: {
-    tabClick(idx) {
-      this.$emit('tab-change', idx);
+    getData() {
+      var p = {
+        uid: uid,
+        token: token,
+        key: live,
+      }
+      CGI.post('get_conf', p, (resp)=> {
+        if (resp.errno == 0) {
+          this.val = JSON.parse(resp.data.val);
+          this.dataReady = true;
+        }
+      })
+    },
+    tabClick(list,idx) {
+      this.$emit('tab-change', list, idx);
     }
   }
 }
