@@ -34,6 +34,7 @@ import adban from './components/views/adban.vue'
 import uploadImg from './components/views/uploadImg.vue'
 import setActivity from './components/views/setActivity.vue'
 import setWeb from './components/views/setWeb.vue'
+import setAndroid from './components/views/setAndroid.vue'
 
 export default {
   name: 'app',
@@ -72,7 +73,8 @@ export default {
     adban,
     uploadImg,
     setActivity,
-    setWeb
+    setWeb,
+    setAndroid
   },
   // for share components View using.
   mounted() {

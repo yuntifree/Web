@@ -14,7 +14,10 @@
       <header class="app_header">
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
-            文章状态<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">未审核</option><option :value="{ number: 1 }">上 线</option><option :value="{ number: 2 }">下 线</option></select></button>
+            文章状态<select v-model="type" @change="getData(true)"><option :value="{ number: 0 }">未审核</option><option :value="{ number: 1 }">上 线</option><option :value="{ number: 2 }">下 线</option></select>
+          </button>
+          <button type="button" class="btn btn-info btn-left outline-none">
+            地区<select v-model="stype" @change="getData(true)"><option :value="{ number: 0 }">全部</option><option :value="{ number: 1 }">东莞</option></select>
           </button>
         </div>
         <div>
@@ -113,7 +116,7 @@
               </el-checkbox-group>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="editPost(event,false)">确定</el-button>
+              <el-button type="primary" @click="editPost">确定</el-button>
               <el-button @click="modal.editShow=false">取消</el-button>
             </el-form-item>
           </el-form>
@@ -124,7 +127,7 @@
         <span>{{dialogCfg.text}}</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click.native="modal.dialogShow = false">取 消</el-button>
-          <el-button type="primary" @click.native="editPost(event,true)">确 定</el-button>
+          <el-button type="primary" @click.native="chkonline">确 定</el-button>
         </span>
       </el-dialog>
       <!--alert-->
@@ -160,8 +163,11 @@ export default {
       },
       selIdx: -1,
 
-      selected: {
+      type: {
         number:0
+      },
+      stype: {
+        number: 0
       },
       search: '',
       tagsInfo: [],
@@ -209,13 +215,15 @@ export default {
       var param = {
         seq: this.pageCfg.start,
         num: 30,
-        type: this.selected.number
+        type: this.type.number,
+        stype: this.stype.number
       }
 
       CGI.post(this.$store.state, 'get_news', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
           this.news = data.infos;
+          console.log(data.total);
           this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
@@ -254,36 +262,34 @@ export default {
         }
       })
     },
-    editPost(event,confirm) { 
+    editPost() { 
       if (this.editInfo.title.length <= 0) {
         this.alertInfo('请输入title');
         return;
       }
       var param = {};
-      if (confirm) {
-        param.id = this.editInfo.id;
-        param.reject = ~~this.newsInfo.reject;
-      } else {
-        var paramTags = [];
-        if (this.newsInfo.title !== this.editInfo.title) {
-          param.title = this.newsInfo.title;
-          param.modify = 1;
-        }
-        if (this.checkedTags.length > 0) {
-          var clen = this.checkedTags.length;
-          var tlen = this.tagsInfo.tags.length;
-          for (var i=0;i<clen;i++) {
-            for (var j=0;j<tlen;j++) {
-              if (this.checkedTags[i] == this.tagsInfo.tags[j].content) {
-                paramTags.push(this.tagsInfo.tags[j].id);
-              }
+      var paramTags = [];
+      if (this.newsInfo.title !== this.editInfo.title) {
+        param.title = this.newsInfo.title;
+        param.modify = 1;
+      }
+      if (this.checkedTags.length > 0) {
+        var clen = this.checkedTags.length;
+        var tlen = this.tagsInfo.tags.length;
+        for (var i=0;i<clen;i++) {
+          for (var j=0;j<tlen;j++) {
+            if (this.checkedTags[i] == this.tagsInfo.tags[j].content) {
+              paramTags.push(this.tagsInfo.tags[j].id);
             }
           }
         }
-        param.tags = paramTags;
-        param.reject = ~~this.newsInfo.reject;
-        param.id = this.editInfo.id;
       }
+      param.tags = paramTags;
+      param.reject = ~~this.newsInfo.reject;
+      param.id = this.editInfo.id;
+      this.actPost(param);
+    },
+    actPost(param) {
       CGI.post(this.$store.state,'review_news',param,(resp)=> {
         if (resp.errno === 0) {
           this.news.splice(this.selIdx,1);
@@ -311,6 +317,13 @@ export default {
       this.newsInfo.reject = ops;
       this.editInfo =  CGI.clone(row);
       this.modal.dialogShow = true;
+    },
+    chkonline() {
+      var param = {
+        id: this.editInfo.id,
+        reject: ~~this.newsInfo.reject
+      }
+      this.actPost(param);
     },
     alertInfo(val) {
       this.alertShow = true;
