@@ -180,14 +180,12 @@ module.exports = {
       return ret;
     },
     tabChange: function(router, list, type) {
-        //var names = ['news','hotspot','service','live'];
-        //var names = ['news','hotspot','service'];
         if (list.routername) {
             router.push({name: list.routername});
         } else {
             location.href = list.url;
         }
-        /*var param = {
+        var param = {
             name: list.name,
         }
         if (type) {
@@ -195,7 +193,7 @@ module.exports = {
         } else {
             param.type = 7
         }
-        this.reportClick(param);*/
+        this.reportClick(param);
     },
     reportClick: function(p) {
         this.post('report_click', p, function(resp) {

@@ -338,7 +338,6 @@ export default {
         if (resp.errno == 0) {
           this.menu = JSON.parse(resp.data.val);
           this.$store.state.tablist = this.menu.tablist
-          //console.log(this.menu);
         }
       })
     },

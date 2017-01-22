@@ -65,10 +65,16 @@ export default {
       var url = 'http://web.free.wifi.360.cn/internet/huajiao?callback=liveCallback&offset='+this.offset;
       CGI.get(url, {}, (resp)=> {
         if (resp.errno == 0) {
-          this.items = this.items.concat(resp.data.list);
-          this.offset = resp.data.offset;
-          this.loading = false;
-          this.nomore = resp.data.more ? false : true;
+          var list = resp.data.list
+          if (!list || list.length<=0) {
+            this.loading = false;
+            this.tipBox('暂时没有主播直播，请稍后重试');
+          } else {
+            this.items = this.items.concat(resp.data.list);
+            this.offset = resp.data.offset;
+            this.loading = false;
+            this.nomore = resp.data.more ? false : true;
+          }     
         } else {
           this.tipBox(resp.desc);
         }
@@ -90,7 +96,7 @@ export default {
     tabChange(list, idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, idx, false)
+      CGI.tabChange(this.$router, list, false)
     },
     tipBox(val) {
       this.tips.msg = val;

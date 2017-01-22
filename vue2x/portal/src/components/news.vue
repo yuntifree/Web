@@ -30,7 +30,7 @@ export default {
     tabChange(list,idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, idx, true)
+      CGI.tabChange(this.$router, list, false)
     }
   }
 }
