@@ -24,9 +24,9 @@
           <div class="quick_search">
             <i class="iconfont icon-search"></i>
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名"
-              v-model="search" @keyup.enter="doSearch(true)">
+              v-model.trim="search" @keyup.enter="doSearch(true)">
           </div>
-          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
+          <button class="btn btn-default btn-ssm" @click="getData(true)">刷新</button>
         </div>
       </header>
       <div class="tab_container" ref="tableContent">
@@ -218,12 +218,14 @@ export default {
         type: this.type.number,
         stype: this.stype.number
       }
-
+      this.search = '';
+      this.dataPost(param);
+    },
+    dataPost(param) {
       CGI.post(this.$store.state, 'get_news', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
           this.news = data.infos;
-          console.log(data.total);
           this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
@@ -232,12 +234,17 @@ export default {
       });
     },
     handleSizeChange(val) {
-      console.log('每页 ${val} 条');
+      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.pageCfg.start = (val-1)*30;
-      this.getData(false);
-      console.log('当前页: ${val}');
+      this.pageCfg.currentPage = val;
+      if (this.search.length > 0) {
+        this.doSearch(false);
+      } else {
+        this.getData(false);
+      }
+      console.log(`当前页: ${val}`);
     },
     edit(idx,row,seq) {
       this.selIdx = idx;
@@ -328,6 +335,25 @@ export default {
     alertInfo(val) {
       this.alertShow = true;
       this.alertMsg = val;
+    },
+    doSearch(first) {
+      if (this.search.length <= 0) {
+        this.alertInfo('请输入搜索信息');
+        return;
+      }
+      console.log(first);
+      if (first) {
+        this.pageCfg.currentPage = 1;
+        this.pageCfg.start = 0;
+      }
+      var param = {
+        seq: this.pageCfg.start,
+        num: 30,
+        type: this.type.number,
+        stype: this.stype.number,
+        search: this.search
+      }
+      this.dataPost(param);
     }
   }
 }

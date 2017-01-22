@@ -187,12 +187,12 @@ export default {
       });
     },
     handleSizeChange(val) {
-      console.log('每页 ${val} 条');
+      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.pageCfg.start = (val-1)*30;
       this.getData(false);
-      console.log('当前页: ${val}');
+      console.log(`当前页: ${val}`);
     },
     addAct() {
       CGI.objClear(this.addInfo);
