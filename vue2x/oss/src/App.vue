@@ -159,7 +159,6 @@ section#main {
 }
 
 .quick_search {
-  text-align: center;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;

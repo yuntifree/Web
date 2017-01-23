@@ -3,7 +3,7 @@
     <div class="content">
       <h2>用户登录</h2>
       <div class="user">
-        <i class="iconfont icon-user"></i>
+        <i class="iconfont icon-yonghu"></i>
         <input type="text" placeholder="请输入账号" v-model="username" @focus="error = false" ref="user"/>
       </div>
       <div class="user password">

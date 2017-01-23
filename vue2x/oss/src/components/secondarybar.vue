@@ -1,6 +1,6 @@
 <template>
   <section id="secondary_bar">
-    <div class="user">
+    <div class="users">
       <p><i class="glyphicon glyphicon-user second-icon-user"></i>{{user}}(<a href="javascript:;" @click="logout">退出登录</a>)</p>
     </div>
     <div class="breadcrumbs_container">
@@ -45,12 +45,14 @@ section#secondary_bar {
   box-shadow: 2px 4px 5px #E5E6EC;
 }
 
-section#secondary_bar .user {
+section#secondary_bar .user,
+.users {
   float: left;
   width: 15%;
 }
 
-.user p {
+.user p,
+.users p {
   margin: 0;
   padding: 0;
   color: #666666;
