@@ -6,7 +6,7 @@
       <div class="liveBox-li"  v-for="item in items" @click="liveLink(item)">
         <a href="javascript:;">
           <span class="liveBox-li-head">
-            <img :src="item.avatar" width="100%">
+            <img :src="item.img" width="100%">
             <em class="liveBox-li-status">{{item.live ? '直播':''}}</em>
           </span>
           <span class="liveBox-li-fun">

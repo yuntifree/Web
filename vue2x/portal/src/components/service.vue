@@ -121,7 +121,7 @@ export default {
         token: token
       }
       CGI.reportClick(param);
-      location.href = item.url;
+      location.href = item.dst;
     },
     tipBox(val) {
       this.tips.msg = val;
