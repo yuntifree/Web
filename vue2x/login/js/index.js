@@ -266,7 +266,7 @@ function oneClickLogin(param) {
 }
 
 function loginDone(info) {
-  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + +'&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
   if (CGI.isIE()) {
