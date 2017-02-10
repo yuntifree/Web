@@ -25,7 +25,7 @@ window.onerror =  function handleErr(msg,url,l) {
     txt+="URL: " + url + "\n"
     txt+="行：" + l + "\n\n"
     txt+="点击“确定”继续。\n\n"
-    alert(txt)
+    //alert(txt);
     return true
 }
 const router = new VueRouter({
