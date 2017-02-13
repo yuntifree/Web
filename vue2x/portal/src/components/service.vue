@@ -67,8 +67,8 @@ import tab from './lib/tab.vue'
 import CGI from '../lib/cgi'
 
 var query = CGI.query();
-var uid = ~~(query.uid) || 137;
-var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
+var uid = ~~(query.uid) || 0;
+var token = query.token || '';
 
 export default {
   name: 'service',
@@ -130,7 +130,7 @@ export default {
     tabChange(list, idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, false)
+      CGI.tabChange(this.$router, list, false, uid, token);
     }
   }
 }

@@ -1,7 +1,8 @@
 var ajax = require('./ajax')
 
 module.exports = {
-    HOST: __DEV__ ? '' : 'http://120.76.236.185/',
+    //HOST: __DEV__ ? '' : 'http://120.76.236.185/',
+    HOST: __DEV__ ? '' : 'http://120.25.133.234/',
     CGI: '/',
 
     /**
@@ -179,7 +180,8 @@ module.exports = {
       var ret = isMob.test(tel);
       return ret;
     },
-    tabChange: function(router, list, type) {
+    tabChange: function(router, list, type, uid,token) {
+        console.log(list.routername)
         if (list.routername) {
             router.push({name: list.routername});
         } else {
@@ -187,6 +189,8 @@ module.exports = {
         }
         var param = {
             name: list.name,
+            uid: uid,
+            token: token
         }
         if (type) {
             param.type = 8

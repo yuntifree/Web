@@ -28,6 +28,9 @@ import tip from './lib/tip.vue'
 import download from './lib/download.vue'
 import tab from './lib/tab.vue'
 import CGI from '../lib/cgi'
+var query = CGI.query();
+var uid = ~~(query.uid) || 0;
+var token = query.token || '';
 
 
 export default {
@@ -96,7 +99,7 @@ export default {
     tabChange(list, idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, false)
+      CGI.tabChange(this.$router, list, false, uid, token);
     },
     tipBox(val) {
       this.tips.msg = val;

@@ -266,8 +266,8 @@ import newslist from './lib/newslist.vue'
 import CGI from '../lib/cgi.js'
 
 var query = CGI.query();
-var uid = ~~(query.uid) || 137;
-var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
+var uid = ~~(query.uid) || 0;
+var token = query.token || '';
 var live = query.live || '';
 
 // 通过时间戳来判断是非第一次进入该页面
@@ -344,7 +344,7 @@ export default {
     openLink(list,idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, true)
+      CGI.tabChange(this.$router, list, true, uid, token)
     },
     countdown() {
       this.timer = setInterval(()=> {

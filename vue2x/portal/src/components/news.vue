@@ -11,6 +11,10 @@ import newslist from './lib/newslist.vue'
 import tab from './lib/tab.vue'
 import download from './lib/download.vue'
 import CGI from '../lib/cgi.js'
+var query = CGI.query();
+var uid = ~~(query.uid) || 0;
+var token = query.token || '';
+
 export default {
   name: 'news',
   data() {
@@ -30,7 +34,7 @@ export default {
     tabChange(list,idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, false)
+      CGI.tabChange(this.$router, list, false, uid,token)
     }
   }
 }
