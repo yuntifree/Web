@@ -167,7 +167,6 @@ export default {
             })
           }
         }
-        //sessionStorage.clear();
       }
       if (!this.useCache) {
         this.getData()

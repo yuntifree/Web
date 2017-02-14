@@ -31,9 +31,11 @@ export default {
     this.tabIdx = 1;
   },
   methods: {
-    tabChange(list, idx) {
-      this.$store.state.tabidx = idx;
-      this.tabIdx = idx;
+    tabChange(list, idx, len) {
+      if (idx !== len) {
+        this.$store.state.tabidx = idx;
+        this.tabIdx = idx;
+      }
       CGI.tabChange(this.$router, list, false, uid, token)
     }
   }
