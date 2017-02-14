@@ -155,19 +155,16 @@ export default {
   overflow: hidden;
 }
 .liveBox-li {
-  /* width: 50%;
-  float: left; */
-    display: inline-block;
-    background: #fff;
-    border-bottom: 1px solid #000;
-    border-right:1px solid #000;
-    float: left;
-    margin-left: -1px;
-    padding-bottom: 6px;
-    width: 50%;
-    height: auto;
-    box-sizing: content-box;
-    -webkit-box-sizing: content-box;
+  background: #fff;
+  border-bottom: 1px solid #000;
+  border-right:1px solid #000;
+  float: left;
+  margin-left: -1px;
+  padding-bottom: 6px;
+  width: 50%;
+  height: auto;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
 }
 .liveBox-li:nth-child(even) {
   margin-left: 0;
