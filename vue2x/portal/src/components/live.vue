@@ -61,7 +61,18 @@ export default {
   mounted() {
     this.$nextTick(function () {
       this.getData();
-      this.imgHeight = (screen.width) / 2;
+      if (screen.availWidth > 750) {
+        this.imgHeight = 375;
+      } else {
+        this.imgHeight = (screen.availWidth) / 2;
+        console.log(document.body.clientWidth);
+      }
+      // if (this.isPC()) {
+      //   this.imgHeight = 375;
+      // } else {
+      //   this.imgHeight = (screen.availWidth) / 2;
+      //   console.log(document.body.clientWidth);
+      // } 
     })
   },
   methods: {
@@ -131,7 +142,7 @@ export default {
     tipBox(val) {
       this.tips.msg = val;
       this.tips.show = true;
-    },
+    }
   }
 }
 </script>
@@ -182,16 +193,16 @@ export default {
   border-radius: 2px;
   color: #fff;
   font-style: normal;
-  font-size: 12px;
-  padding: 1px 3px;
+  font-size: 0.24rem;
+  padding: 0.02rem 0.06rem;
   position: absolute;
-  right: 7px;
-  top: 7px;
+  right: 0.14rem;
+  top: 0.14rem;
 }
 
 .liveBox-li-fun {
   display: block;
-  padding-top: 7px;
+  padding-top: 0.14rem;
   position: relative;
   width: 100%;
 }
@@ -200,30 +211,30 @@ export default {
   background-size: 12px 12px;
 }
 .liveBox-li-name {
-  font-size: 14px;
-  height: 24px;
-  line-height: 24px;
+  font-size: 0.28rem;
+  height: 0.48rem;
+  line-height: 0.48rem;
   overflow: hidden;
-  padding-left: 28px;
+  padding-left: 0.56rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 47%;
 }
 .liveBox-li-city {
   color: #aaabbb;
-  font-size: 13px;
-  height: 22px;
-  line-height: 22px;
-  padding-left: 28px;
+  font-size: 0.26rem;
+  height: 0.44rem;
+  line-height: 0.44rem;
+  padding-left: 0.56rem;
 }
 .liveBox-li-count {
   color: #aaabbb;
   display: block;
-  font-size: 12px;
-  height: 20px;
-  line-height: 20px;
+  font-size: 0.24rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 0.2rem;
+  top: 0.2rem;
 }
 </style>
