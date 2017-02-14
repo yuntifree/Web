@@ -2,11 +2,11 @@
   <div class="videos top176">
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
-    <div class="live-body">
+    <div class="live-body g-clearfix">
       <div class="liveBox-li"  v-for="item in items" @click="liveLink(item)">
         <a href="javascript:;">
           <span class="liveBox-li-head">
-            <img :src="item.img" width="100%">
+            <img :src="item.img" width="100%" :height="imgHeight">
             <em class="liveBox-li-status">{{item.live ? '直播':''}}</em>
           </span>
           <span class="liveBox-li-fun">
@@ -31,8 +31,7 @@ import CGI from '../lib/cgi'
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
-
-
+var src = 'http://web.free.wifi.360.cn/internet/huajiao?callback=liveCallback&offset=';
 export default {
   name: 'videos',
   data () {
@@ -46,7 +45,9 @@ export default {
         msg: '',
         duration: 1500,
       },
-      tabIdx: -1
+      tabIdx: -1,
+      num: 0,
+      imgHeight: 0,
     }
   },
   components: {
@@ -59,20 +60,30 @@ export default {
   },
   mounted() {
     this.$nextTick(function () {
-      this.getData()
+      this.getData();
+      this.imgHeight = (screen.width) / 2;
     })
   },
   methods: {
     getData() {
+      console.log(new Date().getTime()/1000)
       this.loading = true;
-      var url = 'http://web.free.wifi.360.cn/internet/huajiao?callback=liveCallback&offset='+this.offset;
+      var url = src+this.offset;
       CGI.get(url, {}, (resp)=> {
         if (resp.errno == 0) {
           var list = resp.data.list
           if (!list || list.length<=0) {
-            this.loading = false;
-            this.tipBox('暂时没有主播直播，请稍后重试');
+            if (this.num >= 3) {
+              this.loading = false;
+              this.tipBox('暂时没有主播直播，请稍后重试');
+            } else {
+              setTimeout(()=>{
+                this.getData();
+                this.num++;
+              },1000)
+            }
           } else {
+            this.num = 0;
             this.items = this.items.concat(resp.data.list);
             this.offset = resp.data.offset;
             this.loading = false;
@@ -86,9 +97,23 @@ export default {
     loadMorevideo() {
       if (!this.nomore) {
         this.loading = true;
-        setTimeout(()=>{
-          this.getData();
-        },1000)
+        var url = src+this.offset;
+        CGI.get(url, {}, (resp)=> {
+          if (resp.errno == 0) {
+            var list = resp.data.list
+            if (!list || list.length<=0) {
+              this.loading = false;
+              this.tipBox('暂时没有主播直播，请稍后重试');
+            } else {
+              this.items = this.items.concat(resp.data.list);
+              this.offset = resp.data.offset;
+              this.loading = false;
+              this.nomore = resp.data.more ? false : true;
+            }     
+          } else {
+            this.tipBox(resp.desc);
+          }
+        })
       } else {
         this.tipBox('全都在这没有更多了');
       }   
@@ -96,9 +121,11 @@ export default {
     liveLink(item) {
       location.href = 'http://h.huajiao.com/l/index?liveid='+item.live_id;
     },
-    tabChange(list, idx) {
-      this.$store.state.tabidx = idx;
-      this.tabIdx = idx;
+    tabChange(list, idx, len) {
+      if (idx !== len) {
+        this.$store.state.tabidx = idx;
+        this.tabIdx = idx;
+      }
       CGI.tabChange(this.$router, list, false, uid, token);
     },
     tipBox(val) {
@@ -117,6 +144,9 @@ export default {
   overflow: hidden;
 }
 .liveBox-li {
+  /* width: 50%;
+  float: left; */
+    display: inline-block;
     background: #fff;
     border-bottom: 1px solid #000;
     border-right:1px solid #000;
@@ -124,6 +154,7 @@ export default {
     margin-left: -1px;
     padding-bottom: 6px;
     width: 50%;
+    height: auto;
     box-sizing: content-box;
     -webkit-box-sizing: content-box;
 }
@@ -131,6 +162,7 @@ export default {
   margin-left: 0;
   border-right: 0 none;
 }
+
 .liveBox-li a {
   display: block;
   color: #222;
@@ -142,47 +174,47 @@ export default {
 .liveBox-li-head, 
 .liveBox-li-status, 
 .liveBox-li-head img {
-    display: block;
+  display: block;
 }
 .liveBox-li-status {
-    border: 1px solid #fff;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    color: #fff;
-    font-style: normal;
-    font-size: 12px;
-    padding: 1px 3px;
-    position: absolute;
-    right: 7px;
-    top: 7px;
+  border: 1px solid #fff;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  color: #fff;
+  font-style: normal;
+  font-size: 12px;
+  padding: 1px 3px;
+  position: absolute;
+  right: 7px;
+  top: 7px;
 }
 
 .liveBox-li-fun {
-    display: block;
-    padding-top: 7px;
-    position: relative;
-    width: 100%;
+  display: block;
+  padding-top: 7px;
+  position: relative;
+  width: 100%;
 }
 .liveBox-li-male {
-    background: url(http://p4.qhmsg.com/t0153a4545649265ec4.png) no-repeat 9px center;
-    background-size: 12px 12px;
+  background: url(http://p4.qhmsg.com/t0153a4545649265ec4.png) no-repeat 9px center;
+  background-size: 12px 12px;
 }
 .liveBox-li-name {
-    font-size: 14px;
-    height: 24px;
-    line-height: 24px;
-    overflow: hidden;
-    padding-left: 28px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 47%;
+  font-size: 14px;
+  height: 24px;
+  line-height: 24px;
+  overflow: hidden;
+  padding-left: 28px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 47%;
 }
 .liveBox-li-city {
-    color: #aaabbb;
-    font-size: 13px;
-    height: 22px;
-    line-height: 22px;
-    padding-left: 28px;
+  color: #aaabbb;
+  font-size: 13px;
+  height: 22px;
+  line-height: 22px;
+  padding-left: 28px;
 }
 .liveBox-li-count {
   color: #aaabbb;

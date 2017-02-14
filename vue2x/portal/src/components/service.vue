@@ -30,7 +30,7 @@
 }
 .menu-item {
   @include containerSize(1.72rem, auto);
-  margin-left: 0.58rem;
+  margin-left: 0.1rem;
   margin-top: 0.5rem;
 }
 .menu-item img {
@@ -127,9 +127,11 @@ export default {
       this.tips.msg = val;
       this.tips.show = true;
     },
-    tabChange(list, idx) {
+    tabChange(list, idx, len) {
       this.$store.state.tabidx = idx;
-      this.tabIdx = idx;
+      if (idx !== len) {
+        this.tabIdx = idx;
+      }
       CGI.tabChange(this.$router, list, false, uid, token);
     }
   }
