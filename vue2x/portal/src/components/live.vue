@@ -3,8 +3,8 @@
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
     <div class="live-body g-clearfix">
-      <div class="liveBox-li"  v-for="item in items" @click="liveLink(item)">
-        <a href="javascript:;">
+      <div class="liveBox-li"  v-for="item in items">
+        <a :href="'http://h.huajiao.com/l/index?liveid='+item.live_id" target="_blank">
           <span class="liveBox-li-head">
             <img :src="item.img" width="100%" :height="imgHeight">
             <em class="liveBox-li-status">{{item.live ? '直播':''}}</em>
