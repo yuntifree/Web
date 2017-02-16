@@ -12,7 +12,7 @@
           <span class="liveBox-li-fun">
             <p class="liveBox-li-name liveBox-li-male" :class="{'item-visited':item.visited}">{{item.nickname}}</p>
             <p class="liveBox-li-city">{{item.location}}</p>
-            <span class="liveBox-li-count">{{item.watches}}</span>
+            <span class="liveBox-li-count">{{item.watches}}人</span>
           </span>
         </a>
       </div>
@@ -31,7 +31,6 @@ import CGI from '../lib/cgi'
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
-var src = 'http://web.free.wifi.360.cn/internet/huajiao?callback=liveCallback&offset=';
 export default {
   name: 'videos',
   data () {
@@ -39,7 +38,7 @@ export default {
       items: [],
       loading: true,
       nomore: false,
-      offset: 0,
+      seq: 0,
       tips: {
         show: false,
         msg: '',
@@ -65,41 +64,26 @@ export default {
         this.imgHeight = 375;
       } else {
         this.imgHeight = (screen.availWidth) / 2;
-        console.log(document.body.clientWidth);
       }
-      // if (this.isPC()) {
-      //   this.imgHeight = 375;
-      // } else {
-      //   this.imgHeight = (screen.availWidth) / 2;
-      //   console.log(document.body.clientWidth);
-      // } 
     })
   },
   methods: {
     getData() {
-      console.log(new Date().getTime()/1000)
-      this.loading = true;
-      var url = src+this.offset;
-      CGI.get(url, {}, (resp)=> {
+      this.loading = false;
+      var param = {
+        uid: uid,
+        token: token,
+        seq: this.seq
+      }
+      CGI.post('get_live_info', param, (resp)=> {
         if (resp.errno == 0) {
           var list = resp.data.list
-          if (!list || list.length<=0) {
-            if (this.num >= 3) {
-              this.loading = false;
-              this.tipBox('暂时没有主播直播，请稍后重试');
-            } else {
-              setTimeout(()=>{
-                this.getData();
-                this.num++;
-              },1000)
-            }
-          } else {
-            this.num = 0;
+          if (list || list.length>0) {
             this.items = this.items.concat(resp.data.list);
-            this.offset = resp.data.offset;
-            this.loading = false;
-            this.nomore = resp.data.more ? false : true;
-          }     
+            this.seq = this.items[length].seq;
+          }
+          this.loading = false;
+          this.nomore = resp.data.hasmore ? false : true;     
         } else {
           this.tipBox(resp.desc);
         }
@@ -107,24 +91,7 @@ export default {
     },
     loadMorevideo() {
       if (!this.nomore) {
-        this.loading = true;
-        var url = src+this.offset;
-        CGI.get(url, {}, (resp)=> {
-          if (resp.errno == 0) {
-            var list = resp.data.list
-            if (!list || list.length<=0) {
-              this.loading = false;
-              this.tipBox('暂时没有主播直播，请稍后重试');
-            } else {
-              this.items = this.items.concat(resp.data.list);
-              this.offset = resp.data.offset;
-              this.loading = false;
-              this.nomore = resp.data.more ? false : true;
-            }     
-          } else {
-            this.tipBox(resp.desc);
-          }
-        })
+        this.getData();
       } else {
         this.tipBox('全都在这没有更多了');
       }   
