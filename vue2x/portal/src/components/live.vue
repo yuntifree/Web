@@ -4,7 +4,7 @@
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
     <div class="live-body g-clearfix">
       <div class="liveBox-li"  v-for="item in items">
-        <a :href="'http://h.huajiao.com/l/index?liveid='+item.live_id" target="_blank">
+        <a :href="getLiveurl(item)" target="_blank">
           <span class="liveBox-li-head">
             <img :src="item.img" width="100%" :height="imgHeight">
             <em class="liveBox-li-status">{{item.live ? '直播':''}}</em>
@@ -95,6 +95,15 @@ export default {
       } else {
         this.tipBox('全都在这没有更多了');
       }   
+    },
+    getLiveurl(item) {
+      var ua = navigator.userAgent.toLowerCase();
+      console.log(ua);
+        if (/iphone|ipad/.test(ua)) {
+          return 'http://h.huajiao.com/l/index?liveid='+item.live_id
+        } else {
+          return 'javascript:;'
+        }
     },
     liveLink(item) {
       location.href = 'http://h.huajiao.com/l/index?liveid='+item.live_id;
