@@ -28,6 +28,7 @@
 .img-list {
   @include containerSize(100%, auto);
   min-height: 1.5rem;
+  background-color: #f0f0f0;
 }
 .list1-info {
   width: 4.74rem;
