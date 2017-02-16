@@ -270,9 +270,9 @@ function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
   if (CGI.isIE()) {
-    location.href = firsturl;
+    location.replace(firsturl);
   } else {
-    location.href = url;
+    location.replace(url);
   }
 }
 
