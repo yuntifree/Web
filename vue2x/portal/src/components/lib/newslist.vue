@@ -31,7 +31,7 @@
   background-color: #f0f0f0;
 }
 .list1-info {
-  width: 4.74rem;
+  width: 4.54rem;
   padding-right: 0.16rem;
   text-align: justify;
 }

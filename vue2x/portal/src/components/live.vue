@@ -31,6 +31,7 @@ import CGI from '../lib/cgi'
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
+var ua = navigator.userAgent.toLowerCase();
 export default {
   name: 'videos',
   data () {
@@ -60,10 +61,14 @@ export default {
   mounted() {
     this.$nextTick(function () {
       this.getData();
-      if (screen.availWidth > 750) {
-        this.imgHeight = 375;
+      if (window.screen.availWidth > 750) {
+        if (window.screen.availHeight > window.screen.availWidth && !(/ipad/.test(ua))) {
+          this.imgHeight = 187; 
+        } else {
+          this.imgHeight = 375;        
+        }
       } else {
-        this.imgHeight = (screen.availWidth) / 2;
+        this.imgHeight = (window.screen.availWidth) / 2;
       }
     })
   },
@@ -97,13 +102,11 @@ export default {
       }   
     },
     getLiveurl(item) {
-      var ua = navigator.userAgent.toLowerCase();
-      console.log(ua);
-        if (/iphone|ipad/.test(ua)) {
-          return 'http://h.huajiao.com/l/index?liveid='+item.live_id
-        } else {
-          return 'javascript:;'
-        }
+      if (/iphone|ipad/.test(ua)) {
+        return 'http://h.huajiao.com/l/index?liveid='+item.live_id
+      } else {
+        return 'javascript:;'
+      }
     },
     liveLink(item) {
       location.href = 'http://h.huajiao.com/l/index?liveid='+item.live_id;

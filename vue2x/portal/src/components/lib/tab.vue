@@ -1,7 +1,7 @@
 <template>
   <div class="tab">
-    <ul class="flex-space" v-if="dataReady">
-      <li class="g-tac tab-list" v-for="(list,idx) in val.tablist" @click=tabClick(list,idx)><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
+    <ul class="menu-list" v-if="dataReady">
+      <li class="g-tac tab-list" :class="live ? 'wid20' : 'wid25'"v-for="(list,idx) in val.tablist" @click=tabClick(list,idx)><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
     </ul>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
     return {
       //tablist: ['东莞','热点','查询','视频','更多'],
       val: [],
+      live: live,
       dataReady: false
     }
   },
@@ -57,7 +58,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.flex-space {
+.menu-list {
   width: 100%;
   max-width: 750px;
   background-color: #fff;
@@ -76,9 +77,15 @@ export default {
   -moz-transform: translateX(-50%);
   z-index: 5;
 }
+.wid20 {
+  width: 20%;
+}
+.wid25 {
+  width: 25%;
+}
 .tab-list{
-  width:  25%;
   float: left;
+  text-align: center;
 }
 .tab-list span{
   display: inline-block;

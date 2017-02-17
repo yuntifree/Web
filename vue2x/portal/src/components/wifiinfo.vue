@@ -160,7 +160,7 @@
 }
 .menu-list {
   @include containerSize(100%, auto);
-  padding: 0.42rem 0.42rem 0;
+  padding: 0.32rem 0.32rem 0;
 }
 .title-toutiao {
   padding: 0.12rem 0 0.18rem 0;

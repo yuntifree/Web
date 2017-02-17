@@ -130,8 +130,8 @@
 import tip from './lib/tip.vue'
 import CGI from '../lib/cgi'
 var query = CGI.query();
-var uid = ~~(query.uid) || 137;
-var token = query.token || '6ba9ac5a422d4473b337d57376dd3488';
+var uid = 137;
+var token = '6ba9ac5a422d4473b337d57376dd3488';
 var union = query.union || '';
 
 export default {

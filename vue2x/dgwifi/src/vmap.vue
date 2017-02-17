@@ -23,9 +23,8 @@ import maptip from './components/lib/tooltip.vue'
 import weixin from './lib/wx.js'
 import gps from './common/gpstransform.js'
 
-var query = CGI.query();
-var uid = ~~(query.uid) || 1;
-var token = query.token || '7329cf254871429d803c5826c8d9db1d';
+var uid = 137;
+var token = '7329cf254871429d803c5826c8d9db1d';
 var union = query.union || '';
 var map;
 var point;
@@ -52,9 +51,9 @@ export default {
   },
   mounted() {
     // 存下union
-    if (union.length > 0) {
-      CGI.setCookie('UNION', union, 7);
-    }
+    // if (union.length > 0) {
+    //   CGI.setCookie('UNION', union, 7);
+    // }
   },
   methods: {
     mapShow() {
