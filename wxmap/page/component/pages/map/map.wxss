@@ -1,0 +1,155 @@
+.g-tar {
+  text-align: right;
+}
+.g-tac {
+  text-align: center;
+}
+.g-ellipsis{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.lines-ellipsis {
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.g-clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.g-clearfix {
+  zoom: 1;
+}
+.g-fl{
+  float: left;
+}
+
+.g-fr{
+  float: right;
+}
+.map_container{ 
+    height: 100%; 
+    width: 100%; 
+} 
+ 
+.map { 
+    height: 100%; 
+    width: 100%; 
+}
+.place_info {
+  width: 100%;
+  height: auto;
+  padding: 10rpx;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+}
+.maptip {
+  width: 486rpx;
+  height: auto;
+  position: absolute;
+  top:0;
+  left: 50%;
+  transform:translateX(-50%);
+  margin-top:1rpx;
+  background-color: #fff;
+  box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.5);
+  border-radius:12rpx;
+  z-index: 10;
+}
+.maptip-top {
+  position: relative;
+  height: 70rpx;
+  padding: 36rpx 32rpx 2rpx 11rpx;
+}
+.maptip-tit {
+  position: relative;
+  color:#313131;
+  font-size: 24rpx;
+  flex-direction: column;
+  padding-left: 100rpx;
+}
+.tip-head {
+  width: 70rpx;
+  height: 70rpx;
+  position: absolute;
+  top:32rpx;
+  left:32rpx;
+}
+.maptip-info {
+  padding: 32rpx 32rpx 2rpx 0rpx;
+  font-size: 24rpx;
+  color: #9b9b9b;
+  flex-direction: row;
+}
+.maptip-msg {
+  display: inline-block;
+  width: 55%;
+  height: 40rpx;
+  padding-left: 72rpx;
+  position: relative;
+  font-size: 24rpx;
+  color:#b4b4b4;
+  line-height: 40rpx;
+}
+.maptip-msg:before {
+  display: block;
+  content: '';
+  width: 40rpx;
+  height: 40rpx;
+  background: url('../../../../image/ico_location.png');
+  background-size: contain;
+  position: absolute;
+  top:0;
+  left:30rpx;
+}
+.maptip-dist {
+  padding-left:40rpx;
+  position: relative;
+}
+.maptip-dist:before {
+  display: block;
+  content: '';
+  width: 40rpx;
+  height: 40rpx;
+  background: url('../../../../image/ico_walk.png');
+  background-size: contain;
+  position: absolute;
+  top:0;
+  left:0;
+}
+.tip-val {
+  display: block;
+  padding-left: 32rpx;
+  font-size: 20rpx;
+  color: #b4b4b4;
+  background-color: #e5f3fb;
+}
+.tip-val-radius {
+  border-bottom-left-radius: 12rpx;
+  border-bottom-right-radius: 12rpx;
+}
+.map-pflag {
+  width: 120rpx;
+  height: 120rpx;
+  position: fixed;
+  right: 40rpx;
+  bottom: 32rpx;
+}
+.map-noflag {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+.map-makeflag {
+  width: 100%;
+  height: 160rpx;
+  background-color: #fff;
+}
