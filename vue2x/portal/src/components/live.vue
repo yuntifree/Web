@@ -3,7 +3,7 @@
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
     <div class="live-body g-clearfix">
-      <div class="liveBox-li"  v-for="item in items">
+      <div class="liveBox-li"  v-for="item in items" @click="liveReport">
         <a :href="getLiveurl(item)" target="_blank">
           <span class="liveBox-li-head">
             <img :src="item.img" width="100%" :height="imgHeight">
@@ -100,6 +100,15 @@ export default {
       } else {
         this.tipBox('全都在这没有更多了');
       }   
+    },
+    liveReport() {
+      var param = {
+        type: 8,
+        name: 'livedetail',
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
     },
     getLiveurl(item) {
       if (/iphone|ipad/.test(ua)) {
