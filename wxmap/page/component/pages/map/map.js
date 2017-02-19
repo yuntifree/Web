@@ -210,7 +210,6 @@ Page({
             })
             var idx = that.getDistance(infos);
             var idxInfo = infos.splice(idx,1);
-            console.log(idxInfo);
             infos = infos.concat(idxInfo); 
             var len = infos.length-1;
             infos.forEach(function(item, i) {
@@ -250,7 +249,6 @@ Page({
           latitude: res.latitude,
           longitude: res.longitude
         })
-        console.log(res.latitude + ',' +res.longitude);
         //that.mapCtx.moveToLocation();
         var lat = that.gcj02tobd09(res.longitude,res.latitude);
         that.getAps(lat[1],lat[0]);
@@ -308,7 +306,7 @@ Page({
   },
   onBindtap() {
   },
-  getLngLat: function(){
+  /*getLngLat: function(){
     var that = this;
     this.mapCtx.getCenterLocation({
       success: function(res){
@@ -323,7 +321,7 @@ Page({
         })
       }
     })
-  },
+  },*/
   Rad(d){
      return d * Math.PI / 180.0;//经纬度转换成三角函数中度分表形式。
   },
@@ -332,7 +330,6 @@ Page({
     dis = [];
     var lat1 = this.data.latitude;
     var lng1 = this.data.longitude;
-    //console.log(lat1 + ','+lng1);
     var radLat1 = this.Rad(lat1);
     for (var i=0; i<list.length; i++) {
       var radLat2 = this.Rad(list[i].latitude);
@@ -345,14 +342,12 @@ Page({
     }
     var j = 0;
     var min = 1000;
-    console.log(dis);
     dis.forEach(function(item, index) {
       if (item < min) {
         j = index;
         min = item;
       }
     })
-    console.log(min);
     return j;
   },
   bd09togcj02(bd_lon, bd_lat) {

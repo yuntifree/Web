@@ -1,4 +1,4 @@
 <view class="map_container">
-  <map class="map" id="myMap" longitude="{{longitude}}" latitude="{{latitude}}" scale="12" controls="{{controls}}" markers="{{markers}}" bindcontroltap="controltap" bindmarkertap="openLocation" bindtap="onBindtap" bindregionchange="regionchange" show-location="true"></map>
+  <map class="map" id="myMap" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" controls="{{controls}}" markers="{{markers}}" bindcontroltap="controltap" bindmarkertap="openLocation" bindtap="onBindtap" bindregionchange="regionchange" show-location="true"></map>
 </view> 
 

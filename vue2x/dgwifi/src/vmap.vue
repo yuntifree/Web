@@ -83,17 +83,15 @@ export default {
         var bsne = bs.getNorthEast();   //可视区域右上角
         var lng = (bssw.lng+bsne.lng)/2;
         var lat = (bssw.lat+bsne.lat)/2;
-        getApAddress(lng,lat);
+        //getApAddress(lng,lat);
       });
 
-      function  getApAddress(lng,lat){
+      function  getApAddress(){
          var param = {
-          longitude: lng,
-          latitude: lat,
           uid:uid,
           token:token
         }
-        CGI.post('get_nearby_aps',param,(resp)=>{
+        CGI.post('get_all_aps',param,(resp)=>{
           if (resp.errno === 0) {
             addlonglat(resp.data.infos);
           }
