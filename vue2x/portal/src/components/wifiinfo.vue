@@ -262,7 +262,7 @@
 <script>
 import news from './news.vue'
 import tip from './lib/tip.vue'
-import newslist from './lib/newslist.vue'
+import newslist from './lib/newshot.vue'
 import CGI from '../lib/cgi.js'
 
 var query = CGI.query();
