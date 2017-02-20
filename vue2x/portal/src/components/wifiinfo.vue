@@ -344,7 +344,7 @@ export default {
     openLink(list,idx) {
       this.$store.state.tabidx = idx;
       this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, true, uid, token)
+      CGI.tabChange(this.$router, list, true, uid, token,true)
     },
     countdown() {
       this.timer = setInterval(()=> {

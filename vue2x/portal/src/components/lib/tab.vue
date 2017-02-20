@@ -1,7 +1,7 @@
 <template>
   <div class="tab">
     <ul class="menu-list" v-if="dataReady">
-      <li class="g-tac tab-list" :class="live ? 'wid20' : 'wid25'"v-for="(list,idx) in val.tablist" @click=tabClick(list,idx)><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
+      <li class="g-tac tab-list" :class="live =='livetrue' ? 'wid20' : 'wid25'"v-for="(list,idx) in val.tablist" @click=tabClick(list,idx)><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
     </ul>
   </div>
 </template>
@@ -50,7 +50,7 @@ export default {
       if (this.val.tablist.length >0) {
         len = this.val.tablist.length - 1;
       }
-      this.$emit('tab-change', list, idx, len);
+      this.$emit('tab-change', list, idx, len,false);
     }
   }
 }

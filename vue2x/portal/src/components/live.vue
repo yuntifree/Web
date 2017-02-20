@@ -10,7 +10,7 @@
             <em class="liveBox-li-status">{{item.live ? '直播':''}}</em>
           </span>
           <span class="liveBox-li-fun">
-            <p class="liveBox-li-name liveBox-li-male" :class="{'item-visited':item.visited}">{{item.nickname}}</p>
+            <p class="liveBox-li-name liveBox-li-male" :class="{'item-visited':item.visited}">{{item.nickname ? item.nickname : '主播'}}</p>
             <p class="liveBox-li-city">{{item.location}}</p>
             <span class="liveBox-li-count">{{item.watches}}人</span>
           </span>
@@ -125,7 +125,7 @@ export default {
         this.$store.state.tabidx = idx;
         this.tabIdx = idx;
       }
-      CGI.tabChange(this.$router, list, false, uid, token);
+      CGI.tabChange(this.$router, list, false, uid, token,false);
     },
     tipBox(val) {
       this.tips.msg = val;

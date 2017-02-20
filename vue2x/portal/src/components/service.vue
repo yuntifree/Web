@@ -132,7 +132,7 @@ export default {
       if (idx !== len) {
         this.tabIdx = idx;
       }
-      CGI.tabChange(this.$router, list, false, uid, token);
+      CGI.tabChange(this.$router, list, false, uid, token,false);
     }
   }
 }

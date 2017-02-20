@@ -36,7 +36,7 @@ export default {
         this.$store.state.tabidx = idx;
         this.tabIdx = idx;
       }
-      CGI.tabChange(this.$router, list, false, uid,token)
+      CGI.tabChange(this.$router, list, false, uid,token,false)
     }
   }
 }
