@@ -121,7 +121,7 @@ export default {
       function addMarker(lng,lat,idx) {
         //alert(lng+','+lat+','+idx);
         var spot = new BMap.Point(lng, lat);
-        var myIcon2 = new BMap.Icon("./static/market.png", new BMap.Size(60,60));
+        var myIcon2 = new BMap.Icon("./static/marker.png", new BMap.Size(60,60));
         var marker2 = new BMap.Marker(spot,{icon:myIcon2});
         map.addOverlay(marker2);
         marker2.addEventListener("click",attribute);
