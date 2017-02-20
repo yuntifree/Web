@@ -22,9 +22,9 @@ import CGI from './lib/cgi.js'
 import maptip from './components/lib/tooltip.vue'
 import weixin from './lib/wx.js'
 import gps from './common/gpstransform.js'
-
+var query = CGI.query();
 var uid = 137;
-var token = '7329cf254871429d803c5826c8d9db1d';
+var token = '6ba9ac5a422d4473b337d57376dd3488';
 var union = query.union || '';
 var map;
 var point;
@@ -77,14 +77,14 @@ export default {
       getApAddress(_this.longitude, _this.latitude);
 
       //事件
-      map.addEventListener("dragend", function(){
+      /*map.addEventListener("dragend", function(){
         var bs = map.getBounds();   //获取可视区域
         var bssw = bs.getSouthWest();   //可视区域左上角
         var bsne = bs.getNorthEast();   //可视区域右上角
         var lng = (bssw.lng+bsne.lng)/2;
         var lat = (bssw.lat+bsne.lat)/2;
         //getApAddress(lng,lat);
-      });
+      });*/
 
       function  getApAddress(){
          var param = {
