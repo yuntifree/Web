@@ -180,24 +180,13 @@ module.exports = {
       var ret = isMob.test(tel);
       return ret;
     },
-    tabChange: function(router, list, type, uid,token,menu) {
+    tabChange: function(router, list, type, uid,token) {
         //console.log(list.routername)
         if (list.routername) {
             //router.push({name: list.routername});
-            if (menu) {
-              var url = window.document.location.href.toString();
-              var index = url.lastIndexOf("/"); 
-              url  = url.substring(0, index+1) + list.routername;
-              window.open(url)  
-            } else {
-                router.push({name: list.routername});
-            }   
+            router.push({name: list.routername});
         } else {
-            if (menu) {
-               window.open(list.url);  
-            } else {
-                location.href = list.url;
-            }
+            location.href = list.url;
         }
         var param = {
             name: list.name,

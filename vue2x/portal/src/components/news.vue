@@ -33,10 +33,9 @@ export default {
   methods: {
     tabChange(list,idx,len) {
       if (idx !== len) {
-        this.$store.state.tabidx = idx;
         this.tabIdx = idx;
       }
-      CGI.tabChange(this.$router, list, false, uid,token,false)
+      CGI.tabChange(this.$router, list, false, uid,token)
     }
   }
 }
