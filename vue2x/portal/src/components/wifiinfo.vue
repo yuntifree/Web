@@ -339,14 +339,19 @@ export default {
       CGI.post('get_conf', p, (resp)=> {
         if (resp.errno == 0) {
           this.menu = JSON.parse(resp.data.val);
-          this.$store.state.tablist = this.menu.tablist
+          this.$store.state.tablist = this.menu.tablist;
+          console.log(resp.data.val);
         }
       })
     },
     getOpenLink(list,idx) {
       var url = window.document.location.href.toString();
       var index = url.lastIndexOf("/");
-      url  = url.substring(0, index + 1) + list.routername;
+      if (list.routername) {
+        url  = url.substring(0, index + 1) + list.routername;
+      } else {
+        url = list.url;
+      }
       return url
     },
     countdown() {
