@@ -241,9 +241,11 @@
           </div>
         </div>
         <ul class="menu-list g-clearfix">
-          <li class="g-fl list-item" v-for="(list,index) in menu.menulist" @click="openLink(list,index)">
+          <li class="g-fl list-item" v-for="(list,index) in menu.menuList">
+            <a :href="getOpenLink(list,index)" target="_blank">
             <img :src="list.icon">
             <span class="g-tac title-name" v-text="list.text"></span>
+            </a>
           </li>
         </ul>
         <div class="menu-title title-toutiao">
@@ -339,10 +341,15 @@ export default {
         }
       })
     },
-    openLink(list,idx) {
-      this.$store.state.tabidx = idx;
-      this.tabIdx = idx;
-      CGI.tabChange(this.$router, list, true, uid, token,true)
+    getOpenLink(list,idx) {
+      var url = window.document.location.href.toString();
+      var index = url.lastIndexOf("/");
+      if (list.routername) {
+        url  = url.substring(0, index + 1) + list.routername;
+      } else {
+        url = list.url;
+      }
+      return url
     },
     countdown() {
       this.timer = setInterval(()=> {

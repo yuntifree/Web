@@ -82,6 +82,10 @@ var JPlaceHolder = {
       var data = resp.data;
       autologin = data.autologin;
       var height = document.documentElement.clientHeight;
+      //$('html').css('height',height);
+      if (height < 500) {
+        height = 520;
+      }
       $('html').css('height',height);
       if (isPC()) {
         if (autologin) {

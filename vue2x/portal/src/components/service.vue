@@ -19,7 +19,7 @@
   color: #3c3c3c;
   position: relative;
 }
-.list-title:before{ 
+.list-title:before{
   @include containerSize(0.06rem,0.32rem);
   content: "";  /*:before和:after必带技能，重要性为满5颗星*/
   display: block;
@@ -128,11 +128,10 @@ export default {
       this.tips.show = true;
     },
     tabChange(list, idx, len) {
-      this.$store.state.tabidx = idx;
       if (idx !== len) {
         this.tabIdx = idx;
       }
-      CGI.tabChange(this.$router, list, false, uid, token,false);
+      CGI.tabChange(this.$router, list, false, uid, token);
     }
   }
 }

@@ -63,9 +63,9 @@ export default {
       this.getData();
       if (window.screen.availWidth > 750) {
         if (window.screen.availHeight > window.screen.availWidth && !(/ipad/.test(ua))) {
-          this.imgHeight = 187; 
+          this.imgHeight = 187;
         } else {
-          this.imgHeight = 375;        
+          this.imgHeight = 375;
         }
       } else {
         this.imgHeight = (window.screen.availWidth) / 2;
@@ -86,10 +86,9 @@ export default {
           if (list || list.length>0) {
             this.items = this.items.concat(resp.data.list);
             this.seq = this.items[this.items.length-1].seq;
-            console.log(JSON.stringify(list.length));
           }
           this.loading = false;
-          this.nomore = resp.data.hasmore ? false : true;     
+          this.nomore = resp.data.hasmore ? false : true;
         } else {
           this.tipBox(resp.desc);
         }
@@ -100,7 +99,7 @@ export default {
         this.getData();
       } else {
         this.tipBox('全都在这没有更多了');
-      }   
+      }
     },
     liveReport() {
       var param = {
@@ -126,7 +125,7 @@ export default {
         this.$store.state.tabidx = idx;
         this.tabIdx = idx;
       }
-      CGI.tabChange(this.$router, list, false, uid, token,false);
+      CGI.tabChange(this.$router, list, false, uid, token);
     },
     tipBox(val) {
       this.tips.msg = val;
@@ -168,8 +167,8 @@ export default {
 .liveBox-li-head {
     position: relative;
 }
-.liveBox-li-head, 
-.liveBox-li-status, 
+.liveBox-li-head,
+.liveBox-li-status,
 .liveBox-li-head img {
   display: block;
 }
