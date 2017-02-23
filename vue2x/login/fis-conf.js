@@ -10,6 +10,8 @@ ignores = ignores.concat([
     'design/**',
     'publish/**',
     'dist/**',
+    'login2017*/**',
+    'test/**'
 ]);
 
 fis.set('project.ignore', ignores);
