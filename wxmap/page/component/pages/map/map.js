@@ -49,7 +49,8 @@ Page({
     signature: '',
     encryptedData: '',
     iv: '',
-    sid: '' 
+    sid: '',
+    nearest: true,
   },
   onReady: function (e) {
     // 使用 wx.createMapContext 获取 map 上下文 
@@ -60,7 +61,7 @@ Page({
   },
   onLoad() {
     var that = this;
-    that.checkLogin();
+    that.getLocation();
     wx.getSystemInfo({
       success: function(res) {
         wWidth = res.windowWidth;
@@ -122,7 +123,9 @@ Page({
                   uid = resp.data.uid;
                   token = resp.data.token;
                   //定位
-                  that.getLocation();
+                  //that.getLocation();
+                  var lat = that.gcj02tobd09(that.data.longitude,that.data.latitude);
+                  that.getAps(lat[1],lat[0]);
                 } else {
                   that.setData({
                     sid: resp.data.sid
@@ -176,8 +179,8 @@ Page({
         var resp = res.data;
         uid = resp.data.uid;
         token = rep.data.token;
-        //定位
-        that.getLocation();
+        var lat = that.gcj02tobd09(that.data.longitude,that.data.latitude);
+        that.getAps(lat[1],lat[0]);
       }
     })
   },
@@ -212,17 +215,23 @@ Page({
             var idxInfo = infos.splice(idx,1);
             infos = infos.concat(idxInfo); 
             var len = infos.length-1;
-            infos.forEach(function(item, i) {
-              if (i !== len) {
-                infos[i].width = 40;
-                infos[i].height = 40;
-                infos[i].iconPath = '../../../../image/ico_wifi.png'
-              } else {
-                infos[i].width = 80;
-                infos[i].height = 80;
-                infos[i].iconPath = '../../../../image/img_nearest.png'
-              }
-            })
+
+            if (that.data.nearest) {
+              infos.forEach(function(item, i) {
+                if (i !== len) {
+                  infos[i].width = 40;
+                  infos[i].height = 40;
+                  infos[i].iconPath = '../../../../image/ico_wifi.png'
+                } else {
+                  infos[i].width = 80;
+                  infos[i].height = 80;
+                  infos[i].iconPath = '../../../../image/img_nearest.png'
+                  that.setData({
+                    nearest: false
+                  })
+                }
+              })
+            }           
             that.setData({
               markers: infos
             })
@@ -249,9 +258,7 @@ Page({
           latitude: res.latitude,
           longitude: res.longitude
         })
-        //that.mapCtx.moveToLocation();
-        var lat = that.gcj02tobd09(res.longitude,res.latitude);
-        that.getAps(lat[1],lat[0]);
+        that.checkLogin();
       },
     })
   },
@@ -348,6 +355,7 @@ Page({
         min = item;
       }
     })
+    console.log(min);
     return j;
   },
   bd09togcj02(bd_lon, bd_lat) {
