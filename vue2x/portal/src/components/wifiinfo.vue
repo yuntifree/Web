@@ -241,7 +241,7 @@
           </div>
         </div>
         <ul class="menu-list g-clearfix">
-          <li class="g-fl list-item" v-for="(list,index) in menu.menuList" @click="openLink(list,index)">
+          <li class="g-fl list-item" v-for="(list,index) in menu.menulist" @click="openLink(list,index)">
             <img :src="list.icon">
             <span class="g-tac title-name" v-text="list.text"></span>
           </li>
@@ -292,7 +292,6 @@ export default {
                     'http://img.yunxingzh.com/3a961ff5-2530-4c10-b17c-aff36013b5db.png'],
       weather: {},
       weatherImg: '',
-      queryParam: '',
       menu: {},
     }
   },
@@ -317,9 +316,9 @@ export default {
     getData() {
       var param = {
         uid: uid,
-        token: token
+        token: token,
+        type: 0
       }
-      this.queryParam = JSON.stringify(param);
       CGI.post('get_weather_news', param, (resp)=> {
         if (resp.errno === 0) {
           this.weather = resp.data.weather;
@@ -332,12 +331,11 @@ export default {
       var p = {
         uid: uid,
         token: token,
-        key: live,
       }
-      CGI.post('get_conf', p, (resp)=> {
+      CGI.post('get_portal_menu', p, (resp)=> {
         if (resp.errno == 0) {
-          this.menu = JSON.parse(resp.data.val);
-          this.$store.state.tablist = this.menu.tablist
+          this.menu = resp.data;
+          console.log(this.menu.menulist);
         }
       })
     },

@@ -54,6 +54,7 @@
     "vue-router": "^2.1.1",
     "vue-style-loader": "^1.0.0",
     "vue-swipe": "^2.0.0",
+    "vue-touch": "^1.1.0",
     "vue-validator": "^3.0.0-alpha.1",
     "vuex": "^2.0.0",
     "webpack": "^1.13.2",

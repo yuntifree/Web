@@ -1,7 +1,7 @@
 <template>
   <div class="tab">
     <ul class="menu-list" v-if="dataReady">
-      <li class="g-tac tab-list" :class="live =='livetrue' ? 'wid20' : 'wid25'"v-for="(list,idx) in val.tablist" @click=tabClick(list,idx)><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
+      <li class="g-tac tab-list" v-for="(list,idx) in val.tablist" @click="tabClick(list,idx)"><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
     </ul>
   </div>
 </template>
@@ -33,14 +33,14 @@ export default {
   },
   methods: {
     getData() {
-      var p = {
+      var param = {
         uid: uid,
         token: token,
-        key: live,
+        type: 1,
       }
-      CGI.post('get_conf', p, (resp)=> {
+      CGI.post('get_portal_menu', param, (resp)=> {
         if (resp.errno == 0) {
-          this.val = JSON.parse(resp.data.val);
+          this.val = resp.data;
           this.dataReady = true;
         }
       })
@@ -76,16 +76,12 @@ export default {
   -o-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
   z-index: 5;
-}
-.wid20 {
-  width: 20%;
-}
-.wid25 {
-  width: 25%;
+  overflow-x: auto;
 }
 .tab-list{
   float: left;
   text-align: center;
+  /*width: 16%;*/
 }
 .tab-list span{
   display: inline-block;

@@ -85,7 +85,8 @@ export default {
           var list = resp.data.list
           if (list || list.length>0) {
             this.items = this.items.concat(resp.data.list);
-            this.seq = this.items[length].seq;
+            this.seq = this.items[this.items.length-1].seq;
+            console.log(JSON.stringify(list.length));
           }
           this.loading = false;
           this.nomore = resp.data.hasmore ? false : true;     
