@@ -50,7 +50,7 @@ export default {
       if (this.val.tablist.length >0) {
         len = this.val.tablist.length - 1;
       }
-      this.$emit('tab-change', list, idx, len,false);
+      this.$emit('tab-change', list, idx, len);
     }
   }
 }
@@ -58,8 +58,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.menu-list {
+.tab {
   width: 100%;
+  height: 0.88rem;
   max-width: 750px;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
@@ -72,16 +73,23 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  z-index: 5;
   overflow-x: auto;
+  z-index: 5;
+  text-align: center;
+}
+.menu-list {
+  display: inline-block;
+  width: auto;
+  height: 100%;
+  margin: 0 auto; 
 }
 .tab-list{
   float: left;
   text-align: center;
-  /*width: 16%;*/
+  width: 1.24rem;
 }
 .tab-list span{
   display: inline-block;

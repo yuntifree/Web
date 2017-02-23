@@ -17,6 +17,7 @@ import service from './components/service'
 import news from './components/news'
 import hotspot from './components/hotspot.vue'
 import live from './components/live.vue'
+import entertainment from './components/entertainment.vue'
 
 window.onerror =  function handleErr(msg,url,l) {
     var txt;
@@ -52,6 +53,10 @@ const router = new VueRouter({
       path: '/live',
       name: 'live',
       component: live,
+    },{
+      path: '/entertainment',
+      name: 'entertainment',
+      component: entertainment,
     },{
       path: '*',
       redirect: 'home',

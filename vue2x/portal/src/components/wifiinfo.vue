@@ -241,7 +241,7 @@
           </div>
         </div>
         <ul class="menu-list g-clearfix">
-          <li class="g-fl list-item" v-for="(list,index) in menu.menuList">
+          <li class="g-fl list-item" v-for="(list,index) in menu.menulist">
             <a :href="getOpenLink(list,index)" target="_blank">
             <img :src="list.icon">
             <span class="g-tac title-name" v-text="list.text"></span>
@@ -319,7 +319,6 @@ export default {
       var param = {
         uid: uid,
         token: token,
-        type: 0
       }
       CGI.post('get_weather_news', param, (resp)=> {
         if (resp.errno === 0) {
@@ -333,11 +332,14 @@ export default {
       var p = {
         uid: uid,
         token: token,
+        type: 0
       }
       CGI.post('get_portal_menu', p, (resp)=> {
         if (resp.errno == 0) {
           this.menu = resp.data;
-          console.log(this.menu.menulist);
+          console.log(JSON.stringify(this.menu));
+        } else {
+          this.alertInfo(resp.desc);
         }
       })
     },

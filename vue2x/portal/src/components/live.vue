@@ -56,7 +56,7 @@ export default {
     download
   },
   activated() {
-    this.tabIdx = 3;
+    this.tabIdx = 4;
   },
   mounted() {
     this.$nextTick(function () {

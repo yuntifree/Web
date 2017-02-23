@@ -97,7 +97,7 @@ export default {
     })
   },
   activated() {
-    this.tabIdx = 2;
+    this.tabIdx = 3;
   },
   methods: {
     getData(seq) {
