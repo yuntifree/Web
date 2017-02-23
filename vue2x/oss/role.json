@@ -62,6 +62,10 @@
     "title":"Android版本管理",
     "name": "setAndroid",
     "icon": "yonghuxinxi"
+    },{
+    "title":"portalMenu",
+    "name": "setPortalMenu",
+    "icon": "yonghuxinxi"
     }]
   }],
   "0": [{

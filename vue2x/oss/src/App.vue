@@ -35,7 +35,7 @@ import uploadImg from './components/views/uploadImg.vue'
 import setActivity from './components/views/setActivity.vue'
 import setWeb from './components/views/setWeb.vue'
 import setAndroid from './components/views/setAndroid.vue'
-
+import setPortalMenu from './components/views/setPortalmenu.vue'
 export default {
   name: 'app',
   data() {
@@ -44,7 +44,6 @@ export default {
 
   computed: {
     currentView() {
-      console.log(this.$store.state.view);
       return this.$store.state.view;
     },
     logined() {
@@ -74,7 +73,8 @@ export default {
     uploadImg,
     setActivity,
     setWeb,
-    setAndroid
+    setAndroid,
+    setPortalMenu
   },
   // for share components View using.
   mounted() {
