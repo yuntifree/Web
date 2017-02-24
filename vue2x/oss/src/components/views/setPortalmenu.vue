@@ -130,28 +130,16 @@
             </el-form-item>
             <el-form-item label="测试">
               <el-radio-group v-model="postInfo.dbg">
-                <el-radio label="是"></el-radio>
-                <el-radio label="否"></el-radio>
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="状态">
               <el-radio-group v-model="postInfo.deleted">
-                <el-radio label="下线"></el-radio>
-                <el-radio label="上线"></el-radio>
+                <el-radio label="1">下线</el-radio>
+                <el-radio label="0">上线</el-radio>
               </el-radio-group>
             </el-form-item>
-            <!--el-form-item label="测试">
-              <input type="radio" id="one" value="1" v-model="postInfo.dbg">
-              <label for="one">是</label>
-              <input type="radio" id="two" value="0" v-model="postInfo.dbg">
-              <label for="two">否</label>
-            </el-form-item-->
-            <!--el-form-item label="状态">
-              <input type="radio" id="deleted" value="1" v-model="postInfo.deleted">
-              <label for="deleted">下线</label>
-              <input type="radio" id="deleted1" value="0" v-model="postInfo.deleted">
-              <label for="deleted1">上线</label>
-            </el-form-item-->
             <el-form-item>
               <el-button type="primary" @click="editPost">确定</el-button>
               <el-button @click="modal.editShow=false">取消</el-button>
@@ -159,7 +147,7 @@
           </el-form>
         </div>
       </div>
-      <!--div class="shade" v-if="modal.addShow">
+      <div class="shade" v-if="modal.addShow">
         <div class="edit-form" style="width:600px">
           <el-form ref="form2" :model="postInfo" label-width="80px">
             <el-form-item label="text">
@@ -181,16 +169,16 @@
               <el-input type="number" v-model.number="postInfo.priority"  placeholder="请输入优先级"></el-input>
             </el-form-item>
             <el-form-item label="测试">
-              <input type="radio" id="one" value="1" v-model="postInfo.dbg">
-              <label for="one">是</label>
-              <input type="radio" id="two" value="0" v-model="postInfo.dbg">
-              <label for="two">否</label>
+              <el-radio-group v-model="postInfo.dbg">
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
+              </el-radio-group>
             </el-form-item>
             <el-form-item label="状态">
-              <input type="radio" id="deleted" value="1" v-model="postInfo.deleted">
-              <label for="deleted">下线</label>
-              <input type="radio" id="deleted1" value="0" v-model="postInfo.deleted">
-              <label for="deleted1">上线</label>
+              <el-radio-group v-model="postInfo.deleted">
+                <el-radio label="1">下线</el-radio>
+                <el-radio label="0">上线</el-radio>
+              </el-radio-group>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="addPost">确定</el-button>
@@ -250,8 +238,8 @@ export default {
         routername: '',
         url: '',
         priority: 0, 
-        dbg: 0,
-        deleted: 0,
+        dbg: '1',
+        deleted: '1',
       },
       reviewOps: 0,
       alertShow: false,
@@ -326,7 +314,10 @@ export default {
     edit(idx,row) {
       this.selIdx = idx;
       CGI.objClear(this.postInfo);
+      row.dbg = row.dbg.toString();
+      row.deleted = row.deleted.toString();
       CGI.extend(this.postInfo,row);
+      console.log(JSON.stringify(this.postInfo));
       this.modal.editShow = true;
     },
     editPost() { 

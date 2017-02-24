@@ -100,10 +100,10 @@
         <div class="edit-form" style="width:600px">
           <el-form ref="form" :model="newsInfo" label-width="80px">
             <el-form-item label="审核操作">
-              <input type="radio" id="one" value="0" v-model="newsInfo.reject">
-              <label for="one">通过</label>
-              <input type="radio" id="two" value="1" v-model="newsInfo.reject">
-              <label for="two">拒绝</label>
+              <el-radio-group v-model="newsInfo.reject">
+                <el-radio label="0">通过</el-radio>
+                <el-radio label="1">拒绝</el-radio>
+              </el-radio-group>
             </el-form-item>
             <el-form-item label="title">
               <el-input v-model="newsInfo.title"></el-input>
@@ -173,7 +173,7 @@ export default {
       checkedTags: [],
       newsInfo: {
         title: '',
-        reject: 0,
+        reject: '0',
         modify: 0,
         tags: [],
       },
