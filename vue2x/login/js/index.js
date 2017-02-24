@@ -90,16 +90,16 @@ var JPlaceHolder = {
       $('html').css('height',height);
       if (isPC()) {
         if (autologin) {
-          $('.login').append(template('tplPhone', ads));
+          $('.login').append(template('tplPhone', {}));
         } else {
-          $('.login').append(template('tplPc', ads));
+          $('.login').append(template('tplPc', {}));
         }
       } else {
         if (autologin) {
-          $('.login').append(template('tplOnelogin', ads));
+          $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
         } else {
-          $('.login').append(template('tplIptlogin', ads));
+          $('.login').append(template('tplIptlogin', {}));
           $('.login').after(template('tplBottom', ads));
         }
       }
