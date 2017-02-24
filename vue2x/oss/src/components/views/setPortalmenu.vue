@@ -147,7 +147,7 @@
           </el-form>
         </div>
       </div>
-      <!--div class="shade" v-if="modal.addShow">
+      <div class="shade" v-if="modal.addShow">
         <div class="edit-form" style="width:600px">
           <el-form ref="form2" :model="postInfo" label-width="80px">
             <el-form-item label="text">
@@ -389,7 +389,6 @@ export default {
       this.selIdx = idx;
       var title = '';
       var text = '';
-      console.log(ops);
       if (ops) {
         title = '下线';
         text = '确认要下线吗'; 
