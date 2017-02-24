@@ -90,9 +90,9 @@ var JPlaceHolder = {
       $('html').css('height',height);
       if (isPC()) {
         if (autologin) {
-          $('.login').append(template('tplPcone', {}));
+          $('.login').append(template('tplPhone', ads));
         } else {
-          $('.login').append(template('tplPc', {}));
+          $('.login').append(template('tplPc', ads));
         }
       } else {
         if (autologin) {
