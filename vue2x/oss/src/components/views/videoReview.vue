@@ -42,7 +42,6 @@
                 label="文章ID">
                 <div>{{row.id||'-'}}</div>
               </el-table-column>
-              </el-table-column>
               <el-table-column
                 inline-template 
                 label="图片">

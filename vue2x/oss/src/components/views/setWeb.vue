@@ -36,7 +36,6 @@
               border
               highlight-current-row
               @row-click="chkLine">
-              </el-table-column>
               <el-table-column
                 inline-template
                 label="id">

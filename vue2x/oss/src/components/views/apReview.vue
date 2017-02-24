@@ -24,7 +24,6 @@
               :height="tableHeight"
               border
               highlight-current-row>
-              </el-table-column>
               <el-table-column
                 inline-template
                 label="id">
