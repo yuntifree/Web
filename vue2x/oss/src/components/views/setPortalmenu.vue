@@ -20,7 +20,7 @@
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
             类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">menu</option><option :value="{ number: 1 }">tab</option></button>
-          <button class="btn btn-left outline-none" @click="add">添加</button>
+          <!--button class="btn btn-left outline-none" @click="add">添加</button-->
         </div>
         <div>
           <button class="btn btn-default btn-ssm" @click="getData(false)">刷新</button>
@@ -147,9 +147,9 @@
           </el-form>
         </div>
       </div>
-      <div class="shade" v-if="modal.addShow">
+      <!--div class="shade" v-if="modal.addShow">
         <div class="edit-form" style="width:600px">
-          <el-form ref="form" :model="postInfo" label-width="80px">
+          <el-form ref="form2" :model="postInfo" label-width="80px">
             <el-form-item label="text">
               <el-input  v-model.trim="postInfo.text" placeholder="请输入menu描述"></el-input>
             </el-form-item>
