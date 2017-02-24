@@ -10,6 +10,7 @@ module.exports = {
     map: path.resolve(__dirname, '../'+ distPath +'/map.html'),
     error: path.resolve(__dirname, '../'+ distPath +'/error.html'),
     welfare: path.resolve(__dirname, '../'+ distPath +'/welfare.html'),
+    service: path.resolve(__dirname, '../'+ distPath +'/service.html'),
     assetsRoot: path.resolve(__dirname, '../' + distPath),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/'+ distPath + '/',
