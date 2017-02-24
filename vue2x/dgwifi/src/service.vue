@@ -6,6 +6,29 @@
   background-color: #f5f5f5;
   z-index: -1;
 }
+.service-menu {
+  width: 100%;
+  height: auto;
+}
+.service-menu-item {
+  padding: 0.32rem 0;
+  background-color: #fff;
+  margin-bottom: 0.24rem;
+  width: 20%;
+  text-align: center;
+}
+
+.item-img {
+  display: block;
+  width: 0.88rem;
+  height: 0.90rem;
+  margin: 0 auto;
+}
+.item-text {
+  font-size: 0.28rem;
+  color: #3c3c3c;
+}
+
 .service-list {
  padding: 0.24rem 0 0.4rem;
  border-top: 1px solid #d2d2d2;
@@ -46,6 +69,12 @@
 </style>
 <template>
   <div class="service top176">
+    <ul class="service-menu g-clearfix">
+      <li class="service-menu-item g-fl" v-for="list in lists" @click="urlLink(item)">
+        <img class="item-img" :src="list.img">
+        <p class="item-text" v-text="list.text"></p>
+      </li>
+    </ul>
     <div class="service-list" v-for="list in services">
       <h2 class="list-title" v-text="list.title"></h2>
       <ul class="service-menu g-clearfix">
@@ -68,6 +97,28 @@ export default {
   data () {
     return {
       services: [],
+      lists:[{
+        img: 'http://img.yunxingzh.com/2174238a-ba33-4b96-9268-89be3a2d242d.png',
+        text: '招聘',
+        dst: 'https://jumpluna.58.com/i/LsnMqfsa1luDwQM'
+      },{
+        img: 'http://img.yunxingzh.com/6e8147bf-ba4b-4309-a7bf-eff391b5f260.png',
+        text: '二手',
+        dst: 'https://jumpluna.58.com/i/LsnMeCA2J9tMeMj'
+      },{
+        img: 'http://img.yunxingzh.com/829983c2-8f72-4671-865a-3dd829158d01.png',
+        text: '租房',
+        dst: 'https://jumpluna.58.com/i/LsnMxFt2J9tMcKG'
+      },{
+        img: 'http://img.yunxingzh.com/2733c7ff-f2f1-4343-943d-ea54cef3ca49.png',
+        text: '家政',
+        dst: 'https://jumpluna.58.com/i/LsnMklja1luDubj'
+      },{
+        img: 'http://img.yunxingzh.com/3b9fc40e-e9c2-4103-9fd1-4dd2da64b979.png',
+        text: '更多',
+        dst: 'https://jumpluna.58.com/i/LsnM_6r2J9tMeMj'
+      }],
+
       tips: {
         show: false,
         msg: '',
@@ -98,12 +149,6 @@ export default {
       })
     },
     urlLink(item) {
-      var param = {
-        type: 4,
-        id: item.sid,
-        uid: uid,
-        token: token
-      }
       location.href = item.dst;
     },
     tipBox(val) {
