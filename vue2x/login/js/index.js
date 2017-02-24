@@ -116,7 +116,6 @@ function initUI() {
   $('.ipt-phone').focus();
   JPlaceHolder.init();
   $('.query-code').click(getCode);
-  //$('.app-ads').click(appDownload)
   if (isPC()) {
     $('.pc-btn').click(tripEnd);
   } else {
@@ -252,7 +251,6 @@ function portalLogin(param) {
       loginDone(resp.data);
     } else {
       //test
-      ads.portalUrl = 'http://wx.yunxingzh.com/portaltest201702231800/wifilink.html?uid=212&token=043e528182cc4a7d8f5d4ce2037d7c61&live=livetrue&ts=1487495180&s=1#/home';
       tipShow(resp.desc);
       $('.ipt-code').val('');
       $('.ipt-code').focus('');
@@ -268,23 +266,19 @@ function oneClickLogin(param) {
       loginDone(resp.data);
     } else {
       //test
-      ads.portalUrl = 'http://wx.yunxingzh.com/portaltest201702231800/wifilink.html?uid=212&token=043e528182cc4a7d8f5d4ce2037d7c61&live=livetrue&ts=1487495180&s=1#/home';
       tipShow(resp.desc);
     }
   })
 }
 
 function loginDone(info) {
-  ads.portalUrl = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
   if (CGI.isIE()) {
-    location.replace(firsturl);
+    //location.replace(firsturl);
+    window.open(firsturl, '_blank');
   } else {
-    location.replace(url);
+    //location.replace(url);
+    window.open(url, '_blank');
   }
-}
-
-function appDownload() {
-  location.href = ads.url;
 }
