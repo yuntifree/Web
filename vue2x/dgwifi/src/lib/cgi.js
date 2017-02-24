@@ -45,7 +45,7 @@ module.exports = {
             uid: ~~param.uid,
             data: param,
             web: 1,
-            term: 2,
+            term: 3,
             version:1
     };
 
