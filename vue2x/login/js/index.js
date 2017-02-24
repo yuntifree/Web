@@ -251,6 +251,8 @@ function portalLogin(param) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
+      //test
+      ads.portalUrl = 'http://wx.yunxingzh.com/portaltest201702231800/wifilink.html?uid=212&token=043e528182cc4a7d8f5d4ce2037d7c61&live=livetrue&ts=1487495180&s=1#/home';
       tipShow(resp.desc);
       $('.ipt-code').val('');
       $('.ipt-code').focus('');
@@ -265,6 +267,8 @@ function oneClickLogin(param) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
+      //test
+      ads.portalUrl = 'http://wx.yunxingzh.com/portaltest201702231800/wifilink.html?uid=212&token=043e528182cc4a7d8f5d4ce2037d7c61&live=livetrue&ts=1487495180&s=1#/home';
       tipShow(resp.desc);
     }
   })
