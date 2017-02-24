@@ -217,7 +217,6 @@ export default {
         editShow: false,
         dialogShow: false,
         addShow: false,
-        delShow: false,
       },
       dialogCfg: {
         title: '',
@@ -230,7 +229,6 @@ export default {
         currentPage: 1,
       },
       selIdx: -1,
-
       selected: {
         number:0
       },
@@ -404,7 +402,6 @@ export default {
       this.dialogCfg.text = text;
       this.reviewInfo = row;
       this.reviewOps = ops;
-      this.modal.delShow = false;
       this.modal.dialogShow = true;
     },
     onlineOps() {
@@ -422,14 +419,6 @@ export default {
           this.alertInfo(resp.desc);
         }
      })
-    },
-    delPost(idx,row) {
-      this.selIdx = idx;
-      this.dialogCfg.title = '删除';
-      this.dialogCfg.text = '确认要删除吗？';
-      this.reviewInfo = row;
-      this.modal.delShow = true;
-      this.modal.dialogShow = true;
     },
     alertInfo(val) {
       this.alertShow = true;
