@@ -181,10 +181,8 @@ module.exports = {
       return ret;
     },
     tabChange: function(router, list, type, uid,token) {
-        console.log(list.routername);
         if (list.routername) {
             router.push({name: list.routername});
-            console.log(list.routername)
         } else {
             location.href = list.url;
         }

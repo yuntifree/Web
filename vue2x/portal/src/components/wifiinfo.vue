@@ -337,7 +337,6 @@ export default {
       CGI.post('get_portal_menu', p, (resp)=> {
         if (resp.errno == 0) {
           this.menu = resp.data;
-          console.log(JSON.stringify(this.menu));
         } else {
           this.alertInfo(resp.desc);
         }

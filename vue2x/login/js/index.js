@@ -1,6 +1,7 @@
 var ads = {
   img: 'images/act_banner.png',
-  url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless'
+  url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless',
+  portalUrl: '',
 }
 
 //倒计时
@@ -95,10 +96,10 @@ var JPlaceHolder = {
         }
       } else {
         if (autologin) {
-          $('.login').append(template('tplOnelogin', {}));
+          $('.login').append(template('tplOnelogin', ads));
           $('.login').append(template('tplBottom', ads));
         } else {
-          $('.login').append(template('tplIptlogin', {}));
+          $('.login').append(template('tplIptlogin', ads));
           $('.login').after(template('tplBottom', ads));
         }
       }
@@ -115,7 +116,7 @@ function initUI() {
   $('.ipt-phone').focus();
   JPlaceHolder.init();
   $('.query-code').click(getCode);
-  $('.app-ads').click(appDownload)
+  //$('.app-ads').click(appDownload)
   if (isPC()) {
     $('.pc-btn').click(tripEnd);
   } else {
@@ -270,7 +271,7 @@ function oneClickLogin(param) {
 }
 
 function loginDone(info) {
-  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  ads.portalUrl = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
   if (CGI.isIE()) {

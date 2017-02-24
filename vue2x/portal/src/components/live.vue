@@ -60,7 +60,7 @@ export default {
   },
   mounted() {
     this.$nextTick(function () {
-      this.getData();
+      //this.getData();
       if (window.screen.availWidth > 750) {
         if (window.screen.availHeight > window.screen.availWidth && !(/ipad/.test(ua))) {
           this.imgHeight = 187;
@@ -69,6 +69,24 @@ export default {
         }
       } else {
         this.imgHeight = (window.screen.availWidth) / 2;
+      }
+
+      var scrollY = sessionStorage.getItem('scrollY');
+      if (scrollY != null) {
+        var cache = sessionStorage.getItem('cache');
+        if (cache && cache.length > 0) {
+          var list = JSON.parse(cache);
+          if (list) {
+            this.items = list;
+            this.useCache = true;
+            this.$nextTick(function() {
+              window.scroll(0, scrollY);
+            })
+          }
+        }
+      }
+      if (!this.useCache) {
+        this.getData()
       }
     })
   },
@@ -112,9 +130,9 @@ export default {
     },
     getLiveurl(item) {
       if (/iphone|ipad/.test(ua)) {
-        return 'http://h.huajiao.com/l/index?liveid='+item.live_id
+        return 'http://h.huajiao.com/l/index?liveid='+item.live_id;
       } else {
-        return 'javascript:;'
+        return 'http://app.qq.com/#id=detail&appid=1105815909';
       }
     },
     liveLink(item) {
