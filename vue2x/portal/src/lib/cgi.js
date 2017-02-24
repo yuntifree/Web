@@ -2,7 +2,7 @@ var ajax = require('./ajax')
 
 module.exports = {
     //HOST: __DEV__ ? '' : 'http://120.76.236.185/',
-    HOST: __DEV__ ? '' : 'http://120.25.133.234/',
+    HOST: __DEV__ ? '' : (__DEP__ ? 'https://wx.yunxingzh.com/' : 'https://api.yunxingzh.com/'),
     CGI: '/',
 
     /**
