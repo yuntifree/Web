@@ -219,6 +219,7 @@ legend{
   border-left: 1px solid #00a0fb;
 }
 .btn {
+  display: block;
   width: 100%;
   line-height: 0.8rem;
   border-radius: 0.14rem;
@@ -226,6 +227,7 @@ legend{
   background-color: #00a0fb;
   font-size: 0.36rem;
   color: #fff;
+  text-align: center;
 }
 .login-bottom {
   width: 100%;
