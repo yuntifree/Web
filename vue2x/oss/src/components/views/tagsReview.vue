@@ -45,7 +45,6 @@
               <el-table-column
                 inline-template
                 :context="_self"
-                fixed="right"
                 label="操作"
                 width="100">
                 <span>

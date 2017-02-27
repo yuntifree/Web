@@ -47,8 +47,8 @@
               <el-table-column
                 inline-template
                 label="图片">
-                <div class="height120">
-                  <img v-if="row.img" style="width:120px;height:auto;" :src="row.img">
+                <div>
+                  <img v-if="row.img" style="width:100%;height:auto;" :src="row.img">
                   <span v-else>-</span>
                 </div>
               </el-table-column>
@@ -75,7 +75,6 @@
               <el-table-column
                 inline-template
                 :context="_self"
-                fixed="right"
                 label="操作"
                 width="100">
                 <span>
@@ -95,7 +94,7 @@
         :current-page="pageCfg.currentPage"
         :page-size="pageCfg.limit"
         layout="prev, pager, next, jumper"
-        :total="pageCfg.total">
+        :total="pageCfg.total || 1">
       </el-pagination>
       <div class="shade" v-if="modal.editShow">
         <div class="edit-form" style="width:600px">
@@ -123,6 +122,11 @@
               <el-col :span="11">
                 <el-time-picker type="fixed-time" placeholder="选择时间" v-model="dateInfo.date2" style="width: 100%;"></el-time-picker>
               </el-col>
+              <!--el-date-picker
+                v-model="value1"
+                type="datetime"
+                placeholder="选择日期时间">
+              </el-date-picker-->
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="editPost">确定</el-button>

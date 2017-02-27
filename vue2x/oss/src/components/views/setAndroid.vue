@@ -68,7 +68,6 @@
               <el-table-column
                 inline-template
                 :context="_self"
-                fixed="right"
                 label="操作"
                 width="100">
                 <span>
@@ -85,7 +84,7 @@
         :current-page="pageCfg.currentPage"
         :page-size="pageCfg.limit"
         layout="prev, pager, next, jumper"
-        :total="pageCfg.total">
+        :total="pageCfg.total || 1">
       </el-pagination>
       <div class="shade" v-if="modal.addShow" >
         <div class="edit-form" style="width:600px">

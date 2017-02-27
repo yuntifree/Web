@@ -75,7 +75,6 @@
               <el-table-column
                 inline-template
                 :context="_self"
-                fixed="right"
                 label="操作"
                 width="100">
                 <span>
@@ -94,7 +93,7 @@
         :current-page="pageCfg.currentPage"
         :page-size="pageCfg.limit"
         layout="prev, pager, next, jumper"
-        :total="pageCfg.total">
+        :total="pageCfg.total || 1">
       </el-pagination>
       <div class="shade" v-if="modal.editShow" >
         <div class="edit-form" style="width:600px">
@@ -109,10 +108,10 @@
               <el-input v-model="newsInfo.title"></el-input>
             </el-form-item>
             <el-form-item label="标签">
-              <el-checkbox-group v-model="checkedTags">
-                <el-checkbox v-for="tag in tagsInfo.tags" :label="tag.content" name="type"></el-checkbox>
-                <span class="btn btn-info btn-sm" v-show="tagsInfo.hasmore" @click="edit('','',tagsInfo.tags[tagsInfo.tags.length-1].seq)">点击加载更多</span>
+              <el-checkbox-group v-model="checkedTags" @change="handleChecked">
+                <el-checkbox v-for="tag in tagsInfo" :label="tag.id">{{tag.content}}</el-checkbox>
               </el-checkbox-group>
+              <span class="btn btn-info btn-sm" v-show="tagsInfo.hasmore" @click="edit('','',tagsInfo[tagsInfo.length-1].seq)">点击加载更多</span>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="editPost">确定</el-button>
@@ -171,6 +170,7 @@ export default {
       search: '',
       tagsInfo: [],
       checkedTags: [],
+      tagsMore: false,
       newsInfo: {
         title: '',
         reject: '0',
@@ -245,6 +245,9 @@ export default {
       }
       console.log(`当前页: ${val}`);
     },
+    handleChecked(value) {
+      console.log(JSON.stringify(value));
+    },
     edit(idx,row,seq) {
       this.selIdx = idx;
       var param = {
@@ -254,12 +257,18 @@ export default {
       CGI.post(this.$store.state,'get_tags',param,(resp)=>{
         if (resp.errno === 0) {
           if (param.seq === 0) {
-            this.tagsInfo = resp.data;
+            this.tagsInfo = resp.data.infos;
+            if (this.tagsInfo.length < resp.data.total) {
+              this.tagsMore = true;
+            }//else {};
           } else {
-            this.tagsInfo.tags = this.tagsInfo.tags.concat(resp.data.tags);
-            this.tagsInfo.hasmore = resp.data.hasmore;
+            this.tagsInfo = this.tagsInfo.concat(resp.data.infos);
+            if (this.tagsInfo.length < resp.data.total) {
+              this.tagsMore = true;
+            }
           }
           CGI.objClear(this.newsInfo);
+          this.newsInfo.reject = '1';
           this.newsInfo.title = row.title;
           this.editInfo =  CGI.clone(row);
           this.modal.editShow = true;
@@ -280,17 +289,8 @@ export default {
         param.modify = 1;
       }
       if (this.checkedTags.length > 0) {
-        var clen = this.checkedTags.length;
-        var tlen = this.tagsInfo.tags.length;
-        for (var i=0;i<clen;i++) {
-          for (var j=0;j<tlen;j++) {
-            if (this.checkedTags[i] == this.tagsInfo.tags[j].content) {
-              paramTags.push(this.tagsInfo.tags[j].id);
-            }
-          }
-        }
+        param.tags = this.checkedTags;
       }
-      param.tags = paramTags;
       param.reject = ~~this.newsInfo.reject;
       param.id = this.editInfo.id;
       this.actPost(param);

@@ -70,14 +70,13 @@
               <el-table-column
                 inline-template
                 :context="_self"
-                fixed="right"
                 label="操作"
                 width="100">
                 <span>
                   <el-button @click="editvideos($index,row)" type="text" size="small">审核</el-button>
                   <el-button @click="review($index,row,0)" type="text" size="small">上线</el-button>
                   <el-button @click="review($index,row,1)" type="text" size="small">下线</el-button>
-                </span>
+                 </span>
               </el-table-column>
             </el-table>
           </template>
@@ -89,17 +88,17 @@
          :current-page="pageCfg.currentPage"
          :page-size="pageCfg.limit"
          layout="prev, pager, next, jumper"
-         :total="pageCfg.total">
+         :total="pageCfg.total ||1">
        </el-pagination>
        <!--edit-->
        <div class="shade" v-if="modal.editShow" >
         <div class="edit-form" style="width:600px">
           <el-form ref="form" :model="videosInfo" label-width="80px">
             <el-form-item label="审核操作">
-              <input type="radio" id="one" value="0" v-model="videosInfo.reject">
-              <label for="one">通过</label>
-              <input type="radio" id="two" value="1" v-model="videosInfo.reject">
-              <label for="two">拒绝</label>
+              <el-radio-group v-model="videosInfo.reject">
+                <el-radio label="0">通过</el-radio>
+                <el-radio label="1">拒绝</el-radio>
+              </el-radio-group>
             </el-form-item>
             <el-form-item label="title">
               <el-input v-model="videosInfo.title"></el-input>
@@ -205,7 +204,7 @@ export default {
         if (resp.errno === 0) {
           var data = resp.data;
           this.videos = data.infos;
-          if (this.videos.length>0) {
+          if (this.videos && this.videos.length>0) {
             this.videos.forEach( (item,index)=> {
               item.idx = index;
             })
@@ -235,7 +234,7 @@ export default {
     editvideos(idx,row) { 
       this.selIdx = idx;
       CGI.objClear(this.videosInfo);
-      this.videosInfo.reject = 0;
+      this.videosInfo.reject = '1';
       this.videosInfo.title = row.title;
       this.editInfo = CGI.clone(row);
       this.modal.editShow = true;
@@ -283,7 +282,7 @@ export default {
       }
       this.dialogCfg.title = title;
       this.dialogCfg.text = text;
-      this.videosInfo.reject = ops;
+      this.videosInfo.reject = ~~ops;
       this.editInfo = CGI.clone(row);
       this.modal.dialogShow = true;
     },

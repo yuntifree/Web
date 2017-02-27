@@ -75,7 +75,6 @@
           <el-button type="primary" @click.native="delPost">确 定</el-button>
         </span>
       </el-dialog>
-
       <div v-show="alertShow">
         <el-alert
           :title="alertMsg"
