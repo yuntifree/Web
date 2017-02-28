@@ -100,23 +100,23 @@ export default {
       lists:[{
         img: 'http://img.yunxingzh.com/2174238a-ba33-4b96-9268-89be3a2d242d.png',
         text: '招聘',
-        dst: 'https://jumpluna.58.com/i/LsnMqfsa1luDwQM'
+        dst: 'https://jumpluna.58.com/i/LsnwGLLa1luDubj'
       },{
         img: 'http://img.yunxingzh.com/6e8147bf-ba4b-4309-a7bf-eff391b5f260.png',
         text: '二手',
-        dst: 'https://jumpluna.58.com/i/LsnMeCA2J9tMeMj'
+        dst: 'https://jumpluna.58.com/i/LsnvnSW2J9tMcKG'
       },{
         img: 'http://img.yunxingzh.com/829983c2-8f72-4671-865a-3dd829158d01.png',
         text: '租房',
-        dst: 'https://jumpluna.58.com/i/LsnMxFt2J9tMcKG'
+        dst: 'https://jumpluna.58.com/i/LsnwinLa1luDwQM'
       },{
         img: 'http://img.yunxingzh.com/2733c7ff-f2f1-4343-943d-ea54cef3ca49.png',
         text: '家政',
-        dst: 'https://jumpluna.58.com/i/LsnMklja1luDubj'
+        dst: 'https://jumpluna.58.com/i/Lsnw1pj2J9tMeMj'
       },{
         img: 'http://img.yunxingzh.com/3b9fc40e-e9c2-4103-9fd1-4dd2da64b979.png',
         text: '更多',
-        dst: 'https://jumpluna.58.com/i/LsnM_6r2J9tMeMj'
+        dst: 'https://jumpluna.58.com/i/LsnwwxU2J9tMcKG'
       }],
 
       tips: {
