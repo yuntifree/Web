@@ -14,6 +14,7 @@
     "vue-infinite-loading": "^2.0.0-rc.5"
   },
   "devDependencies": {
+    "alloyfinger": "^0.1.5",
     "autoprefixer": "^6.4.0",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",

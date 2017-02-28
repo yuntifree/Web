@@ -1,4 +1,4 @@
-//import Vue from 'vue'
+import Vue from 'vue'
 import welfare from './welfare.vue'
 
 var initFont = require('./common/font.js')

@@ -70,7 +70,7 @@
 <template>
   <div class="service top176">
     <ul class="service-menu g-clearfix">
-      <li class="service-menu-item g-fl" v-for="list in lists" @click="urlLink(item)">
+      <li class="service-menu-item g-fl" v-for="list in lists" @click="urlLink(list)">
         <img class="item-img" :src="list.img">
         <p class="item-text" v-text="list.text"></p>
       </li>

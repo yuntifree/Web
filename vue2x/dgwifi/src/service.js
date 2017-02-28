@@ -1,4 +1,4 @@
-//import Vue from 'vue'
+import Vue from 'vue'
 import service from './service.vue'
 
 var initFont = require('./common/font.js')

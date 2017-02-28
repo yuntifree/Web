@@ -1,4 +1,4 @@
-//import Vue from 'vue'
+import Vue from 'vue'
 import App from './App'
 import VueLazyload from 'vue-lazyload'
 import infiniteScroll from 'vue-infinite-scroll';

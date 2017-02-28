@@ -133,7 +133,7 @@ var query = CGI.query();
 var uid = 137;
 var token = '6ba9ac5a422d4473b337d57376dd3488';
 var union = query.union || '';
-
+console.log(1);
 export default {
   name: 'newslist',
   data() {
@@ -148,12 +148,14 @@ export default {
       ready: false,
       loading: false,
       nomore: false,
+      useCache: false
     }
   },
   components: {
     tip,
   },
   mounted() {
+    console.log(2);
     this.$nextTick(function () {
       // 存下union
       if (union.length > 0) {
