@@ -78,15 +78,6 @@ var JPlaceHolder = {
     wlanacname: wlanacname
   };
 
-  var height = document.documentElement.clientHeight;
-  var htmlHeight = $('html').height();
-  console.log(height + ',' +htmlHeight);
-  if (height > htmlHeight) {
-    $('html').css('height',height);
-    $('.login-bottom').css('position','absolute');
-    $('.login-bottom').css('left', 0);
-    $('.login-bottom').css('bottom', 0);
-  }
   CGI.post('check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
@@ -101,10 +92,13 @@ var JPlaceHolder = {
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
+          setHeight();
         } else {
           $('.login').append(template('tplIptlogin', {}));
           $('.login').after(template('tplBottom', ads));
+          setHeight();
         }
+
       }
       initUI();
     } else {
@@ -112,6 +106,18 @@ var JPlaceHolder = {
     }
   });
 })()
+
+function setHeight() {
+  var height = document.documentElement.clientHeight;
+  var htmlHeight = $('html').height();
+  console.log(height + ',' +htmlHeight);
+  if (height > htmlHeight) {
+    $('html').css('height',height);
+    $('.login-bottom').css('position','absolute');
+    $('.login-bottom').css('left', 0);
+    $('.login-bottom').css('bottom', 0);
+  }
+}
 
 
 function initUI() {
