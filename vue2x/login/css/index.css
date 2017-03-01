@@ -137,7 +137,7 @@ legend{
 }
 .login {
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 .login-top,
 .login-top-bg {
@@ -232,10 +232,7 @@ legend{
 .login-bottom {
   width: 100%;
   height: auto;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 1;
+  margin-bottom: 0.6rem;
 }
 .company-img {
   width: 70%;
