@@ -21,6 +21,7 @@ var port = process.env.PORT || config.dev.port
 
 var app = express()
 
+//解析reqbody部分
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 

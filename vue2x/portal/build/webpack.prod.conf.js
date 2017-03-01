@@ -60,7 +60,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
-      chunks: ['manifest','vendor','']
+      chunks: ['manifest','vendor','app']
     }),
     new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
