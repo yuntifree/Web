@@ -82,11 +82,14 @@ var JPlaceHolder = {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
-      /*var height = document.documentElement.clientHeight;
-      if (height < 500) {
-        height = 520;
+      var height = document.documentElement.clientHeight;
+      var htmlHeight = $('html').height();
+      if (height < htmlHeight) {
+        $('html').css('height',height);
+        $('.login-bottom').css('position','absolute');
+        $('.login-bottom').css('left', 0);
+        $('.login-bottom').css('bottom', 0);
       }
-      $('html').css('height',height);*/
       if (isPC()) {
         if (autologin) {
           $('.login').append(template('tplPhone', {}));
