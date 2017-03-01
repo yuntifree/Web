@@ -208,25 +208,57 @@ export default {
         dir: this.postInfo.dir,
         description: this.postInfo.description
       }
-      var u = CGI.clone(this.postInfo);
-      CGI.post(this.$store.state, 'add_portal_dir', param, (resp)=> {
-        if (resp.errno === 0) {
-          var u = CGI.clone(this.postInfo);
-          u.id = resp.data.id;
-          if (this.infos.length > 0) {
-            this.infos.push(u);
+      var pass = true;
+      switch (param.type) {
+        case 0:
+          var str = param.dir.substr(0,5);
+          if (str !== 'login') {
+            pass = false;
+            this.alertInfo('请输入以login开头的目录名');
+          } //else {}
+          break;
+        case 1:
+          var str = param.dir.substr(0,6);
+          if (str !== 'portal') {
+            pass = false;
+            this.alertInfo('请输入以portal开头的目录名');
+          } //else {}
+          break;
+        case 2:
+          var str = param.dir.substr(0,9);
+          if (str !== 'logintest') {
+            pass = false;
+            this.alertInfo('请输入以logintest开头的目录名');
+          } //else {}
+          break;
+        case 3:
+          var str = param.dir.substr(0,10);
+          if (str !== 'portaltest') {
+            pass = false;
+            this.alertInfo('请输入以portaltest开头的目录名');
+          } //else {}
+          break;
+      }
+      if (pass) {
+        var u = CGI.clone(this.postInfo);
+        CGI.post(this.$store.state, 'add_portal_dir', param, (resp)=> {
+          if (resp.errno === 0) {
+            var u = CGI.clone(this.postInfo);
+            u.id = resp.data.id;
+            if (this.infos.length > 0) {
+              this.infos.push(u);
+            } else {
+              this.infos = u;
+            }         
+            this.modal.addShow = false;
           } else {
-            this.infos = u;
-          }         
-          this.modal.addShow = false;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      })
+            this.alertInfo(resp.desc);
+          }
+        })
+      }
     },
     postParam() {
       var ret = true;
-      console.log(this.postInfo.dir.length + ',' +this.postInfo.description.length);
       if (this.postInfo.dir.length <= 0) {
         this.alertInfo('请输入对应目录');
         ret = false;
