@@ -93,11 +93,11 @@ var JPlaceHolder = {
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
-          setHeight();
+          setTimeout(function(){setHeight()},0)
         } else {
           $('.login').append(template('tplIptlogin', {}));
           $('.login').after(template('tplBottom', ads));
-          setHeight();
+          setTimeout(function(){setHeight()},0)
         }
 
       }
