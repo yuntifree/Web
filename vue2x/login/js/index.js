@@ -78,18 +78,19 @@ var JPlaceHolder = {
     wlanacname: wlanacname
   };
 
+  var height = document.documentElement.clientHeight;
+  var htmlHeight = $('html').height();
+  console.log(height + ',' +htmlHeight);
+  if (height > htmlHeight) {
+    $('html').css('height',height);
+    $('.login-bottom').css('position','absolute');
+    $('.login-bottom').css('left', 0);
+    $('.login-bottom').css('bottom', 0);
+  }
   CGI.post('check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
-      var height = document.documentElement.clientHeight;
-      var htmlHeight = $('html').height();
-      if (height < htmlHeight) {
-        $('html').css('height',height);
-        $('.login-bottom').css('position','absolute');
-        $('.login-bottom').css('left', 0);
-        $('.login-bottom').css('bottom', 0);
-      }
       if (isPC()) {
         if (autologin) {
           $('.login').append(template('tplPhone', {}));
