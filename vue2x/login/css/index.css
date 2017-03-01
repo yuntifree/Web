@@ -234,11 +234,6 @@ legend{
   height: auto;
   margin-top: 0.6rem;
 }
-.posBottom {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-}
 .company-img {
   width: 70%;
   height: auto;

@@ -70,6 +70,7 @@ var JPlaceHolder = {
 };
 
 (function() {
+  font(true);
   String.prototype.trim = function() {
     return this.replace(/(^\s*)|(\s*$)/g, "");
   }
@@ -113,14 +114,14 @@ function setHeight() {
   console.log(height + ',' +htmlHeight);
   if (height > htmlHeight) {
     $('html').css('height',height);
-    //$('.login-bottom').css('position','absolute');
-    $('.login-bottom').addClass('posBottom')
+    $('.login-bottom').css('position','absolute');
+    $('.login-bottom').css('left', 0);
+    $('.login-bottom').css('bottom', 0);
   }
 }
 
 
 function initUI() {
-  font(true);
   $('.ipt-phone').focus();
   JPlaceHolder.init();
   $('.query-code').click(getCode);
