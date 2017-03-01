@@ -113,9 +113,8 @@ function setHeight() {
   console.log(height + ',' +htmlHeight);
   if (height > htmlHeight) {
     $('html').css('height',height);
-    $('.login-bottom').css('position','absolute');
-    $('.login-bottom').css('left', 0);
-    $('.login-bottom').css('bottom', 0);
+    //$('.login-bottom').css('position','absolute');
+    $('.login-bottom').addClass('posBottom')
   }
 }
 
