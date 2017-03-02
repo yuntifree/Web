@@ -89,16 +89,18 @@ var JPlaceHolder = {
         } else {
           $('.login').append(template('tplPc', {}));
         }
+        var height = document.documentElement.clientHeight;
+        $('html').css('height',height);
       } else {
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
-          var height = screenWidth * 750/460;
+          var height = screenWidth * (460/750);
           $('.login-top').css('height',height);
         } else {
           $('.login').append(template('tplIptlogin', {}));
           $('.login').after(template('tplBottom', ads));
-          var height = screenWidth * 750/240;
+          var height = screenWidth * (240/750);
           $('.login-top').css('height',height);
         }
         setTimeout(function(){setHeight()},300);
