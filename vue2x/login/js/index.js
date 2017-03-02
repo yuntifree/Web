@@ -78,7 +78,7 @@ var JPlaceHolder = {
     wlanusermac: wlanusermac,
     wlanacname: wlanacname
   };
-
+  var screenWidth = document.body.clientWidth;
   CGI.post('check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
@@ -93,9 +93,13 @@ var JPlaceHolder = {
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
+          var height = screenWidth * 750/460;
+          $('.login-top').css('height',height);
         } else {
           $('.login').append(template('tplIptlogin', {}));
           $('.login').after(template('tplBottom', ads));
+          var height = screenWidth * 750/240;
+          $('.login-top').css('height',height);
         }
         setTimeout(function(){setHeight()},300);
       }
@@ -110,9 +114,9 @@ function setHeight() {
   var height = document.documentElement.clientHeight;
   var htmlHeight = $('html').height();
   if (height > htmlHeight) {
-   if(height < 500) {
+   /*if(height < 500) {
        height = 520;
-    }   
+    }*/   
    $('html').css('height',height);
     $('.login-bottom').css('position','absolute');
     $('.login-bottom').css('left', 0);
