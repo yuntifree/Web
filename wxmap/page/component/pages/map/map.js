@@ -189,6 +189,7 @@ Page({
     var param = {
       uid: uid,
       token: token,
+      term: 3
     }
     wx.request({
       url: url + 'get_all_aps',
