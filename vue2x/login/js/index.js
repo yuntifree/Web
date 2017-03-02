@@ -93,13 +93,11 @@ var JPlaceHolder = {
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
-          setTimeout(function(){setHeight()},0)
         } else {
           $('.login').append(template('tplIptlogin', {}));
           $('.login').after(template('tplBottom', ads));
-          setTimeout(function(){setHeight()},0)
         }
-
+        setTimeout(function(){setHeight()},300);
       }
       initUI();
     } else {
@@ -111,9 +109,11 @@ var JPlaceHolder = {
 function setHeight() {
   var height = document.documentElement.clientHeight;
   var htmlHeight = $('html').height();
-  console.log(height + ',' +htmlHeight);
   if (height > htmlHeight) {
-    $('html').css('height',height);
+   if(height < 500) {
+       height = 520;
+    }   
+   $('html').css('height',height);
     $('.login-bottom').css('position','absolute');
     $('.login-bottom').css('left', 0);
     $('.login-bottom').css('bottom', 0);
