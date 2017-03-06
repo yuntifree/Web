@@ -290,11 +290,12 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
+  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
-    //location.replace(firsturl);
-    window.open(firsturl, '_blank');
+    location.replace(firsturl);
+    //window.open(firsturl, '_blank');
   } else {
-    //location.replace(url);
-    window.open(url, '_blank');
+    location.replace(url);
+    //window.open(url, '_blank');
   }
 }
