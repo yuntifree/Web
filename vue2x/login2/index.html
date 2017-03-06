@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>东莞无限</title>
+  </head>
+  <body>
+    <div class="login">
+    </div>
+    <p class="tip-info g-tac"></p>
+    <script type="text/html" id="tplIptlogin">
+      <div class="ipt-login">
+        <div class="login-top">
+          <img class="login-top-bg" src="images/img_bg3.png">
+        </div>
+        <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
+        <div class="input-main">
+          <div class="input-info g-clearfix">
+            <label class="input-img g-fl" for="name"><img src="images/loading_icon_phone.png"></label>
+            <input class="g-fr ipt-phone" id="name" type="text" placeholder="请输入手机号">
+          </div>
+          <div class="input-info g-clearfix">
+            <label class="input-img g-fl" for="code" ><img src="images/loading_icon_key.png"></label>
+            <input class="g-fr ipt-code" id="code" type="text" placeholder="请输入验证码">
+            <i class="query-code">获取验证码</i>
+          </div>
+          <button class="btn mob-btn">开启智慧城市之旅</button>
+        </div>
+      </div>
+    </script>
+    <script type="text/html" id="tplOnelogin">
+      <div class="one-click">
+        <div class="login-top">
+          <img class="login-top-bg" src="images/img_bg4.png">
+          <p class="g-tac top-text oneclick-text">欢迎使用东莞无限免费WiFi</p>
+        </div>
+        <div class="input-main">
+          <button class="btn mob-btn">一键登录</button>
+        </div>
+      </div>
+    </script>
+    <script type="text/html" id="tplBottom">
+      <div class="login-bottom">
+        <img class="company-img" src="images/img_text_phone.png">
+        <img class="app-ads" src="{{img}}">
+      </div>
+    </script>
+
+    <script type="text/html" id="tplPc">
+      <div class="pc-container">
+        <div class="pc-login-main">
+          <img class="pc-login-dglogo" src="images/pc_img_dglogo.png">
+          <p class="g-tac pc-dgpc-text">欢迎使用东莞无限免费WiFi</p>
+          <div class="pc-input-info g-clearfix">
+            <label class="pc-input-img g-fl" for="name"><img src="images/loading_icon_phone.png"></label>
+            <input class="g-fr ipt-phone" id="name" type="text" placeholder="请输入手机号">
+          </div>
+          <div class="pc-input-info g-clearfix">
+            <label class="pc-input-img g-fl" for="pwd"><img src="images/loading_icon_key.png"></label>
+            <input class="g-fr ipt-code" id="pwd" type="text" placeholder="请输入验证码">
+            <i class="query-code pc-query-code">获取验证码</i>
+          </div>
+          <button class="btn pc-btn">开启智慧城市之旅</button>
+        </div>
+        <div class="qr-code">
+          <img src="images/pc_img_app.png">
+          <p class="g-tac">下载App</p>
+        </div>
+        <div class="qr-code wechat-code">
+          <img src="images/pc_img_wechat2.png">
+          <p class="g-tac">关注微信</p>
+        </div>
+        <img class="pccompay-text" src="images/pc_img_text.png">
+      </div>
+    </script>
+
+    <script type="text/html" id="tplPhone">
+      <div class="pc-container">
+        <div class="pc-login-main">
+          <img class="pc-login-dglogo onepc-login-dglogo" src="images/pc_img_dglogo.png">
+          <p class="g-tac pc-dgpc-text pcone-dgpc-text">欢迎使用东莞无限免费WiFi</p>
+          <button class="btn pc-btn onepc-btn">一键登录</button>
+        </div>
+        <div class="qr-code">
+          <img src="images/pc_img_app.png">
+          <p class="g-tac">下载App</p>
+        </div>
+        <div class="qr-code wechat-code">
+          <img src="images/pc_img_wechat2.png">
+          <p class="g-tac">关注微信</p>
+        </div>
+        <img class="pccompay-text" src="images/pc_img_text.png">
+      </div>
+    </script> 
+  </body>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/template.js"></script>
+  <script type="text/javascript" src="js/cgi.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+</html>
