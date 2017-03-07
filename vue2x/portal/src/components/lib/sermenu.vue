@@ -50,6 +50,7 @@ export default {
 }
 .service-list {
   @include containerSize(100%, auto);
+  padding: 0.12rem 0 0.3rem;
 }
 .title-toutiao {
   padding: 0.12rem 0 0.18rem 0;
@@ -63,11 +64,11 @@ export default {
 }
 .list-item {
   @include containerSize(20%, auto);
-  padding: 0.42rem 0 0.3rem;
+  padding: 0.3rem 0 0;
 }
 .list-item img {
   width: 0.507rem;
   height: 0.516rem;
-  margin-bottom: 0.177rem;
+  margin-bottom: 0.06rem;
 }
 </style>
