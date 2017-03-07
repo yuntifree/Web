@@ -9,7 +9,7 @@ window.CGI = {
    */
 
   get: function(action, param, callback) {
-    var url = action;
+    var url = this.Host + action;
     var opt = {
       type: 'GET',
       url: url,

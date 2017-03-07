@@ -79,7 +79,7 @@ var JPlaceHolder = {
     wlanacname: wlanacname
   };
   var screenWidth = document.documentElement.clientWidth;
-  CGI.post('check_login', param, function(resp) {
+  CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
