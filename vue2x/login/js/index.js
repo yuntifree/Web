@@ -212,7 +212,7 @@ function getCode() {
     phone: phone,
     wlanacname: wlanacname
   };
-  CGI.post('get_check_code', param, function(resp) {
+  CGI.get('get_check_code', param, function(resp) {
     if (resp.errno === 0) {
       tipShow('获取成功');
       var seconds = 60;
@@ -262,7 +262,7 @@ function tripEnd(e) {
 }
 
 function portalLogin(param) {
-  CGI.post('portal_login', param, function(resp) {
+  CGI.get('portal_login', param, function(resp) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
@@ -277,7 +277,7 @@ function portalLogin(param) {
 }
 
 function oneClickLogin(param) {
-  CGI.post('one_click_login', param, function(resp) {
+  CGI.get('one_click_login', param, function(resp) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
@@ -292,10 +292,8 @@ function loginDone(info) {
   $('.ipt-code').val('');
   var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
-    location.replace(firsturl);
-    //window.open(firsturl, '_blank');
+    window.open(firsturl, '_blank');
   } else {
-    location.replace(url);
-    //window.open(url, '_blank');
+    window.open(url, '_blank');
   }
 }
