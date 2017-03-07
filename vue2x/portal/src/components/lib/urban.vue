@@ -34,7 +34,8 @@ export default {
     getTouch: function(evt) { 
       console.log(event);
     },
-    openLink(item) {
+    openLink(item,) {
+      var url = '';
       var param = {
         id: item.id,
         type: 8,
@@ -45,7 +46,15 @@ export default {
         } else {
         }
       })
-      window.open(item.dst);
+      //if (item.routername) {
+        var url = window.document.location.href.toString();
+        //url = url.substr(url.lastIndexOf('/'));
+        url = url + '/'+ 'service'
+          //this.$router.push(item.routername)
+        //} else {
+        /*    url = item.url;
+        }*/
+      window.open(url);
     }
   }
 }
