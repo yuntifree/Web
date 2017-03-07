@@ -3,7 +3,7 @@
   <div class="app">
     <div class="banner" v-if="infos.banners &&infos.banners.length>0">
       <swipe class="my-swipe">
-        <swipe-item class="slide1" v-for="banner in infos.banners">
+        <swipe-item v-for="banner in infos.banners">
           <img :src="banner.img">
         </swipe-item>
       </swipe>
@@ -199,24 +199,17 @@ export default {
 }
 .banner {
   width: 100%;
-  height: 200px;
+  height: 3.2rem;
+  overflow:hidden;
 }
 .my-swipe {
   color: #fff;
   font-size: 30px;
   text-align: center;
-}
-.slide1 {
-  background-color: #0089dc;
-  color: #fff;
-}
-.slide2 {
-  background-color: #ffd705;
-  color: #000;
-}
-.slide3 {
-  background-color: #ff2d4b;
-  color: #fff;
+}i
+.my-swipe img {
+  width: 100%;
+  height: auto;
 }
 .test-touch {
   width: 300px;

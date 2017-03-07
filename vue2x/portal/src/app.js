@@ -3,13 +3,13 @@ import VueLazyload from 'vue-lazyload'
 
 import app from './app.vue'
 import store from './store.js'
-import AlloyFinger from 'alloyfinger/alloy_finger' // 手势库
-import AlloyFingerVue from 'alloyfinger/vue/alloy_finger.vue'
+//import AlloyFinger from 'alloyfinger/alloy_finger' // 手势库
+//import AlloyFingerVue from 'alloyfinger/vue/alloy_finger.vue'
 import infiniteScroll from 'vue-infinite-scroll';
 
-Vue.use(AlloyFingerVue, {
+/*Vue.use(AlloyFingerVue, {
   AlloyFinger
-})
+})*/
 Vue.use(infiniteScroll)
 Vue.use(VueLazyload)
 var initFont = require('./common/font.js')
