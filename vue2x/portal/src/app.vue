@@ -4,7 +4,7 @@
     <div class="banner" v-if="infos.banners &&infos.banners.length>0">
       <swipe class="my-swipe">
         <swipe-item v-for="banner in infos.banners">
-          <img :src="banner.img"  @click="openLink(banner)">
+          <img class="banner-img" :src="banner.img"  @click="openLink(banner)">
         </swipe-item>
       </swipe>
     </div>
@@ -113,7 +113,10 @@ export default {
   height: 300px;
   background-color: #f00;
 }
-
+.banner-img {
+    width: 100%;
+    height: auto;
+}
 </style>
 
 
