@@ -5,7 +5,7 @@
       <ul class="service-list g-clearfix">
         <li class="g-fl list-item g-tac" v-for="(item,index) in ser.items"
             @click="openLink(item)">
-          <img :src="item.img">
+          <img :src="item.icon">
           <p class="g-tac title-name" v-text="item.title"></p>
         </li>
       </ul>
@@ -63,12 +63,12 @@ export default {
   border-bottom: 1px solid  #e7e7e7;
 }
 .list-item {
-  @include containerSize(20%, auto);
+  @include containerSize(25%, auto);
   padding: 0.3rem 0 0;
 }
 .list-item img {
-  width: 0.507rem;
-  height: 0.516rem;
+  width: 0.88rem;
+  height: 0.88rem;
   margin-bottom: 0.06rem;
 }
 </style>

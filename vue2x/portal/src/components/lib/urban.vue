@@ -1,9 +1,8 @@
 <template>
   <div class="urban-menu">
     <div class="touch-menu">
-      <ul class="menu-lists g-clearfix" ref="alloy"
-        @click="getTouch">
-        <li class="menu-item g-fl" 
+      <ul class="menu-lists g-clearfix" ref="alloy">
+        <li class="menu-item g-fl g-tac" 
             v-for="(ur, index) in urbandata" 
             :data-idx="index"
             @click="openLink(ur)"
@@ -27,13 +26,14 @@ export default {
     this.$nextTick(()=> {
       var len = this.urbandata.length;
       var width = document.documentElement.clientWidth;
-      this.$refs.alloy.style.width = width * len * 0.2 +'px';
+      //this.$refs.alloy.childNodes.style.width = (width*0.2) +'px';
+      this.$refs.alloy.style.width = len * (width*0.22) +'px';
+      this.$refs.alloy.childNodes.forEach((item)=> {
+        item.style.width = (width*0.22) +'px';
+      })
     })
   },
   methods: {
-    getTouch: function(evt) { 
-      console.log(event);
-    },
     openLink(item,) {
       var url = '';
       var param = {
@@ -46,14 +46,13 @@ export default {
         } else {
         }
       })
-      //if (item.routername) {
-        var url = window.document.location.href.toString();
-        //url = url.substr(url.lastIndexOf('/'));
-        url = url + '/'+ 'service'
-          //this.$router.push(item.routername)
-        //} else {
-        /*    url = item.url;
-        }*/
+      if (item.routername) {
+          url = window.document.location.href.toString();
+          url = url.replace("index.html","wifilink.html");
+          url = url + '#/'+ item.routername
+        } else {
+           url = item.dst;
+        }
       window.open(url);
     }
   }

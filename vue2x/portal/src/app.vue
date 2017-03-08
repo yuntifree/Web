@@ -4,7 +4,7 @@
     <div class="banner" v-if="infos.banners &&infos.banners.length>0">
       <swipe class="my-swipe">
         <swipe-item v-for="banner in infos.banners">
-          <img :src="banner.img">
+          <img :src="banner.img"  @click="openLink(banner)">
         </swipe-item>
       </swipe>
     </div>
@@ -14,8 +14,8 @@
     <urban v-if="infos.hospitalintros && infos.hospitalintros.length>0" 
             :urbandata="infos.hospitalintros">
     </urban>
-    <sermenu v-if="services && services.length>0" 
-            :serdata="services"></sermenu> 
+    <sermenu v-if="infos.services && infos.services.length>0" 
+            :serdata="infos.services"></sermenu> 
     <scrollnews></scrollnews>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
@@ -47,120 +47,12 @@ export default {
   },
   data() {
     return {
-      lists: ['新闻','热点','娱乐','查询','直播','招聘','二手','租房','家政','更多'],
       tips: {
         show: false,
         msg: '',
         duration: 1500,
       },
       infos: {},
-      services: [{
-        name: '患者服务',
-        items:[{
-          img: "http://img.yunxingzh.com/5acbd849-93c2-4a2b-b461-2270fc80bfdc.png",
-          dst: "https://jumpluna.58.com/i/LsnNUMya1luDwQM",
-          title: "招聘",
-          id: 1
-        },{
-          img: "http://img.yunxingzh.com/98baedd0-fdad-4f08-92eb-4b99907e3168.png",
-          dst: "https://jumpluna.58.com/i/LsnO3bh2J9tMeMj",
-          title: "二手",
-          id: 2
-        }, {
-          img: "http://img.yunxingzh.com/b119f07f-3666-4b4f-9218-a3bb1a9f7251.png",
-          dst: "https://jumpluna.58.com/i/LsoLp0La1luDubj",
-          title: "租房",
-          id: 3
-        }, {
-          img: "http://img.yunxingzh.com/43dcf196-fdca-4817-82c5-1b209bb22ec1.png",
-          dst: "https://jumpluna.58.com/i/LsnOzrKa1luDubj",
-          title: "家政",
-          id: 4
-        }, {
-          img: "http://img.yunxingzh.com/4774e039-c120-4eee-8c4f-e3bc55a60205.png",
-          dst: "https://jumpluna.58.com/i/LsnPDcUa1luDwQM",
-          title: "更多",
-          id: 5
-        },{
-          img: "http://img.yunxingzh.com/5acbd849-93c2-4a2b-b461-2270fc80bfdc.png",
-          dst: "https://jumpluna.58.com/i/LsnNUMya1luDwQM",
-          title: "招聘",
-          id: 6
-        }, {
-          img: "http://img.yunxingzh.com/98baedd0-fdad-4f08-92eb-4b99907e3168.png",
-          dst: "https://jumpluna.58.com/i/LsnO3bh2J9tMeMj",
-          title: "二手",
-          id: 7
-        }, {
-          img: "http://img.yunxingzh.com/b119f07f-3666-4b4f-9218-a3bb1a9f7251.png",
-          dst: "https://jumpluna.58.com/i/LsoLp0La1luDubj",
-          title: "租房",
-          id: 8
-        }, {
-          img: "http://img.yunxingzh.com/43dcf196-fdca-4817-82c5-1b209bb22ec1.png",
-          dst: "https://jumpluna.58.com/i/LsnOzrKa1luDubj",
-          title: "家政",
-          id: 9
-        }, {
-          img: "http://img.yunxingzh.com/4774e039-c120-4eee-8c4f-e3bc55a60205.png",
-          dst: "https://jumpluna.58.com/i/LsnPDcUa1luDwQM",
-          title: "更多",
-          id: 10
-        }]
-      },{
-        name: '城市服务',
-        items:[{
-          img: "http://img.yunxingzh.com/5acbd849-93c2-4a2b-b461-2270fc80bfdc.png",
-          dst: "https://jumpluna.58.com/i/LsnNUMya1luDwQM",
-          title: "招聘",
-          id: 11
-        },{
-          img: "http://img.yunxingzh.com/98baedd0-fdad-4f08-92eb-4b99907e3168.png",
-          dst: "https://jumpluna.58.com/i/LsnO3bh2J9tMeMj",
-          title: "二手",
-          id: 12
-        }, {
-          img: "http://img.yunxingzh.com/b119f07f-3666-4b4f-9218-a3bb1a9f7251.png",
-          dst: "https://jumpluna.58.com/i/LsoLp0La1luDubj",
-          title: "租房",
-          id: 13
-        }, {
-          img: "http://img.yunxingzh.com/43dcf196-fdca-4817-82c5-1b209bb22ec1.png",
-          dst: "https://jumpluna.58.com/i/LsnOzrKa1luDubj",
-          title: "家政",
-          id: 14
-        }, {
-          img: "http://img.yunxingzh.com/4774e039-c120-4eee-8c4f-e3bc55a60205.png",
-          dst: "https://jumpluna.58.com/i/LsnPDcUa1luDwQM",
-          title: "更多",
-          id: 15
-        },{
-          img: "http://img.yunxingzh.com/5acbd849-93c2-4a2b-b461-2270fc80bfdc.png",
-          dst: "https://jumpluna.58.com/i/LsnNUMya1luDwQM",
-          title: "招聘",
-          id: 16
-        }, {
-          img: "http://img.yunxingzh.com/98baedd0-fdad-4f08-92eb-4b99907e3168.png",
-          dst: "https://jumpluna.58.com/i/LsnO3bh2J9tMeMj",
-          title: "二手",
-          id: 17
-        }, {
-          img: "http://img.yunxingzh.com/b119f07f-3666-4b4f-9218-a3bb1a9f7251.png",
-          dst: "https://jumpluna.58.com/i/LsoLp0La1luDubj",
-          title: "租房",
-          id: 18
-        }, {
-          img: "http://img.yunxingzh.com/43dcf196-fdca-4817-82c5-1b209bb22ec1.png",
-          dst: "https://jumpluna.58.com/i/LsnOzrKa1luDubj",
-          title: "家政",
-          id: 19
-        }, {
-          img: "http://img.yunxingzh.com/4774e039-c120-4eee-8c4f-e3bc55a60205.png",
-          dst: "https://jumpluna.58.com/i/LsnPDcUa1luDwQM",
-          title: "更多",
-          id: 20
-        }]
-      }]
     }
   }, 
   mounted() {
@@ -179,9 +71,14 @@ export default {
         if (resp.errno === 0) {
           this.infos = resp.data;
         } else {
-          this.tipBox(resp.desc);
+          console.log(resp);
+          //this.tipBox(resp.desc);
         }
       })
+    },
+    openLink(ban) {
+      console.log(ban.dst);
+      window.open(ban.dst);
     },
     tipBox(val) {
       this.tips.msg = val;
