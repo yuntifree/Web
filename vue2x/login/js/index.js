@@ -89,22 +89,14 @@ var JPlaceHolder = {
         } else {
           $('.login').append(template('tplPc', {}));
         }
-        var height = document.documentElement.clientHeight;
-        $('html').css('height',height);
-        $('.login').css('height','100%');
        } else {
-        var height = 0.0;
         if (autologin) {
+          setToptpl();
           $('.login').append(template('tplOnelogin', {}));
-          $('.login').append(template('tplBottom', ads));
-          height = screenWidth * (460/750);
         } else {
+          setToptpl();
           $('.login').append(template('tplIptlogin', {}));
-          $('.login').after(template('tplBottom', ads));
-          height = screenWidth * (240/750);
         }  
-        $('.login-top').css('height',height);
-        setTimeout(function(){setHeight()},300);
       }
       initUI();
     } else {
@@ -112,6 +104,13 @@ var JPlaceHolder = {
     }
   });
 })()
+function setToptpl() {
+  if (checkVideo()) {
+    $('.login').append(template('tplVideotop', {}));
+  } else {
+    $('.login').append(template('tplImgtop', {}));
+  }
+}
 
 function setHeight() {
   var height = document.documentElement.clientHeight;
@@ -295,5 +294,36 @@ function loginDone(info) {
     window.open(firsturl, '_blank');
   } else {
     window.open(url, '_blank');
+  }
+}
+function checkVideo() {
+  if (!!document.createElement('video').canPlayType) {
+    var vidTest = document.createElement("video");
+    oggTest = vidTest.canPlayType('video/ogg; codecs="theora, vorbis"');
+    if (!oggTest) {
+      h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+      if (!h264Test) {
+        return false;
+      }
+      else {
+        if (h264Test == "probably") {
+            return true;
+        }
+        else {
+            return false;
+        }
+      }
+    }
+    else {
+      if (oggTest == "probably") {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+  }
+  else {
+    return false;
   }
 }

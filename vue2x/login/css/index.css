@@ -15,6 +15,9 @@ html{
   color:#000;
   background:#f7f7f7;
   font-size: 100px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -102,6 +105,9 @@ input,textarea,select,button{
 legend{
   color:#000;
 }
+video {
+  background-color: #000;
+}
 #yui3-css-stamp.cssreset{ display:none;}
 /*清除浮动*/
 .g-cl{clear: both;}
@@ -137,13 +143,54 @@ legend{
 }
 .login {
   width: 100%;
-  height: auto;
+  height: 100%;
 }
-.login-top,
 .login-top-bg {
   width: 100%;
   height: auto;
   position: relative;
+}
+.login-top {
+  width: 100%;
+  max-height: 60%;
+  overflow: hidden;
+  position: relative;
+}
+.login-top img {
+  width: 100%;
+  height: auto;
+}
+
+.login-bottom {
+  width: 100%;
+  height: auto;
+  max-height: 40%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 0.45rem;
+}
+.login-ipt-box {
+  width: 2.69rem;
+  height: auto;
+  margin: 0 auto;
+}
+.login-ipt-inner {
+  position: relative;
+  margin-bottom: 0.2rem;
+}
+.login-ipt {
+  width: 1.69rem;
+  padding: 0.04rem;
+  font-size: 0.14rem;
+  border: 1px solid #c8c8c8;
+}
+
+.login-bottom-company {
+  line-height: 0.2rem;
+  font-size: 0.14rem;
+  color: #4a4a4a;
+  width: 100%;
 }
 .login-logo {
   width: 1.2rem;
@@ -158,10 +205,10 @@ legend{
 }
 .top-text {
   width: 100%;
-  font-size: 0.36rem;
-  color: #5a5a5a;
+  font-size: 0.24rem;
   text-align: center;
-  margin-top: 0.48rem;
+  color: #9b9b9b;
+  margin-bottom: 0.42rem;
 }
 .oneclick-text {
   position: absolute;
@@ -170,14 +217,20 @@ legend{
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
 }
+.vedio-top-text {
+  bottom: -0.3rem;  
+}
 .input-main {
-  width: 70%;
+  width: 5.38rem;
   margin: 0.3rem auto 0;
 }
 .input-info {
-  width: 100%;
-  padding: 0.42rem 0 0;
+  width: 3.38rem;
+  padding: 0.06rem 0;
   position: relative;
+  border: 1px solid #979797;
+  border-radius: 0.08rem;
+  margin-bottom: 0.42rem;
 }
 .input-img {
   display: block;
@@ -191,21 +244,14 @@ legend{
   display: block;
 }
 .input-info input {
-  width: 91%;
+  width: 2.7rem;
   height: auto;
   padding: 0.1rem 0;
-  border-bottom: 1px solid #c8c8c8;
   font-size: 0.32rem;
   color: #000;
 }
-.input-info input::placeholder {
-  color: #c8c8c8;
-}
-.input-info input::-webkit-input-placeholder {
-  color: #c8c8c8;
-}
 .query-code {
-  padding-left: 0.08rem;
+  padding-left: .08rem;
   position: absolute;
   top: 65%;
   right: 0;
@@ -218,6 +264,16 @@ legend{
   color: #00a0fb;
   border-left: 1px solid #00a0fb;
 }
+.mob-query-code {
+  width: 1.74rem;
+  line-height: 0.6rem;
+  border-radius: 0.08rem;
+  border: solid 1px #00a0fb;
+  right: -2rem;
+  top:  50%;
+  padding-left: 0;
+  text-align: center;
+}
 .btn {
   display: block;
   width: 100%;
@@ -229,16 +285,51 @@ legend{
   color: #fff;
   text-align: center;
 }
-.login-bottom {
-  width: 100%;
-  height: auto;
-  margin-top: 0.6rem;
+.mob-btn {
+    margin-top: 0.6rem;
+}
+.click-btn {
+  width: 1.74rem;
+  line-height: 0.6rem;
+  position: absolute;
+  border-radius: 0.08rem;
+  right: -2rem;
+  top:  0;
+  text-align: center;
+  font-size: 0.28rem;
+  margin-top: 0;
 }
 .company-img {
   width: 70%;
   height: auto;
   display: block;
   margin:  0 auto;
+}
+.login-bottom-company {
+  width: 5.16rem;
+  line-height: 0.4rem;
+  margin: 0 auto;
+  font-size: 0.28rem;
+  color: #4a4a4a;
+  margin-top: 0.8rem;
+  padding-left: 0.56rem;
+  position: relative;
+}
+
+.login-bottom-company:before {
+  display: block;
+  content: '';
+  width: 0.42rem;
+  height: 0.42rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('../images/ico_login_logo_small.png');
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+.onelogin-bottom-company {
+  margin-top: 1.2rem;
 }
 .app-ads {
   width: 100%;
@@ -304,9 +395,7 @@ legend{
   font-size: 16px;
   color: #5a5a5a;
 }
-.mob-btn {
-    margin-top: 0.6rem;
-}
+
 .pc-input-info {
   width: 246px;
   padding: 20px 0 0;
