@@ -106,6 +106,8 @@ legend{
   color:#000;
 }
 video {
+  width:100%;
+  height: auto;
   background-color: #000;
 }
 #yui3-css-stamp.cssreset{ display:none;}
