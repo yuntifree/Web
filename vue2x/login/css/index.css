@@ -108,7 +108,12 @@ legend{
 video {
   width:100%;
   height: auto;
-  background-color: url('../images/mob_img_bg.png');
+  /*background: url('../images/mob_img_bg.png') no-repeat center center;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -ms-background-size: cover;*/
 }
 #yui3-css-stamp.cssreset{ display:none;}
 /*清除浮动*/

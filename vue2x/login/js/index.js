@@ -105,8 +105,14 @@ var JPlaceHolder = {
   });
 })()
 function setToptpl() {
+  console.log(checkVideo());
   if (checkVideo()) {
-    $('.login').append(template('tplVideotop', {}));
+    var type = navigator.userAgent.toLowerCase();
+    if (type.indexOf("huawei") >= 0 ) {   
+       $('.login').append(template('tplImgtop', {}));
+    } else {
+      $('.login').append(template('tplVideotop', {}));
+    }
   } else {
     $('.login').append(template('tplImgtop', {}));
   }
@@ -297,33 +303,30 @@ function loginDone(info) {
   }
 }
 function checkVideo() {
+  var ret = false;
   if (!!document.createElement('video').canPlayType) {
     var vidTest = document.createElement("video");
     oggTest = vidTest.canPlayType('video/ogg; codecs="theora, vorbis"');
     if (!oggTest) {
       h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
       if (!h264Test) {
-        return false;
-      }
-      else {
+        ret =  false;
+      } else {
         if (h264Test == "probably") {
-            return true;
-        }
-        else {
-            return false;
+            ret =  true;
+        } else {
+            ret = false;
         }
       }
-    }
-    else {
+    } else {
       if (oggTest == "probably") {
-        return true;
-      }
-      else {
-        return false;
+        ret =  true;
+      } else {
+        ret =  false;
       }
     }
+  } else {
+    ret =  false;
   }
-  else {
-    return false;
-  }
+  return ret;
 }
