@@ -8,11 +8,11 @@ var ads = {
 var timer;
 
 var query = CGI.query();
-var wlanacname = query.wlanacname || '2043.0769.200.00';
-var wlanuserip = query.wlanuserip || '10.96.72.28';
-var wlanacip = query.wlanacip || '120.197.159.10';
-var wlanusermac = query.wlanusermac || 'f45c89987347';
-var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';
+var wlanacname = query.wlanacname || '';//'2043.0769.200.00';
+var wlanuserip = query.wlanuserip || '';//'10.96.72.28';
+var wlanacip = query.wlanacip || '';//'120.197.159.10';
+var wlanusermac = query.wlanusermac || '';//'f45c89987347';
+var firsturl = query.wlanuserfirsturl || '';//'http://www.baidu.com';
 var autologin = 0;
 
 //判断浏览器类型
