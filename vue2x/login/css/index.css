@@ -15,9 +15,9 @@ html{
   color:#000;
   background:#f7f7f7;
   font-size: 100px;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  /* width: 100%;
+  height: 100%; 
+  overflow: hidden;*/
 }
 
 html, body, div, span, applet, object, iframe,
@@ -171,10 +171,6 @@ video {
 .login-bottom {
   width: 100%;
   height: auto;
-  max-height: 40%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
   padding-bottom: 0.45rem;
 }
 .login-ipt-box {
@@ -322,7 +318,7 @@ video {
   margin: 0 auto;
   font-size: 0.28rem;
   color: #4a4a4a;
-  margin-top: 0.8rem;
+  margin-top: 0.4rem;
   padding-left: 0.56rem;
   position: relative;
 }
@@ -483,6 +479,12 @@ video {
   left: 50%;
   bottom: 57px;
   margin-left: -113px;
+}
+.a-simulate {
+  display: block;
+  width: 1px;
+  height: 1px;
+  background-color: #fff;
 }
 
 

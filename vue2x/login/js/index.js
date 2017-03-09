@@ -1,3 +1,121 @@
+var ajax = $.ajax;
+
+var CGI = {
+ // HOST: 'http://120.25.133.234/',
+  HOST: 'http://120.76.236.185/',
+  CGI: '/',
+
+  /**
+   * HTTP Get for cgi
+   */
+
+  get: function(action, param, callback) {
+    var url = this.HOST + action + '?' + this.makeParam(param) + '&term=2';
+    var opt = {
+      type: 'GET',
+      url: url,
+      contentType: 'application/json',
+      cache: false,
+      timeout: 2000,
+      dataType: 'jsonp',
+      jsonp: 'callback',
+      success: function(data) {
+        callback(data);
+      },
+      error: function(req, text) {
+        callback({
+          errno: 99,
+          desc: '网络有些慢，请稍后重试:' + text
+        });
+      }
+    };
+    // call ajax
+    try {
+      ajax(opt);
+    } catch (e) {
+      console.log(JSON.stringify(e));
+    }
+  },
+
+  /**
+   * HTTP Post
+   */
+
+  post: function(action, param, callback) {
+    var p = {
+      data: param,
+      term: 2,
+      version: 1
+    };
+
+    var url = this.CGI + action;
+
+    try {
+      ajax({
+        type: 'POST',
+        url: url,
+        contentType: 'application/json',
+        dataType: 'json',
+        timeout: 5000,
+        data: JSON.stringify(p),
+        success: function(data) {
+          callback(data);
+        },
+        error: function() {
+          callback({
+            errno: 99,
+            desc: '网络有些慢，请稍后重试~'
+          });
+        }
+      });
+    } catch (e) {
+      console.log(JSON.stringify(e));
+    }
+  },
+
+  /**
+   * make get param
+   */
+
+  makeParam: function(param) {
+    var ret = [];
+    for (var idx in param) {
+      ret.push(idx + '=' + encodeURIComponent(param[idx]));
+    }
+    return ret.join('&');
+  },
+  query: function() {
+    //var url = window.document.location.search.toString().substr(1);
+    var url = window.document.location.href.toString();
+    url = url.substr(url.indexOf('?') + 1);
+    if (typeof(url) === 'string') {
+      var u = url.split('&');
+      var get = {};
+      for (var i in u) {
+        if (typeof(u[i]) === 'string') {
+          var j = u[i].split('=');
+          get[j[0]] = j[1];
+        }
+      }
+      return get;
+    } else {
+      return {};
+    }
+  },
+  checkTel: function(tel) {
+    //var isPhone = /^([0-9]{3,4})?[0-9]{7,8}$/;
+    var isMob = /^((\+?86)|(\(\+86\)))?(1[0-9]{10})$/;
+    //var isNum=/^\+?[1-9][0-9]||isNum.test(tel)*$/;
+    var ret = isMob.test(tel);
+    return ret;
+  },
+  isIE: function() {
+    var userAgent = navigator.userAgent;
+    var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
+    return userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
+  }
+}
+
 var ads = {
   img: 'images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless',
@@ -12,7 +130,8 @@ var wlanacname = query.wlanacname || '';//'2043.0769.200.00';
 var wlanuserip = query.wlanuserip || '';//'10.96.72.28';
 var wlanacip = query.wlanacip || '';//'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';//'f45c89987347';
-var firsturl = query.wlanuserfirsturl || '';//'http://www.baidu.com';
+var wlanapmac = query.wlanapmac || ''; 
+var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';//'http://www.baidu.com';
 var autologin = 0;
 
 //判断浏览器类型
@@ -89,6 +208,9 @@ var JPlaceHolder = {
         } else {
           $('.login').append(template('tplPc', {}));
         }
+        var height = document.documentElement.clientHeight;
+        $('html').css('height',height);
+        $('.login').css('height','100%');
        } else {
         if (autologin) {
           setToptpl();
@@ -96,7 +218,9 @@ var JPlaceHolder = {
         } else {
           setToptpl();
           $('.login').append(template('tplIptlogin', {}));
-        }  
+        } 
+        $('.login-top').css('height',screenWidth);
+        setTimeout(function(){setHeight()},300); 
       }
       initUI();
     } else {
@@ -104,14 +228,20 @@ var JPlaceHolder = {
     }
   });
 })()
+
 function setToptpl() {
-  console.log(checkVideo());
   if (checkVideo()) {
     var type = navigator.userAgent.toLowerCase();
     if (type.indexOf("huawei") >= 0 ) {   
        $('.login').append(template('tplImgtop', {}));
     } else {
       $('.login').append(template('tplVideotop', {}));
+      setTimeout(function(){
+        var video = document.querySelector('video');
+        enableInlineVideo(video,{
+          ipad: true
+        });
+      },500);  
     }
   } else {
     $('.login').append(template('tplImgtop', {}));
@@ -121,10 +251,7 @@ function setToptpl() {
 function setHeight() {
   var height = document.documentElement.clientHeight;
   var htmlHeight = $('html').height();
-  if (height > htmlHeight) {
-   /*if(height < 500) {
-       height = 520;
-    }*/   
+  if (height > htmlHeight) {   
    $('html').css('height',height);
     $('.login-bottom').css('position','absolute');
     $('.login-bottom').css('left', 0);
@@ -297,9 +424,10 @@ function loginDone(info) {
   $('.ipt-code').val('');
   var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
-    window.open(firsturl, '_blank');
+    //window.open(firsturl, '_blank');
+    simulate(firsturl)
   } else {
-    window.open(url, '_blank');
+    simulate(url)
   }
 }
 function checkVideo() {
@@ -329,4 +457,11 @@ function checkVideo() {
     ret =  false;
   }
   return ret;
+}
+function simulate(url) {
+  var ev = document.createEvent('HTMLEvents');
+  var el = $('.a-simulate').get(0);
+  ev.initEvent('click', false, true);
+  $('.a-simulate').attr("href",url); 
+  el.dispatchEvent(ev);
 }
