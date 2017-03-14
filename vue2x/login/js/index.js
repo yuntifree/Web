@@ -12,6 +12,7 @@ var wlanacname = query.wlanacname || ''; //'2043.0769.200.00';
 var wlanuserip = query.wlanuserip || ''; //'10.96.72.28';
 var wlanacip = query.wlanacip || ''; //'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';
+var wlanapmac = query.wlanapmac || '';
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';
 var autologin = 0;
 
@@ -79,7 +80,7 @@ var JPlaceHolder = {
     wlanacname: wlanacname
   };
   var screenWidth = document.documentElement.clientWidth;
-  CGI.post('check_login', param, function(resp) {
+  CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
@@ -212,7 +213,7 @@ function getCode() {
     phone: phone,
     wlanacname: wlanacname
   };
-  CGI.post('get_check_code', param, function(resp) {
+  CGI.get('get_check_code', param, function(resp) {
     if (resp.errno === 0) {
       tipShow('获取成功');
       var seconds = 60;
@@ -241,7 +242,8 @@ function tripEnd(e) {
     wlanacname: wlanacname,
     wlanuserip: wlanuserip,
     wlanacip: wlanacip,
-    wlanusermac: wlanusermac
+    wlanusermac: wlanusermac,
+    wlanapmac: wlanapmac
   };
 
   if (autologin) {
@@ -262,7 +264,7 @@ function tripEnd(e) {
 }
 
 function portalLogin(param) {
-  CGI.post('portal_login', param, function(resp) {
+  CGI.get('portal_login', param, function(resp) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
@@ -277,7 +279,7 @@ function portalLogin(param) {
 }
 
 function oneClickLogin(param) {
-  CGI.post('one_click_login', param, function(resp) {
+  CGI.get('one_click_login', param, function(resp) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
@@ -290,7 +292,7 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&wlanuserip='+ wlanuserip + '&wlanusermac='+ wlanusermac + '&wlanapmac='+ wlanapmac+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
     //window.open(firsturl, '_blank');
