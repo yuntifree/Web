@@ -2,20 +2,14 @@ var ajax = $.ajax;
 //var __DEV__ = true;
 window.CGI = {
   HOST: 'http://120.25.133.234/',
-  HOST2: 'http://api.yunxingzh.com/test',
   CGI: '/',
 
   /**
    * HTTP Get for cgi
    */
 
-  get: function(getType, action, param, callback) {
-    var url = ''
-    if (getType) {
-      url = this.HOST + action + '?term=2&' +this.makeParam(param);
-    } else {
-      url = action;
-    }
+  get: function(action, param, callback) {
+    var  url = this.HOST + action + '?term=2&' +this.makeParam(param);
     var opt = {
       type: 'GET',
       url: url,
