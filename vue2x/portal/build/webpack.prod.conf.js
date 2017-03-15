@@ -45,7 +45,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
+    /*new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
         ? 'web.htmviewl'
         : config.build.index,
@@ -62,7 +62,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency',
       chunks: ['manifest','vendor','app']
     }),
-    new HtmlWebpackPlugin({
+*/    new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
         ? 'web.htmviewl'
         : config.build.wifilink,
