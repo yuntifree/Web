@@ -80,7 +80,7 @@ var JPlaceHolder = {
     wlanacname: wlanacname
   };
   var screenWidth = document.documentElement.clientWidth;
-  CGI.get('check_login', param, function(resp) {
+  CGI.get(true, 'check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
@@ -112,6 +112,9 @@ var JPlaceHolder = {
       tipShow(resp.desc);
     }
   });
+  CGI.get(false, 'http://api.yunxingzh.com/test', {}, (resp)=> {
+    if (resp.errno ===0) {} else {}
+  })
 })()
 
 function setHeight() {
@@ -213,7 +216,7 @@ function getCode() {
     phone: phone,
     wlanacname: wlanacname
   };
-  CGI.get('get_check_code', param, function(resp) {
+  CGI.get(true, 'get_check_code', param, function(resp) {
     if (resp.errno === 0) {
       tipShow('获取成功');
       var seconds = 60;
@@ -264,7 +267,7 @@ function tripEnd(e) {
 }
 
 function portalLogin(param) {
-  CGI.get('portal_login', param, function(resp) {
+  CGI.get(true, 'portal_login', param, function(resp) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
@@ -279,7 +282,7 @@ function portalLogin(param) {
 }
 
 function oneClickLogin(param) {
-  CGI.get('one_click_login', param, function(resp) {
+  CGI.get(true, 'one_click_login', param, function(resp) {
     if (resp.errno === 0) {
       loginDone(resp.data);
     } else {
