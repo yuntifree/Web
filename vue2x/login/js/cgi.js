@@ -1,7 +1,7 @@
 var ajax = $.ajax;
 //var __DEV__ = true;
 window.CGI = {
-  HOST: 'http://120.76.236.185/',
+  HOST: 'http://120.25.133.234/',
   CGI: '/',
 
   /**
@@ -9,7 +9,7 @@ window.CGI = {
    */
 
   get: function(action, param, callback) {
-    var url = this.HOST + action + '?' +this.makeParam(param);
+    var url = this.HOST + action + '?term=2&' +this.makeParam(param);
     var opt = {
       type: 'GET',
       url: url,
