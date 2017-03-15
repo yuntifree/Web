@@ -23,7 +23,7 @@
         <div>
           <div class="quick_search">
             <i class="iconfont icon-search"></i>
-            <input class="ipt-search" type="text" placeholder="ID/电话/用户名"
+            <input class="ipt-search" type="text" placeholder="标题/title"
               v-model.trim="search" @keyup.enter="doSearch(true)">
           </div>
           <button class="btn btn-default btn-ssm" @click="getData(true)">刷新</button>
@@ -340,7 +340,6 @@ export default {
         this.alertInfo('请输入搜索信息');
         return;
       }
-      console.log(first);
       if (first) {
         this.pageCfg.currentPage = 1;
         this.pageCfg.start = 0;

@@ -67,6 +67,22 @@
     "name": "setPortalMenu",
     "icon": "yonghuxinxi"
     }]
+  },{
+    "title":"广告管理",
+    "show": false,
+    "menus": [{
+      "title": "广告统计",
+      "name": "adCount",
+      "icon": "icons01"
+      },{
+      "title": "广告管理",
+      "name": "adManage",
+      "icon": "icon"
+      },{
+      "title": "合作方管理",
+      "name": "adCooperate",
+      "icon": "yonghuxinxi"
+    }]
   }],
   "0": [{
     "title": "用户管理",

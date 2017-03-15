@@ -36,6 +36,10 @@ import setActivity from './components/views/setActivity.vue'
 import setWeb from './components/views/setWeb.vue'
 import setAndroid from './components/views/setAndroid.vue'
 import setPortalMenu from './components/views/setPortalmenu.vue'
+import adCount from './components/views/setPortalmenu.vue'
+import adManage from './components/views/adManage.vue'
+import adCooperate from './components/views/setPortalmenu.vue'
+
 export default {
   name: 'app',
   data() {
@@ -74,7 +78,10 @@ export default {
     setActivity,
     setWeb,
     setAndroid,
-    setPortalMenu
+    setPortalMenu,
+    adCount,
+    adManage,
+    adCooperate
   },
   // for share components View using.
   mounted() {

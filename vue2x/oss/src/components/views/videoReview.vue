@@ -23,9 +23,9 @@
           <div class="quick_search">
             <i class="iconfont icon-search"></i>
             <input class="ipt-search" type="text" placeholder="ID/电话/用户名"
-              v-model="search">
+              v-model.trim="search" @keyup.enter="doSearch(true)">
           </div>
-          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
+          <button class="btn btn-default btn-ssm" @click="getData(true)">刷新</button>
         </div>
       </header>
       <!--table-->
@@ -199,7 +199,9 @@ export default {
         num: 30,
         type: this.selected.number
       }
-
+      this.dataPost(param);
+    },
+    dataPost(param) {
       CGI.post(this.$store.state, 'get_videos', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
@@ -291,12 +293,33 @@ export default {
     },
     handleCurrentChange(val) {
       this.pageCfg.start = (val-1)*30;
-      this.getData(false);
+      if (this.search.length > 0) {
+        this.doSearch(false);
+      } else {
+        this.getData(false);
+      }
       console.log(`当前页: ${val}`);
     },
     alertInfo(val) {
       this.alertShow = true;
       this.alertMsg = val;
+    },
+    doSearch(first) {
+      if (this.search.length <= 0) {
+        this.alertInfo('请输入搜索信息');
+        return;
+      }
+      if (first) {
+        this.pageCfg.currentPage = 1;
+        this.pageCfg.start = 0;
+      }
+      var param = {
+        seq: this.pageCfg.start,
+        num: 30,
+        type: this.selected.number,
+        search: this.search
+      }
+      this.dataPost(param);
     }
   }
 }
