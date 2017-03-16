@@ -238,6 +238,10 @@ function tripStart(e) {
 
 function tripEnd(e) {
   $('.btn').css('backgroundColor', '#00a0fb');
+  $('.btn').attr('disabled', true);
+  setTimeout(function() {
+    $('.btn').attr('disabled', false);
+  },200)
   var param = {
     wlanacname: wlanacname,
     wlanuserip: wlanuserip,
