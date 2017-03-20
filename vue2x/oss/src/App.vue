@@ -36,9 +36,9 @@ import setActivity from './components/views/setActivity.vue'
 import setWeb from './components/views/setWeb.vue'
 import setAndroid from './components/views/setAndroid.vue'
 import setPortalMenu from './components/views/setPortalmenu.vue'
-import adCount from './components/views/setPortalmenu.vue'
+import adCount from './components/views/adCount.vue'
 import adManage from './components/views/adManage.vue'
-import adCooperate from './components/views/setPortalmenu.vue'
+import adCooperate from './components/views/adCooperate.vue'
 
 export default {
   name: 'app',
@@ -290,6 +290,10 @@ button>i {
   box-shadow:0 3px 9px rgba(0,0,0,0.5);
   border-radius: 6px;
   padding: 10px;
+  max-width:600px;
+  width: 70%;
+  height: 60%;
+  overflow: auto
 }
 .el-alert {
   width: auto;

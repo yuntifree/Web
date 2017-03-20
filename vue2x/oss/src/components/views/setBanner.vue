@@ -69,6 +69,11 @@
               </el-table-column>
               <el-table-column
                 inline-template
+                label="是否测试">
+                <div>{{row.dbg?'是':'否'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
                 label="过期时间">
                 <div>{{row.expire | dateFormat('yyyy-MM-dd hh:mm:ss')}}</div>
               </el-table-column>
@@ -110,6 +115,18 @@
             </el-form-item>
             <el-form-item label="优先级" v-show="!modal.addShow">
               <el-input type="number" v-model.number="postInfo.priority"></el-input>
+            </el-form-item>
+            <el-form-item label="测试">
+              <el-radio-group v-model="postInfo.dbg">
+                <el-radio label="1">是</el-radio>
+                <el-radio label="0">否</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="上线">
+              <el-radio-group v-model="postInfo.online">
+                <el-radio label="1">上线</el-radio>
+                <el-radio label="0">下线</el-radio>
+              </el-radio-group>
             </el-form-item>
             <el-form-item v-if="!modal.addShow" label="过期时间">
                 <el-input disabled v-model="postInfo.expire"></el-input>
@@ -187,9 +204,10 @@ export default {
         title: '',
         img: '',
         dst: '',
-        online: 0,
+        online: '0',
         priority: 0, 
-        expire: ''
+        expire: '',
+        dbg: '0',
       },
       dateInfo: {
         date1: '',
@@ -240,6 +258,18 @@ export default {
         if (resp.errno === 0) {
           var data = resp.data;
           this.infos = data.infos;
+          if (!this.infos) {
+            this.infos = [];
+          } else if (this.infos && this.infos.length > 0){
+            this.infos.forEach(function(item) {
+              if(!item.online) {
+                item.online = 0;
+              }
+              if(!item.dbg) {
+                item.dbg = 0;
+              }
+            })
+          }
           this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
@@ -281,12 +311,17 @@ export default {
         param.type = this.selected.number;
         action = 'add_banner';
       } else {
-        console.log(JSON.stringify(this.postInfo));
-        param = CGI.objModified(this.infos[this.selIdx], this.postInfo);
+        var postInfo = CGI.clone(this.postInfo);
+        postInfo.online = ~~postInfo.online;
+        postInfo.dbg = ~~postInfo.dbg;
+        param = CGI.objModified(this.infos[this.selIdx], postInfo);
         console.log(JSON.stringify(this.infos[this.selIdx]));
         if(!param['online']) {
-          param.online = this.infos[this.selIdx].online || 0;
+          param.online = ~~this.infos[this.selIdx].online || 0;
         } 
+        if(!param['dbg']) {
+          param.online = ~~this.infos[this.selIdx].dbg || 0;
+        }
         if (CGI.emptyObj(param)) {
           this.modal.editShow = false;
           this.selIdx = -1;
@@ -310,6 +345,9 @@ export default {
         param.id = this.infos[this.selIdx].id;
         action = 'mod_banner';
       } 
+      param.dbg = ~~param.dbg;
+      param.online = ~~param.online;
+      console.log(JSON.stringify(param));
       CGI.post(this.$store.state, action, param, (resp)=> {
         if (resp.errno === 0) {
           if (addBanner) {
@@ -347,10 +385,10 @@ export default {
         this.alertInfo('请输入图片地址');
         ret = false;
       }
-      if (this.postInfo.dst.length <= 0) {
+      /*if (this.postInfo.dst.length <= 0) {
         this.alertInfo('请输入跳转地址');
         ret = false;
-      } 
+      }*/ 
       if (this.modal.addShow) {
         if (this.dateInfo.date1.length <= 0) {
           this.alertInfo('请选择过期日期');
