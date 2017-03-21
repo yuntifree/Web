@@ -74,7 +74,7 @@
 </style>
 <template>
 <div class="newshot">
-  <div> 
+  <div>
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -166,11 +166,10 @@ export default {
             this.items = list;
             this.useCache = true;
             this.$nextTick(function() {
-              window.scroll(0, scrollY);
+              window.scroll(0, ~~scrollY);
             })
           }
         }
-        sessionStorage.clear();
       }
       if (!this.useCache) {
         this.getData()
@@ -220,8 +219,8 @@ export default {
           setTimeout(()=>{
             this.getData(this.items[len].seq);
           },1000)
-        }                       
-      }    
+        }
+      }
     },
     link(item) {
       item.visited = true;

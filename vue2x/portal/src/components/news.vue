@@ -16,7 +16,6 @@ var uid = ~~(query.uid) || 0;
 var token = query.token || '';
 
 export default {
-  name: 'news',
   data() {
     return {
       tabIdx: -1,
