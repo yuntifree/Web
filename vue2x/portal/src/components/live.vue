@@ -4,7 +4,7 @@
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
     <div class="live-body g-clearfix">
       <div class="liveBox-li"  v-for="item in items" @click="liveReport">
-        <a :href="getLiveurl(item)" target="_blank">
+        <a :href="getLiveurl(item)">
           <span class="liveBox-li-head">
             <img :src="item.img" width="100%" :height="imgHeight">
             <em class="liveBox-li-status">{{item.live ? '直播':''}}</em>

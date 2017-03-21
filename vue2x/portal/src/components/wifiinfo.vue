@@ -242,7 +242,7 @@
         </div>
         <ul class="menu-list g-clearfix">
           <li class="g-fl list-item" v-for="(list,index) in menu.menulist">
-            <a :href="getOpenLink(list,index)" target="_blank">
+            <a :href="getOpenLink(list,index)" :target="index < 5 ? '_blank' : ''">
             <img :src="list.icon">
             <span class="g-tac title-name" v-text="list.text"></span>
             </a>
