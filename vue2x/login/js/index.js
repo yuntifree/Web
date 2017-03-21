@@ -309,7 +309,7 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&wlanuserip='+ wlanuserip + '&wlanusermac='+ wlanusermac + '&wlanapmac='+ wlanapmac+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&portaltype=' + info.portaltype + '&adtype=' + info.adtype +'&wlanuserip='+ wlanuserip + '&wlanusermac='+ wlanusermac + '&wlanapmac='+ wlanapmac+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
     //window.open(firsturl, '_blank');
