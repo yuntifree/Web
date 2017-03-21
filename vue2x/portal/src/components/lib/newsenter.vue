@@ -2,7 +2,7 @@
 </style>
 <template>
 <div class="newslist" ref="newsenter">
-  <div> 
+  <div>
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -92,7 +92,7 @@ export default {
             this.items = list;
             this.useCache = true;
             this.$nextTick(function() {
-              window.scroll(0, scrollY);
+              window.scroll(0, ~~scrollY);
             })
           }
         }
@@ -139,13 +139,13 @@ export default {
         this.alertInfo('全都在这没有更多了');
       } else {
         var len = this.items.length-1;
-        if (!this.nomore && len >= 0) {    
+        if (!this.nomore && len >= 0) {
           this.loading = true;
           setTimeout(()=>{
             this.getData(this.items[len].seq);
           },1000)
         }
-      }    
+      }
     },
     link(item) {
       item.visited = true;
@@ -153,20 +153,19 @@ export default {
       var pageHeight = document.documentElement.clientHeight;
       var delta = scrollY % pageHeight;
       scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
-      if (sessionStorage) { 
+      if (sessionStorage) {
         try {
           sessionStorage.setItem('scrollY_'+this.type, scrollY);
           sessionStorage.setItem('cache_'+this.type, JSON.stringify(this.items));
         } catch(e) {
         }
-      }  
+      }
       var param = {
         type: 1,
         id: item.id,
         uid: uid,
         token: token
       }
-      console.log(JSON.stringify(param));
       CGI.reportClick(param);
       location.href = item.dst;
     },
