@@ -2,7 +2,7 @@
   <div class="news top176">
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
-    <newsenter></enter>
+    <newsenter :type="5"></enter>
   </div>
 </template>
 
@@ -16,7 +16,6 @@ var uid = ~~(query.uid) || 0;
 var token = query.token || '';
 
 export default {
-  name: 'news',
   data() {
     return {
       tabIdx: -1,

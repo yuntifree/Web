@@ -2,7 +2,7 @@
   <div class="hotspot top176">
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
-    <newshot></newshot>
+    <newshot :type="0"></newshot>
   </div>
 </template>
 
@@ -16,7 +16,6 @@ var uid = ~~(query.uid) || 0;
 var token = query.token || '';
 
 export default {
-  name: 'hotspot',
   data() {
     return {
       tabIdx: -1

@@ -1,7 +1,7 @@
 <style lang="scss">
 </style>
 <template>
-<div class="newslist">
+<div class="newslist" ref="newsenter">
   <div> 
     <div v-for="item in items"
         class="item-container"
@@ -74,15 +74,18 @@ export default {
       useCache: false
     }
   },
+  props: {
+    type: Number
+  },
   components: {
     tip,
   },
   mounted() {
     this.$nextTick(()=>{
       // 存下union
-      var scrollY = sessionStorage.getItem('scrollY');
+      var scrollY = sessionStorage.getItem('scrollY_'+this.type);
       if (scrollY != null) {
-        var cache = sessionStorage.getItem('cache');
+        var cache = sessionStorage.getItem('cache_'+this.type);
         if (cache && cache.length > 0) {
           var list = JSON.parse(cache);
           if (list) {
@@ -152,8 +155,8 @@ export default {
       scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
       if (sessionStorage) { 
         try {
-          sessionStorage.setItem('scrollY', scrollY);
-          sessionStorage.setItem('cache', JSON.stringify(this.items));
+          sessionStorage.setItem('scrollY_'+this.type, scrollY);
+          sessionStorage.setItem('cache_'+this.type, JSON.stringify(this.items));
         } catch(e) {
         }
       }  
