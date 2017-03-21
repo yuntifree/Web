@@ -1,8 +1,10 @@
 <template>
   <div class="tab">
-    <ul class="menu-list" v-if="dataReady">
-      <li class="g-tac tab-list" v-for="(list,idx) in val.tablist" @click="tabClick(list,idx)"><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
-    </ul>
+    <div class="tab-menu">
+      <ul class="tab-menu-list" v-if="dataReady" :style="{width: 1.24 * val.tablist.length +'rem'}">
+        <li class="g-tac tab-list" v-for="(list,idx) in val.tablist" @click="tabClick(list,idx)"><span :class="{'span-bottom':selidx==idx}">{{list.text}}</span></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -79,11 +81,19 @@ export default {
   overflow-x: auto;
   z-index: 5;
   text-align: center;
+  overflow: hidden;
 }
-.menu-list {
+.tab-menu {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+.tab-menu-list {
   display: inline-block;
   width: auto;
-  height: 100%;
+  height: 0.88rem;
   margin: 0 auto; 
 }
 .tab-list{

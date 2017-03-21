@@ -74,15 +74,18 @@ export default {
       useCache: false
     }
   },
+  props: {
+    type: Number
+  },
   components: {
     tip,
   },
   mounted() {
     this.$nextTick(()=>{
       // 存下union
-      var scrollY = sessionStorage.getItem('scrollY');
+      var scrollY = sessionStorage.getItem('scrollY_'+this.type);
       if (scrollY != null) {
-        var cache = sessionStorage.getItem('cache');
+        var cache = sessionStorage.getItem('cache_'+this.type);
         if (cache && cache.length > 0) {
           var list = JSON.parse(cache);
           if (list) {
@@ -146,14 +149,15 @@ export default {
     },
     link(item) {
       item.visited = true;
+      console.log(JSON.stringify(item));
       var scrollY = window.scrollY;
       var pageHeight = document.documentElement.clientHeight;
       var delta = scrollY % pageHeight;
       scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
       if (sessionStorage) { 
         try {
-          sessionStorage.setItem('scrollY', scrollY);
-          sessionStorage.setItem('cache', JSON.stringify(this.items));
+          sessionStorage.setItem('scrollY_'+this.type, scrollY);
+          sessionStorage.setItem('cache_'+this.type, JSON.stringify(this.items));
         } catch(e) {
         }
       }  
@@ -163,7 +167,6 @@ export default {
         uid: uid,
         token: token
       }
-      console.log(JSON.stringify(param));
       CGI.reportClick(param);
       location.href = item.dst;
     },

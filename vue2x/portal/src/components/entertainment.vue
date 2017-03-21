@@ -2,7 +2,7 @@
   <div class="news top176">
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
-    <newsenter></enter>
+    <newsenter :type="tabIdx"></newsenter>
   </div>
 </template>
 

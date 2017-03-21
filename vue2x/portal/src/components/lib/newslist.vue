@@ -1,78 +1,5 @@
 <style lang="scss">
 @import '../../assets/css/common.scss';
-.item-container {
-  width: 94%;
-  margin: 0 auto;
-  border-bottom: 1px solid #e6e6e6;
-  padding: 0.24rem 0;
-}
-.item-title {
-  line-height: 150%;
-  font-size: 0.32rem;
-  color: $color43;
-  margin-bottom: 0.2rem;
-}
-.item-imgs {
-  margin: 0.15rem 0;
-}
-.item-imgs li{
-  overflow: hidden;
-}
-.list-img3 li {
-  @include containerSize(32%,1.48rem);
-  margin-right: 2%;
-}
-.item-imgs li:last-child {
-  margin-right: 0;
-}
-.img-list {
-  @include containerSize(100%, auto);
-  min-height: 1.5rem;
-  background-color: #f0f0f0;
-}
-.list1-info {
-  width: 4.54rem;
-  padding-right: 0.16rem;
-  text-align: justify;
-}
-.list-img1 {
-  @include containerSize(2.28rem, 1.5rem);
-  overflow: hidden;
-}
-.list-img1 img{
-  @include containerSize(100%, auto);
-  min-height: 1.5rem;
-}
-.item-desc {
-  font-size: 0.24rem;
-  color: $color84;
-}
-.item-visited {
-  color: $color84;
-}
-.item-desc span:first-child {
-  margin-right: 0.4rem;
-}
-.list1-item-title {
-  line-height: 0.46rem;
-}
-.adv-img {
-  @include containerSize(100%, auto);
-  max-height: 312rem;
-  overflow: hidden;
-}
-.adv-img img {
-  @include containerSize(100%, auto);
-}
-.adv-text {
-  padding: 0.02rem 0.12rem;
-  color: #f6c042;
-  border: 1px solid #f6c042;
-  border-radius: 0.08rem;
-}
-.more-desc {
-  line-height: 0.8rem;
-}
 </style>
 <template>
 <div class="newslist">
@@ -145,8 +72,11 @@ export default {
       ready: false,
       loading: false,
       nomore: false,
-      useCache: false
+      useCache: false,
     }
+  },
+  prop: {
+    type: Number
   },
   components: {
     tip,
@@ -154,11 +84,12 @@ export default {
   mounted() {
     this.$nextTick(()=>{
       // 存下union
-      var scrollY = sessionStorage.getItem('scrollY');
+      var scrollY = sessionStorage.getItem('scrollY_'+this.type);
       if (scrollY != null) {
-        var cache = sessionStorage.getItem('cache');
+        var cache = sessionStorage.getItem('cache_'+this.type);
         if (cache && cache.length > 0) {
           var list = JSON.parse(cache);
+          console.log(JSON.stringify(list));
           if (list) {
             this.items = list;
             this.useCache = true;
@@ -220,14 +151,15 @@ export default {
     },
     link(item) {
       item.visited = true;
+      console.log(JSON.stringify(item));
       var scrollY = window.scrollY;
       var pageHeight = document.documentElement.clientHeight;
       var delta = scrollY % pageHeight;
       scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
       if (sessionStorage) { 
         try {
-          sessionStorage.setItem('scrollY', scrollY);
-          sessionStorage.setItem('cache', JSON.stringify(this.items));
+          sessionStorage.setItem('scrollY_'+this.type, scrollY);
+          sessionStorage.setItem('cache_'+this.type, JSON.stringify(this.items));
         } catch(e) {
         }
       }  

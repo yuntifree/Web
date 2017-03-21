@@ -2,7 +2,7 @@
   <div class="hotspot top176">
     <download></download>
     <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
-    <newshot></newshot>
+    <newshot :type="tabIdx"></newshot>
   </div>
 </template>
 
