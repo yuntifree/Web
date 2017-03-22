@@ -52,10 +52,10 @@ export default {
           url = window.document.location.href.toString();
           switch (portaltype) {
             case 0: 
-              url = url.replace("index.html","wifilink.html");
+              url = url.replace("index2.html","wifilink.html");
               break;
             case 1:
-              url = url = url.replace("index.html","hospital.html");
+              url = url = url.replace("index2.html","hospital.html");
               break;
           }
           url = url + '#/'+ item.routername

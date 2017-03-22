@@ -75,27 +75,27 @@ export default {
   data () {
     return {
       doctors: [{
-        img: '../../../static/images/ico_login_logo.png',
+        img: '../static/images/ico_login_logo.png',
         name: '鲁大师',
         title: '内一科主任',
         desc: '急诊医学副主任医师',
       },{
-        img: '../../../static/images/ico_login_logo.png',
+        img: '../static/images/ico_login_logo.png',
         name: '鲁大师',
         title: '内一科主任',
         desc: '急诊医学副主任医师',
       },{
-        img: '../../../static/images/ico_login_logo.png',
+        img: '../static/images/ico_login_logo.png',
         name: '鲁大师',
         title: '内一科主任',
         desc: '急诊医学副主任医师',
       },{
-        img: '../../../static/images/ico_login_logo.png',
+        img: '../static/images/ico_login_logo.png',
         name: '鲁大师',
         title: '内一科主任',
         desc: '急诊医学副主任医师',
       },{
-        img: '../../../static/images/ico_login_logo.png',
+        img: '../static/images/ico_login_logo.png',
         name: '鲁大师',
         title: '内一科主任',
         desc: '急诊医学副主任医师',

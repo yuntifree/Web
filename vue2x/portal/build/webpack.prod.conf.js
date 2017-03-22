@@ -49,7 +49,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       filename: process.env.NODE_ENV === 'testing'
         ? 'web.htmviewl'
         : config.build.index,
-      template: 'index.html',
+      template: 'index2.html',
       inject: true,
       minify: {
         removeComments: true,
