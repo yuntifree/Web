@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-@import '../assets/css/common.scss';
+@import '../../assets/css/common.scss';
 .hospital-intro {
   @include containerSize(100%, auto);
   background-color: #F0F0F0;
@@ -115,8 +115,8 @@
 </template>
 
 <script>
-import tip from './lib/tip.vue'
-import CGI from '../lib/cgi'
+import tip from '../lib/tip.vue'
+import CGI from '../../lib/cgi'
 
 export default {
   name: 'videos',

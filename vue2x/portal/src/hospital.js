@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import wifilink from './wifilink.vue'
+import hospital from './wifilink.vue'
 import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 
@@ -12,12 +12,13 @@ var initFont = require('./common/font.js')
 initFont(true);
 /* eslint-disable no-new */
 
-import hospitalIntro from './components/hospitalIntro'
-import category from './components/lib/category'
-import news from './components/news'
-import hotspot from './components/hotspot.vue'
-import live from './components/live.vue'
-import entertainment from './components/entertainment.vue'
+import hospitalIntro from './components/hospital/hospitalIntro'
+import category from './components/hospital/category'
+import doctor from './components/hospital/doctor'
+import categoryItem from './components/hospital/categoryItem.vue'
+import doctorItem from './components/hospital/doctorItem.vue'
+import hospitalnews from './components/hospital/hospitalNews.vue'
+
 
 window.onerror =  function handleErr(msg,url,l) {
     var txt;
@@ -34,32 +35,32 @@ const router = new VueRouter({
   base: __public__,
   routes: [
     {
-      path: '/home',
-      name: 'home',
+      path: '/hospitalIntro',
+      name: 'hospitalIntro',
       component: hospitalIntro,
     },{
       path: '/category',
       name: 'category',
       component: category,
     },{
-      path: '/news',
-      name: 'news',
-      component: news,
+      path: '/doctor',
+      name: 'doctor',
+      component: doctor,
     },{
-      path: '/hotspot',
-      name: 'hotspot',
-      component: hotspot,
+      path: '/categoryItem',
+      name: 'categoryItem',
+      component: categoryItem,
     },{
-      path: '/live',
-      name: 'live',
-      component: live,
+      path: '/doctorItem',
+      name: 'doctorItem',
+      component: doctorItem,
     },{
-      path: '/entertainment',
-      name: 'entertainment',
-      component: entertainment,
+      path: '/hospitalnews',
+      name: 'hospitalnews',
+      component: hospitalnews,
     },{
       path: '*',
-      redirect: 'home',
+      redirect: 'hospitalIntro',
     }
   ]
 })
@@ -68,8 +69,8 @@ new Vue({
   store,
   router,
   el: '#hospital',
-  template: '<wifilink/>',
-  components: { wifilink },
+  template: '<hospital/>',
+  components: { hospital },
   mounted() {
     this.$nextTick(()=> {
       //alert('wifilink'+3);

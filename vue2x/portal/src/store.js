@@ -10,7 +10,9 @@ const state = {
   uid: 0,
   token: '',
   newsname: 0,
-  tabidx: 0
+  tabidx: 0,
+  doctorIdx: 0,
+  keshi: ''
 }
 
 export default new Vuex.Store({

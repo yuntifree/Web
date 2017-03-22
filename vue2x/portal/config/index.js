@@ -29,6 +29,7 @@ module.exports = {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../'+ distPath +'/index.html'),
     wifilink: path.resolve(__dirname, '../'+ distPath +'/wifilink.html'),
+    hospital: path.resolve(__dirname, '../'+ distPath +'/hospital.html'),
     assetsRoot: path.resolve(__dirname, '../' + distPath),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/'+ distPath + '/',

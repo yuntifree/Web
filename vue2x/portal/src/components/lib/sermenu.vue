@@ -5,7 +5,7 @@
       <ul class="service-list g-clearfix">
         <li class="g-fl list-item g-tac" v-for="(item,index) in ser.items"
             @click="openLink(item)">
-          <img :src="item.icon">
+          <img :src="item.img">
           <p class="g-tac title-name" v-text="item.title"></p>
         </li>
       </ul>
@@ -34,7 +34,9 @@ export default {
         } else {
         }
       })
-      window.open(item.dst);
+      if (item.dst) {
+        location.href = item.dst;
+      }
     }
   }
 }
