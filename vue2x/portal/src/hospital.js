@@ -13,7 +13,7 @@ initFont(true);
 /* eslint-disable no-new */
 
 import hospitalIntro from './components/hospitalIntro'
-import service from './components/service'
+import category from './components/lib/category'
 import news from './components/news'
 import hotspot from './components/hotspot.vue'
 import live from './components/live.vue'
@@ -38,9 +38,9 @@ const router = new VueRouter({
       name: 'home',
       component: hospitalIntro,
     },{
-      path: '/service',
-      name: 'service',
-      component: service,
+      path: '/category',
+      name: 'category',
+      component: category,
     },{
       path: '/news',
       name: 'news',

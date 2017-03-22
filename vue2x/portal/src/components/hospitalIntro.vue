@@ -39,7 +39,57 @@
 .hospital-deltail {
   margin-top: 0.3rem;
   background-color: #fff;
-  padding: 0.32rem;
+  padding: 0 0.32rem;
+}
+.detail-list {
+  border-bottom: 1px solid #e6e6e6;
+  padding: 0.27rem 0;
+  position: relative;
+}
+.detail-list img {
+  @include containerSize(0.54rem, 0.54rem);
+  display: block;
+  margin-top: -0.06rem;
+}
+.detail-list span {
+  font-size: 0.32rem;
+  line-height: 150%;
+  display: block;
+}
+.list-key {
+  width: 1rem;
+  color: #282828;
+}
+.list-val {
+  color: #969696;
+  text-align: justify;
+  width: 73%;
+  max-width: 5rem;
+}
+.hospital-introduction {
+  background-color: #fff;
+  padding: 0 0.32rem 0.86rem;
+}
+.intro-title {
+  //line-height: 1.08rem;
+  padding: 0.27rem 0;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 0.16rem;
+}
+.intro-title span{
+  font-size: 0.32rem;
+}
+.intro-title img{
+  display: block;
+  @include containerSize(0.54rem, 0.54rem);
+  margin-top: -0.06rem;
+}
+.hospital-introduction p {
+  font-size: 0.26rem;
+  line-height: 1.5;
+  color: #969696;
+  text-indent: 2em;
+  text-align: justify;
 }
 </style>
 <template>
@@ -51,14 +101,14 @@
         <p class="desc-inner g-clearfix"><img class="info-icon g-fl" :src="items.descIco"><span class="inner-desc g-fl" v-text="items.desc"></span></p></div>
     </div>
     <ul class="hospital-deltail">
-      <li v-for="list in items.details">
-        <img :src="list.icon">
-        <span v-text="list.key"></span>
-        <span v-text="list.val"></span>
+      <li v-for="list in items.details" class="detail-list g-clearfix">
+        <img class="g-fl" :src="list.icon">
+        <span class="list-key g-fl" v-text="list.key"></span>
+        <span class="list-val g-fl" v-text="list.val"></span>
       </li>
     </ul>
-    <div>
-      <h2><img :src="items.introduction.icon">{{items.introduction.title}}</h2>
+    <div class="hospital-introduction">
+      <h2 class="intro-title g-clearfix"><img class="g-fl" :src="items.introduction.icon"><span class="g-fl">{{items.introduction.title}}</span></h2>
       <p v-for="list in items.introduction.desc" v-text="list"></p>
     </div>
   </div>
@@ -88,7 +138,7 @@ export default {
         },{
           icon: '../../static/images/hospital/ico_add.png',
           key: '地址：',
-          val: '东莞市石排镇石排大道中段198号'
+          val: '东莞市石排镇石排大道中段198号东莞市石排镇石排大道中段198号东莞市石排镇石排大道中段198号'
         },{
           icon: '../../static/images/hospital/ico_web.png',
           key: '网址：',
@@ -105,10 +155,8 @@ export default {
   components: {
     tip,
   },
-
   mounted() {
-    this.$nextTick(function () {
-      console.log(1);
+    this.$nextTick(()=> {
     })
   },
   methods: {
