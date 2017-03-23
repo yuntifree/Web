@@ -99,10 +99,10 @@ var JPlaceHolder = {
         $('.login').css('height','100%');
        } else {
         if (autologin) {
-          setToptpl();
+          $('.login').append(template('tplImgtop', {}));
           $('.login').append(template('tplOnelogin', {}));
         } else {
-          setToptpl();
+          $('.login').append(template('tplImgtop', {}));
           $('.login').append(template('tplIptlogin', {}));
         } 
         $('.login-top').css('height',screenWidth);
@@ -114,25 +114,6 @@ var JPlaceHolder = {
     }
   });
 })()
-
-function setToptpl() {
-  /*if (checkVideo()) {
-    var type = navigator.userAgent.toLowerCase();
-    if (type.indexOf("huawei") >= 0 ) {   
-       $('.login').append(template('tplImgtop', {}));
-    } else {
-      $('.login').append(template('tplVideotop', {}));
-      setTimeout(function(){
-        var video = document.querySelector('video');
-        enableInlineVideo(video,{
-          ipad: true
-        });
-      },500);  
-    }
-  } else {*/
-    $('.login').append(template('tplImgtop', {}));
-  //}
-}
 
 function setHeight() {
   var height = document.documentElement.clientHeight;
@@ -322,7 +303,7 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  //var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"index2.html?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
   } else {

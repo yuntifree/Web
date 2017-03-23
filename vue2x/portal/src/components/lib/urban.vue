@@ -49,7 +49,7 @@ export default {
         }
       })
       if (item.routername) {
-          url = window.document.location.href.toString();
+         /* url = window.document.location.href.toString();
           switch (portaltype) {
             case 0: 
               url = url.replace("index2.html","wifilink.html");
@@ -57,7 +57,7 @@ export default {
             case 1:
               url = url = url.replace("index2.html","hospital.html");
               break;
-          }
+          }*/
           url = url + '#/'+ item.routername
         } else {
            url = item.dst;

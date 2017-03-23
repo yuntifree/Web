@@ -28,10 +28,10 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
+      filename: 'index2.html',
+      template: 'index2.html',
       inject: true,
-      chunks: ['app'],
+      chunks: [''],
     }),
     new HtmlWebpackPlugin({
       filename: 'wifilink.html',

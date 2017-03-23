@@ -1,9 +1,11 @@
 import Vue from 'vue'
-import hospital from './wifilink.vue'
+import hospital from './hospital.vue'
 import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 
 import store from './store.js'
+import infiniteScroll from 'vue-infinite-scroll';
+Vue.use(infiniteScroll)
 Vue.use(VueLazyload)
 Vue.use(VueRouter)
 
@@ -12,6 +14,7 @@ var initFont = require('./common/font.js')
 initFont(true);
 /* eslint-disable no-new */
 
+import hospitalInfo from './components/hospital/hospitalinfo.vue'
 import hospitalIntro from './components/hospital/hospitalIntro'
 import category from './components/hospital/category'
 import doctor from './components/hospital/doctor'
@@ -35,6 +38,10 @@ const router = new VueRouter({
   base: __public__,
   routes: [
     {
+      path: '/hospitalInfo',
+      name: 'hospitalInfo',
+      component: hospitalInfo,
+    },{
       path: '/hospitalIntro',
       name: 'hospitalIntro',
       component: hospitalIntro,
@@ -60,7 +67,7 @@ const router = new VueRouter({
       component: hospitalnews,
     },{
       path: '*',
-      redirect: 'hospitalIntro',
+      redirect: 'hospitalInfo',
     }
   ]
 })
