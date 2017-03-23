@@ -15,6 +15,8 @@ var wlanusermac = query.wlanusermac || '';//'f45c89987347';
 var wlanapmac = query.wlanapmac || ''; 
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';//'http://www.baidu.com';
 var autologin = 0;
+var useragent = navigator.userAgent;
+var canClick = true;
 
 //判断浏览器类型
 var JPlaceHolder = {
@@ -77,7 +79,9 @@ var JPlaceHolder = {
   }
   var param = {
     wlanusermac: wlanusermac,
-    wlanacname: wlanacname
+    wlanacname: wlanacname,
+    wlanapmac: wlanapmac,
+    useragent: useragent
   };
   var screenWidth = document.documentElement.clientWidth;
   CGI.get('check_login', param, function(resp) {
@@ -250,30 +254,44 @@ function tripStart(e) {
 }
 
 function tripEnd(e) {
-  $('.btn').css('backgroundColor', '#00a0fb');
-  var param = {
-    wlanacname: wlanacname,
-    wlanuserip: wlanuserip,
-    wlanacip: wlanacip,
-    wlanusermac: wlanusermac
-  };
+  if (canClick) {
+    var param = {
+      wlanacname: wlanacname,
+      wlanuserip: wlanuserip,
+      wlanacip: wlanacip,
+      wlanusermac: wlanusermac,
+      wlanapmac: wlanapmac
+    };
 
-  if (autologin) {
-    oneClickLogin(param);
-  } else {
-    var phone = $('.ipt-phone').val().trim();
-    var code = $('.ipt-code').val().trim();
-    if (checkPhone(phone)) {
-      param.phone = phone;
-      if (code.length <= 0) {
-        tipShow('请输入验证码');
-      } else {
-        param.code = code;
-        portalLogin(param);
+    if (autologin) {
+      disableButton();
+      oneClickLogin(param);
+    } else {
+      var phone = $('.ipt-phone').val().trim();
+      var code = $('.ipt-code').val().trim();
+      if (checkPhone(phone)) {
+        param.phone = phone;
+        if (code.length <= 0) {
+          tipShow('请输入验证码');
+        } else {
+          param.code = code;
+          disableButton();
+          portalLogin(param);
+        }
       }
     }
+  } else {
+    return false;
   }
 }
+
+function disableButton() {
+  canClick = false;
+  setTimeout(function() {
+    canClick = true;
+  },3000)          
+}
+
 
 function portalLogin(param) {
   CGI.get('portal_login', param, function(resp) {
@@ -304,7 +322,7 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  //var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
   } else {
