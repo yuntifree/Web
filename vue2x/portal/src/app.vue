@@ -34,7 +34,9 @@ import CGI from './lib/cgi.js'
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
-var type = ~~(query.type) || 0;
+//var type = ~~(query.type) || 0;
+var adtype = ~~(query.adtype) || 0;
+var portaltype = ~~(query.portaltype) || 0;
 export default {
   name: 'app',
   components: {
@@ -65,7 +67,8 @@ export default {
       var param = {
         uid: uid,
         token: token,
-        type: type,
+        adtype: adtype,
+        portaltype: portaltype,
       }
       CGI.post('get_portal_conf', param, (resp)=> {
         if (resp.errno === 0) {
@@ -77,8 +80,7 @@ export default {
       })
     },
     openLink(ban) {
-      console.log(ban.dst);
-      window.open(ban.dst);
+      location.href = ban.dst;
     },
     tipBox(val) {
       this.tips.msg = val;

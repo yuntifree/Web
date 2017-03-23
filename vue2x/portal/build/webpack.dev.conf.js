@@ -38,6 +38,12 @@ module.exports = merge(baseWebpackConfig, {
       template: 'wifilink.html',
       inject: true,
       chunks: ['wifilink'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'hospital.html',
+      template: 'hospital.html',
+      inject: true,
+      chunks: ['hospital'],
     })
   ]
 })

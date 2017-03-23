@@ -17,6 +17,8 @@
 
 <script>
 import CGI from '../../lib/cgi.js'
+var query = CGI.query();
+var portaltype = ~~(query.portaltype) || 0;
 export default {
   name: 'urban-menu',
   props: {
@@ -48,12 +50,19 @@ export default {
       })
       if (item.routername) {
           url = window.document.location.href.toString();
-          url = url.replace("index.html","wifilink.html");
+          switch (portaltype) {
+            case 0: 
+              url = url.replace("index2.html","wifilink.html");
+              break;
+            case 1:
+              url = url = url.replace("index2.html","hospital.html");
+              break;
+          }
           url = url + '#/'+ item.routername
         } else {
            url = item.dst;
         }
-      window.open(url);
+      location.href = url;
     }
   }
 }
@@ -79,12 +88,11 @@ export default {
 }
 .menu-lists {
   height: 2.2rem;
+  margin: 0 auto;
 }
 .menu-item {
   width: 20%;
   margin-right: 0;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 .menu-item img{
   @include containerSize(0.88rem, 0.88rem);

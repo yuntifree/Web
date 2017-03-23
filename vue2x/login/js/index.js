@@ -112,7 +112,7 @@ var JPlaceHolder = {
 })()
 
 function setToptpl() {
-  if (checkVideo()) {
+  /*if (checkVideo()) {
     var type = navigator.userAgent.toLowerCase();
     if (type.indexOf("huawei") >= 0 ) {   
        $('.login').append(template('tplImgtop', {}));
@@ -125,9 +125,9 @@ function setToptpl() {
         });
       },500);  
     }
-  } else {
+  } else {*/
     $('.login').append(template('tplImgtop', {}));
-  }
+  //}
 }
 
 function setHeight() {

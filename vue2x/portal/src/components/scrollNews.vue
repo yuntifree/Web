@@ -46,13 +46,13 @@
   font-size: 0.24rem;
   color: $color84;
   line-height: 0.34rem;
+  margin-top: 0.12rem;
 }
 .item-desc span:first-child {
   margin-right: 0.4rem;
 }
 .list1-item-title {
   line-height: 0.46rem;
-  margin-bottom: 0.12rem;
 }
 .adv-img {
   @include containerSize(100%, auto);
@@ -96,7 +96,7 @@
         </div>
       </template>
       <!--新闻有1、2张图片-->
-      <template v-if="item.images.length==1 || item.images.length==2 && !item.stype">
+      <template v-if="item.images.length==1&& !item.stype || item.images.length==2 && !item.stype">
         <dl class="g-clearfix">
          <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
          <dd class="list1-info g-fl">
@@ -133,6 +133,7 @@ import CGI from '../lib/cgi'
 var query = CGI.query();
 var uid = 137;
 var token = '6ba9ac5a422d4473b337d57376dd3488';
+var adtype = ~~(query.adtype) || 0;
 var union = query.union || '';
 export default {
   name: 'newslist',
@@ -187,7 +188,8 @@ export default {
         uid: uid,
         token: token,
         seq:seq || 0,
-        type:0
+        type:0,
+        adtype: adtype
       }
       CGI.post('hot', param, (resp)=>{
         if (resp.errno === 0) {
@@ -243,7 +245,9 @@ export default {
       this.tips.show = true;
     },
     formatTime(ctime) {
-      return ctime.substr(0, ctime.length - 3)
+      if (ctime) {
+        return ctime.substr(0, ctime.length - 3)
+      }
     }
   }
 }
