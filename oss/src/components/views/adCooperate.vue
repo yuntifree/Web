@@ -81,7 +81,7 @@
                 width="100">
                 <span>
                   <el-button @click="edit($index,row)" type="text" size="small">修改</el-button>
-                  <el-button @click="edit($index,row)" type="text" size="small">删除</el-button>
+                  <el-button @click="del($index,row)" type="text" size="small">删除</el-button>
                 </span>
               </el-table-column>
             </el-table>
@@ -144,7 +144,7 @@
         <span>{{dialogCfg.text}}</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click.native="modal.dialogShow = false">取 消</el-button>
-          <el-button type="primary" @click.native="onlineOps">确 定</el-button>
+          <el-button type="primary" @click.native="delPost">确 定</el-button>
         </span>
       </el-dialog>
       <!--alert-->
@@ -291,7 +291,6 @@ export default {
     editPost() { 
       var param = CGI.clone(this.postInfo);        
       param.id = this.infos[this.selIdx].id; 
-      console.log(JSON.stringify(param));
       CGI.post(this.$store.state, 'mod_customer', param, (resp)=> {
         console.log(JSON.stringify(resp));
         if (resp.errno === 0) {
@@ -328,14 +327,35 @@ export default {
           } else {
             this.alertInfo('请输入正确的电话号码');
             this.postInfo.phone = '';
-            console.log(this.$refs.phone);
             //_this.$refs['phone'].focus();
           }
         } else {
           return false;
         }
       });
-    },  
+    }, 
+    del(idx,row) {
+      this.selIdx = idx;
+      this.dialogCfg.title = '删除';
+      this.dialogCfg.text = '确认要删除' + row.name;
+      this.modal.dialogShow = true; 
+    },
+    delPost() {
+      var param = {
+        id: this.infos[this.selIdx].id,
+        deleted: 1
+      }
+      console.log(JSON.stringify(param));
+      CGI.post(this.$store.state, 'mod_customer', param, (resp)=> {
+        if (resp.errno === 0) {
+          this.infos.splice(this.selIdx,1);
+          this.modal.dialogShow = false; 
+          this.alertInfo('删除成功');
+        } else {
+          this.alertInfo(resp.desc);
+        }
+      })
+    },
     alertInfo(val) {
       this.alertShow = true;
       this.alertMsg = val; 

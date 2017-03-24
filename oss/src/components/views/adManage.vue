@@ -102,7 +102,8 @@
         :total="pageCfg.total || 1">
       </el-pagination>
       <div class="shade" v-if="modal.editShow">
-        <div class="edit-form" style="">
+        <div class="edit-form">
+          <div class="form-title">{{modal.text}}</div>
           <el-form :model="postInfo" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
              <el-form-item label="广告名称" prop="name">
               <el-input  v-model.trim="postInfo.name" placeholder="请输入广告名称"></el-input>
@@ -142,79 +143,18 @@
             </el-form-item>
             <el-form-item label="状态" prop="online">
               <el-radio-group v-model="postInfo.online">
-                <el-radio label="1">下线</el-radio>
-                <el-radio label="0">上线</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="addPost('ruleForm')">确定</el-button>
-              <el-button @click="modal.addShow=false">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
-      <div class="shade" v-if="modal.addShow">
-        <div class="edit-form">
-          <div class="form-title">增加</div>
-          <el-form ref="form2" :model="postInfo" :rules="rules" label-width="100px">
-            <el-form-item label="广告名称" prop="name">
-              <el-input  v-model.trim="postInfo.name" placeholder="请输入广告名称"></el-input>
-            </el-form-item>
-            <el-form-item label="内容版本" prop="version">
-              <el-input v-model.trim="postInfo.version" placeholder="请输入内容版本"></el-input>
-            </el-form-item>
-            <el-form-item label="摘要信息" prop="abstract">
-              <el-input v-model.trim="postInfo.abstract"  placeholder="请输入摘要信息"></el-input>
-            </el-form-item>
-            <el-form-item label="广告内容" prop="content">
-              <el-input v-model.trim="postInfo.content"  placeholder="请输入摘要信息"></el-input>
-            </el-form-item>
-            <el-form-item label="广告图片">
-              <uploader></uploader>
-            </el-form-item>  
-            <el-form-item label="广告业主" prop="adid">
-              <el-select v-model="postInfo.adid" placeholder="请选择广告业主">
-                <el-option
-                  v-for="item in addParam.customer"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="投放时段" prop="tsid">
-              <el-select v-model="postInfo.tsid" placeholder="请选择投放时段">
-                <el-option
-                  v-for="item in addParam.timeslot"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="投放区域" prop="areaid">
-              <el-select v-model="postInfo.areaid" placeholder="请选择投放区域">
-                <el-option
-                  v-for="item in addParam.area"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="状态" prop="online">
-              <el-radio-group v-model="postInfo.online">
-                <el-radio label="1">上线</el-radio>
                 <el-radio label="0">下线</el-radio>
+                <el-radio label="1">上线</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item>
-              <div class="btn-click">
-                <el-button type="primary" @click="addPost('form2')">确定</el-button>
-                <el-button @click="modal.addShow=false">取消</el-button>
-              </div>
+              <el-button type="primary" v-if="modal.addShow" @click="addPost('ruleForm')">确定</el-button>
+              <el-button type="primary" v-else @click="editPost('ruleForm')">确定</el-button>
+              <el-button @click="modal.editShow=false">取消</el-button>
             </el-form-item>
           </el-form>
         </div>
       </div>
-      <!--dialog-->
       <el-dialog v-model="modal.dialogShow"  :title="dialogCfg.title" size="tiny">
         <span>{{dialogCfg.text}}</span>
         <span slot="footer" class="dialog-footer">
@@ -244,6 +184,7 @@ export default {
         editShow: false,
         dialogShow: false,
         addShow: false,
+        text: ''
       },
       dialogCfg: {
         title: '',
@@ -374,6 +315,7 @@ export default {
     },
     add() {
       CGI.objClear(this.postInfo);
+      this.postInfo.online = "0";
       CGI.post(this.$store.state, 'get_ad_param', {}, (resp)=> {
         if (resp.errno === 0) {
           this.addParam = resp.data;
@@ -381,12 +323,17 @@ export default {
           this.alertInfo(resp.desc);
         }
       })
+      this.modal.text = '增加';
       this.modal.addShow = true;
+      this.modal.editShow = true;
     },
     edit(idx,row) {
       this.selIdx = idx;
       CGI.objClear(this.postInfo);
       CGI.extend(this.postInfo,row);
+      this.postInfo.online = this.postInfo.online.toString()
+      this.modal.text = '修改';
+      this.modal.addShow = false;
       this.modal.editShow = true;
     },
     editPost() { 
@@ -412,11 +359,9 @@ export default {
           var param = CGI.clone(this.postInfo);
           param.img = this.$store.state.imgUrl[0];
           param.online = ~~param.online;
-          console.log(JSON.stringify(param));
           CGI.post(this.$store.state, 'add_advertise', param, function(resp){
             if (resp.errno === 0) {
               var u = CGI.clone(_this.postInfo);
-              console.log(resp.data.id)
               u.id = resp.data.id;
               _this.infos.push(u);
               _this.modal.addShow = false;
@@ -461,19 +406,6 @@ export default {
           this.alertInfo(resp.desc);
         }
      })
-    },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     },
     alertInfo(val) {
       this.alertShow = true;

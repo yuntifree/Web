@@ -19,7 +19,7 @@
       <header class="app_header">
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
-            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">menu</option><option :value="{ number: 1 }">tab</option></button>
+            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">menu</option><option :value="{ number: 1 }">tab</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
         </div>
         <div>
