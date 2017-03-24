@@ -55,8 +55,16 @@
     "name": "setActivity",
     "icon": "icon"
     },{
-    "title": "web上线",
-    "name": "setWeb",
+    "title": "login上线",
+    "name": "login",
+    "icon": "yonghuxinxi"
+    },{
+    "title": "portal上线",
+    "name": "portal",
+    "icon": "yonghuxinxi"
+    },{
+    "title": "scense上线",
+    "name": "scense",
     "icon": "yonghuxinxi"
     },{
     "title":"Android版本管理",
