@@ -56,15 +56,15 @@
     "icon": "icon"
     },{
     "title": "login上线",
-    "name": "login",
+    "name": "setlogin",
     "icon": "yonghuxinxi"
     },{
     "title": "portal上线",
-    "name": "portal",
+    "name": "setportal",
     "icon": "yonghuxinxi"
     },{
     "title": "scense上线",
-    "name": "scense",
+    "name": "setscense",
     "icon": "yonghuxinxi"
     },{
     "title":"Android版本管理",
