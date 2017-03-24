@@ -195,13 +195,13 @@ export default {
     makeAddress(row) {
       var num = this.selected.number
       var p = '';
-      if (num == 0 || num == 2) {
-        p = '?wsmp-theme=1001&wsmp-page=0&wsmp-time=-1&wsmp-portal=103&wlanacname=AC_SSH_A_04&wlanuserip=10.6.201.249&ssid=无线东莞DG-FREE&wlanapmac=a858408a93a0&wlanusermac=f45c89987347&wlanuserfirsturl=http://qq.com&wlanacip=192.168.100.24'
+      if (num == 1) {
+        p = 'http://api.yunxingzh.com/'
       } else {
-        p = 'wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&live=livetrue&s=1#/home'
+        p = 'http://wx.yunxingzh.com/'
       }
-      var ret = 'http://api.yunxingzh.com/'+row.dir+p;
-      return ret
+      var ret = p +row.dir+'wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&s=1#/home';
+      return ret;
     },
     handleSizeChange(val) {
       console.log('每页 ${val} 条');
@@ -292,7 +292,6 @@ export default {
     },
     chkLine(row) {
       this.selId = row.id; 
-      console.log(this.selId);    
     },
     onlineOps() {
       var param = {

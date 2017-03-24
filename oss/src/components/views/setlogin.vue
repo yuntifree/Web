@@ -195,12 +195,12 @@ export default {
     makeAddress(row) {
       var num = this.selected.number
       var p = '';
-      if (num == 0 || num == 2) {
-        p = '?wsmp-theme=1001&wsmp-page=0&wsmp-time=-1&wsmp-portal=103&wlanacname=AC_SSH_A_04&wlanuserip=10.6.201.249&ssid=无线东莞DG-FREE&wlanapmac=a858408a93a0&wlanusermac=f45c89987347&wlanuserfirsturl=http://qq.com&wlanacip=192.168.100.24'
+      if (num == 0) {
+        p = 'http://api.yunxingzh.com/'
       } else {
-        p = 'wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&live=livetrue&s=1#/home'
+        p = 'http://wx.yunxingzh.com/'
       }
-      var ret = 'http://api.yunxingzh.com/'+row.dir+p;
+      var ret = p+row.dir+'?wsmp-theme=1001&wsmp-page=0&wsmp-time=-1&wsmp-portal=103&wlanacname=AC_SSH_A_04&wlanuserip=10.6.201.249&ssid=无线东莞DG-FREE&wlanapmac=a858408a93a0&wlanusermac=f45c89987347&wlanuserfirsturl=http://qq.com&wlanacip=192.168.100.24';
       return ret
     },
     handleSizeChange(val) {
