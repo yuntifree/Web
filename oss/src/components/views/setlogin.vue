@@ -19,7 +19,7 @@
       <header class="app_header">
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
-            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">login</option><option :value="{ number: 1 }">portal</option><option :value="{ number: 2 }">login test</option><option :value="{ number: 3 }">portal test</option></select></button>
+            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">login</option><option :value="{ number: 2 }">login test</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
           <button class="btn btn-left outline-none" :disabled="selId==-1" @click="review">上线</button>
         </div>

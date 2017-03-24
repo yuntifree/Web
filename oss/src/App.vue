@@ -33,7 +33,9 @@ import setBanner from './components/views/setBanner.vue'
 import adban from './components/views/adban.vue'
 import uploadImg from './components/views/uploadImg.vue'
 import setActivity from './components/views/setActivity.vue'
-import setWeb from './components/views/setWeb.vue'
+import setlogin from './components/views/setlogin.vue'
+import setportal from './components/views/setportal.vue'
+import setscense from './components/views/setscenes.vue'
 import setAndroid from './components/views/setAndroid.vue'
 import setPortalMenu from './components/views/setPortalmenu.vue'
 import adCount from './components/views/adCount.vue'
@@ -76,7 +78,9 @@ export default {
     adban,
     uploadImg,
     setActivity,
-    setWeb,
+    setlogin,
+    setportal,
+    setscense,
     setAndroid,
     setPortalMenu,
     adCount,
