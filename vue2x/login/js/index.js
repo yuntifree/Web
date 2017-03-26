@@ -99,11 +99,11 @@ var JPlaceHolder = {
         $('.login').css('height','100%');
        } else {
         if (autologin) {
-          $('.login').append(template('tplImgtop', {}));
           $('.login').append(template('tplOnelogin', {}));
+          $('.login').append(template('tplBottom', ads));
         } else {
-          $('.login').append(template('tplImgtop', {}));
           $('.login').append(template('tplIptlogin', {}));
+          $('.login').append(template('tplBottom', ads));
         } 
         $('.login-top').css('height',screenWidth);
         setTimeout(function(){setHeight()},300); 
