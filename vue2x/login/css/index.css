@@ -15,9 +15,6 @@ html{
   color:#000;
   background:#f7f7f7;
   font-size: 100px;
-  /* width: 100%;
-  height: 100%; 
-  overflow: hidden;*/
 }
 
 html, body, div, span, applet, object, iframe,
@@ -211,7 +208,7 @@ video {
   font-size: 0.36rem;
   text-align: center;
   color: #9b9b9b;
-  margin-bottom: 0.42rem;
+  margin: 0.46rem 0 0.42rem;
 }
 .oneclick-text {
   position: absolute;
@@ -228,12 +225,15 @@ video {
   margin: 0.3rem auto 0;
 }
 .input-info {
-  width: 3.38rem;
+  /* width: 3.38rem;
   padding: 0.06rem 0;
   position: relative;
   border: 1px solid #979797;
   border-radius: 0.08rem;
-  margin-bottom: 0.42rem;
+  margin-bottom: 0.42rem; */
+  width: 100%;
+  padding: 0.42rem 0 0;
+  position: relative;
 }
 .input-img {
   display: block;
@@ -246,10 +246,12 @@ video {
   height: 100%;
   display: block;
 }
+
 .input-info input {
-  width: 2.7rem;
+  width: 91%;
   height: auto;
   padding: 0.1rem 0;
+  border-bottom: 1px solid #c8c8c8;
   font-size: 0.32rem;
   color: #000;
 }

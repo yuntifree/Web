@@ -105,7 +105,7 @@ var JPlaceHolder = {
           $('.login').append(template('tplIptlogin', {}));
           $('.login').append(template('tplBottom', ads));
         } 
-        $('.login-top').css('height',screenWidth);
+        //$('.login-top').css('height',screenWidth);
         setTimeout(function(){setHeight()},300); 
       }
       initUI();
@@ -303,7 +303,7 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"index2.html?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
   } else {
