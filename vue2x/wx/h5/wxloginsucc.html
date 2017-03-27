@@ -37,5 +37,12 @@
     <div class="login">
       <p>恭喜您，连接成功！</p>
     </div>
+    <script type="text/javascript">
+      setTimeout({
+        WeixinJSBridge.invoke('closeWindow',{},function(res){ 
+          //alert(res.err_msg);
+        });
+      }, 3000);
+    </script>
   </body>
 </html>
