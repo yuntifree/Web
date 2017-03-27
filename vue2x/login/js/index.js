@@ -20,10 +20,10 @@ var canClick = true;
 
 //
 var appId = "wx0387308775179bfe";
-var secretkey = "35a3d320ca2964ac6f94c0f96bbf15b8";
+var secretkey = "33606a01d90c4b806202e1f51f67574d";
 var extend = "fangbei";    　　　 //开发者自定义参数集合
 var timestamp = new Date().getTime();　　　　//时间戳(毫秒)
-var shop_id = "2370729";            　　  //AP设备所在门店的ID
+var shop_id = "4061110";            　　  //AP设备所在门店的ID
 var authUrl = "http://wx.yunxingzh.com/auth";        //认证服务端URL
 var mac = query.wlanusermac || '';  　　　//用户手机mac地址 安卓设备必需
 var ssid = "";           //AP设备信号名称，非必须
