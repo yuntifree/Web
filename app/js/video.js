@@ -33,7 +33,7 @@ function font(bFont) {
 }
 
 function getData() {
-  CGI.post('get_education_video', {}, function() {
+  CGI.post('get_education_video', {}, function(resp) {
     if (resp.errno === 0) {
       data = resp.data.infos;
       $('video').append(template('tplVideo',data));
