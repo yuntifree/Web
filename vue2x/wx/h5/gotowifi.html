@@ -11,12 +11,9 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/cgi.js"></script>
     <script type="text/javascript">
-      var openid = CGI.query().open;
-      var url = 'http://www.baidu.com/?wx_code_com=gh_473af7c4942b&wx_code_cust='+openid;
-      alert(url);
-      CGI.get(url,{},function(resp) {
-        alert(resp);
-      })
+      var open = CGI.query().open;
+      var url = 'http://www.baidu.com/?wx_code_com=gh_473af7c4942b&wx_code_cust='+open;
+      location.href = url;
     </script>
   </body>
 </html>
