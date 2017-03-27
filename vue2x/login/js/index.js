@@ -18,6 +18,18 @@ var autologin = 0;
 var useragent = navigator.userAgent;
 var canClick = true;
 
+//
+var appId = "wx0387308775179bfe";
+var secretkey = "35a3d320ca2964ac6f94c0f96bbf15b8";
+var extend = "fangbei";    　　　 //开发者自定义参数集合
+var timestamp = new Date().getTime();　　　　//时间戳(毫秒)
+var shop_id = "2370729";            　　  //AP设备所在门店的ID
+var authUrl = "http://wx.yunxingzh.com/auth";        //认证服务端URL
+var mac = query.wlanusermac || '';  　　　//用户手机mac地址 安卓设备必需
+var ssid = "";           //AP设备信号名称，非必须
+var bssid = ""; 
+
+
 //判断浏览器类型
 var JPlaceHolder = {
   //检测
@@ -105,7 +117,6 @@ var JPlaceHolder = {
           $('.login').append(template('tplIptlogin', {}));
           $('.login').append(template('tplBottom', ads));
         } 
-        //$('.login-top').css('height',screenWidth);
         setTimeout(function(){setHeight()},300); 
       }
       initUI();
@@ -136,6 +147,7 @@ function initUI() {
   } else {
     $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
     $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
+    $('.wx-btn').click(callWechatBrowser);
   }
 }
 
@@ -310,7 +322,14 @@ function loginDone(info) {
     location.replace(url);
   }
 }
-function checkVideo() {
+
+function callWechatBrowser(){
+  var sign = hex_md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
+  alert(sign);
+  Wechat_GotoRedirect(appId, extend, timestamp, sign, shop_id, authUrl, mac, ssid, bssid);
+}
+//checkVideo
+/*function checkVideo() {
   var ret = false;
   if (!!document.createElement('video').canPlayType) {
     var vidTest = document.createElement("video");
@@ -337,4 +356,4 @@ function checkVideo() {
     ret =  false;
   }
   return ret;
-}
+}*/

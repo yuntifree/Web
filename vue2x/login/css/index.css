@@ -168,6 +168,7 @@ video {
 .login-bottom {
   width: 100%;
   height: auto;
+  padding-top: 0.4rem;
   padding-bottom: 0.45rem;
 }
 .login-ipt-box {
