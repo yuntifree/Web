@@ -15,7 +15,7 @@ var wlanusermac = query.wlanusermac || '';//'f45c89987347';
 var wlanapmac = query.wlanapmac || ''; 
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';//'http://www.baidu.com';
 var autologin = 0;
-var useragent = navigator.userAgent;
+//var useragent = navigator.userAgent;
 var canClick = true;
 
 //
@@ -93,7 +93,6 @@ var JPlaceHolder = {
     wlanusermac: wlanusermac,
     wlanacname: wlanacname,
     wlanapmac: wlanapmac,
-    useragent: useragent
   };
   var screenWidth = document.documentElement.clientWidth;
   CGI.get('check_login', param, function(resp) {
@@ -114,7 +113,7 @@ var JPlaceHolder = {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
         } else {
-          $('.login').append(template('tplIptlogin', {}));
+          $('.login').append(template('tplIptlogin', data.img));
           $('.login').append(template('tplBottom', ads));
         } 
         setTimeout(function(){setHeight()},300); 
@@ -147,7 +146,6 @@ function initUI() {
   } else {
     $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
     $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
-    $('.wx-btn').click(callWechatBrowser);
   }
 }
 
@@ -323,10 +321,6 @@ function loginDone(info) {
   }
 }
 
-function callWechatBrowser(){
-  var sign = md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
-  Wechat_GotoRedirect(appId, extend, timestamp, sign, shop_id, authUrl, mac, ssid, bssid);
-}
 //checkVideo
 /*function checkVideo() {
   var ret = false;
