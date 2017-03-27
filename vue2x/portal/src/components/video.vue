@@ -44,16 +44,7 @@ export default {
     tip,
     download
   },
-  /*beforeRouteLeave(to, from, next) {
-    this.videoloading = true;
-    next(true);
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-      vm.videoloading = false;
-    })
-  },*/
+
   mounted() {
     this.$nextTick(function () {
       // 存下union
