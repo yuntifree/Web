@@ -324,7 +324,7 @@ function loginDone(info) {
 }
 
 function callWechatBrowser(){
-  var sign = hex_md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
+  var sign = md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
   alert(sign);
   Wechat_GotoRedirect(appId, extend, timestamp, sign, shop_id, authUrl, mac, ssid, bssid);
 }
