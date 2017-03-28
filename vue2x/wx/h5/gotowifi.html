@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<iDOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -13,9 +13,7 @@
     <script type="text/javascript">
       var open = CGI.query().open;
       var url = 'http://www.baidu.com/?wx_code_com=gh_473af7c4942b&wx_code_cust='+open;
-      CGI.get(url,{},function(resp) {
-        console.log(resp);
-      })
+      location.href = url;
     </script>
   </body>
 </html>
