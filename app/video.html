@@ -106,12 +106,15 @@
     <p class="tip-info"></p>
     <script type="text/html" id="tplVideo">
       {{each infos as value i}}
-        <div class="video-list" data-idx={{i}}>
+        <div class="video-list">
           <div class="video-inner">
-            <video src={{value.dst}} width="100%" height="auto" controls></video>
+            <video controls poster="./images/img_banner.png" width="100%" height="auto"   data-idx={{i}}>
+               <source src={{value.dst}} type="video/mp4">
+               您的浏览器不能使用最新的视频播放方式呢
+            </video>
             <div class="video-text g-clearfix">
               <p class="g-fl"><span class="video-text-source">{{value.source}}</span></p>
-              <p class="g-fr click-num">{{value.click}}次播放</p>
+              <p class="g-fr click-num">{{value.click || 0}}次播放</p>
             </div>
           </div>
           <p class="video-title g-ellipsis">{{value.title}}</p>
