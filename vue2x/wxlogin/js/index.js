@@ -113,7 +113,7 @@ var JPlaceHolder = {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
         } else {
-          $('.login').append(template('tplIptlogin', data.img));
+          $('.login').append(template('tplIptlogin', data));
           $('.login').append(template('tplBottom', ads));
         } 
         setTimeout(function(){setHeight()},300); 
