@@ -1,10 +1,13 @@
-var data = [];
+//var data = [];
+var data = [{"dst":"http://file.yunxingzh.com/060c0327-1700-43f5-b311-c969d4e07dce.mp4","title":"哎呀回家-机票改签篇","id":45},
+            {"dst":"http://file.yunxingzh.com/93dfc881-8454-4c82-b1ee-7d625e79aa97.mp4","title":"哎呀回家—购物退款篇","id":44}]
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token =  query.token || '';
 (function() {
   font(true);
-  getData();
+  //getData();
+  $('.video').append(template('tplVideo',data));
 })()
 
 
@@ -42,7 +45,7 @@ function getData() {
   CGI.post('get_education_video', param, function() {
     if (resp.errno === 0) {
       data = resp.data.infos;
-      $('video').append(template('tplVideo',data));
+      $('.video').append(template('tplVideo',data));
     } else {
       tipShow(resp.desc);
     }

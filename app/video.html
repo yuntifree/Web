@@ -103,24 +103,24 @@
     <div class="video">
     </div>
     <p id="video-more" class="item-desc g-tac"></p>
-    <!--http://www.zhangxinxu.com/study/media/cat.mp4-->
     <p class="tip-info"></p>
     <script type="text/html" id="tplVideo">
-      {{each list as video i}}
+      {{each list as value i}}
         <div class="video-list">
           <div class="video-inner">
             <video src="list.dst" width="100%" height="auto" controls></video>
             <div class="video-text g-clearfix">
-              <p class="g-fl"><span class="video-text-source">{{list.source}}</span></p>
-              <p class="g-fr">{{list.click}}次播放</p>
+              <p class="g-fl"><span class="video-text-source">{{value.source}}</span></p>
+              <p class="g-fr">{{value.click}}次播放</p>
             </div>
           </div>
-          <p class="video-title g-ellipsis">{{list.title}}</p>
+          <p class="video-title g-ellipsis">{{value.title}}</p>
         </div>
       {{/each}}
     </script>
   </div>
   <script type="text/javascript" src="lib/jquery.min.js"></script>
+  <script type="text/javascript" src="lib/template.js"></script>
   <script type="text/javascript" src="lib/cgi.js"></script>
   <script type="text/javascript" src="js/video.js"></script>
 </body>
