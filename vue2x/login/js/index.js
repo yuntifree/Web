@@ -110,10 +110,10 @@ var JPlaceHolder = {
         $('.login').css('height','100%');
        } else {
         if (autologin) {
-          $('.login').append(template('tplOnelogin', {}));
+          $('.login').append(template('tplOnelogin', data));
           $('.login').append(template('tplBottom', ads));
         } else {
-          $('.login').append(template('tplIptlogin', data.img));
+          $('.login').append(template('tplIptlogin', data));
           $('.login').append(template('tplBottom', ads));
         } 
         setTimeout(function(){setHeight()},300); 
@@ -313,7 +313,7 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
   } else {
