@@ -1,5 +1,7 @@
 var data = [];
-
+var query = CGI.query();
+var uid = ~~(query.uid) || 0;
+var token =  query.token || '';
 (function() {
   font(true);
   getData();
@@ -33,7 +35,11 @@ function font(bFont) {
 }
 
 function getData() {
-  CGI.post('get_education_video', {}, function() {
+  var param = {
+    uid: uid,
+    token: token
+  }
+  CGI.post('get_education_video', param, function() {
     if (resp.errno === 0) {
       data = resp.data.infos;
       $('video').append(template('tplVideo',data));
