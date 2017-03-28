@@ -1,13 +1,17 @@
-//var data = [];
-var data = [{"dst":"http://file.yunxingzh.com/060c0327-1700-43f5-b311-c969d4e07dce.mp4","title":"哎呀回家-机票改签篇","id":45},
+var data = {};
+/*var data = {
+        infos:[{"dst":"http://file.yunxingzh.com/060c0327-1700-43f5-b311-c969d4e07dce.mp4","title":"哎呀回家-机票改签篇","id":45},
             {"dst":"http://file.yunxingzh.com/93dfc881-8454-4c82-b1ee-7d625e79aa97.mp4","title":"哎呀回家—购物退款篇","id":44}]
+        }*/
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token =  query.token || '';
+var clickIdx = 0;
 (function() {
   font(true);
-  //getData();
+  getData();
   $('.video').append(template('tplVideo',data));
+  //videoPlay();
 })()
 
 
@@ -59,3 +63,14 @@ function tipShow(val) {
     $('.tip-info').hide();
   }, 2000);
 }
+
+function videoPlay(){
+  $('.video-list').click(function() {
+      $('video').trigger('pause');
+      $(this).find('video').trigger('play');
+      var idx = $(this).index();
+      var num = data.infos[idx].click + 1
+      $(this).find(('.click-num')).text(num + 次播放);
+  })
+}
+
