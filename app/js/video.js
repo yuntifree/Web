@@ -43,9 +43,9 @@ function getData() {
     uid: uid,
     token: token
   }
-  CGI.post('get_education_video', param, function() {
+  CGI.post('get_education_video', param, function(resp) {
     if (resp.errno === 0) {
-      data = resp.data.infos;
+      data = resp.data;
       $('.video').append(template('tplVideo',data));
       videoPlay();
       $('video').bind('pause', function(e) {
