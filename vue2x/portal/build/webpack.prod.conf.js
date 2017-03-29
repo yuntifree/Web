@@ -65,8 +65,8 @@ var webpackConfig = merge(baseWebpackConfig, {
 */    new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
         ? 'web.htmviewl'
-        : config.build.wifilink,
-      template: 'wifilink.html',
+        : config.build.index,
+      template: 'index.html',
       inject: true,
       minify: {
         removeComments: true,
