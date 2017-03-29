@@ -233,28 +233,13 @@ export default {
             this.alertInfo('请输入以login开头的目录名');
           } //else {}
           break;
-        case 1:
-          var str = param.dir.substr(0,6);
-          if (str !== 'portal') {
-            pass = false;
-            this.alertInfo('请输入以portal开头的目录名');
-          } //else {}
-          break;
         case 2:
           var str = param.dir.substr(0,9);
           if (str !== 'logintest') {
             pass = false;
             this.alertInfo('请输入以logintest开头的目录名');
           } //else {}
-          break;
-        case 3:
-          var str = param.dir.substr(0,10);
-          if (str !== 'portaltest') {
-            pass = false;
-            this.alertInfo('请输入以portaltest开头的目录名');
-          } //else {}
-          break;
-      }
+          break;      }
       if (pass) {
         var u = CGI.clone(this.postInfo);
         CGI.post(this.$store.state, 'add_portal_dir', param, (resp)=> {

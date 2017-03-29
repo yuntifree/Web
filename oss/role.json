@@ -63,8 +63,12 @@
     "name": "setportal",
     "icon": "yonghuxinxi"
     },{
-    "title": "scense上线",
-    "name": "setscense",
+    "title": "scenes上线",
+    "name": "setscenes",
+    "icon": "yonghuxinxi"
+    },{
+    "title": "wj上线",
+    "name": "setWjweb",
     "icon": "yonghuxinxi"
     },{
     "title":"Android版本管理",

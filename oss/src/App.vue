@@ -35,7 +35,8 @@ import uploadImg from './components/views/uploadImg.vue'
 import setActivity from './components/views/setActivity.vue'
 import setlogin from './components/views/setlogin.vue'
 import setportal from './components/views/setportal.vue'
-import setscense from './components/views/setscenes.vue'
+import setscenes from './components/views/setscenes.vue'
+import setWjweb from './components/views/setWjweb.vue'
 import setAndroid from './components/views/setAndroid.vue'
 import setPortalMenu from './components/views/setPortalmenu.vue'
 import adCount from './components/views/adCount.vue'
@@ -80,7 +81,8 @@ export default {
     setActivity,
     setlogin,
     setportal,
-    setscense,
+    setscenes,
+    setWjweb,
     setAndroid,
     setPortalMenu,
     adCount,

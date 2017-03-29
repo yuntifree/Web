@@ -19,7 +19,7 @@
       <header class="app_header">
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
-            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 4 }">scense</option><option :value="{ number: 5 }">scensetest</option>></select></button>
+            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 6 }">wjLogin</option><option :value="{ number: 7 }">wjPortal</option>></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
           <button class="btn btn-left outline-none" :disabled="selId==-1" @click="review">上线</button>
         </div>
@@ -130,7 +130,7 @@ export default {
       },
       selId: -1,
       selected: {
-        number:4
+        number:6
       },
       tagsInfo: [],
       checkedTags: [],
@@ -193,14 +193,7 @@ export default {
       });
     },
     makeAddress(row) {
-      var num = this.selected.number
-      var p = '';
-      if (num == 4) {
-        p = 'http://api.yunxingzh.com/'
-      } else {
-        p = 'http://wx.yunxingzh.com/'
-      }
-      var ret = p+row.dir+'?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&portaltype=1&adtype=1&s=1#/home';
+      var ret = 'http://api.yunxingzh.com/'+row.dir+'wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&portaltype=1&adtype=1&s=1#/home';
       return ret
     },
     handleSizeChange(val) {
@@ -224,40 +217,37 @@ export default {
         dir: this.postInfo.dir,
         description: this.postInfo.description
       }
-      var pass = true;
-      switch (param.type) {
-        case 4:
-          var str = param.dir.substr(0,6);
-          if (str !== 'scenes') {
+      /*switch (param.type) {
+        case 6:
+          var str = param.dir.substr(0,7);
+          if (str !== 'wjlogin') {
             pass = false;
-            this.alertInfo('请输入以scenes开头的目录名');
+            this.alertInfo('请输入以login开头的目录名');
           } //else {}
           break;
-        case 5:
-          var str = param.dir.substr(0,10);
-          if (str !== 'scenestest') {
+        case 7:
+          var str = param.dir.substr(0,8);
+          if (str !== 'wjportal') {
             pass = false;
-            this.alertInfo('请输入以scenestest开头的目录名');
+            this.alertInfo('请输入以wjportal开头的目录名');
           } //else {}
           break;
-      }
-      if (pass) {
-        var u = CGI.clone(this.postInfo);
-        CGI.post(this.$store.state, 'add_portal_dir', param, (resp)=> {
-          if (resp.errno === 0) {
-            var u = CGI.clone(this.postInfo);
-            u.id = resp.data.id;
-            if (this.infos.length > 0) {
-              this.infos.push(u);
-            } else {
-              this.infos = u;
-            }         
-            this.modal.addShow = false;
+      }*/
+      var u = CGI.clone(this.postInfo);
+      CGI.post(this.$store.state, 'add_portal_dir', param, (resp)=> {
+        if (resp.errno === 0) {
+          var u = CGI.clone(this.postInfo);
+          u.id = resp.data.id;
+          if (this.infos.length > 0) {
+            this.infos.push(u);
           } else {
-            this.alertInfo(resp.desc);
-          }
-        })
-      }
+            this.infos = u;
+          }         
+          this.modal.addShow = false;
+        } else {
+          this.alertInfo(resp.desc);
+        }
+      })
     },
     postParam() {
       var ret = true;

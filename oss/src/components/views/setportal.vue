@@ -226,25 +226,11 @@ export default {
       }
       var pass = true;
       switch (param.type) {
-        case 0:
-          var str = param.dir.substr(0,5);
-          if (str !== 'login') {
-            pass = false;
-            this.alertInfo('请输入以login开头的目录名');
-          } //else {}
-          break;
         case 1:
           var str = param.dir.substr(0,6);
           if (str !== 'portal') {
             pass = false;
             this.alertInfo('请输入以portal开头的目录名');
-          } //else {}
-          break;
-        case 2:
-          var str = param.dir.substr(0,9);
-          if (str !== 'logintest') {
-            pass = false;
-            this.alertInfo('请输入以logintest开头的目录名');
           } //else {}
           break;
         case 3:
