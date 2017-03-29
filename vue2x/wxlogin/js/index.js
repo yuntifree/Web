@@ -8,12 +8,34 @@ var ads = {
 var timer;
 
 var query = CGI.query();
-var wlanacname = query.wlanacname || ''; //'2043.0769.200.00';
-var wlanuserip = query.wlanuserip || ''; //'10.96.72.28';
-var wlanacip = query.wlanacip || ''; //'120.197.159.10';
-var wlanusermac = query.wlanusermac || '';
-var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';
+var wlanacname = query.wlanacname || '';//'2043.0769.200.00';
+var wlanuserip = query.wlanuserip || '';//'10.96.72.28';
+var wlanacip = query.wlanacip || '';//'120.197.159.10';
+var wlanusermac = query.wlanusermac || '';//'f45c89987347';
+var wlanapmac = query.wlanapmac || ''; 
+var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';//'http://www.baidu.com';
 var autologin = 0;
+//var useragent = navigator.userAgent;
+var canClick = true;
+
+//
+var appId = "wxbf43854270af39aa";
+var secretkey = "f1d41ba80597ee59b142032e16f801d9";
+var extend = [wlanacname,wlanuserip,wlanacip,wlanusermac,wlanapmac].join(',');    　　　 //开发者自定义参数集合
+var timestamp = new Date().getTime();　　　　//时间戳(毫秒)
+var shop_id = "4040455";            　　  //AP设备所在门店的ID
+var authUrl = "http://wx.yunxingzh.com/auth";        //认证服务端URL
+var mac = query.wlanusermac || '';  　　　//用户手机mac地址 安卓设备必需
+var ssid = "";           //AP设备信号名称，非必须
+var bssid = ""; 
+
+
+window.onerror=fnErrorTrap;
+
+function fnErrorTrap(sMsg,sUrl,sLine){
+oErrorLog.innerHTML+="Error: " + sMsg + "<br>";
+return false;
+}
 
 //判断浏览器类型
 var JPlaceHolder = {
@@ -76,10 +98,11 @@ var JPlaceHolder = {
   }
   var param = {
     wlanusermac: wlanusermac,
-    wlanacname: wlanacname
+    wlanacname: wlanacname,
+    wlanapmac: wlanapmac,
   };
   var screenWidth = document.documentElement.clientWidth;
-  CGI.post('check_login', param, function(resp) {
+  CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
@@ -93,18 +116,14 @@ var JPlaceHolder = {
         $('html').css('height',height);
         $('.login').css('height','100%');
        } else {
-        var height = 0.0;
         if (autologin) {
           $('.login').append(template('tplOnelogin', {}));
           $('.login').append(template('tplBottom', ads));
-          height = screenWidth * (460/750);
         } else {
-          $('.login').append(template('tplIptlogin', {}));
-          $('.login').after(template('tplBottom', ads));
-          height = screenWidth * (240/750);
-        }  
-        $('.login-top').css('height',height);
-        setTimeout(function(){setHeight()},300);
+          $('.login').append(template('tplIptlogin', data));
+          $('.login').append(template('tplBottom', ads));
+        } 
+        setTimeout(function(){setHeight()},300); 
       }
       initUI();
     } else {
@@ -116,10 +135,7 @@ var JPlaceHolder = {
 function setHeight() {
   var height = document.documentElement.clientHeight;
   var htmlHeight = $('html').height();
-  if (height > htmlHeight) {
-   /*if(height < 500) {
-       height = 520;
-    }*/   
+  if (height > htmlHeight) {   
    $('html').css('height',height);
     $('.login-bottom').css('position','absolute');
     $('.login-bottom').css('left', 0);
@@ -135,8 +151,14 @@ function initUI() {
   if (isPC()) {
     $('.pc-btn').click(tripEnd);
   } else {
-    $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
-    $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
+    if (autologin) {
+      $('.wx-btn').get(0).addEventListener('touchstart', tripStart, false);
+      //$('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
+      $('.wx-btn').click(callWechatBrowser);
+    } else {
+      $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
+      $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
+    }     
   }
 }
 
@@ -236,30 +258,44 @@ function tripStart(e) {
 }
 
 function tripEnd(e) {
-  $('.btn').css('backgroundColor', '#00a0fb');
-  var param = {
-    wlanacname: wlanacname,
-    wlanuserip: wlanuserip,
-    wlanacip: wlanacip,
-    wlanusermac: wlanusermac
-  };
+  if (canClick) {
+    var param = {
+      wlanacname: wlanacname,
+      wlanuserip: wlanuserip,
+      wlanacip: wlanacip,
+      wlanusermac: wlanusermac,
+      wlanapmac: wlanapmac
+    };
 
-  if (autologin) {
-    oneClickLogin(param);
-  } else {
-    var phone = $('.ipt-phone').val().trim();
-    var code = $('.ipt-code').val().trim();
-    if (checkPhone(phone)) {
-      param.phone = phone;
-      if (code.length <= 0) {
-        tipShow('请输入验证码');
-      } else {
-        param.code = code;
-        portalLogin(param);
+    if (autologin) {
+      disableButton();
+      oneClickLogin(param);
+    } else {
+      var phone = $('.ipt-phone').val().trim();
+      var code = $('.ipt-code').val().trim();
+      if (checkPhone(phone)) {
+        param.phone = phone;
+        if (code.length <= 0) {
+          tipShow('请输入验证码');
+        } else {
+          param.code = code;
+          disableButton();
+          portalLogin(param);
+        }
       }
     }
+  } else {
+    return false;
   }
 }
+
+function disableButton() {
+  canClick = false;
+  setTimeout(function() {
+    canClick = true;
+  },3000)          
+}
+
 
 function portalLogin(param) {
   CGI.get('portal_login', param, function(resp) {
@@ -290,10 +326,44 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
-    window.open(firsturl, '_blank');
+    location.replace(firsturl);
   } else {
-    window.open(url, '_blank');
+    location.replace(url);
   }
 }
+
+function callWechatBrowser(){
+  var sign = md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
+  Wechat_GotoRedirect(appId, extend, timestamp, sign, shop_id, authUrl, mac, ssid, bssid);
+}
+//checkVideo
+/*function checkVideo() {
+  var ret = false;
+  if (!!document.createElement('video').canPlayType) {
+    var vidTest = document.createElement("video");
+    oggTest = vidTest.canPlayType('video/ogg; codecs="theora, vorbis"');
+    if (!oggTest) {
+      h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+      if (!h264Test) {
+        ret =  false;
+      } else {
+        if (h264Test == "probably") {
+            ret =  true;
+        } else {
+            ret = false;
+        }
+      }
+    } else {
+      if (oggTest == "probably") {
+        ret =  true;
+      } else {
+        ret =  false;
+      }
+    }
+  } else {
+    ret =  false;
+  }
+  return ret;
+}*/

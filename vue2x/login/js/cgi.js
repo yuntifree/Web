@@ -1,7 +1,7 @@
 var ajax = $.ajax;
 //var __DEV__ = true;
 window.CGI = {
- // HOST: 'http://120.25.133.234/',
+  //HOST: 'http://120.25.133.234/',
   HOST: 'http://120.76.236.185/',
   CGI: '/',
 

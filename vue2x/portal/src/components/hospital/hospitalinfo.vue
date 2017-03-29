@@ -22,15 +22,14 @@
 </template>
 
 <script>
-import Hello from './components/wifiinfo'
 import { Swipe, SwipeItem } from 'vue-swipe';
-import tip from './components/lib/tip.vue'
-import scrollnews from './components/scrollNews.vue'
-import urban from './components/lib/urban.vue'
-import sermenu from './components/lib/sermenu.vue'
+import tip from '../lib/tip.vue'
+import scrollnews from '../scrollNews.vue'
+import urban from '../lib/urban.vue'
+import sermenu from '../lib/sermenu.vue'
 //require('./common/transform.js');
 //var el;
-import CGI from './lib/cgi.js'
+import CGI from '../../lib/cgi.js'
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
@@ -74,8 +73,7 @@ export default {
         if (resp.errno === 0) {
           this.infos = resp.data;
         } else {
-          console.log(resp);
-          //this.tipBox(resp.desc);
+          this.tipBox(resp.desc);
         }
       })
     },
@@ -91,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import './assets/css/swipe.css','./assets/css/common.scss';
+@import '../../assets/css/swipe.css','../../assets/css/common.scss';
 .app {
   max-width: 750px;
   margin: 0 auto;

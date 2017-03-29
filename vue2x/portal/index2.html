@@ -12,12 +12,33 @@
     <!-- built files will be auto injected -->
   </body>
   <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?4d7f4413c92d88c3417c9e927e2d588d";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+    function query() {
+      var url = window.document.location.href.toString();
+      url = url.substr(url.indexOf('?')+1);
+      if (typeof(url) === 'string') {
+          var u = url.split('&');
+          var get = {};
+          for (var i in u) {
+              if (typeof(u[i]) === 'string') {
+                  var j = u[i].split('=');
+                  get[j[0]] = j[1];
+              }
+          }
+            return get;
+        } else {
+            return {};
+        }
+      }
+    var portaltype = ~~(query().portaltype) || 0;
+    url = window.document.location.href.toString();
+    switch (portaltype) {
+      case 0: 
+        url = url.replace("index2.html","wifilink.html");
+        break;
+      case 1:
+        url = url = url.replace("index2.html","hospital.html");
+        break;
+    }
+    location.href = url;
+  </script> 
 </html>

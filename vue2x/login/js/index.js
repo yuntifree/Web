@@ -15,6 +15,20 @@ var wlanusermac = query.wlanusermac || '';//'f45c89987347';
 var wlanapmac = query.wlanapmac || ''; 
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';//'http://www.baidu.com';
 var autologin = 0;
+//var useragent = navigator.userAgent;
+var canClick = true;
+
+//
+var appId = "wx0387308775179bfe";
+var secretkey = "33606a01d90c4b806202e1f51f67574d";
+var extend = [wlanacname,wlanuserip,wlanacip,wlanusermac,wlanapmac].join(',');    　　　 //开发者自定义参数集合
+var timestamp = new Date().getTime();　　　　//时间戳(毫秒)
+var shop_id = "4061110";            　　  //AP设备所在门店的ID
+var authUrl = "http://wx.yunxingzh.com/auth";        //认证服务端URL
+var mac = query.wlanusermac || '';  　　　//用户手机mac地址 安卓设备必需
+var ssid = "";           //AP设备信号名称，非必须
+var bssid = ""; 
+
 
 //判断浏览器类型
 var JPlaceHolder = {
@@ -77,7 +91,8 @@ var JPlaceHolder = {
   }
   var param = {
     wlanusermac: wlanusermac,
-    wlanacname: wlanacname
+    wlanacname: wlanacname,
+    wlanapmac: wlanapmac,
   };
   var screenWidth = document.documentElement.clientWidth;
   CGI.get('check_login', param, function(resp) {
@@ -95,13 +110,12 @@ var JPlaceHolder = {
         $('.login').css('height','100%');
        } else {
         if (autologin) {
-          setToptpl();
-          $('.login').append(template('tplOnelogin', {}));
+          $('.login').append(template('tplOnelogin', data));
+          $('.login').append(template('tplBottom', ads));
         } else {
-          setToptpl();
-          $('.login').append(template('tplIptlogin', {}));
+          $('.login').append(template('tplIptlogin', data));
+          $('.login').append(template('tplBottom', ads));
         } 
-        $('.login-top').css('height',screenWidth);
         setTimeout(function(){setHeight()},300); 
       }
       initUI();
@@ -110,25 +124,6 @@ var JPlaceHolder = {
     }
   });
 })()
-
-function setToptpl() {
-  /*if (checkVideo()) {
-    var type = navigator.userAgent.toLowerCase();
-    if (type.indexOf("huawei") >= 0 ) {   
-       $('.login').append(template('tplImgtop', {}));
-    } else {
-      $('.login').append(template('tplVideotop', {}));
-      setTimeout(function(){
-        var video = document.querySelector('video');
-        enableInlineVideo(video,{
-          ipad: true
-        });
-      },500);  
-    }
-  } else {*/
-    $('.login').append(template('tplImgtop', {}));
-  //}
-}
 
 function setHeight() {
   var height = document.documentElement.clientHeight;
@@ -250,30 +245,44 @@ function tripStart(e) {
 }
 
 function tripEnd(e) {
-  $('.btn').css('backgroundColor', '#00a0fb');
-  var param = {
-    wlanacname: wlanacname,
-    wlanuserip: wlanuserip,
-    wlanacip: wlanacip,
-    wlanusermac: wlanusermac
-  };
+  if (canClick) {
+    var param = {
+      wlanacname: wlanacname,
+      wlanuserip: wlanuserip,
+      wlanacip: wlanacip,
+      wlanusermac: wlanusermac,
+      wlanapmac: wlanapmac
+    };
 
-  if (autologin) {
-    oneClickLogin(param);
-  } else {
-    var phone = $('.ipt-phone').val().trim();
-    var code = $('.ipt-code').val().trim();
-    if (checkPhone(phone)) {
-      param.phone = phone;
-      if (code.length <= 0) {
-        tipShow('请输入验证码');
-      } else {
-        param.code = code;
-        portalLogin(param);
+    if (autologin) {
+      disableButton();
+      oneClickLogin(param);
+    } else {
+      var phone = $('.ipt-phone').val().trim();
+      var code = $('.ipt-code').val().trim();
+      if (checkPhone(phone)) {
+        param.phone = phone;
+        if (code.length <= 0) {
+          tipShow('请输入验证码');
+        } else {
+          param.code = code;
+          disableButton();
+          portalLogin(param);
+        }
       }
     }
+  } else {
+    return false;
   }
 }
+
+function disableButton() {
+  canClick = false;
+  setTimeout(function() {
+    canClick = true;
+  },3000)          
+}
+
 
 function portalLogin(param) {
   CGI.get('portal_login', param, function(resp) {
@@ -304,14 +313,16 @@ function oneClickLogin(param) {
 function loginDone(info) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&live='+ info.live+ '&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var url = info.portaldir+"wifilink.html?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
   } else {
     location.replace(url);
   }
 }
-function checkVideo() {
+
+//checkVideo
+/*function checkVideo() {
   var ret = false;
   if (!!document.createElement('video').canPlayType) {
     var vidTest = document.createElement("video");
@@ -338,4 +349,4 @@ function checkVideo() {
     ret =  false;
   }
   return ret;
-}
+}*/
