@@ -59,6 +59,7 @@ function reportQues() {
     CGI.get('report_issue', param, function(resp) {
       if (resp.errno === 0) {
         tipShow('提交成功，谢谢您的反馈！');
+        window.history.go(-1);
       } else {
         tipShow(resp.desc);
       }
