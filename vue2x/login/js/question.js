@@ -1,29 +1,79 @@
-var val = [];
+var query = CGI.query();
+var wlanacname = query.wlanacname || '';//'2043.0769.200.00';
+var wlanusermac = query.wlanusermac || '';//'f45c89987347';
+var wlanapmac = query.wlanapmac || ''; 
 
+var val = [];
+var ids = '';
 (function() {
   font(true);
+  getIds();
   reportQues();
 })()
 
-function reportQues() {
-  console.log()
+function getIds() {
   $('.ipt-chk').bind('change', function(e) {
+    var value = ~~($(this).get(0).value);
     if ($(this).get(0).checked) {
-      var value = ~~($(this).get(0).value);
       val.push(value);
-      console.log(val);
     } else {
       if (val.length > 0) {
-        val.each(function() {
-          console.log(this);
-          if (this === val) {
-            val.splice(value);
+        val.forEach(function(item,idx) {
+          if (item === value) {
+            val.splice(idx,1);
           } 
         })
       }
-      console.log(val);
     }
   })
+}
+
+function reportQues() {
+  $('.btn').click(function() {
+    if (val.length <= 0) {
+      tipShow('请至少选择一种您存在的问题');
+      //ret = false;
+      return false;
+    }
+    var contact = $('.ipt-contact').val().trim();
+    if (contact.length <= 0) {
+      tipShow('请输入您的联系方式');
+      $('.ipt-contact').focus();
+      //ret = false;
+      return false;
+    } else {
+      if (!(~~contact)) {
+        tipShow('请输入正确的联系方式');
+        $('.ipt-contact').val('');
+        $('.ipt-contact').focus();
+        //ret = false;
+        return false;
+      }
+    }
+    var content = $('.ipt-content').val().trim();
+    var param = {
+      wlanapmac: wlanapmac,
+      wlanusermac: wlanusermac,
+      wlanacname: wlanacname,
+      contact : contact,
+      content: content,
+      ids: val.join(',')
+    }
+    CGI.get('report_issue', param, function(resp) {
+      if (resp.errno === 0) {
+        tipShow('提交成功，谢谢您的反馈！');
+      } else {
+        tipShow(resp.desc);
+      }
+    })
+  })
+}
+function tipShow(val) {
+  $('.tip-info').text(val);
+  $('.tip-info').show();
+  setTimeout(function() {
+    $('.tip-info').hide();
+  }, 1500);
 }
 
 function font(bFont) {

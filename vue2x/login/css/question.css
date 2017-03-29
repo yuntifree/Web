@@ -202,6 +202,22 @@ video {
   color: #fff;
   font-size: 0.36rem;
 }
+.tip-info {
+  width: 200px;
+  padding: 10px;
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  margin-left: -100px;
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #6b6b6b\0;
+  +background-color: #6b6b6b;
+  color: #fff;
+  border-radius: 5px;
+  display: none;
+}
+
 
 
 
