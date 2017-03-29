@@ -346,6 +346,6 @@ function callWechatBrowser() {
 }
 
 function getQues() {
-  var url = 'http://120.76.236.185/wx/h5/question.html?'+ ~~((new Date()).getTime()/1000);
-  location.href(url);
+  var url = 'http://120.76.236.185/wx/h5/question.html?wlanacname='+wlanacname + '&wlanusermac='+wlanusermac+'&wlanapmac='+wlanapmac;
+  location.href = url;
 }
