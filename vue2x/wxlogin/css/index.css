@@ -453,11 +453,11 @@ video {
   height: 40px;
   line-height: 40px;
   border-radius: 6px;
-  margin: 28px auto;
+  margin: 28px auto 6px;
   font-size: 18px;
 }
 .onepc-btn {
-  margin: 60px auto 0;
+  margin: 60px auto 6px;
 }
 .qr-code {
   width: 74px;
@@ -496,6 +496,10 @@ video {
 .has-ques {
   font-size: 0.26rem;
   color: #9b9b9b;
+  text-decoration: underline;
+}
+.pc-ques {
+  font-size: 12px;
 }
 
 
