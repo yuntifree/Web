@@ -19,16 +19,23 @@ var autologin = 0;
 var canClick = true;
 
 //
-var appId = "wx0387308775179bfe";
-var secretkey = "33606a01d90c4b806202e1f51f67574d";
+var appId = "wxbf43854270af39aa";
+var secretkey = "f1d41ba80597ee59b142032e16f801d9";
 var extend = [wlanacname,wlanuserip,wlanacip,wlanusermac,wlanapmac].join(',');    　　　 //开发者自定义参数集合
 var timestamp = new Date().getTime();　　　　//时间戳(毫秒)
-var shop_id = "4061110";            　　  //AP设备所在门店的ID
+var shop_id = "4040455";            　　  //AP设备所在门店的ID
 var authUrl = "http://wx.yunxingzh.com/auth";        //认证服务端URL
 var mac = query.wlanusermac || '';  　　　//用户手机mac地址 安卓设备必需
 var ssid = "";           //AP设备信号名称，非必须
 var bssid = ""; 
 
+
+window.onerror=fnErrorTrap;
+
+function fnErrorTrap(sMsg,sUrl,sLine){
+oErrorLog.innerHTML+="Error: " + sMsg + "<br>";
+return false;
+}
 
 //判断浏览器类型
 var JPlaceHolder = {
@@ -144,9 +151,14 @@ function initUI() {
   if (isPC()) {
     $('.pc-btn').click(tripEnd);
   } else {
-    $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
-    $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
-    $('.wx-btn').click(callWechatBrowser);
+    if (autologin) {
+      $('.wx-btn').get(0).addEventListener('touchstart', tripStart, false);
+      //$('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
+      $('.wx-btn').click(callWechatBrowser);
+    } else {
+      $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
+      $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
+    }     
   }
 }
 

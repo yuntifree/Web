@@ -294,6 +294,9 @@ video {
 .mob-btn {
     margin-top: 0.6rem;
 }
+.wx-btn {
+  margin-top: 1rem;
+}
 .click-btn {
   width: 1.74rem;
   line-height: 0.6rem;
