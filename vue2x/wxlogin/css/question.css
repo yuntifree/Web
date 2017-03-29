@@ -45,10 +45,13 @@ time, mark, audio, video,label,input,textarea{
 
 body{
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-width: 750px;
   font-size: 12px;
   position: relative;
   color: #5a5a5a;
+  margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 table{
@@ -217,6 +220,7 @@ video {
   border-radius: 5px;
   display: none;
 }
+
 
 
 

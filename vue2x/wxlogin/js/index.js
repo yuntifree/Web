@@ -116,9 +116,11 @@ var JPlaceHolder = {
         $('.login').css('height','100%');
        } else {
         if (autologin) {
-          $('.login').append(template('tplOnelogin', {}));
+          console.log(data);
+          $('.login').append(template('tplOnelogin', data));
           $('.login').append(template('tplBottom', ads));
         } else {
+          console.log(data);
           $('.login').append(template('tplIptlogin', data));
           $('.login').append(template('tplBottom', ads));
         }
@@ -158,6 +160,7 @@ function initUI() {
       $('.mob-btn').get(0).addEventListener('touchend', touchEnd, false);
     }
   }
+  $('.has-ques').click(getQues)
 }
 
 function font(bFont) {
@@ -342,4 +345,9 @@ function loginDone(info, wx) {
 function callWechatBrowser() {
   var sign = md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
   Wechat_GotoRedirect(appId, extend, timestamp, sign, shop_id, authUrl, mac, ssid, bssid);
+}
+
+function getQues() {
+  var url = 'http://120.76.236.185/wx/h5/question.html';
+  location.href(url);
 }

@@ -286,6 +286,7 @@ video {
   line-height: 0.8rem;
   border-radius: 0.14rem;
   margin-top: 0.36rem;
+  margin-bottom: 0.23rem;
   background-color: #00a0fb;
   font-size: 0.36rem;
   color: #fff;
@@ -491,6 +492,10 @@ video {
   width: 1px;
   height: 1px;
   background-color: #fff;
+}
+.has-ques {
+  font-size: 0.26rem;
+  color: #9b9b9b;
 }
 
 
