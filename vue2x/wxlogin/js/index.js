@@ -325,7 +325,14 @@ function oneClickLogin(param) {
 function loginDone(info, wx) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  jumpUrl = info.portaldir+"?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  var dir = info.portaldir;
+  var paramCode = "?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1'
+  if (!info.portaltype) {
+    if (dir.indexOf('.html') === -1) {
+      dir = info.portaldir + '/wifilink.html'
+    }
+  }
+  jumpUrl = dir + paramCode;
   if (CGI.isIE()) {
     location.replace(firsturl);
   } else {
