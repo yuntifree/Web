@@ -32,21 +32,18 @@ function reportQues() {
   $('.btn').click(function() {
     if (val.length <= 0) {
       tipShow('请至少选择一种您存在的问题');
-      //ret = false;
       return false;
     }
     var contact = $('.ipt-contact').val().trim();
     if (contact.length <= 0) {
       tipShow('请输入您的联系方式');
       $('.ipt-contact').focus();
-      //ret = false;
       return false;
     } else {
       if (!(~~contact)) {
         tipShow('请输入正确的联系方式');
         $('.ipt-contact').val('');
         $('.ipt-contact').focus();
-        //ret = false;
         return false;
       }
     }
