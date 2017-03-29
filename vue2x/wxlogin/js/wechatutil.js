@@ -10,17 +10,17 @@
      loadIframe = iframe;
  }
 //注册回调函数
-function jsonpCallback(result){  
+function jsonpCallback(result){
   if(result && result.success){
-    var ua=navigator.userAgent;              
-    if (ua.indexOf("iPhone") != -1 ||ua.indexOf("iPod")!=-1||ua.indexOf("iPad") != -1) {   //iPhone             
+    var ua=navigator.userAgent;
+    if (ua.indexOf("iPhone") != -1 ||ua.indexOf("iPod")!=-1||ua.indexOf("iPad") != -1) {   //iPhone
       document.location = result.data;
-    }else{
-        createIframe();
+    } else{
+      createIframe();
         loadIframe.src=result.data;
-      noResponse = setTimeout(function(){
+        noResponse = setTimeout(function(){
         errorJump();
-          },3000);
+      },3000);
     }
   }else if(result && !result.success){
     alert(result.data);
@@ -28,31 +28,31 @@ function jsonpCallback(result){
 }
 
 function Wechat_GotoRedirect(appId, extend, timestamp, sign, shopId, authUrl, mac, ssid, bssid){
-  
+
   //将回调函数名称带到服务器端
-  var url = "https://wifi.weixin.qq.com/operator/callWechatBrowser.xhtml?appId=" + appId 
-                                    + "&extend=" + extend 
-                                    + "&timestamp=" + timestamp 
-                                    + "&sign=" + sign;  
-  
+  var url = "https://wifi.weixin.qq.com/operator/callWechatBrowser.xhtml?appId=" + appId
+                                    + "&extend=" + extend
+                                    + "&timestamp=" + timestamp
+                                    + "&sign=" + sign;
+
   //如果sign后面的参数有值，则是新3.1发起的流程
   if(authUrl && shopId){
-    
-    
-    url = "https://wifi.weixin.qq.com/operator/callWechat.xhtml?appId=" + appId 
-                                    + "&extend=" + extend 
-                                    + "&timestamp=" + timestamp 
+
+
+    url = "https://wifi.weixin.qq.com/operator/callWechat.xhtml?appId=" + appId
+                                    + "&extend=" + extend
+                                    + "&timestamp=" + timestamp
                                     + "&sign=" + sign
                                     + "&shopId=" + shopId
                                     + "&authUrl=" + encodeURIComponent(authUrl)
                                     + "&mac=" + mac
                                     + "&ssid=" + ssid
                                     + "&bssid=" + bssid;
-    
-  }     
-  
-  //通过dom操作创建script节点实现异步请求  
-  var script = document.createElement('script');  
-  script.setAttribute('src', url);  
+
+  }
+
+  //通过dom操作创建script节点实现异步请求
+  var script = document.createElement('script');
+  script.setAttribute('src', url);
   document.getElementsByTagName('head')[0].appendChild(script);
 }
