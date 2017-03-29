@@ -27,7 +27,7 @@
   @include containerSize(71%, auto);
 }
 .doctor-name {
-  font-size: 0.36rem;
+  font-size: 0.32rem;
   color: #3c3c3c;
   line-height: 0.5rem;
 }
