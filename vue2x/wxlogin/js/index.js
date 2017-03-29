@@ -116,11 +116,9 @@ var JPlaceHolder = {
         $('.login').css('height','100%');
        } else {
         if (autologin) {
-          console.log(data);
           $('.login').append(template('tplOnelogin', data));
           $('.login').append(template('tplBottom', ads));
         } else {
-          console.log(data);
           $('.login').append(template('tplIptlogin', data));
           $('.login').append(template('tplBottom', ads));
         }
@@ -348,6 +346,6 @@ function callWechatBrowser() {
 }
 
 function getQues() {
-  var url = 'http://120.76.236.185/wx/h5/question.html';
+  var url = 'http://120.76.236.185/wx/h5/question.html?'+ ~~((new Date()).getTime()/1000);
   location.href(url);
 }
