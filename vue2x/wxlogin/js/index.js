@@ -12,7 +12,7 @@ var wlanacname = query.wlanacname || '';//'2043.0769.200.00';
 var wlanuserip = query.wlanuserip || '';//'10.96.72.28';
 var wlanacip = query.wlanacip || '';//'120.197.159.10';
 var wlanusermac = query.wlanusermac || '';//'f45c89987347';
-var wlanapmac = query.wlanapmac || ''; 
+var wlanapmac = query.wlanapmac || '';
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com';//'http://www.baidu.com';
 var autologin = 0;
 //var useragent = navigator.userAgent;
@@ -27,14 +27,14 @@ var shop_id = "4040455";            　　  //AP设备所在门店的ID
 var authUrl = "http://wx.yunxingzh.com/auth";        //认证服务端URL
 var mac = query.wlanusermac || '';  　　　//用户手机mac地址 安卓设备必需
 var ssid = "";           //AP设备信号名称，非必须
-var bssid = ""; 
+var bssid = "";
+var jumpUrl = "";
 
 
-window.onerror=fnErrorTrap;
-
-function fnErrorTrap(sMsg,sUrl,sLine){
-oErrorLog.innerHTML+="Error: " + sMsg + "<br>";
-return false;
+function errorJump() {
+  if (jumpUrl.length > 0) {
+    location.replace(jumpUrl);
+  }
 }
 
 //判断浏览器类型
@@ -88,7 +88,6 @@ var JPlaceHolder = {
       });
     });
   }
-
 };
 
 (function() {
@@ -122,8 +121,8 @@ var JPlaceHolder = {
         } else {
           $('.login').append(template('tplIptlogin', data));
           $('.login').append(template('tplBottom', ads));
-        } 
-        setTimeout(function(){setHeight()},300); 
+        }
+        setTimeout(function(){setHeight()},300);
       }
       initUI();
     } else {
@@ -135,7 +134,7 @@ var JPlaceHolder = {
 function setHeight() {
   var height = document.documentElement.clientHeight;
   var htmlHeight = $('html').height();
-  if (height > htmlHeight) {   
+  if (height > htmlHeight) {
    $('html').css('height',height);
     $('.login-bottom').css('position','absolute');
     $('.login-bottom').css('left', 0);
@@ -149,16 +148,15 @@ function initUI() {
   JPlaceHolder.init();
   $('.query-code').click(getCode);
   if (isPC()) {
-    $('.pc-btn').click(tripEnd);
+    $('.pc-btn').click(touchEnd);
   } else {
     if (autologin) {
-      $('.wx-btn').get(0).addEventListener('touchstart', tripStart, false);
-      //$('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
-      $('.wx-btn').click(callWechatBrowser);
+      $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
+      $('.wx-btn').get(0).addEventListener('touchend', touchEnd, false);
     } else {
-      $('.mob-btn').get(0).addEventListener('touchstart', tripStart, false);
-      $('.mob-btn').get(0).addEventListener('touchend', tripEnd, false);
-    }     
+      $('.mob-btn').get(0).addEventListener('touchstart', touchStart, false);
+      $('.mob-btn').get(0).addEventListener('touchend', touchEnd, false);
+    }
   }
 }
 
@@ -253,11 +251,11 @@ function getCode() {
   });
 }
 
-function tripStart(e) {
+function touchStart(e) {
   $('.btn').css('backgroundColor', '#0187ee');
 }
 
-function tripEnd(e) {
+function touchEnd(e) {
   if (canClick) {
     var param = {
       wlanacname: wlanacname,
@@ -293,16 +291,16 @@ function disableButton() {
   canClick = false;
   setTimeout(function() {
     canClick = true;
-  },3000)          
+  },3000)
 }
 
 
 function portalLogin(param) {
   CGI.get('portal_login', param, function(resp) {
     if (resp.errno === 0) {
-      loginDone(resp.data);
+      loginDone(resp.data, false);
     } else {
-      //test
+      // 验证码
       tipShow(resp.desc);
       $('.ipt-code').val('');
       $('.ipt-code').focus('');
@@ -315,55 +313,33 @@ function portalLogin(param) {
 function oneClickLogin(param) {
   CGI.get('one_click_login', param, function(resp) {
     if (resp.errno === 0) {
-      loginDone(resp.data);
+      loginDone(resp.data, true);
     } else {
-      //test
+      // 验证码
       tipShow(resp.desc);
     }
   })
 }
 
-function loginDone(info) {
+function loginDone(info, wx) {
   $('.ipt-phone').val('');
   $('.ipt-code').val('');
-  var url = info.portaldir+"?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
+  jumpUrl = info.portaldir+"?uid=" + info.uid + '&token=' + info.token + '&adtype='+ info.adtype+ '&portaltype='+ info.portaltype+'&ts=' + ~~((new Date()).getTime()/1000) + '&s=1';
   if (CGI.isIE()) {
     location.replace(firsturl);
   } else {
-    location.replace(url);
+    if (wx) {
+      callWechatBrowser();
+      setTimeout(function() {
+        errorJump();
+      }, 3000)
+    } else {
+      location.replace(jumpUrl);
+    }
   }
 }
 
-function callWechatBrowser(){
+function callWechatBrowser() {
   var sign = md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
   Wechat_GotoRedirect(appId, extend, timestamp, sign, shop_id, authUrl, mac, ssid, bssid);
 }
-//checkVideo
-/*function checkVideo() {
-  var ret = false;
-  if (!!document.createElement('video').canPlayType) {
-    var vidTest = document.createElement("video");
-    oggTest = vidTest.canPlayType('video/ogg; codecs="theora, vorbis"');
-    if (!oggTest) {
-      h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
-      if (!h264Test) {
-        ret =  false;
-      } else {
-        if (h264Test == "probably") {
-            ret =  true;
-        } else {
-            ret = false;
-        }
-      }
-    } else {
-      if (oggTest == "probably") {
-        ret =  true;
-      } else {
-        ret =  false;
-      }
-    }
-  } else {
-    ret =  false;
-  }
-  return ret;
-}*/
