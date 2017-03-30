@@ -323,7 +323,7 @@ function portalLogin(param, wx) {
       connected = true;
       sendTest();
       if (wx) {
-        setTimeout(function() {callWeixin()}, 300);
+        setTimeout(function() {callWeixin()}, 1000);
       } else {
         if (CGI.isIE()) {
           location.replace(firsturl);
@@ -358,7 +358,7 @@ function oneClickLogin(auto, callWX) {
       if (!auto) {
         // 如果需要，调用微信
         if (callWX) {
-          setTimeout(function() {callWeixin()}, 300);
+          setTimeout(function() {callWeixin()}, 1000);
         } else {
           if (CGI.isIE()) {
             location.replace(firsturl);
@@ -394,9 +394,7 @@ function disableButton() {
 
 // make apple happy!
 function sendTest() {
-  CGI.get('test', {}, function(resp) {
-    // empty
-  })
+  $('body').append(template('apple', {}));
 }
 
 function genJumpUrl(info) {
