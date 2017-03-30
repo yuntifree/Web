@@ -7,6 +7,7 @@
           <img class="banner-img" :src="banner.img"  @click="openLink(banner)">
         </swipe-item>
       </swipe>
+      <img class="info-logo"　src="http://img.yunxingzh.com/3816d7d7-acb1-4357-ace0-b0e674537a32.png">
       <div class="info-weather g-clearfix">
         <img class="weacher-icon g-fl" :src="weatherImg">
         <span class="weather-temp g-fl">{{weather.temp}}&#176;C</span>
@@ -158,6 +159,13 @@ export default {
 .weather-info,
 .weather-temp{
   line-height: 0.36rem;
+}
+.info-logo {
+  @include containerSize(0.4rem, auto);
+  display: block;
+  position: absolute;
+  top: 0.2rem;
+  left: 0.24rem;
 }
 </style>
 
