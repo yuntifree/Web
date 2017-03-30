@@ -280,7 +280,7 @@ function touchEnd(e) {
         } else {
           param.code = code;
           disableButton();
-          portalLogin(param);
+          portalLogin(param, !isPC());
         }
       }
     }
@@ -299,11 +299,11 @@ function disableButton() {
 }
 
 
-function portalLogin(param) {
+function portalLogin(param,wx) {
   CGI.get('portal_login', param, function(resp) {
     enableButton();
     if (resp.errno === 0) {
-      loginDone(resp.data, false);
+      loginDone(resp.data, wx);
     } else {
       // 验证码
       tipShow(resp.desc);
