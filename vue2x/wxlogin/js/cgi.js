@@ -16,7 +16,7 @@ window.CGI = {
       url: url,
       contentType: 'application/json',
       cache: false,
-      timeout: 2000,
+      timeout: 5000,
       dataType: 'jsonp',
       jsonp: 'callback',
       success: function(data) {
