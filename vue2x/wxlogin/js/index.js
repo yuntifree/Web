@@ -323,7 +323,7 @@ function portalLogin(param, wx) {
       connected = true;
       sendTest();
       if (wx) {
-        setTimeout(function() {callWeixin()}, 1000);
+        callWeixin();
       } else {
         if (CGI.isIE()) {
           location.replace(firsturl);
@@ -358,7 +358,7 @@ function oneClickLogin(auto, callWX) {
       if (!auto) {
         // 如果需要，调用微信
         if (callWX) {
-          setTimeout(function() {callWeixin()}, 1000);
+          callWeixin();
         } else {
           if (CGI.isIE()) {
             location.replace(firsturl);
