@@ -151,8 +151,9 @@ function initUI() {
     $('.pc-btn').click(touchEnd);
   } else {
     if (autologin) {
+      touchEnd();
       $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
-      $('.wx-btn').get(0).addEventListener('touchend', touchEnd, false);
+      $('.wx-btn').get(0).addEventListener('touchend', enableButton); 
     } else {
       $('.mob-btn').get(0).addEventListener('touchstart', touchStart, false);
       $('.mob-btn').get(0).addEventListener('touchend', touchEnd, false);
