@@ -149,11 +149,18 @@ export default {
       ready: false,
       loading: false,
       nomore: false,
-      useCache: false
+      useCache: false,
+      canScroll: false,
     }
   },
   components: {
     tip,
+  },
+  activated() {
+    this.canScroll = true;
+  },
+  deactivated() {
+    this.canScroll = false;
   },
   mounted() {
     this.$nextTick(function () {
@@ -210,7 +217,7 @@ export default {
     loadMore() {
       this.loading = true;
       var len = this.items.length-1;
-      if (!this.nomore && len >= 0) {
+      if (this.canScroll && !this.nomore && len >= 0) {
         setTimeout(()=>{
           this.getData(this.items[len].seq);
         },1000)

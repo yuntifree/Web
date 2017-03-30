@@ -7,6 +7,11 @@
           <img class="banner-img" :src="banner.img"  @click="openLink(banner)">
         </swipe-item>
       </swipe>
+      <div class="info-weather g-clearfix">
+        <img class="weacher-icon g-fl" :src="weatherImg">
+        <span class="weather-temp g-fl">{{weather.temp}}&#176;C</span>
+        <span class="weather-info g-fl">{{weather.info}}</span>
+      </div>
     </div>
     <urban v-if="infos.urbanservices && infos.urbanservices.length>0" 
             :urbandata="infos.urbanservices">
@@ -54,6 +59,12 @@ export default {
         duration: 1500,
       },
       infos: {},
+      weatherIcon: ['http://img.yunxingzh.com/c7f30e46-f5aa-4a16-a611-1c7b99f5ec01.png',
+                    'http://img.yunxingzh.com/2c8898ab-78c2-4002-b8a7-ae0579e8bb66.png',
+                    'http://img.yunxingzh.com/881bfc97-7849-44a2-b585-c197a6917e96.png',
+                    'http://img.yunxingzh.com/3a961ff5-2530-4c10-b17c-aff36013b5db.png'],
+      weather: {},
+      weatherImg: '',
     }
   }, 
   mounted() {
@@ -74,6 +85,19 @@ export default {
           this.infos = resp.data;
         } else {
           this.tipBox(resp.desc);
+        }
+      })
+      var p = {
+        uid: uid,
+        token: token,
+      }
+      CGI.post('get_weather_news', p, (resp)=> {
+        if (resp.errno === 0) {
+          this.weather = resp.data.weather;
+          var weatherType = this.weather.type || 0;
+          this.weatherImg = this.weatherIcon[weatherType];
+        } else {
+          this.alertInfo(resp.desc);
         }
       })
     },
@@ -116,6 +140,24 @@ export default {
 .banner-img {
     width: 100%;
     height: auto;
+}
+.info-weather {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.24rem;
+  color: #fff;
+}
+.weacher-icon {
+  @include containerSize(0.36rem, 0.36rem);
+  display: block;
+}
+.weather-temp {
+  line-height: 0.36rem;
+  margin: 0 0.1rem;
+}
+.weather-info,
+.weather-temp{
+  line-height: 0.36rem;
 }
 </style>
 
