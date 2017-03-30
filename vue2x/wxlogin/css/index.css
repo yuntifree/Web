@@ -219,7 +219,7 @@ video {
   -webkit-transform: translateX(-50%);
 }
 .vedio-top-text {
-  bottom: -0.3rem;  
+  bottom: -0.3rem;
 }
 .input-main {
   width: 5.38rem;
@@ -296,7 +296,7 @@ video {
     margin-top: 0.6rem;
 }
 .wx-btn {
-  margin-top: 1rem;
+  margin-top: 0.8rem;
 }
 .click-btn {
   width: 1.74rem;
