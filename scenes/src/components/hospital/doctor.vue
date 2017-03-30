@@ -101,21 +101,6 @@ export default {
         desc: '',
       },{
         img: 'http://img.yunxingzh.com/aa5a7e87-c00a-4d6e-b72f-0649e179ab59.jpg',
-        name: '谭稻香',
-        title: '儿科主治医师',
-        desc: '',
-      },{
-        img: 'http://img.yunxingzh.com/aa5a7e87-c00a-4d6e-b72f-0649e179ab59.jpg',
-        name: '谭稻香',
-        title: '儿科主治医师',
-        desc: '',
-      },{
-        img: 'http://img.yunxingzh.com/aa5a7e87-c00a-4d6e-b72f-0649e179ab59.jpg',
-        name: '谭稻香',
-        title: '儿科主治医师',
-        desc: '',
-      },{
-        img: 'http://img.yunxingzh.com/aa5a7e87-c00a-4d6e-b72f-0649e179ab59.jpg',
         name: '陈素容',
         title: '妇产科副主任医师',
         desc: '医疗专科：妇科、妇幼保健',
@@ -123,6 +108,61 @@ export default {
         img: 'http://img.yunxingzh.com/d40bdb4f-4c79-455f-9f43-51b7350458f1.jpg',
         name: '蓝清香',
         title: '妇科副主任  副主任医师',
+        desc: '',
+      },{
+        img: 'http://img.yunxingzh.com/0c44e829-0c77-40f4-8d73-8fe1e36baaed.jpg',
+        name: '李霞',
+        title: '妇产科主任医师',
+        desc: '',
+      },{
+        img: 'http://img.yunxingzh.com/285227bd-0fda-4e22-b8ae-27d280e2b707.jpg',
+        name: '刘美香',
+        title: '妇产科副主任医师',
+        desc: '',
+      },{
+        img: 'http://img.yunxingzh.com/aa5a7e87-c00a-4d6e-b72f-0649e179ab59.jpg',
+        name: '彭雪梅',
+        title: ' 产科主任 妇产科副主任医师',
+        desc: '',
+      },{
+        img: 'http://img.yunxingzh.com/9f5a88e4-9824-4cc8-8541-27ad9d7dba12.jpg',
+        name: '唐莉',
+        title: ' 妇科主任 妇产科副主任医师',
+        desc: '',
+      },{
+        img: 'http://img.yunxingzh.com/06d02e50-d890-4944-9f6a-13280d2d526a.jpg',
+        name: '吴建岚',
+        title: '妇产科副主任医师',
+        desc: '',
+      },{
+        img: 'http://img.yunxingzh.com/7bed5775-4c54-4a2b-862c-d913f8834a94.jpg',
+        name: '程喜红',
+        title: '骨科主任 　骨科主任医师',
+        desc: '医疗专科：骨外科',
+      },{
+        img: 'http://img.yunxingzh.com/0b0aea59-e13a-4521-a99d-e37c9cb3f0df.jpg',
+        name: '吴琦明',
+        title: '骨科副主任 副主任医师',
+        desc: '医疗专科：骨外科',
+      },{
+        img: 'http://img.yunxingzh.com/d680c282-1de2-4817-8cb6-b9009991645f.jpg',
+        name: '李建斌',
+        title: '骨科副主任医师',
+        desc: '医疗专科：创伤骨科、脊柱外科',
+      },{
+        img: 'http://img.yunxingzh.com/8276e806-dfe2-48b7-a526-0b9b04df3ec7.jpg',
+        name: '陈崛',
+        title: '急诊科主任　内科主治医师',
+        desc: '医疗专科：急诊急救、消化内科',
+      },{
+        img: 'http://img.yunxingzh.com/299ae410-cbc4-444b-8e9d-5c47ec63bffb.JPG',
+        name: '黄武健',
+        title: '内科主治医师',
+        desc: '医疗专科：骨外科',
+      },{
+        img: 'http://img.yunxingzh.com/ba2f2604-5f03-41c3-bde5-50e7849e1a10.jpg',
+        name: '黎志刚',
+        title: '急诊科副主任 主治医师',
         desc: '',
       }],
     }
