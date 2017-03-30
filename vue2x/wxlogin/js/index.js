@@ -268,7 +268,7 @@ function touchEnd(e) {
 
     if (autologin) {
       disableButton();
-      oneClickLogin(param);
+      oneClickLogin(param, !isPC());
     } else {
       var phone = $('.ipt-phone').val().trim();
       var code = $('.ipt-code').val().trim();
@@ -276,6 +276,7 @@ function touchEnd(e) {
         param.phone = phone;
         if (code.length <= 0) {
           tipShow('请输入验证码');
+          enableButton();
         } else {
           param.code = code;
           disableButton();
@@ -283,9 +284,11 @@ function touchEnd(e) {
         }
       }
     }
-  } else {
-    return false;
   }
+}
+
+function enableButton() {
+  $('.btn').css('backgroundColor', '#00a0fb');
 }
 
 function disableButton() {
@@ -298,6 +301,7 @@ function disableButton() {
 
 function portalLogin(param) {
   CGI.get('portal_login', param, function(resp) {
+    enableButton();
     if (resp.errno === 0) {
       loginDone(resp.data, false);
     } else {
@@ -311,10 +315,11 @@ function portalLogin(param) {
   })
 }
 
-function oneClickLogin(param) {
+function oneClickLogin(param, wx) {
   CGI.get('one_click_login', param, function(resp) {
+    enableButton();
     if (resp.errno === 0) {
-      loginDone(resp.data, true);
+      loginDone(resp.data, wx);
     } else {
       // 验证码
       tipShow(resp.desc);
@@ -353,6 +358,7 @@ function callWechatBrowser() {
 }
 
 function getQues() {
-  var url = 'http://120.76.236.185/wx/h5/question.html?wlanacname='+wlanacname + '&wlanusermac='+wlanusermac+'&wlanapmac='+wlanapmac;
+  var url = 'http://120.76.236.185/wx/h5/question.html?wlanacname='+ wlanacname +
+      '&wlanusermac='+wlanusermac+'&wlanapmac='+wlanapmac + '&ts=' + (new Date()).getTime();
   location.href = url;
 }
