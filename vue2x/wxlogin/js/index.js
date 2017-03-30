@@ -192,7 +192,7 @@ function initUI() {
       $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
       $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
       // 发送自动认证请求, 不调用微信
-      oneClickLogin(true, false);
+      // oneClickLogin(true, false);
     } else {
       $('.mob-btn').get(0).addEventListener('touchstart', touchStart, false);
       $('.mob-btn').get(0).addEventListener('touchend', mobRegClick, false);
