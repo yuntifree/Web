@@ -187,7 +187,7 @@ export default {
   },
   methods: {
     getDoctor(idx) {
-      if (idx < 18) {
+      if (idx < 17) {
         this.$store.state.doctorIdx = idx;
         this.$router.push({name: 'doctorItem'}); 
       } else {

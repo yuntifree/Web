@@ -27,6 +27,7 @@
 .list-img3 li {
   @include containerSize(32%,1.48rem);
   margin-right: 2%;
+  background-color: #f0f0f0;
 }
 .item-imgs li:last-child {
   margin-right: 0;
@@ -43,6 +44,7 @@
 .list-img1 {
   @include containerSize(2.28rem, 1.5rem);
   overflow: hidden;
+  background-color: #f0f0f0;
 }
 .list-img1 img{
   @include containerSize(100%, auto);
@@ -87,6 +89,9 @@
   color: #3c3c3c;
   border-bottom: 1px solid  #e7e7e7;
   background-color: #fff;
+}
+.newslist img {
+  background-color: #f0f0f0;
 }
 </style>
 <template>

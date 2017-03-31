@@ -5,6 +5,7 @@
       <swipe class="my-swipe">
         <swipe-item v-for="banner in infos.banners">
           <img class="banner-img" :src="banner.img"  @click="openLink(banner)">
+          <p class="info-unit g-tar" v-if="!banner.type">东莞石排医院</p>
         </swipe-item>
       </swipe>
       <p class="info-logo g-clearfix">
@@ -124,8 +125,9 @@ export default {
 }
 .banner {
   width: 100%;
-  height: 3.2rem;
+  height: 3.1rem;
   overflow:hidden;
+  position: relative;
 }
 .my-swipe {
   color: #fff;
@@ -180,6 +182,18 @@ export default {
   font-size: 0.24rem;
   line-height: 0.4rem;
   padding-left: 0.5rem;
+}
+.info-unit {
+  width: 100%;
+  display: block;
+  padding-right: 0.4rem;
+  color: #fff;
+  font-size: 0.32rem;
+  line-height:0.76rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.3);
 }
 </style>
 
