@@ -46,10 +46,10 @@ export default {
   components: {
     maptip
   },
-  created() {
-    weixin.init(this.wxReady);
+  created() {  
   },
   mounted() {
+    this.wxReady();
     // 存下union
     // if (union.length > 0) {
     //   CGI.setCookie('UNION', union, 7);
@@ -62,8 +62,8 @@ export default {
 
       map = new BMap.Map('map');
       // debug
-      _this.longitude = 113.7582310000;
-      _this.latitude = 23.0269980000;
+      //_this.longitude = 113.90387023396529;
+      //_this.latitude = 22.93310386339828;
       point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,15);
@@ -119,7 +119,6 @@ export default {
       };
 
       function addMarker(lng,lat,idx) {
-        //alert(lng+','+lat+','+idx);
         var spot = new BMap.Point(lng, lat);
         var myIcon2 = new BMap.Icon("./static/marker.png", new BMap.Size(60,60));
         var marker2 = new BMap.Marker(spot,{icon:myIcon2});
@@ -143,7 +142,7 @@ export default {
         _this.$nextTick(()=>{
            _this.mapShow();       
         })
-      })
+      });
     },
   }
 }
