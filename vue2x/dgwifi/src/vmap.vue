@@ -62,11 +62,11 @@ export default {
 
       map = new BMap.Map('map');
       // debug
-      //_this.longitude = 113.90387023396529;
-      //_this.latitude = 22.93310386339828;
+      _this.longitude = 113.7582310000;
+      _this.latitude = 23.0269980000;
       point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
-      map.centerAndZoom(point,15);
+      map.centerAndZoom(point,12);
       var myIcon = new BMap.Icon("./static/target.png", new BMap.Size(60,60));
       var marker = new BMap.Marker(point,{icon:myIcon});  // 创建标注
       map.addOverlay(marker)
