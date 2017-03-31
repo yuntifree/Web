@@ -77,9 +77,7 @@
 </style>
 <template>
 <div id="newslist">
-  <div v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="30">
+  <div>
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -123,8 +121,9 @@
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
-  <p class="item-desc g-tac loading" v-if="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
-  <p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p>
+   <p class="item-desc more-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
+    <p class="item-desc g-tac loading" v-if="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
+  <!--p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p-->
 </div>
 </template>
 <script>
@@ -229,9 +228,12 @@ export default {
       var pageHeight = document.documentElement.clientHeight;
       var delta = scrollY % pageHeight;
       scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
-      sessionStorage.setItem('scrollY', scrollY);
-      sessionStorage.setItem('cache', JSON.stringify(this.items));
-
+      if (sessionStorage) {
+        try {
+          sessionStorage.setItem('scrollY_'+this.type, scrollY);
+          sessionStorage.setItem('cache_'+this.type, JSON.stringify(this.items));
+        } catch(e){}
+      }
       var param = {
         id: item.id,
         type: 0,

@@ -35,6 +35,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
 .cate-list-inner li:nth-child(4n+4) {
   border-right: 0;
@@ -45,10 +46,11 @@
     <div class="cate-list" v-for="item in categorys">
       <h2 class="cate-list-name g-clearfix"><img class="g-fl" :src="item.icon"><span class="g-fl" v-text="item.name"></span></h2>
       <ul class="cate-list-inner g-clearfix">
-        <li class="g-tac g-fl" v-for="list in item.lists" @click="goKeshi(list.name)"><span class="cate-text" v-html="list.text"></span></li>
+        <li class="g-tac g-fl" v-for="list in item.lists" @click="goKeshi(list.name)"><span class="cate-text g-tac" v-html="list.text"></span></li>
         <template v-for="idx in 4"><li v-if="makeCell(idx, item.lists.length)" class="g-tac g-fl"><span class="cate-text"></span></li></template>
       </ul>
     </div>
+    <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
 
@@ -60,6 +62,11 @@ export default {
   name: 'category',
   data () {
     return {
+      tips: {
+        show: false,
+        msg: '',
+        duration: 1500,
+      },
       categorys: [{
         icon: '../../../static/images/hospital/ico_medicine.png',
         name: '内科系统',
@@ -164,8 +171,12 @@ export default {
       return ret;
     },
     goKeshi(name) {
-      this.$store.state.keshi = name;
-      this.$router.push({name: 'categoryItem'})
+      if (name == 'neiyike') {
+        this.$store.state.keshi = name;
+        this.$router.push({name: 'categoryItem'})
+      } else {
+        this.tipBox('资料完善中，敬请期待');
+      }
     },
     tipBox(val) {
       this.tips.msg = val;

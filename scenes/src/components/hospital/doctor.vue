@@ -63,6 +63,7 @@
       </dl>
       <button class="g-fr btn-intro" @click="getDoctor(index)">介绍</button>
     </div>
+    <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
 
@@ -74,6 +75,11 @@ export default {
   name: 'doctor',
   data () {
     return {
+      tips: {
+        show: false,
+        msg: '',
+        duration: 1500,
+      },
       doctors: [{
         img: 'http://img.yunxingzh.com/3bff7f86-b266-4d49-a64c-0df6a8dcb901.jpg',
         name: '蔡西方',
@@ -164,6 +170,11 @@ export default {
         name: '黎志刚',
         title: '急诊科副主任 主治医师',
         desc: '',
+      },{
+        img: 'http://img.yunxingzh.com/56c93b51-36ac-49b8-933a-0d3c4dd13fa9.jpg',
+        name: '冯敬东',
+        title: '门诊部副主任 内科主任医师',
+        desc: '',
       }],
     }
   },
@@ -176,8 +187,12 @@ export default {
   },
   methods: {
     getDoctor(idx) {
-      this.$store.state.doctorIdx = idx;
-      this.$router.push({name: 'doctorItem'});
+      if (idx < 18) {
+        this.$store.state.doctorIdx = idx;
+        this.$router.push({name: 'doctorItem'}); 
+      } else {
+        this.tipBox('资料完善中，敬请期待');
+      }
     },
     tipBox(val) {
       this.tips.msg = val;

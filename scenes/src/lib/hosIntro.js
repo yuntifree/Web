@@ -109,7 +109,7 @@ var docInfo = [{
 },{
   title: '黄武健 内科主治医师',
   date : '',
-  img :'http://img.yunxingzh.com/5384b55f-defa-4df1-b277-0e815b15dd23.jpg',
+  img :'http://img.yunxingzh.com/299ae410-cbc4-444b-8e9d-5c47ec63bffb.JPG',
   text: '2002年毕业于广东医学院，大学本科。一直从事内科临床工作，对内科常见病、多发病的诊治积累了丰富的经验，对危重病及疑难病诊治有一定的经验'
 },{
   title: '黎志刚 骨科副主任医师',
