@@ -62,8 +62,8 @@ export default {
 
       map = new BMap.Map('map');
       // debug
-      //_this.longitude = 113.90387023396529;
-      //_this.latitude = 22.93310386339828;
+      _this.longitude = 113.7582310000;
+      _this.latitude = 23.0269980000;
       point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,15);
@@ -137,25 +137,13 @@ export default {
       this.maptips.show = true;
     },
     wxReady() {
-        var _this = this;
-        wx && wx.getLocation({
-        success: function (res) {
-          _this.latitude = parseFloat(res.latitude);
-          _this.longitude = parseFloat(res.longitude);
-          var _location = gps.trans2BD(_this.latitude, _this.longitude);
-          _this.latitude = _location[0];
-          _this.longitude = _location[1];
-          CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
-            _this.loadMap = true;
-            _this.$nextTick(()=>{
-               _this.mapShow();       
-            })
-          })
-        },
-        cancel: function (res) {
-          alert('定位失败~');
-        }
-      });
+      var _this = this;
+      CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
+        _this.loadMap = true;
+        _this.$nextTick(()=>{
+           _this.mapShow();       
+        })
+      })
     },
   }
 }
