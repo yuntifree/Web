@@ -107,7 +107,9 @@ export default {
       })
     },
     openLink(ban) {
-      location.href = ban.dst;
+      if (ban.dst.length > 0) {
+        location.href = ban.dst;
+      }
     },
     tipBox(val) {
       this.tips.msg = val;
