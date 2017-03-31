@@ -7,7 +7,10 @@
           <img class="banner-img" :src="banner.img"  @click="openLink(banner)">
         </swipe-item>
       </swipe>
-      <img class="info-logo"　src="http://img.yunxingzh.com/3816d7d7-acb1-4357-ace0-b0e674537a32.png">
+      <p class="info-logo g-clearfix">
+          <img class="g-fl" src="http://img.yunxingzh.com/3816d7d7-acb1-4357-ace0-b0e674537a32.png">
+          <span>您已连上东莞无限免费WiFi</span>
+      </p>
       <div class="info-weather g-clearfix">
         <img class="weacher-icon g-fl" :src="weatherImg">
         <span class="weather-temp g-fl">{{weather.temp}}&#176;C</span>
@@ -161,11 +164,22 @@ export default {
   line-height: 0.36rem;
 }
 .info-logo {
-  @include containerSize(0.4rem, auto);
-  display: block;
+  width: 60%;
+  max-width: 60%;
   position: absolute;
   top: 0.2rem;
   left: 0.24rem;
+}
+.info-logo img {
+  @include containerSize(0.4rem, auto);
+  display: block;
+}
+.info-logo span {
+  display: block;
+  color: #fff;
+  font-size: 0.24rem;
+  line-height: 0.4rem;
+  padding-left: 0.5rem;
 }
 </style>
 

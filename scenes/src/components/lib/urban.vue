@@ -28,7 +28,6 @@ export default {
     this.$nextTick(()=> {
       var len = this.urbandata.length;
       var width = document.documentElement.clientWidth;
-      //this.$refs.alloy.childNodes.style.width = (width*0.2) +'px';
       this.$refs.alloy.style.width = len * (width*0.22) +'px';
       this.$refs.alloy.childNodes.forEach((item)=> {
         item.style.width = (width*0.22) +'px';
@@ -49,15 +48,6 @@ export default {
         }
       })
       if (item.routername) {
-         /* url = window.document.location.href.toString();
-          switch (portaltype) {
-            case 0: 
-              url = url.replace("index2.html","wifilink.html");
-              break;
-            case 1:
-              url = url = url.replace("index2.html","hospital.html");
-              break;
-          }*/
           url = url + '#/'+ item.routername
         } else {
            url = item.dst;
@@ -89,6 +79,7 @@ export default {
 .menu-lists {
   height: 2.2rem;
   margin: 0 auto;
+  -webkit-margin: 0 auto;
 }
 .menu-item {
   width: 20%;

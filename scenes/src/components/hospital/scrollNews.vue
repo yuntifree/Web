@@ -1,11 +1,17 @@
 <style lang="scss">
 @import '../../assets/css/common.scss';
+.newslist-inner {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  padding: 0 4%;
+  background-color: #fff;
+}
 .item-container {
   width: 100%;
   margin: 0 auto;
-  border-bottom: 1px solid #e6e6e6;
-  padding: 0.24rem 3%;
-  background-color: #fff;
+  padding: 0.24rem 0;
+  border-bottom: 1px solid #e6e6e6; 
 }
 .item-title {
   line-height: 150%;
@@ -30,7 +36,7 @@
   min-height: 1.5rem;
 }
 .list1-info {
-  width: 4.74rem;
+  width: 4.4rem;
   padding-right: 0.16rem;
   text-align: justify;
 }
@@ -74,10 +80,19 @@
 .item-visited {
   color: $color84;
 }
+.service-title {
+  padding: 0.2rem 0.3rem;
+  font-size: 0.36rem;
+  font-weight: 500;
+  color: #3c3c3c;
+  border-bottom: 1px solid  #e7e7e7;
+  background-color: #fff;
+}
 </style>
 <template>
-<div id="newslist">
-  <div>
+<div class="newslist">
+  <p class="service-title">头条新闻</p>
+  <div class="newslist-inner">
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
@@ -121,7 +136,7 @@
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
-   <p class="item-desc more-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
+   <p class="item-desc more-desc loading g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
     <p class="item-desc g-tac loading" v-if="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
   <!--p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p-->
 </div>
