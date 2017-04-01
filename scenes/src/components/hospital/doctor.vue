@@ -191,7 +191,7 @@ export default {
         this.$store.state.doctorIdx = idx;
         this.$router.push({name: 'doctorItem'}); 
       } else {
-        this.tipBox('资料完善中，敬请期待');
+        this.tipBox('页面内容尚未填充，敬请期待');
       }
     },
     tipBox(val) {

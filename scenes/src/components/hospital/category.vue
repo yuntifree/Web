@@ -175,7 +175,7 @@ export default {
         this.$store.state.keshi = name;
         this.$router.push({name: 'categoryItem'})
       } else {
-        this.tipBox('资料完善中，敬请期待');
+        this.tipBox('页面内容尚未填充，敬请期待');
       }
     },
     tipBox(val) {

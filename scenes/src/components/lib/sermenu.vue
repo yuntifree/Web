@@ -73,4 +73,7 @@ export default {
   height: 0.88rem;
   margin-bottom: 0.06rem;
 }
+.title-name {
+  font-size: 0.26rem;
+}
 </style>

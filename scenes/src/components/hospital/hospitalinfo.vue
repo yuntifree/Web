@@ -5,7 +5,7 @@
       <swipe class="my-swipe">
         <swipe-item v-for="banner in infos.banners">
           <img class="banner-img" :src="banner.img"  @click="openLink(banner)">
-          <p class="info-unit g-tar" v-if="!banner.type">东莞石排医院</p>
+          <p class="info-unit g-tar" v-if="!banner.type">{{banner.unit}}</p>
         </swipe-item>
       </swipe>
       <p class="info-logo g-clearfix">
