@@ -63,8 +63,8 @@ export default {
 
       map = new BMap.Map('map');
       // debug
-      _this.longitude = 113.7582310000;
-      _this.latitude = 23.0269980000;
+      /*_this.longitude = 113.7582310000;
+      _this.latitude = 23.0269980000;*/
       point = new BMap.Point(_this.longitude, _this.latitude);
       //标注
       map.centerAndZoom(point,12);
@@ -141,11 +141,11 @@ export default {
       wx && wx.getLocation({
         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
         success: function (res) {
-            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-            var speed = res.speed; // 速度，以米/每秒计
-            var accuracy = res.accuracy; // 位置精度
-            alert('succ' + res);
+            _this.latitude = parseFloat(res.latitude);
+           _this.longitude = parseFloat(res.longitude);
+           var _location = gps.trans2BD(_this.latitude, _this.longitude);
+           _this.latitude = _location[0];
+           _this.longitude = _location[1];
             CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
               _this.loadMap = true;
               _this.$nextTick(()=>{
