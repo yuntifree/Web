@@ -62,12 +62,12 @@
               <el-table-column
                 inline-template
                 label="合作开始日期">
-                <div>{{row.atime||'-'}}</div>
+                <div>{{makeTime(row.atime)||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
                 label="合作到期日期">
-                <div>{{row.etime || '-'}}</div>
+                <div>{{makeTime(row.etime) || '-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -268,6 +268,10 @@ export default {
         }
       });
     },
+    makeTime(time) {
+      var t = CGI.dateFormat(time, 'yyyy-MM-dd hh:mm:ss');
+      return t;
+    },
     handleSizeChange(val) {
       console.log('每页 ${val} 条');
     },
@@ -316,10 +320,9 @@ export default {
             CGI.post(this.$store.state, 'add_customer', param, function(resp){
               if (resp.errno === 0) {
                 var u = CGI.clone(param);
-                console.log(resp.data.id)
                 u.id = resp.data.id;
                 _this.infos.push(u);
-                _this.modal.addShow = false;
+                _this.modal.editShow = false;
               } else {
                 this.alertInfo(resp.desc);
               }
@@ -327,7 +330,6 @@ export default {
           } else {
             this.alertInfo('请输入正确的电话号码');
             this.postInfo.phone = '';
-            //_this.$refs['phone'].focus();
           }
         } else {
           return false;
@@ -341,16 +343,14 @@ export default {
       this.modal.dialogShow = true; 
     },
     delPost() {
-      var param = {
-        id: this.infos[this.selIdx].id,
-        deleted: 1
-      }
-      console.log(JSON.stringify(param));
+      var param = this.infos[this.selIdx];
+      param.deleted = 1;
       CGI.post(this.$store.state, 'mod_customer', param, (resp)=> {
         if (resp.errno === 0) {
           this.infos.splice(this.selIdx,1);
           this.modal.dialogShow = false; 
           this.alertInfo('删除成功');
+          this.selIdx = -1;
         } else {
           this.alertInfo(resp.desc);
         }

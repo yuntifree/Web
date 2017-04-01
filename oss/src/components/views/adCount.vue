@@ -148,7 +148,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="addPost('ruleForm')">确定</el-button>
-              <el-button @click="modal.addShow=false">取消</el-button>
+              <el-button @click="modal.editShow=false">取消</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -363,6 +363,13 @@ export default {
           this.alertInfo(resp.desc);
         }
       });
+      CGI.post(this.$store.state, 'get_ad_param', {}, (resp)=> {
+        if (resp.errno === 0) {
+          this.addParam = resp.data;
+        } else {
+          this.alertInfo(resp.desc);
+        }
+      })
     },
     handleSizeChange(val) {
       console.log('每页 ${val} 条');
@@ -374,13 +381,7 @@ export default {
     },
     add() {
       CGI.objClear(this.postInfo);
-      CGI.post(this.$store.state, 'get_ad_param', {}, (resp)=> {
-        if (resp.errno === 0) {
-          this.addParam = resp.data;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      })
+      this.postInfo.online = "0";
       this.modal.addShow = true;
     },
     edit(idx,row) {
@@ -392,7 +393,7 @@ export default {
     editPost() { 
       var param = CGI.objModified(this.infos[this.selIdx], this.postInfo);        
       param.id = this.infos[this.selIdx].id; 
-      param.dbg = ~~param.dbg;
+      param.online = this.infos[this.selIdx].online;
       param.deleted = ~~param.deleted;
       CGI.post(this.$store.state, 'mod_portal_menu', param, (resp)=> {
         if (resp.errno === 0) {
@@ -429,52 +430,6 @@ export default {
         }
       });
     },  
-    review(idx,row,ops) {
-      this.selIdx = idx;
-      var title = '';
-      var text = '';
-      if (ops) {
-        title = '下线';
-        text = '确认要下线吗'; 
-      } else {
-        title = '上线';
-        text = '确认要上线吗';
-      }
-      this.dialogCfg.title = title;
-      this.dialogCfg.text = text;
-      this.reviewInfo = row;
-      this.reviewOps = ops;
-      this.modal.dialogShow = true;
-    },
-    onlineOps() {
-      var param = {
-        id: this.reviewInfo.id,
-        online: this.reviewOps,
-        dbg: this.reviewInfo.dbg
-      };
-      CGI.post(this.$store.state, 'mod_advertise', param, (resp)=> {
-        if (resp.errno === 0) {
-          this.infos[this.selIdx].deleted = param.deleted;           
-          this.modal.dialogShow = false;
-          this.selIdx = -1;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-     })
-    },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
     alertInfo(val) {
       this.alertShow = true;
       this.alertMsg = val; 
