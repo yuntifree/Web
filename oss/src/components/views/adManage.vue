@@ -76,8 +76,8 @@
               </el-table-column>
               <el-table-column
                 inline-template
-                label="发布时间">
-                <div>{{row.dbg ? '是' : '否'}}</div>
+                label="时段">
+                <div>{{row.timeslot}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -86,7 +86,7 @@
                 width="100">
                 <span>
                   <el-button @click="edit($index,row)" type="text" size="small">修改</el-button>
-                  <el-button @click="edit($index,row)" type="text" size="small">删除</el-button>
+                  <el-button @click="del($index,row)" type="text" size="small">删除</el-button>
                 </span>
               </el-table-column>
             </el-table>
@@ -114,11 +114,14 @@
             <el-form-item label="摘要信息" prop="abstract">
               <el-input v-model.trim="postInfo.abstract"  placeholder="请输入摘要信息"></el-input>
             </el-form-item>
+            <el-form-item label="摘要信息" prop="img">
+              <uploader></uploader>
+            </el-form-item>
             <el-form-item label="广告业主" prop="adid">
               <el-select v-model="postInfo.adid" placeholder="请选择投放时段">
                 <el-option
                   v-for="item in addParam.customer"
-                  :label="item.id"
+                  :label="item.name"
                   :value="item.id">
                 </el-option>
               </el-select>
@@ -159,7 +162,7 @@
         <span>{{dialogCfg.text}}</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click.native="modal.dialogShow = false">取 消</el-button>
-          <el-button type="primary" @click.native="onlineOps">确 定</el-button>
+          <el-button type="primary" @click.native="delPost">确 定</el-button>
         </span>
       </el-dialog>
       <!--alert-->
@@ -282,7 +285,6 @@ export default {
         seq: this.pageCfg.start,
         num: 30,
       }
-
       CGI.post(this.$store.state, 'get_advertise', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
@@ -303,7 +305,18 @@ export default {
         } else {
           this.alertInfo(resp.desc);
         }
-      });
+      })
+      CGI.post(this.$store.state, 'get_ad_param', {}, (resp)=> {
+        if (resp.errno === 0) {
+          this.addParam = resp.data;
+        } else {
+          this.alertInfo(resp.desc);
+        }
+      })
+    },
+    makeTime(time) {
+      var ret = makeTime(CGI.dateFormat(time));
+      return ret;
     },
     handleSizeChange(val) {
       console.log('每页 ${val} 条');
@@ -316,13 +329,6 @@ export default {
     add() {
       CGI.objClear(this.postInfo);
       this.postInfo.online = "0";
-      CGI.post(this.$store.state, 'get_ad_param', {}, (resp)=> {
-        if (resp.errno === 0) {
-          this.addParam = resp.data;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      })
       this.modal.text = '增加';
       this.modal.addShow = true;
       this.modal.editShow = true;
@@ -330,18 +336,17 @@ export default {
     edit(idx,row) {
       this.selIdx = idx;
       CGI.objClear(this.postInfo);
+      row.online = row.online.toString();
       CGI.extend(this.postInfo,row);
-      this.postInfo.online = this.postInfo.online.toString()
       this.modal.text = '修改';
       this.modal.addShow = false;
       this.modal.editShow = true;
     },
     editPost() { 
-      var param = CGI.objModified(this.infos[this.selIdx], this.postInfo);        
-      param.id = this.infos[this.selIdx].id; 
-      param.dbg = ~~param.dbg;
+      var param = CGI.clone(this.postInfo);        
+      param.online = ~~param.online;
       param.deleted = ~~param.deleted;
-      CGI.post(this.$store.state, 'mod_portal_menu', param, (resp)=> {
+      CGI.post(this.$store.state, 'mod_advertise', param, (resp)=> {
         if (resp.errno === 0) {
           CGI.extend(this.infos[this.selIdx], this.postInfo);
           this.modal.editShow = false;
@@ -374,38 +379,25 @@ export default {
         }
       });
     },  
-    review(idx,row,ops) {
+    del(idx,row) {
       this.selIdx = idx;
-      var title = '';
-      var text = '';
-      if (ops) {
-        title = '下线';
-        text = '确认要下线吗'; 
-      } else {
-        title = '上线';
-        text = '确认要上线吗';
-      }
-      this.dialogCfg.title = title;
-      this.dialogCfg.text = text;
-      this.reviewInfo = row;
-      this.reviewOps = ops;
-      this.modal.dialogShow = true;
+      this.dialogCfg.title = '删除';
+      this.dialogCfg.text = '确认要删除' + row.name +'吗';
+      this.modal.dialogShow = true; 
     },
-    onlineOps() {
-      var param = {
-        id: this.reviewInfo.id,
-        online: this.reviewOps,
-        dbg: this.reviewInfo.dbg
-      };
-      CGI.post(this.$store.state, 'mod_advertise', param, (resp)=> {
+    delPost() {
+      var param = this.infos[this.selIdx];
+      param.deleted = 1;
+      CGI.post(this.$store.state, 'mod_customer', param, (resp)=> {
         if (resp.errno === 0) {
-          this.infos[this.selIdx].deleted = param.deleted;           
-          this.modal.dialogShow = false;
+          this.infos.splice(this.selIdx,1);
+          this.modal.dialogShow = false; 
+          this.alertInfo('删除成功');
           this.selIdx = -1;
         } else {
           this.alertInfo(resp.desc);
         }
-     })
+      })
     },
     alertInfo(val) {
       this.alertShow = true;
