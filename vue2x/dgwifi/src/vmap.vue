@@ -46,10 +46,11 @@ export default {
   components: {
     maptip
   },
-  created() {  
+  created() {
+    weixin.init(this.wxReady);  
   },
   mounted() {
-    this.wxReady();
+    //this.wxReady();
     // 存下union
     // if (union.length > 0) {
     //   CGI.setCookie('UNION', union, 7);
@@ -137,12 +138,29 @@ export default {
     },
     wxReady() {
       var _this = this;
-      CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
-        _this.loadMap = true;
-        _this.$nextTick(()=>{
-           _this.mapShow();       
-        })
-      });
+      wx && wx.getLocation({
+        type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+        success: function (res) {
+            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+            var speed = res.speed; // 速度，以米/每秒计
+            var accuracy = res.accuracy; // 位置精度
+            alert('succ' + res);
+            CGI.loadScript('http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm','map.js',()=>{
+              _this.loadMap = true;
+              _this.$nextTick(()=>{
+                 _this.mapShow();       
+              })
+            });
+        },
+        fail: function(res) {
+          alert('fail' +res);
+        },
+        complete: function(res) {
+          alert('complete'+res);
+        }
+      })
+      
     },
   }
 }
