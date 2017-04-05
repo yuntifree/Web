@@ -157,7 +157,7 @@ export default {
           alert('fail' +res);
         },
         complete: function(res) {
-          alert('complete'+res);
+          //alert('complete'+res);
         }
       })
       

@@ -7,7 +7,7 @@ init: function(callback) {
 
 if (window.wx === undefined || window.wx_cfg === undefined) {
             console.log('wx init failed');
-            alert(window.wx+','+window.wx_cfg);
+            //alert(window.wx+','+window.wx_cfg);
             return null;
 
 }
