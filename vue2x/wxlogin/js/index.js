@@ -155,7 +155,10 @@ function font(bFont) {
           $('.login').append(template('tplOnelogin', data));
           $('.login').append(template('tplBottom', ads));
         } else {
-          $('.login').append(template('tplIptlogin', data));
+          //验证码登录
+          /*$('.login').append(template('tplIptlogin', data));
+          $('.login').append(template('tplBottom', ads));*/
+          $('.login').append(template('tplOnelogin', data));
           $('.login').append(template('tplBottom', ads));
         }
         setTimeout(function() {
@@ -194,8 +197,11 @@ function initUI() {
       // 发送自动认证请求, 不调用微信
       // oneClickLogin(true, false);
     } else {
-      $('.mob-btn').get(0).addEventListener('touchstart', touchStart, false);
-      $('.mob-btn').get(0).addEventListener('touchend', mobRegClick, false);
+      $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
+      $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
+      //验证码登录
+     /* $('.mob-btn').get(0).addEventListener('touchstart', touchStart, false);
+      $('.mob-btn').get(0).addEventListener('touchend', mobRegClick, false);*/
     }
   }
   $('.has-ques').click(getQues)
@@ -267,8 +273,8 @@ function getCode() {
 }
 
 function touchStart(e) {
-  $('.btn').css('backgroundColor', '#0187ee');
-  setTimeout(function() {$('.btn').css('backgroundColor', '#00a0fb');}, 300);
+  $('.btn').css('backgroundColor', '#19A717');
+  setTimeout(function() {$('.btn').css('backgroundColor', '#42bd40');}, 300);
 }
 
 function pcRegClick(e) {
@@ -280,8 +286,10 @@ function pcRegClick(e) {
 
 function mobRegClick(e) {
   if (canClick) {
+    /*disableButton();
+    regClick(true);*/
     disableButton();
-    regClick(true);
+    oneClickLogin(false, true);
   }
 }
 

@@ -163,6 +163,7 @@ video {
 .login-top img {
   width: 100%;
   height: auto;
+  display: block;
 }
 
 .login-bottom {
@@ -209,7 +210,7 @@ video {
   font-size: 0.36rem;
   text-align: center;
   color: #9b9b9b;
-  margin: 0.46rem 0 0.42rem;
+  margin: 0.6rem 0 0;
 }
 .oneclick-text {
   position: absolute;
@@ -296,8 +297,20 @@ video {
     margin-top: 0.6rem;
 }
 .wx-btn {
-  margin-top: 0.8rem;
+  margin-top: 1.6rem;
+  background-color: #42bd40;
+  position: relative
 }
+.btn-img-wechat {
+  width: 0.44rem;
+  height: 0.44rem;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.22rem;
+  left: 1.2rem;
+} 
 .click-btn {
   width: 1.74rem;
   line-height: 0.6rem;
