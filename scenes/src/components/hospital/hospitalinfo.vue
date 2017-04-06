@@ -46,6 +46,7 @@ var token = query.token || '';
 //var type = ~~(query.type) || 0;
 var adtype = ~~(query.adtype) || 0;
 var portaltype = ~~(query.portaltype) || 0;
+var unid = ~~(query.unid) || 0;
 export default {
   name: 'app',
   components: {
@@ -84,6 +85,7 @@ export default {
         token: token,
         adtype: adtype,
         portaltype: portaltype,
+        unid: unid,
       }
       CGI.post('get_portal_conf', param, (resp)=> {
         if (resp.errno === 0) {
