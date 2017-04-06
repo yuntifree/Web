@@ -29,9 +29,11 @@ export default {
       var len = this.urbandata.length;
       var width = document.documentElement.clientWidth;
       this.$refs.alloy.style.width = len * (width*0.22) +'px';
-      this.$refs.alloy.childNodes.forEach((item)=> {
-        item.style.width = (width*0.22) +'px';
-      })
+      var _this = this;
+      var len = _this.$refs.alloy.childNodes.length;
+      for (var i=0; i<len; i++) {
+        _this.$refs.alloy.childNodes[i].style.width = width*0.22 +'px';
+      }
     })
   },
   methods: {
