@@ -19,12 +19,12 @@ var autologin = 0;
 var canClick = true;
 
 //
-var appId = "wxbf43854270af39aa";
-var secretkey = "f1d41ba80597ee59b142032e16f801d9";
+var appId = "";
+var secretkey = "";
 var extend = [wlanacname, wlanuserip, wlanacip, wlanusermac, wlanapmac].join(',');　　　 //开发者自定义参数集合
 var timestamp = new Date().getTime();　　　　 //时间戳(毫秒)
-var shop_id = "4040455";　　 //AP设备所在门店的ID
-var authUrl = "http://wx.yunxingzh.com/auth"; //认证服务端URL
+var shop_id = "";　　 //AP设备所在门店的ID
+var authUrl = ""; //认证服务端URL
 var mac = query.wlanusermac || '';　　　 //用户手机mac地址 安卓设备必需
 var ssid = ""; //AP设备信号名称，非必须
 var bssid = "";
@@ -141,6 +141,10 @@ function font(bFont) {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
+      appId = data.wxappid;
+      shop_id = data.wxshopid;
+      secretkey = data.wxsecret;
+      authUrl = data.wxauthurl
       if (isPC()) {
         if (autologin) {
           $('.login').append(template('tplPhone', {}));
@@ -357,7 +361,8 @@ function portalLogin(param, wx) {
  */
 function oneClickLogin(auto, callWX) {
   var param = loginParam;
-  CGI.get('one_click_login', param, function(resp) {
+  //CGI.get('one_click_login', param, function(resp) {
+  CGI.get('unify_login', param, function(resp) {
     if (resp.errno === 0) {
       // 局部刷新，通知iOS能上网了
       genJumpUrl(resp.data);
