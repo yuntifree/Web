@@ -347,7 +347,6 @@ export default {
       } 
       param.dbg = ~~param.dbg;
       param.online = ~~param.online;
-      console.log(JSON.stringify(param));
       CGI.post(this.$store.state, action, param, (resp)=> {
         if (resp.errno === 0) {
           if (addBanner) {

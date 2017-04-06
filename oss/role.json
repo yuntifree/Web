@@ -94,6 +94,22 @@
       "title": "合作方管理",
       "name": "adCooperate",
       "icon": "yonghuxinxi"
+      },{
+      "title": "时间段管理",
+      "name": "setTime",
+      "icon": "icon"
+      },{
+      "title": "区域管理",
+      "name": "setArea",
+      "icon": "yonghuxinxi"
+      },{
+      "title": "广告区域管理",
+      "name": "setaAdarea",
+      "icon": "yonghuxinxi"
+      },{
+      "title": "ap单位管理",
+      "name": "setUnit",
+      "icon": "yonghuxinxi"
     }]
   }],
   "0": [{

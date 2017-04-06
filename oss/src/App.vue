@@ -42,6 +42,10 @@ import setPortalMenu from './components/views/setPortalmenu.vue'
 import adCount from './components/views/adCount.vue'
 import adManage from './components/views/adManage.vue'
 import adCooperate from './components/views/adCooperate.vue'
+import setTime from './components/views/setTime.vue'
+import setArea from './components/views/adCooperate.vue'
+import setAdarea from './components/views/adCooperate.vue'
+import setUnit from './components/views/adCooperate.vue'
 
 export default {
   name: 'app',
@@ -87,7 +91,11 @@ export default {
     setPortalMenu,
     adCount,
     adManage,
-    adCooperate
+    adCooperate,
+    setTime,
+    setArea,
+    setAdarea,
+    setUnit
   },
   // for share components View using.
   mounted() {

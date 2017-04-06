@@ -45,6 +45,11 @@
                 <div>{{row.name||'-'}}</div>
               </el-table-column>
               <el-table-column
+                inline-template 
+                label="广告图片">
+                  <img style="width:100%;height:auto;" :src="row.img"/>
+              </el-table-column>
+              <el-table-column
                 inline-template
                 label="广告版本">
                 <div>{{row.version||'-'}}</div>
@@ -63,6 +68,11 @@
                 inline-template
                 label="广告内容">
                 <div>{{row.content||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="跳转地址">
+                <div>{{row.dst||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -114,6 +124,12 @@
             <el-form-item label="摘要信息" prop="abstract">
               <el-input v-model.trim="postInfo.abstract"  placeholder="请输入摘要信息"></el-input>
             </el-form-item>
+            <el-form-item label="广告内容" prop="content">
+              <el-input v-model.trim="postInfo.content"  placeholder="请输入摘要信息"></el-input>
+            </el-form-item>
+            <el-form-item label="跳转地址" prop="dst">
+              <el-input v-model.trim="postInfo.dst"  placeholder="请输入跳转地址"></el-input>
+            </el-form-item>
             <el-form-item label="摘要信息" prop="img">
               <uploader></uploader>
             </el-form-item>
@@ -151,8 +167,8 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" v-if="modal.addShow" @click="addPost('ruleForm')">确定</el-button>
-              <el-button type="primary" v-else @click="editPost('ruleForm')">确定</el-button>
+              <el-button type="primary" v-if="modal.addShow" @click="addPost">确定</el-button>
+              <el-button type="primary" v-else @click="editPost">确定</el-button>
               <el-button @click="modal.editShow=false">取消</el-button>
             </el-form-item>
           </el-form>
@@ -212,7 +228,8 @@ export default {
         img: '',
         abstract: '',
         online: '1',
-        content: ''
+        content: '',
+        dst: ''
       },
       reviewOps: 0,
       alertShow: false,
@@ -230,9 +247,6 @@ export default {
         ],
         content: [
           { required: true, message: '请输入广告内容', trigger: 'blur' }
-        ],
-        img: [
-          { required: true, message: '请选择banner图片', trigger: 'click'}
         ],
         adid: [
           { type: 'number', required: true, message: '请选择广告业主', trigger: 'change' }
@@ -327,6 +341,7 @@ export default {
       console.log('当前页: ${val}');
     },
     add() {
+      this.$store.state.imgUrl = [];
       CGI.objClear(this.postInfo);
       this.postInfo.online = "0";
       this.modal.text = '增加';
@@ -335,6 +350,7 @@ export default {
     },
     edit(idx,row) {
       this.selIdx = idx;
+      this.$store.state.imgUrl = [];
       CGI.objClear(this.postInfo);
       row.online = row.online.toString();
       CGI.extend(this.postInfo,row);
@@ -343,41 +359,55 @@ export default {
       this.modal.editShow = true;
     },
     editPost() { 
-      var param = CGI.clone(this.postInfo);        
-      param.online = ~~param.online;
-      param.deleted = ~~param.deleted;
-      CGI.post(this.$store.state, 'mod_advertise', param, (resp)=> {
-        if (resp.errno === 0) {
-          CGI.extend(this.infos[this.selIdx], this.postInfo);
-          this.modal.editShow = false;
-          this.selIdx = -1;
-        } else {
-          this.alertInfo(resp.desc);
-        }
+      var _this = this;
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          //_this.postInfo.img = _this.$store.state.imgUrl[0];
+          var param = CGI.clone(_this.postInfo);        
+          param.online = ~~param.online;
+          param.deleted = ~~param.deleted;
+          param.id = _this.infos[_this.selIdx].id;
+          console.log(JSON.stringify(_this.postInfo));
+          if (_this.$store.state.imgUrl.length > 0) {
+            param.img = _this.$store.state.imgUrl[0];
+          }
+          CGI.post(this.$store.state, 'mod_advertise', param, function(resp) {
+            if (resp.errno === 0) {
+              CGI.extend(_this.infos[_this.selIdx], param);
+              _this.modal.editShow = false;
+              _this.selIdx = -1;
+            } else {
+              _this.alertInfo(resp.desc);
+            }
+          })
+        }//else {}
       })
     },
     addPost(formName) {
       var _this = this;
-      this.$refs[formName].validate((valid) => {
+      this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.postInfo.img = this.$store.state.imgUrl[0];
+          //this.postInfo.img = this.$store.state.imgUrl[0];
           var param = CGI.clone(this.postInfo);
-          param.img = this.$store.state.imgUrl[0];
           param.online = ~~param.online;
+          if (this.$store.state.imgUrl.length <= 0) {
+            _this.alertInfo('请选择广告图片');
+            return false;
+          } else {
+            param.img = this.$store.state.imgUrl[0];
+          }
           CGI.post(this.$store.state, 'add_advertise', param, function(resp){
             if (resp.errno === 0) {
               var u = CGI.clone(_this.postInfo);
               u.id = resp.data.id;
               _this.infos.push(u);
-              _this.modal.addShow = false;
+              _this.modal.editShow = false;
             } else {
               this.alertInfo(resp.desc);
             }
           })
-        } else {
-          return false;
-        }
-      });
+        } //else {}
+      })
     },  
     del(idx,row) {
       this.selIdx = idx;
@@ -388,7 +418,7 @@ export default {
     delPost() {
       var param = this.infos[this.selIdx];
       param.deleted = 1;
-      CGI.post(this.$store.state, 'mod_customer', param, (resp)=> {
+      CGI.post(this.$store.state, 'mod_advertise', param, (resp)=> {
         if (resp.errno === 0) {
           this.infos.splice(this.selIdx,1);
           this.modal.dialogShow = false; 
