@@ -30,8 +30,38 @@
               </el-table-column>
               <el-table-column
                 inline-template
-                label="content">
-                <div>{{row.name||'-'}}</div>
+                label="区域id">
+                <div>{{row.aid||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="区域名称">
+                <div>{{row.areaname||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="单元名称">
+                <div>{{row.unit||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="单元id">
+                <div>{{row.unid||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="经度">
+                <div>{{row.longitude||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="纬度">
+                <div>{{row.latitude||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="ap数">
+                <div>{{row.cnt||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -160,7 +190,7 @@ export default {
         seq: this.pageCfg.start || 0,
         num: 30,
       };
-      CGI.post(this.$store.state, 'get_area', param, (resp) => {
+      CGI.post(this.$store.state, 'get_area_unit', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
           if (data.infos) {

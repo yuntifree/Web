@@ -31,7 +31,7 @@
               <el-table-column
                 inline-template
                 label="content">
-                <div>{{row.name||'-'}}</div>
+                <div>{{row.content||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -60,12 +60,28 @@
         <div class="edit-form">
           <div class="form-title">{{modal.text}}</div>
           <el-form ref="form" :model="postInfo" label-width="80px">
-            <el-form-item label="content" prop="online">
-              <el-time-picker
-                 is-range
-                 v-model="postInfo.content"
-                 placeholder="选择时间范围">
-               </el-time-picker>
+            <el-form-item label="起始时间" prop="content">
+              <el-time-select
+                 placeholder="起始时间"
+                 v-model="startTime"
+                 :picker-options="{
+                   start: '00:00',
+                   step: '01:00',
+                   end: '23:00'
+                 }">
+               </el-time-select>        
+            </el-form-item>
+            <el-form-item label="结束时间">
+              <el-time-select
+                  placeholder="结束时间"
+                  v-model="endTime"
+                  :picker-options="{
+                    start: '00:00',
+                    step: '01:00',
+                    end: '23:00',
+                    minTime: startTime
+                  }">
+                </el-time-select>     
             </el-form-item>
             <el-form-item>
               <el-button type="primary" v-if="modal.addShow" @click="addPost">确定</el-button>
@@ -122,7 +138,8 @@ export default {
       postInfo: {
         content: '',
       },
-      timer: []
+      startTime: '',
+      endTime: ''
     }
   },
   computed: {
