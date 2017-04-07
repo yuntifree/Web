@@ -141,10 +141,10 @@ function font(bFont) {
     if (resp.errno == 0) {
       var data = resp.data;
       autologin = data.autologin;
-      appId = data.wxappid;
-      shop_id = data.wxshopid;
-      secretkey = data.wxsecret;
-      authUrl = data.wxauthurl
+      appId = data.wxappid || 'wxbf43854270af39aa';
+      shop_id = data.wxshopid || '4040455';
+      secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
+      authUrl = data.wxauthurl;
       if (isPC()) {
         if (autologin) {
           $('.login').append(template('tplPhone', {}));
