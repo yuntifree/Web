@@ -2,7 +2,7 @@
 <template>
   <div class="app">
     <div class="banner" ref="banner" v-if="infos.banners &&infos.banners.length>0">
-      <swipe class="my-swipe" v-show="imgShow">
+      <swipe class="my-swipe">
         <swipe-item v-for="(banner,idx) in infos.banners">
           <img class="banner-img" :ref="'bannerimg' +idx" v-lazy="banner.img" @click="openLink(banner)">
           <p class="info-unit g-tar" v-if="!banner.type">{{infos.unit}}</p>
@@ -64,7 +64,6 @@ export default {
         msg: '',
         duration: 1500,
       },
-      imgShow: false,
       infos: {},
       weatherIcon: ['http://img.yunxingzh.com/c7f30e46-f5aa-4a16-a611-1c7b99f5ec01.png',
                     'http://img.yunxingzh.com/2c8898ab-78c2-4002-b8a7-ae0579e8bb66.png',
@@ -92,11 +91,12 @@ export default {
         if (resp.errno === 0) {
           this.infos = resp.data;
           var _this = this;
+          _this.$nextTick(function() {
             _this.$refs.bannerimg0[0].onload = function() {
-              //var height = _this.$refs.bannerimg0[0].height;
-              //_this.$refs.banner.style.height = height+ 'px';
-              _this.imgShow = true;
+              var height = _this.$refs.bannerimg0[0].height;
+              _this.$refs.banner.style.height = height+ 'px';
             }
+          })
         } else {
           this.tipBox(resp.desc);
         }
@@ -136,7 +136,7 @@ export default {
 }
 .banner {
   width: 100%;
-  height: auto;
+  height: 3rem;
   overflow:hidden;
   position: relative;
 }
