@@ -45,7 +45,7 @@ import adCooperate from './components/views/adCooperate.vue'
 import setTime from './components/views/setTime.vue'
 import setArea from './components/views/setArea.vue'
 import setaAdarea from './components/views/setAdarea.vue'
-import setUnit from './components/views/adCooperate.vue'
+import setUnit from './components/views/setUnit.vue'
 
 export default {
   name: 'app',
