@@ -160,9 +160,7 @@ function font(bFont) {
           $('.login').append(template('tplBottom', ads));
         } else {
           //验证码登录
-          /*$('.login').append(template('tplIptlogin', data));
-          $('.login').append(template('tplBottom', ads));*/
-          $('.login').append(template('tplOnelogin', data));
+          $('.login').append(template('tplIptlogin', data));
           $('.login').append(template('tplBottom', ads));
         }
         setTimeout(function() {
@@ -201,11 +199,8 @@ function initUI() {
       // 发送自动认证请求, 不调用微信
       // oneClickLogin(true, false);
     } else {
-      $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
-      $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
-      //验证码登录
-     /* $('.mob-btn').get(0).addEventListener('touchstart', touchStart, false);
-      $('.mob-btn').get(0).addEventListener('touchend', mobRegClick, false);*/
+      $('.mob-btn').get(0).addEventListener('touchstart', touchStart, false);
+      $('.mob-btn').get(0).addEventListener('touchend', mobRegClick, false);
     }
   }
   $('.has-ques').click(getQues)
@@ -290,10 +285,10 @@ function pcRegClick(e) {
 
 function mobRegClick(e) {
   if (canClick) {
-    /*disableButton();
-    regClick(true);*/
     disableButton();
-    oneClickLogin(false, true);
+    regClick(true);
+    /*disableButton();
+    oneClickLogin(false, true);*/
   }
 }
 
@@ -361,8 +356,8 @@ function portalLogin(param, wx) {
  */
 function oneClickLogin(auto, callWX) {
   var param = loginParam;
-  //CGI.get('one_click_login', param, function(resp) {
-  CGI.get('unify_login', param, function(resp) {
+  CGI.get('one_click_login', param, function(resp) {
+  //CGI.get('unify_login', param, function(resp) {
     if (resp.errno === 0) {
       // 局部刷新，通知iOS能上网了
       genJumpUrl(resp.data);
