@@ -144,7 +144,7 @@ function font(bFont) {
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
       secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
-      authUrl = data.wxauthurl;
+      authUrl = data.wxauthurl || 'http://wx.yunxingzh.com/auth';
       if (isPC()) {
         if (autologin) {
           $('.login').append(template('tplPhone', {}));
