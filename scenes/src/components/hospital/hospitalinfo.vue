@@ -4,7 +4,7 @@
     <div class="banner" ref="banner" v-if="infos.banners &&infos.banners.length>0">
       <swipe class="my-swipe">
         <swipe-item v-for="(banner,idx) in infos.banners">
-          <img class="banner-img" :ref="'bannerimg' +idx" :src="banner.img"  @click="openLink(banner)">
+          <img class="banner-img" :ref="'bannerimg' +idx" v-lazy="banner.img" @click="openLink(banner)">
           <p class="info-unit g-tar" v-if="!banner.type">{{infos.unit}}</p>
         </swipe-item>
       </swipe>
@@ -91,13 +91,12 @@ export default {
         if (resp.errno === 0) {
           this.infos = resp.data;
           var _this = this;
-          setTimeout(function() {
-            _this.$nextTick(function() {
+          _this.$nextTick(function() {
+            _this.$refs.bannerimg0[0].onload = function() {
               var height = _this.$refs.bannerimg0[0].height;
               _this.$refs.banner.style.height = height+ 'px';
-            })
-          },300)
-          
+            }
+          })
         } else {
           this.tipBox(resp.desc);
         }
