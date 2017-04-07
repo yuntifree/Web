@@ -1,11 +1,11 @@
 <style lang="scss" scope>
 @import '../../assets/css/table.css';
 @import '../../assets/css/common.scss';
-.edit-form {
+/* .edit-form {
   max-width:600px;
   width: 80%;
   height: 60%;
-}
+} */
 .form-title {
   width: 100%;
   border-bottom: 1px solid #ccc;

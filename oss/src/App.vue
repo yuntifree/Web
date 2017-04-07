@@ -43,8 +43,8 @@ import adCount from './components/views/adCount.vue'
 import adManage from './components/views/adManage.vue'
 import adCooperate from './components/views/adCooperate.vue'
 import setTime from './components/views/setTime.vue'
-import setArea from './components/views/adCooperate.vue'
-import setAdarea from './components/views/adCooperate.vue'
+import setArea from './components/views/setArea.vue'
+import setaAdarea from './components/views/setAdarea.vue'
 import setUnit from './components/views/adCooperate.vue'
 
 export default {
@@ -94,7 +94,7 @@ export default {
     adCooperate,
     setTime,
     setArea,
-    setAdarea,
+    setaAdarea,
     setUnit
   },
   // for share components View using.
@@ -306,7 +306,8 @@ button>i {
   padding: 10px;
   max-width:600px;
   width: 70%;
-  height: 60%;
+  height: auto;
+  max-height: 60%;
   overflow: auto
 }
 .el-alert {
@@ -347,5 +348,12 @@ button>i {
 .btn-ssm {
   padding: 2px 10px;
   border:1px solid #ccc
+}
+.form-title {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  line-height: 40px;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 </style>
