@@ -4,7 +4,7 @@
     <div class="banner" ref="banner" v-if="infos.banners &&infos.banners.length>0">
       <swipe class="my-swipe">
         <swipe-item v-for="(banner,idx) in infos.banners">
-          <img class="banner-img" :ref="'bannerimg' +idx" v-lazy="banner.img" @click="openLink(banner)">
+          <img class="banner-img" :ref="'bannerimg' +idx" :src="banner.img" @click="openLink(banner)" @load="imgLoad(idx)">
           <p class="info-unit g-tar" v-if="!banner.type">{{infos.unit}}</p>
         </swipe-item>
       </swipe>
@@ -90,13 +90,6 @@ export default {
       CGI.post('get_portal_conf', param, (resp)=> {
         if (resp.errno === 0) {
           this.infos = resp.data;
-          var _this = this;
-          _this.$nextTick(function() {
-            _this.$refs.bannerimg0[0].onload = function() {
-              var height = _this.$refs.bannerimg0[0].height;
-              _this.$refs.banner.style.height = height+ 'px';
-            }
-          })
         } else {
           this.tipBox(resp.desc);
         }
@@ -114,6 +107,14 @@ export default {
           this.alertInfo(resp.desc);
         }
       })
+    },
+    imgLoad(idx) {
+       console.log('onload'); 
+       if (idx == 0) {
+          var height = this.$refs.bannerimg0[0].height;
+          this.$refs.banner.style.height = height+ 'px';
+          console.log()
+       }
     },
     openLink(ban) {
       if (ban.dst.length > 0) {
@@ -137,7 +138,7 @@ export default {
 .banner {
   width: 100%;
   height: 3rem;
-  overflow:hidden;
+  //overflow:hidden;
   position: relative;
 }
 .my-swipe {
@@ -157,6 +158,7 @@ export default {
 .banner-img {
     width: 100%;
     height: auto;
+    display: block;
 }
 .info-weather {
   position: absolute;

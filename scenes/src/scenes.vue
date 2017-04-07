@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss">
 @import './assets/css/reset.css';
-.wifilink {
+.scenes {
   max-width: 750px;
   margin: 0 auto;
 }
