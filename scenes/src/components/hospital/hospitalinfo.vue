@@ -76,7 +76,6 @@ export default {
   mounted() {
     this.$nextTick(()=> {
       this.getData();
-      //this.$refs.banner.style.height = 
     })
   } ,
   methods: {
@@ -92,10 +91,13 @@ export default {
         if (resp.errno === 0) {
           this.infos = resp.data;
           var _this = this;
-          this.$nextTick(function() {
-            var height = _this.$refs.bannerimg0[0].height;
-            _this.$refs.banner.style.height = height+ 'px';
-          })
+          setTimeout(function() {
+            _this.$nextTick(function() {
+              var height = _this.$refs.bannerimg0[0].height;
+              _this.$refs.banner.style.height = height+ 'px';
+            })
+          },300)
+          
         } else {
           this.tipBox(resp.desc);
         }
@@ -136,6 +138,7 @@ export default {
 .banner {
   width: 100%;
   height: auto;
+  min-height: 2rem;
   overflow:hidden;
   position: relative;
 }
