@@ -1,10 +1,10 @@
 
 <template>
   <div class="app">
-    <div class="banner" v-if="infos.banners &&infos.banners.length>0">
+    <div class="banner" ref="banner" v-if="infos.banners &&infos.banners.length>0">
       <swipe class="my-swipe">
-        <swipe-item v-for="banner in infos.banners">
-          <img class="banner-img" :src="banner.img"  @click="openLink(banner)">
+        <swipe-item v-for="(banner,idx) in infos.banners">
+          <img class="banner-img" :ref="'bannerimg' +idx" :src="banner.img"  @click="openLink(banner)">
           <p class="info-unit g-tar" v-if="!banner.type">{{infos.unit}}</p>
         </swipe-item>
       </swipe>
@@ -76,6 +76,7 @@ export default {
   mounted() {
     this.$nextTick(()=> {
       this.getData();
+      //this.$refs.banner.style.height = 
     })
   } ,
   methods: {
@@ -90,6 +91,11 @@ export default {
       CGI.post('get_portal_conf', param, (resp)=> {
         if (resp.errno === 0) {
           this.infos = resp.data;
+          var _this = this;
+          this.$nextTick(function() {
+            var height = _this.$refs.bannerimg0[0].height;
+            _this.$refs.banner.style.height = height+ 'px';
+          })
         } else {
           this.tipBox(resp.desc);
         }
@@ -129,7 +135,7 @@ export default {
 }
 .banner {
   width: 100%;
-  height: 3.1rem;
+  height: auto;
   overflow:hidden;
   position: relative;
 }

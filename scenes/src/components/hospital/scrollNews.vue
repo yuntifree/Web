@@ -34,21 +34,23 @@
 }
 .img-list {
   @include containerSize(100%, auto);
-  min-height: 1.5rem;
+  min-height: 1.48rem;
 }
 .list1-info {
   width: 4.4rem;
+  max-width: 70%;
   padding-right: 0.16rem;
   text-align: justify;
 }
 .list-img1 {
-  @include containerSize(2.28rem, 1.5rem);
+  @include containerSize(2.28rem, 1.48rem);
+  max-width: 30%;
   overflow: hidden;
   background-color: #f0f0f0;
 }
 .list-img1 img{
   @include containerSize(100%, auto);
-  min-height: 1.5rem;
+  min-height: 1.48rem;
 }
 .item-desc {
   font-size: 0.24rem;
@@ -116,7 +118,7 @@
       <!--新闻有1、2张图片-->
       <template v-if="item.images.length==1&& !item.stype || item.images.length==2 && !item.stype">
         <dl class="g-clearfix">
-         <dt class="g-fr list-img1"><img v-lazy="item.images[0]">{{item.images[0]}}</dt>
+         <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
          <dd class="list1-info g-fl">
            <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
            <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
