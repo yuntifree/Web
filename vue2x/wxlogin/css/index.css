@@ -295,6 +295,8 @@ video {
 }
 .mob-btn {
     margin-top: 0.6rem;
+    background-color: #42bd40;
+    position: relative
 }
 .wx-btn {
   margin-top: 1.6rem;
