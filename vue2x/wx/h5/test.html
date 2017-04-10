@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>东莞无限</title>
+  </head>
+  <body>
+  正在加载...
+  </body>
+  <script type="text/javascript">
+  function query() {
+    //var url = window.document.location.search.toString().substr(1);
+    var url = window.document.location.href.toString();
+    url = url.substr(url.indexOf('?') + 1);
+    if (typeof(url) === 'string') {
+      var u = url.split('&');
+      var get = {};
+      for (var i in u) {
+        if (typeof(u[i]) === 'string') {
+          var j = u[i].split('=');
+          get[j[0]] = j[1];
+        }
+      }
+      return get;
+    } else {
+      return {};
+    }
+  }
+  var oid = query().oid;
+  if (oid) {
+    alert(oid);
+  } 
+  alert(location.href);
+  location.href = "http://mp.weixin.qq.com/s/yAFSlLy0qEQ4r2UpmCAp5g";
+  </script>
+</html>

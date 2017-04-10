@@ -154,7 +154,7 @@ import CGI from '../../lib/cgi'
 var query = CGI.query();
 var uid = 137;
 var token = '6ba9ac5a422d4473b337d57376dd3488';
-var adtype = ~~(query.adtype) || 0;
+var adtype = ~~(query.adtype) || 1 ;
 var union = query.union || '';
 export default {
   name: 'newslist',
