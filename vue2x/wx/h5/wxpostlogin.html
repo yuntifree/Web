@@ -21,22 +21,33 @@
         height: 100%;
         position: relative;
       }
-      img {
-        width: 200px;
-        height: 200px;
-        height: auto;
-        display: block;
+      .content {
+        width: 100%;
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -100px;
-        margin-left: -100px;
+        -webkit-transform: translate(-50%, -50%);
+      }
+      .text {
+        text-align: center;
+        font-size: 14px;
+        width: 100%;
+        display: block;
+      }
+      img {
+        width: 200px;
+        height: 200px;
+        display: block; 
+        margin: 0 auto;
       }
     </style>
   </head>
   <body>
     <div class="login">
-      <img src="image/dgfree430.jpg">
+      <div class="content">
+        <p class="text">为保证您能正常使用WiFi，请关注我们的公众号</p>
+        <img src="image/dgfree430.jpg">
+      </div>
     </div>
     </script>
   </body>
