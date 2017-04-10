@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="http://wx.yunxingzh.com/get_jsapi_sign" charset="utf-8"></script>
+    <title>转发文章</title>
+  </head>
+  <body>
+    <div>
+      <p>点击右上角分享</p>
+      <iframe id="content" frameborder="0" width="100%"></iframe>
+    </div>
+  </body>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/cgi.js"></script>
+  <script src="js/wx.js"></script>
+  <script type="text/javascript">
+  var oid = CGI.query().oid;
+  var url = "https://mp.weixin.qq.com/s/yAFSlLy0qEQ4r2UpmCAp5g";
+  function bindShare(param) {
+    if (window.wx && param.title) {
+      wxutil.bindShare({
+          desc: param.desc,
+          title: param.title,
+          link: param.url + '?oid=' + oid,
+          imgUrl: param.imgUrl,
+          callback: function(type, res) {
+              if (type === 'fail') {
+                  alert(JSON.stringify(res));
+              }
+          }
+      });
+    }
+  }
+  $(function(){
+    wxutil.init();
+    $('#content').attr('src', url);
+    // CGI.get('get_forward', {}, function(resp) {
+    //   if (resp.errno == 0) {
+    //     bindShare(resp.data);
+    //   } else {
+    //     console.log(resp.desc);
+    //   }
+    // });
+    wxutil.bindShare({
+      desc: '推荐东莞无限的文章',
+      title: '东莞无限',
+      link: 'http://wx.yunxingzh.com/wx/h5/test.html'
+    })
+  });
+  </script>
+</html>
