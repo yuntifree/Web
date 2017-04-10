@@ -10,7 +10,7 @@ window.wxutil = {
       return null;
     }
 
-    wx_cfg.debug = false;
+    wx_cfg.debug = true;
     wx_cfg.jsApiList = [
       'checkJsApi',
       'onMenuShareTimeline',
