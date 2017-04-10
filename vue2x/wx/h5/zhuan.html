@@ -25,18 +25,26 @@
       wxutil.bindShare({
           desc: param.desc,
           title: param.title,
-          link: param.url + '?oid=' + oid,
-          imgUrl: param.imgUrl,
+          link: param.link + '?oid=' + oid,
+          imgUrl: param.imgUrl || '',
           callback: function(type, res) {
               if (type === 'fail') {
                   alert(JSON.stringify(res));
               }
           }
       });
+      alert(param.desc + ' ' + param.title + ' ' + param.link);
     }
   }
+  function getData() {
+    bindShare({
+      desc: '推荐东莞无限的文章',
+      title: '东莞无限',
+      link: 'http://wx.yunxingzh.com/h5/test.html'
+    })
+  }
   $(function(){
-    wxutil.init();
+    wxutil.init(getData);
     $('#content').attr('src', url);
     $('#content').onload(function(this) {
       $(this).find('img').each(function(img) {
@@ -50,11 +58,6 @@
     //     console.log(resp.desc);
     //   }
     // });
-    wxutil.bindShare({
-      desc: '推荐东莞无限的文章',
-      title: '东莞无限',
-      link: 'http://wx.yunxingzh.com/wx/h5/test.html'
-    })
   });
   </script>
 </html>
