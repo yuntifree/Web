@@ -145,7 +145,7 @@ export default {
   color: #fff;
   font-size: 30px;
   text-align: center;
-}i
+}
 .my-swipe img {
   width: 100%;
   height: auto;
