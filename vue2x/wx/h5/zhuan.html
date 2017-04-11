@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -8,10 +8,10 @@
     <script src="http://wx.yunxingzh.com/get_jsapi_sign" charset="utf-8"></script>
     <title>转发文章</title>
   </head>
-  <body>
+  <body style="height: 100%">
     <div>
       <p>点击右上角分享</p>
-      <iframe id="content" frameborder="0" width="100%"></iframe>
+      <iframe id="content" frameborder="0" width="100%" height="100%"></iframe>
     </div>
   </body>
   <script src="js/jquery.min.js"></script>
@@ -46,6 +46,11 @@
   $(function(){
     wxutil.init(getData);
     $('#content').attr('src', url);
+    $('#content').onload(function(this) {
+      $(this).find('img').each(function(img) {
+        $(img).attr('src', $(img).data('src'))
+      })
+    });
     // CGI.get('get_forward', {}, function(resp) {
     //   if (resp.errno == 0) {
     //     bindShare(resp.data);
