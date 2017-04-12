@@ -229,7 +229,7 @@
   overflow: hidden;
 }
 .tab-inner {
-  width: 100%;
+  width: auto;
   height: 1.2rem;
   overflow-x: auto;
 }
@@ -249,14 +249,10 @@
 </style>
 <template>
   <div class="info">
-    <div class="banner" ref="banner">
-      <swipe class="my-swipe"><!-- v-if="infos.banners &&infos.banners.length>0"-->
-        <!--swipe-item v-for="(banner,idx) in infos.banners">
-          <img class="banner-img" :ref="'bannerimg' +idx" :src="banner.img" @click="openLink(banner)" @load="imgLoad(idx)">
-          <p class="info-unit g-tar" v-if="!banner.type">{{infos.unit}}</p>
-        </swipe-item-->
-        <swipe-item>
-          <img class="banner-img" ref="bannerimg0" src="http://img.yunxingzh.com/410f1b61-0860-4c35-a95c-499edfa67bc9.png" @click="openLink" @load="imgLoad(0)">
+    <div class="banner" ref="banner" v-if="menu.banners &&menu.banners.length>0">
+      <swipe class="my-swipe"><!-- "-->
+        <swipe-item v-for="(banner,idx) in menu.banners">
+          <img class="banner-img" :ref="'bannerimg'" :src="banner.img" @click="openLink(banner)" @load="imgLoad(idx)">
         </swipe-item>
       </swipe>
       <div class="info-weather g-clearfix">
@@ -266,8 +262,10 @@
       </div>
       <div class="search-context g-clearfix">
         <label for="search" class="search-label g-fl"><img src="http://img.yunxingzh.com/9e008505-d8f2-49d8-ae24-56134a53e771.png" alt=""></label>
-        <input type="search" id="search" class="search-ipt g-fl"  v-model="search" ref="search" placeholder="东莞市旅游">
-        <p class="search-evt g-clearfix">
+        <form action="">
+          <input type="search" id="search" class="search-ipt g-fl"  v-model="search" ref="search" placeholder="东莞市旅游" @keyup.enter="doSearch" @focus="iptFocus=true" @blur="iptFocus=false">
+        </form>
+        <p class="search-evt g-clearfix" v-if="iptFocus">
           <img class="g-fl" @click="emptySeach" src="http://img.yunxingzh.com/dd0dcc2e-6eac-4280-80a7-1b90ea1cd6de.png" alt="">
           <span class="search-cancle" @click="cancleSearch">取消</span>
         </p>
@@ -285,7 +283,7 @@
       <div class="margin-line"></div>
       <div class="tab-lists">
         <div class="tab-inner">
-          <ul><li class="g-fl g-tac" 
+          <ul  ref="menulist"><li class="g-fl g-tac" 
                 v-for="(tab,idx) in menu.tablist" 
                 v-text="tab.text" 
                 :class="newShow ==idx ? 'cur': ''"
@@ -322,7 +320,6 @@ export default {
   data() {
     return {
       showCfg: false,
-      tabs: ['东莞','搞笑','萌宠','八卦','情感','旅游','历史'],
       timeTxt: 5,
       tips: {
         show: false,
@@ -342,7 +339,8 @@ export default {
       newsType: 0,
       newShow: 0,
       search: '',
-      winowScroll: 0
+      winowScroll: 0,
+      iptFocus: false,
     }
   },
   components: {
@@ -382,6 +380,11 @@ export default {
       CGI.post('get_portal_content', param, (resp)=> {
         if (resp.errno == 0) {
           this.menu = resp.data;
+          var _this = this;
+          this.$nextTick(function() {
+            var width = _this.menu.tablist.length * 1.2;
+            _this.$refs.menulist.style.width = width + 'rem';
+          })
         } else {
           this.alertInfo(resp.desc);
         }
@@ -390,11 +393,12 @@ export default {
     getOpenLink(list,idx) {
       var url = window.document.location.href.toString();
       var index = url.lastIndexOf("/");
-      if (list.routername) {
+      /*if (list.routername) {
         url  = url.substring(0, index + 1) + list.routername;
       } else {
         url = list.url;
-      }
+      }*/
+      url = url.substring(0, index + 1) +'service';
       return url
     },
     countdown() {
@@ -430,7 +434,7 @@ export default {
           this.tabIdx = this.newsType = this.newShow = 6;
           break; 
       }
-      scrollY[this.tabIdx] = window.scrollY;
+      /*scrollY[this.tabIdx] = window.scrollY;
       var pageHeight = document.documentElement.clientHeight;
       var delta = scrollY[this.tabIdx] % pageHeight;
       scrollY[this.tabIdx] = scrollY[this.tabIdx] < pageHeight ? delta : delta + pageHeight;
@@ -440,13 +444,13 @@ export default {
           sessionStorage.setItem('scrollY_'+this.tabIdx, scrollY[this.tabIdx]);
         } catch(e) {
         }
-      }
+      }*/
     },
     imgLoad(idx) {
-       if (idx == 0) {
-          var height = this.$refs.bannerimg0.height;
-          this.$refs.banner.style.height = height+ 'px';
-       }
+      if (idx == 0) {
+        var height = this.$refs.bannerimg[0].height;
+        this.$refs.banner.style.height = height+ 'px';
+      }
     },
     openLink(ban) {
       if (ban.dst.length > 0) {
@@ -456,7 +460,17 @@ export default {
     emptySeach() {
       this.search = '';
     },
+    doSearch() {
+      var search = this.search.trim();
+      if (search.length <0) {
+        this.alertInfo('请输入搜索内容');
+      } else {
+        search = encodeURI(search);
+        location.href = 'https://www.baidu.com/from=844b/s?&sa=tb&ts=2751889&t_kt=0&ie=utf-8&rsv_t=27f2ii5Qh1ivm7QL33kiG6oYxfW9rXiA41%252BH2PKFyQLQO57fZELehp6bQA&ms=1&rsv_pq=7355972231312562541&ss=101&t_it=1&rqlang=zh&rsv_sug4=3346&inputT=2434&oq=123&word=' + search
+      }
+    },
     cancleSearch() {
+      this.search = '';
       this.$refs.search.blur();
     },
     alertInfo(val) {

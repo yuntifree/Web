@@ -87,6 +87,7 @@ input,textarea,select,button{
   resize:none;
   -webkit-appearance: none;
 }
+input,input:focus,input:active{user-select: text;}
 
 
 legend{

@@ -18,6 +18,7 @@ import news from './components/news'
 import hotspot from './components/hotspot.vue'
 import live from './components/live.vue'
 import entertainment from './components/entertainment.vue'
+import wxpage from './components/wxpage.vue'
 
 window.onerror =  function handleErr(msg,url,l) {
     var txt;
@@ -57,6 +58,10 @@ const router = new VueRouter({
       path: '/entertainment',
       name: 'entertainment',
       component: entertainment,
+    },{
+      path: '/wxpage',
+      name: 'wxpage',
+      component: wxpage,
     },{
       path: '*',
       redirect: 'home',

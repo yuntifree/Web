@@ -94,8 +94,8 @@ export default {
       if (!this.newstype) {
         this.newstype = 0;
       }
-      scrollY[this.newstype] = sessionStorage.getItem('scrollY_'+this.newstype);
-      if (scrollY[this.newstype]) {
+      //scrollY[this.newstype] = sessionStorage.getItem('scrollY_'+this.newstype);
+      //if (scrollY[this.newstype]) {
         cache[this.newstype] = sessionStorage.getItem('cache_'+this.newstype); 
         if (cache[this.newstype] && cache[this.newstype] !=='undefind') {
           var list = JSON.parse(cache[this.newstype]);
@@ -103,13 +103,13 @@ export default {
             this.items = list;
             this.useCache = true;
             var _this = this;
-            console.log(_this.winscroll);
+            /*console.log(_this.winscroll);
             this.$nextTick(function() {
               window.scroll(_this.winscroll, scrollY[_this.newstype]);
             })
-          }
+*/          }
         }
-      }
+      //}
       if (!this.useCache) {
         this.getData()
       }

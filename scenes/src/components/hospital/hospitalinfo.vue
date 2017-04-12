@@ -109,7 +109,6 @@ export default {
       })
     },
     imgLoad(idx) {
-       console.log('onload'); 
        if (idx == 0) {
           var height = this.$refs.bannerimg0[0].height;
           this.$refs.banner.style.height = height+ 'px';
