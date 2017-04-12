@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>邀请好友</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" href="css/accept.css">
+</head>
+<body>
+  <div class="accept-info">
+    <img class="img1" src="images/invite_img1.png">
+    <div class="accept-info-inner">
+      <p class="accept-info-invite g-tac">你的好友邀请你<br/>一起来玩Meecha</p>
+      <p class="g-tac accept-info-code">邀请码：XH67887</p>
+      <button class="accept-info-btn" data-clipboard-text="{{code}}">复制邀请码</button>
+      <div class="tip g-tac">复制成功！</div>
+    </div>
+  </div>
+  <p class="accept-text1 g-tac">也许，你并不是孤身一人</p>
+  <p class="accept-text2 g-tac">找到身边的朋友，发现身边的新鲜事<br/>相约志同道合的朋友一起玩乐</p>
+  <img src="images/invite_img2.png">
+  <img src="images/invite_img3.png">
+  <div class="down-load g-clearfix">
+    <dl class="g-fl down-info">
+      <dt class="g-fl"><img src="images/invite_logo.png"></dt>
+      <dd class="g-fl">
+        <img class="logo-text" src="images/invite_logo_word.png">
+        <p class="down-text">遇见附近的人</p>
+      </dd>
+    </dl>
+    <a class="g-fr down-url g-tac" href="https://itunes.apple.com/app/id1157463038" target="_blank">下载App</a>
+  </div>
+</body>
+<script src="js/jquery.min.js" ></script>
+<script src="js/clipboard.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+    adapt();
+    initUI();
+  })
+  function adapt() {
+    if (document && window) {
+      // init font
+    var docEl = document.documentElement;
+    var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+    var dpr = isIOS? Math.min(window.devicePixelRatio, 3) : 1;
+      dpr = window.top === window.self? dpr : 1; //被iframe引用时，禁止缩放
+    var scale = 1 / dpr;
+    var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+    docEl.dataset.dpr = dpr;
+    var metaEl = document.createElement('meta');
+    metaEl.name = 'viewport';
+    metaEl.content = 'initial-scale=1,maximum-scale=1, minimum-scale=1';
+    docEl.firstElementChild.appendChild(metaEl);
+    var recalc = function () {
+      var width = docEl.clientWidth;
+      if (width / dpr > 750) {
+        width = 750 * dpr;
+      }
+      docEl.style.fontSize = 100 * (width / 750) + 'px';
+    };
+    recalc();
+    if (!document.addEventListener) return;
+    window.addEventListener(resizeEvt, recalc, false);
+    }
+  }
+  function initUI() {
+    var clipboard = new Clipboard('.accept-info-btn');
+    clipboard.on('success', function(e) {
+      e.clearSelection();
+      $('.tip').show();
+      setTimeout(function() { $('.tip').hide()}, 1000);
+    });
+    // 修改下载地址
+    var ua = navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(ua)) {
+      $('.down-url').attr('href', "https://itunes.apple.com/app/id1157463038");
+    } else if (/android/.test(ua)) {
+      $('.down-url').attr('href', "https://play.google.com/store/apps/details?id=me.meecha");
+    }
+  }
+</script>
+</html>
