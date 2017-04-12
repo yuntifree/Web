@@ -53,14 +53,13 @@
                 label="Ap数量">
                 <div>{{row.cnt||'-'}}</div>
               </el-table-column>
-
               <el-table-column
                 inline-template
                 :context="_self"
                 label="操作"
                 width="100">
                 <span>
-                  <el-button @click="editArea($index,row)" type="text" size="small">编辑</el-button>
+                  <el-button @click="editUnit($index,row)" type="text" size="small">编辑</el-button>
                   <el-button @click="delTime($index,row)" type="text" size="small">删除</el-button>
                 </span>
               </el-table-column>
@@ -96,6 +95,7 @@
             <el-form-item label="Ap数量" prop="cnt">
               <el-input  v-model.trim="postInfo.cnt" placeholder="请输入ap数量"></el-input>
             </el-form-item>
+            <el-form-item>
               <el-button type="primary" v-if="modal.addShow" @click="addPost">确定</el-button>
               <el-button type="primary" v-else @click="editPost">确定</el-button>
               <el-button @click="modal.editShow=false">取消</el-button>
@@ -221,7 +221,7 @@ export default {
         }
       });
     },
-    editArea(idx, row) {
+    editUnit(idx, row) {
       CGI.extend(this.postInfo, row);
       this.selIdx = idx;
       this.modal.text = '修改';
