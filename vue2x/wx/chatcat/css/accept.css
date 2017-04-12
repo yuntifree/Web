@@ -1,0 +1,98 @@
+html {
+  width: 100%;
+  min-height: 100%;
+  padding-bottom: 0.5rem;
+  background: url('../images/H5_bg.png') no-repeat center;
+}
+.img-logo {
+  display: block;
+  width: 2.12rem;
+  height: auto;
+  margin: 0.36rem auto 0;
+}
+
+.code-info {
+  width: 74%;
+  height: auto;
+  padding: 0.78rem 0;
+  margin: 0.6rem auto;
+  border-radius: 0.4rem;
+  background-color: #fff;
+  box-shadow:0px 0px 16px rgba(0,0,0,.1);
+}
+.code-info p {
+  padding-bottom: 0.58rem;
+}
+.code-tit {
+  font-size: 0.48rem;
+  color: rgb(74, 74, 82);
+  position: relative;
+}
+.code-line:before {
+  display: block;
+  content: '';
+  width: 53%;
+  height: 0.08rem;
+  background-color: rgb(244,244,243);
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%)
+}
+.code-val {
+  margin-top: 0.3rem;
+  font-size: 0.72rem;
+  color: rgb(36, 36, 39);
+  position: relative;
+}
+.code-info .code-obtain {
+  margin-top: 0.7rem;
+  padding-bottom: 0;
+  font-size: 0.36rem;
+  color: rgb(72, 72, 84);
+}
+a {
+  display: block;
+  width: 74%;
+  height: 1rem;
+  line-height: 1rem;
+  overflow: hidden;
+  margin: 0 auto;
+  font-size: 0.36rem;
+  border-radius: 1rem;
+  color: #fff;
+  position: relative;
+}
+a:before {
+  display: block;
+  content: '';
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.down-ios {
+  margin-top: 0.6rem;
+  background: -moz-linear-gradient(left, rgb(57,188,231) 0%, rgb(16,156,236) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(57, 188, 231)), color-stop(100%,rgb));
+  background: -webkit-linear-gradient(left, rgb(57,188,231) 0%, rgb(16, 156, 236) 100%);
+  }
+.down-ios:before {
+  background-image: url('../images/H5_ios.png');
+  -webkit-background-size: contain;
+  background-size: contain;
+
+}
+.down-android {
+  margin-top: 0.2rem;
+  background: -moz-linear-gradient(left, rgb(5,217,126) 0%, rgb(0,180,186) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgb(0,180,186)), color-stop(100%,rgb));
+  background: -webkit-linear-gradient(left, rgb(5,217,126) 0%, rgb(0,180,186) 100%);
+}
+.down-android:before {
+  background-image: url('../images/H5_android.png');
+  -webkit-background-size: contain;
+  background-size: contain;
+
+}
