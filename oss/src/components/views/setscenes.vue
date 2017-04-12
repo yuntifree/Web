@@ -242,7 +242,6 @@ export default {
           break;
       }
       if (pass) {
-        var u = CGI.clone(this.postInfo);
         CGI.post(this.$store.state, 'add_portal_dir', param, (resp)=> {
           if (resp.errno === 0) {
             var u = CGI.clone(this.postInfo);
