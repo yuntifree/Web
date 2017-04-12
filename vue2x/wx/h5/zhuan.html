@@ -9,9 +9,9 @@
     <title>转发文章</title>
   </head>
   <body style="height: 100%">
-    <div>
+    <div style="height: 100%">
       <p>点击右上角分享</p>
-      <iframe id="content" frameborder="0" width="100%" height="100%"></iframe>
+      <iframe id="content" name="content" frameborder="0" width="100%" height="100%"></iframe>
     </div>
   </body>
   <script src="js/jquery.min.js"></script>
@@ -33,7 +33,6 @@
               }
           }
       });
-      alert(param.desc + ' ' + param.title + ' ' + param.link);
     }
   }
   function getData() {
@@ -46,11 +45,15 @@
   $(function(){
     wxutil.init(getData);
     $('#content').attr('src', url);
-    $('#content').onload(function(this) {
-      $(this).find('img').each(function(img) {
+    //$('#content').load(function() {
+    setTimeout(function(){
+      var imgs = $(window.frames['content'].document).find('img');
+      alert(imgs.length);
+      $('img').each(function(img) {
+        console.log(img);
         $(img).attr('src', $(img).data('src'))
       })
-    });
+    }, 2000);
     // CGI.get('get_forward', {}, function(resp) {
     //   if (resp.errno == 0) {
     //     bindShare(resp.data);
