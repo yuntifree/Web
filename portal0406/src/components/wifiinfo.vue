@@ -33,7 +33,7 @@
   padding: 0.12rem 1.4rem 0.12rem 0.1rem;
   background-color: rgba(255,255,255,0.2);
   position: absolute;
-  bottom: 0.26rem; 
+  bottom: 0.26rem;
   left: 3%;
   border-radius: 0.08rem;
 }
@@ -47,7 +47,7 @@
 .search-ipt::-webkit-input-placeholder {
   color: #fff;
 }
-.search-ipt[type="search"]{-webkit-appearance:none;} 
+.search-ipt[type="search"]{-webkit-appearance:none;}
 .search-ipt::-webkit-search-cancel-button {display: none;}
 .search-label{
   @include containerSize(0.52rem, 0.52rem);
@@ -283,17 +283,17 @@
       <div class="margin-line"></div>
       <div class="tab-lists">
         <div class="tab-inner">
-          <ul  ref="menulist"><li class="g-fl g-tac" 
-                v-for="(tab,idx) in menu.tablist" 
-                v-text="tab.text" 
+          <ul  ref="menulist"><li class="g-fl g-tac"
+                v-for="(tab,idx) in menu.tablist"
+                v-text="tab.text"
                 :class="newShow ==idx ? 'cur': ''"
                 @click="changetab(idx)"></li></ul>
         </div>
       </div>
       <changenews :newstype="newsType"
-                  :winscroll="winowScroll"
-                  v-for="(news,i) in menu.tablist" 
-                  v-if="newShow == i">
+                  v-for="(news,i) in menu.tablist"
+                  :idx="i"
+                  v-show="tabIdx == i">
       </changenews>
     </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
@@ -312,14 +312,12 @@ var token = query.token || '';
 var live = query.live || '';
 
 // 通过时间戳来判断是非第一次进入该页面
-var ts = ~~(query.ts);
-var now = ~~((new Date()).getTime()/1000);
-var scrollY = [];
+var union = query.union || '';
+
 export default {
   name: 'info',
   data() {
     return {
-      showCfg: false,
       timeTxt: 5,
       tips: {
         show: false,
@@ -339,8 +337,12 @@ export default {
       newsType: 0,
       newShow: 0,
       search: '',
-      winowScroll: 0,
       iptFocus: false,
+    }
+  },
+  computed: {
+    tabIdx() {
+      return this.$store.state.tabIdx;
     }
   },
   components: {
@@ -362,10 +364,11 @@ export default {
   },
   mounted() {
     this.$nextTick(()=> {
-      if (now - ts <= 2) {
-        this.showCfg = true;
-        this.countdown();
+      // 存下union
+      if (union.length > 0) {
+        CGI.setCookie('UNION', union, 7);
       }
+
       this.getData();
     })
   },
@@ -407,39 +410,31 @@ export default {
       }
       return url
     },
-    countdown() {
-      this.timer = setInterval(()=> {
-        this.timeTxt--;
-        if (this.timeTxt == 0) {
-          this.showCfg = false;
-          clearInterval(this.timer);
-        };
-      }, 1000)
-    },
     changetab(idx) {
       switch (idx) {
-        case 0: 
+        case 0:
           this.tabIdx = this.newsType = this.newShow = 0;
           break;
-        case 1: 
+        case 1:
           this.tabIdx = this.newsType = this.newShow = 1;
           break;
-        case 2: 
+        case 2:
           this.tabIdx = this.newsType = this.newShow = 2;
           break;
-        case 3: 
+        case 3:
           this.tabIdx = this.newsType = this.newShow = 3;
           break;
-        case 4: 
+        case 4:
           this.tabIdx = this.newsType = this.newShow = 4;
           break;
-        case 5: 
+        case 5:
           this.tabIdx = this.newsType = this.newShow = 5;
-          break;  
-        case 6: 
+          break;
+        case 6:
           this.tabIdx = this.newsType = this.newShow = 6;
-          break; 
+          break;
       }
+      this.$store.state.tabIdx = idx;
       if (sessionStorage) {
         try {
           sessionStorage.setItem('tabIdx', idx);

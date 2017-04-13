@@ -75,47 +75,57 @@ export default {
       loading: false,
       nomore: false,
       useCache: false,
-      tabIdx: 0,
     }
   },
   props: {
     newstype: Number,
-    winscroll: Number,
+    idx: Number
   },
   activated() {
     return this.newstype;
   },
+  computed: {
+    tabIdx() {
+      return this.$store.state.tabIdx;
+    }
+  },
   components: {
     tip,
+  },
+  watch: {
+    tabIdx() {
+      this.loadData();
+    }
   },
   mounted() {
     this.$nextTick(()=>{
       // 存下union
-      if (!this.newstype) {
-        this.newstype = 0;
-      }
-      //scrollY[this.newstype] = sessionStorage.getItem('scrollY_'+this.newstype);
-      //if (scrollY[this.newstype]) {
-        cache[this.newstype] = sessionStorage.getItem('cache_'+this.newstype); 
-        if (cache[this.newstype] && cache[this.newstype] !=='undefind') {
-          var list = JSON.parse(cache[this.newstype]);
-          if (list) {
-            this.items = list;
-            this.useCache = true;
-            var _this = this;
-            /*console.log(_this.winscroll);
-            this.$nextTick(function() {
-              window.scroll(_this.winscroll, scrollY[_this.newstype]);
-            })
-*/          }
-        }
-      //}
-      if (!this.useCache) {
-        this.getData()
-      }
+      this.loadData();
     })
   },
   methods: {
+    loadData() {
+      if (this.tabIdx == this.idx) {
+        if (!this.newstype) {
+          this.newstype = 0;
+        }
+        cache[this.newstype] = sessionStorage.getItem('cache_'+this.newstype);
+        if (cache[this.newstype] && cache[this.newstype] !=='undefind') {
+          try {
+            var list = JSON.parse(cache[this.newstype]);
+            if (list) {
+              this.items = list;
+              this.useCache = true;
+              var _this = this;
+            }
+          } catch(e) {
+          }
+        }
+        if (!this.useCache) {
+          this.getData()
+        }
+      }
+    },
     getData(seq) {
       var param = {
         uid: uid,
@@ -173,13 +183,13 @@ export default {
       var pageHeight = document.documentElement.clientHeight;
       var delta = scrollY % pageHeight;
       scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
+      */
       if (sessionStorage) {
         try {
-          sessionStorage.setItem('scrollY_'+this.type, scrollY[this.type]);
-          sessionStorage.setItem('cache_'+this.type, cache[JSON.stringify(this.items)]);
+          sessionStorage.setItem('cache_'+this.newstype, JSON.stringify(this.items));
         } catch(e) {
         }
-      }*/
+      }
       var param = {
         type: 1,
         id: item.id,
