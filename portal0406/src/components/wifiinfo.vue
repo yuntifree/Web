@@ -312,9 +312,8 @@ var token = query.token || '';
 var live = query.live || '';
 
 // 通过时间戳来判断是非第一次进入该页面
-var ts = ~~(query.ts);
-var now = ~~((new Date()).getTime()/1000);
-var scrollY = [];
+var union = query.union || '';
+
 export default {
   name: 'info',
   data() {
@@ -365,6 +364,11 @@ export default {
   },
   mounted() {
     this.$nextTick(()=> {
+      // 存下union
+      if (union.length > 0) {
+        CGI.setCookie('UNION', union, 7);
+      }
+
       this.getData();
     })
   },
