@@ -82,7 +82,7 @@ export default {
     newstype: Number,
     winscroll: Number,
   },
-  actived() {
+  activated() {
     return this.newstype;
   },
   components: {

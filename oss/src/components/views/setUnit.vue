@@ -246,7 +246,7 @@ export default {
               var u = {}
               u.id = resp.data.id;
               u.name = param.name;
-              _this.infos.push(u);
+              _this.infos.unshift(u);
               _this.modal.editShow = false;
             } else {
               _this.alertInfo(resp.desc);

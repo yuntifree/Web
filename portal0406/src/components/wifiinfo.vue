@@ -349,6 +349,13 @@ export default {
     'tip': tip,
     'changenews': changenews,
   },
+  activated() {
+    if (sessionStorage) {
+      try {
+        this.newShow = sessionStorage.getItem('tabIdx') || 0;
+      } catch(e){}
+    }
+  },
   created() {
     this.$store.state.uid = uid;
     this.$store.state.token = token;
@@ -433,6 +440,11 @@ export default {
         case 6: 
           this.tabIdx = this.newsType = this.newShow = 6;
           break; 
+      }
+      if (sessionStorage) {
+        try {
+          sessionStorage.setItem('tabIdx', idx);
+        } catch(e) {}
       }
       /*scrollY[this.tabIdx] = window.scrollY;
       var pageHeight = document.documentElement.clientHeight;
