@@ -400,12 +400,11 @@ export default {
     getOpenLink(list,idx) {
       var url = window.document.location.href.toString();
       var index = url.lastIndexOf("/");
-      /*if (list.routername) {
+      if (list.routername) {
         url  = url.substring(0, index + 1) + list.routername;
       } else {
         url = list.url;
-      }*/
-      url = url.substring(0, index + 1) +'service';
+      }
       return url
     },
     countdown() {
