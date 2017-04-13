@@ -41,5 +41,5 @@ if (!window.JSHost) {
       window.JSHost.invite_native(code);
     } catch (e) {
     }
-  },
+  }
 }

@@ -58,11 +58,21 @@
 
   function initUI() {
     $('.invite-btn').click(function() {
+      $('.invite-btn').addClass('invite-btn-active');
+      setTimeout(function() {
+        $('.invite-btn').removeClass('invite-btn-active');
+      }, 200)
+
       var key = $('.invite-code').text().trim();
       window.JSHost.share(key);
     })
 
     $('#submit').click(function() {
+      $('#submit').addClass('invite-btn-active');
+      setTimeout(function() {
+        $('#submit').removeClass('invite-btn-active');
+      }, 200)
+
       var code = $('#code').val().trim();
       if (code.length > 0) {
         window.JSHost.invite(code);
