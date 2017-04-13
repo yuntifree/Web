@@ -39,7 +39,7 @@ html {
   line-height: 0.92rem;
   margin: 0.6rem auto 0;
   border-radius: 0.5rem;
-  background-color: rgb(255, 35, 125);
+  background-color: #FF237D;
   color: #fff;
   font-size: 0.36rem
 }
@@ -75,6 +75,9 @@ input::-webkit-input-placeholder {
   -webkit-transform: translateY(-50%);
   font-size: 0.32rem;
   color: #fff;
-  background-color: rgba(255,35,125, 0.35);
+  background-color: rgba(255,35,125, 0.36);
   border-radius: 0.5rem;
+}
+.invite-btn-active {
+  background-color: #CD1964 !important;
 }
