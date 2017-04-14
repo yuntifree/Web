@@ -94,33 +94,35 @@ export default {
   },
   watch: {
     tabIdx() {
-      this.loadData();
+      this.loadData(this.newstype || 0);
     }
   },
   mounted() {
     this.$nextTick(()=>{
       // 存下union
-      this.loadData();
+      if (sessionStorage) {
+        try {
+          var i = sessionStorage.getItem('tabIdx') || 0;
+          this.loadData(i);
+        } catch(e) {}
+      }
     })
   },
   methods: {
-    loadData() {
-      if (this.tabIdx == this.idx) {
-        if (!this.newstype) {
-          this.newstype = 0;
-        }
-        cache[this.newstype] = sessionStorage.getItem('cache_'+this.newstype);
-        if (cache[this.newstype] && cache[this.newstype] !=='undefind') {
+    loadData(i) {
+      if (i == this.idx) {
+        if (sessionStorage) {
           try {
-            var list = JSON.parse(cache[this.newstype]);
-            if (list) {
-              this.items = list;
-              this.useCache = true;
-              var _this = this;
+            cache[i] = sessionStorage.getItem('cache_'+i);
+            if (cache[i] && cache[i] !=='undefind') {
+              var list = JSON.parse(cache[i]);
+              if (list) {
+                this.items = list;
+                this.useCache = true;
+              }
             }
-          } catch(e) {
-          }
-        }
+          } catch(e) {}
+        } 
         if (!this.useCache) {
           this.getData()
         }
@@ -160,10 +162,11 @@ export default {
       });
     },
     loadMore() {
-      if (this.useCache) {
-        this.useCache = false;
-        return;
-      }
+      // if (this.useCache) {
+      //   this.useCache = false;
+      //   return;
+      // }
+      console.log(this.items.length);
       if (this.nomore) {
         this.alertInfo('全都在这没有更多了');
       } else {
@@ -177,13 +180,7 @@ export default {
       }
     },
     link(item,idx) {
-      //this.infos[idx].visited = true;
       item.visited = true;
-      /*var scrollY = window.scrollY;
-      var pageHeight = document.documentElement.clientHeight;
-      var delta = scrollY % pageHeight;
-      scrollY = scrollY < pageHeight ? delta : delta + pageHeight;
-      */
       if (sessionStorage) {
         try {
           sessionStorage.setItem('cache_'+this.newstype, JSON.stringify(this.items));

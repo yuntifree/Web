@@ -281,7 +281,7 @@
         </li>
       </ul>
       <div class="margin-line"></div>
-      <div class="tab-lists">
+      <div class="tab-lists" ref="tablist">
         <div class="tab-inner">
           <ul  ref="menulist"><li class="g-fl g-tac"
                 v-for="(tab,idx) in menu.tablist"
@@ -293,7 +293,7 @@
       <changenews :newstype="newsType"
                   v-for="(news,i) in menu.tablist"
                   :idx="i"
-                  v-show="tabIdx == i">
+                  v-show="newShow == i">
       </changenews>
     </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
@@ -368,6 +368,11 @@ export default {
       if (union.length > 0) {
         CGI.setCookie('UNION', union, 7);
       }
+      if (sessionStorage) {
+        try {
+          this.$store.state.tabIdx = sessionStorage.getItem('tabIdx');
+        } catch(e) {}
+      }
 
       this.getData();
     })
@@ -410,7 +415,7 @@ export default {
       }
       return url
     },
-    changetab(idx) {
+    changetab(idx,e) {
       switch (idx) {
         case 0:
           this.tabIdx = this.newsType = this.newShow = 0;
@@ -440,17 +445,6 @@ export default {
           sessionStorage.setItem('tabIdx', idx);
         } catch(e) {}
       }
-      /*scrollY[this.tabIdx] = window.scrollY;
-      var pageHeight = document.documentElement.clientHeight;
-      var delta = scrollY[this.tabIdx] % pageHeight;
-      scrollY[this.tabIdx] = scrollY[this.tabIdx] < pageHeight ? delta : delta + pageHeight;
-      this.winowScroll = scrollY[this.tabIdx];
-      if (sessionStorage) {
-        try {
-          sessionStorage.setItem('scrollY_'+this.tabIdx, scrollY[this.tabIdx]);
-        } catch(e) {
-        }
-      }*/
     },
     imgLoad(idx) {
       if (idx == 0) {
