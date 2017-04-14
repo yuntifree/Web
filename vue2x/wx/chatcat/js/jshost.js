@@ -9,7 +9,7 @@ if (!window.JSHost) {
       if (window.webkit && window.webkit.messageHandlers) {
         window.webkit.messageHandlers.JSHost.postMessage(param);
       } else {
-        console.log('No JSHost or webkit.messageHandlers');
+        console.log('No JSHost for:'+JSON.stringify(param));
       }
     },
     share: function(key) {
@@ -28,18 +28,21 @@ if (!window.JSHost) {
       key += '';
       window.JSHost.share_native(key);
     } catch (e) {
+      console.log('no JSHost for share');
     }
   },
   window.JSHost.toast = function(msg) {
     try {
       window.JSHost.toast_native(msg);
     } catch (e) {
+      console.log('no JSHost for toast');
     }
   },
   window.JSHost.invite = function(code) {
     try {
       window.JSHost.invite_native(code);
     } catch (e) {
+      console.log('no JSHost for invite');
     }
   }
 }
