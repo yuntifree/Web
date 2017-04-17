@@ -1,7 +1,8 @@
 <style lang="scss">
 @import '../assets/css/swipe.css','../assets/css/common.scss';
-.info {
+html,body,.info {
   @include containerSize(100%, auto);
+  min-height: 100%;
   background-color: #fff;
 }
 .banner {
@@ -141,6 +142,10 @@
 }
 
 //news
+.newslist-inner {
+  overflow: auto;
+  padding-bottom: 0.4rem;
+}
 .item-container {
   width: 94%;
   margin: 0 auto;
@@ -214,6 +219,7 @@
   border-radius: 0.08rem;
 }
 .more-desc {
+  height: 0.8rem;
   line-height: 0.8rem;
 }
 .margin-line {
@@ -246,6 +252,14 @@
 .cur {
  border-bottom: 3px solid #009cfb;
 }
+.make-space {
+  width: 100%;
+  height:0.4rem;
+  position: fixed;
+  left:0;
+  bottom: 0;
+  background-color: #fff;
+}
 </style>
 <template>
   <div class="info">
@@ -257,7 +271,7 @@
       </swipe>
       <div class="info-weather g-clearfix">
         <img class="weacher-icon g-fl" :src="weatherImg">
-        <span class="weather-temp g-fl">{{weather.temp}}&#176;C</span>
+        <span class="weather-temp g-fl">{{weather.temp}}&#176;</span>
         <span class="weather-info g-fl">{{weather.info}}</span>
       </div>
       <div class="search-context g-clearfix">
@@ -296,6 +310,7 @@
                   v-show="newShow == i">
       </changenews>
     </div>
+    <p class="make-space"></p>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
@@ -392,6 +407,13 @@ export default {
           this.alertInfo(resp.desc);
         }
       })
+      if (/(iPhone|iPad)/i.test(navigator.userAgent)) {  //判断iPhone|iPad|iPod|iOS
+          //alert(navigator.userAgent);  
+          param.phoneterm = 1;
+      } else if (/(Android)/i.test(navigator.userAgent)) {   //判断Android
+          //alert(navigator.userAgent); 
+          param.phoneterm = 0;
+      } 
       CGI.post('get_portal_content', param, (resp)=> {
         if (resp.errno == 0) {
           this.menu = resp.data;

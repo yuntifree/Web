@@ -17,7 +17,7 @@
   background-color: #f1f1f1;
   font-size: 0.32rem;
 }
-.page-head .page-cur {
+.page-head .pagecur {
   background-color: #fff;
   color: #009cfb;
 }
@@ -42,7 +42,6 @@
 .wxpage-info-text {
   margin-top: 0.24rem;
   font-size: 0.29rem;
-  text-align: justify;
   padding-left: 0.56rem;
   color: #838383;
 }
@@ -53,6 +52,8 @@
   margin: 0.44rem auto 0.52rem;
   border-radius: 0.08rem;
   border: solid 2px #04be02;
+  font-size: 0.32rem;
+  color: #04be02;
 }
 .wxpage-message {
   padding: 0.37rem 0.3rem 0.4rem 0.3rem;
@@ -62,22 +63,40 @@
 <template>
   <div class="wxpage">
     <ul class="g-clearfix page-head">
-      <li class="g-fl g-tac page-cur">本地精品公众号</li>
-      <li class="g-fl g-tac">热门公众号推荐</li>
+      <li class="g-fl g-tac" @click="localShow=true" :class="{pagecur: localShow}">本地精品公众号</li>
+      <li class="g-fl g-tac" @click="localShow=false" :class="{pagecur: !localShow}">热门公众号推荐</li>
     </ul>
-    <div class="wxpage-info">
-       <div>
-         <p class="g-clearfix info-logo"><img class="img-logo g-fl" src="../assets/images/ico_walk.png"><span class="g-fl logo-text">东莞无限</span></p>
-         <p class="wxpage-info-text">东莞市政府公共免费WiFi服务。关注东莞无限，<br/>上网更快更安全，随时随地发现身边有趣的…</p>
-         <button class="wxpage-info-btn g-tac">进入公众号</button>
-       </div>
-       <dl class="g-clearfix wxpage-message">
-         <dt class="g-fr list-img1"><img src="../assets/images/marker.png"></dt>
-         <dd class="list1-info g-fl">
-           <p class="item-title list1-item-title lines-ellipsis">大健康产业站上风口 莞企加紧布局医疗器械领域</p>
-           <p class="item-desc"><span>2017年4月1日</span></p>
-         </dd>
-      </dl>
+    <div  v-if="wxpage.local && wxpage.local.length>0" v-show="localShow">
+      <div class="wxpage-info"  v-for="local in wxpage.local">
+         <div>
+           <p class="g-clearfix info-logo"><img class="img-logo g-fl" :src="local.icon"><span class="g-fl logo-text">{{local.name}}</span></p>
+           <p class="wxpage-info-text g-tac">{{local.abstract}}</p>
+           <button class="wxpage-info-btn g-tac" @click="linkWx(local.dst)">进入公众号</button>
+         </div>
+         <dl class="g-clearfix wxpage-message" @click="linkWx(local.article.dst)">
+           <dt class="g-fr list-img1"><img :src="local.article.img"></dt>
+           <dd class="list1-info g-fl">
+             <p class="item-title list1-item-title lines-ellipsis">{{local.article.title}}</p>
+             <p class="item-desc"><span>{{local.article.ctime}}</span></p>
+           </dd>
+        </dl>
+      </div>
+    </div>
+    <div v-if="wxpage.hot && wxpage.hot.length>0" v-show="!localShow">
+      <div class="wxpage-info" v-if="wxpage.hot && wxpage.hot.length>0" v-for="hot in wxpage.hot">
+         <div>
+           <p class="g-clearfix info-logo"><img class="img-logo g-fl" :src="hot.icon"><span class="g-fl logo-text">{{hot.name}}</span></p>
+           <p class="wxpage-info-text g-tac">{{hot.abstract}}</p>
+           <button class="wxpage-info-btn g-tac" @click="linkWx(hot.dst)">进入公众号</button>
+         </div>
+         <dl class="g-clearfix wxpage-message" @click="linkWx(hot.article.dst)">
+           <dt class="g-fr list-img1"><img :src="hot.article.img"></dt>
+           <dd class="list1-info g-fl">
+             <p class="item-title list1-item-title lines-ellipsis">{{hot.article.title}}</p>
+             <p class="item-desc"><span>{{hot.article.ctime}}</span></p>
+           </dd>
+        </dl>
+      </div>
     </div>
     <!--dl class="g-clearfix">
       <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
@@ -101,14 +120,15 @@ export default {
   name: 'service',
   data () {
     return {
-      wxpage: [],
+      wxpage: {},
       loading: false,
       tips: {
         show: false,
         msg: '',
         duration: 1500,
       },
-      tabIdx: -1
+      tabIdx: -1,
+      localShow: true
     }
   },
   components: {
@@ -128,13 +148,16 @@ export default {
         uid: uid,
         token: token,
       }
-      CGI.post('services', param, (resp)=> {
+      CGI.post('get_mpwx_info', param, (resp)=> {
         if (resp.errno == 0) {
-          this.services = resp.data.services;
+          this.wxpage = resp.data;
         } else {
           this.tipBox(resp.desc);
         }
       })
+    },
+    linkWx(url) {
+      location.href =  url;
     }
   }
 }

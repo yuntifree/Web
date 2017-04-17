@@ -3,7 +3,7 @@
 </style>
 <template>
 <div class="newslist">
-  <div>
+  <div  class="newslist-inner" ref="news" @scroll="scrollNew">
     <div v-for="(item,idx) in items"
         class="item-container"
         @click="link(item,idx)">
@@ -48,11 +48,11 @@
         </div>
       </template>
     </div>
+    <p class="item-desc more-desc g-tac" v-show="!loading">全都在这没有更多了</p>
+    <p class=" item-desc more-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
-  <p class="item-desc more-desc g-tac" v-show="!loading" @click="loadMore">{{nomore ? '全都在这没有更多了' : '点击加载更多'}}</p>
-  <p class=" item-desc more-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
-</div>
+  </div>
 </template>
 <script>
 import tip from './tip.vue'
@@ -119,6 +119,10 @@ export default {
               if (list) {
                 this.items = list;
                 this.useCache = true;
+                var _this = this;
+                this.$nextTick(function() {
+                  _this.$refs.news.style.height = _this.$refs.news.clientHeight-50 + 'px';
+                })
               }
             }
           } catch(e) {}
@@ -135,26 +139,34 @@ export default {
         seq:seq || 0,
         type: this.newstype || 0
       }
+      var _this = this;
       CGI.post('hot', param, (resp)=>{
         if (resp.errno === 0) {
-          this.pageCount++;
-          resp.data.infos.forEach((item)=>{
-            this.$set(item, "visited", false);
-          })
-          if (param.seq==0) {
-            this.ready = true;
-            this.items = resp.data.infos;
-          } else {
-            this.items = this.items.concat(resp.data.infos);
-          }
-          this.nomore = resp.data.hasmore ? false : true;
-          this.loading = false;
-          this.$store.state.type = param.type;
-          if (sessionStorage) {
-            try {
-              sessionStorage.setItem('cache_'+this.newstype, JSON.stringify(this.items));
-            } catch(e) {
+          if (resp.data.infos && resp.data.infos.length >0) {
+            resp.data.infos.forEach((item)=>{
+              this.$set(item, "visited", false);
+            })
+            if (param.seq==0) {
+              this.ready = true;
+              this.items = resp.data.infos;
+            } else {
+              this.items = this.items.concat(resp.data.infos);
             }
+            this.$nextTick(function() {
+              _this.$refs.news.style.height = _this.$refs.news.clientHeight -100 + 'px';
+              console.log(_this.$refs.news.style.height);
+            })
+            this.nomore = resp.data.hasmore ? false : true;
+            this.loading = false;
+            this.$store.state.type = param.type;
+            if (sessionStorage) {
+              try {
+                sessionStorage.setItem('cache_'+this.newstype, JSON.stringify(this.items));
+              } catch(e) {
+              }
+            }
+          } else {
+            this.loading = false;
           }
         } else {
           this.tipBox(resp.desc);
@@ -175,8 +187,14 @@ export default {
           this.loading = true;
           setTimeout(()=>{
             this.getData(this.items[len].seq);
-          },1000)
+          },1500)
         }
+      }
+    },
+    scrollNew() {
+      var sum = this.$refs.news.scrollHeight; 
+      if (sum <= this.$refs.news.scrollTop + this.$refs.news.clientHeight) { 
+          this.loadMore()
       }
     },
     link(item,idx) {
