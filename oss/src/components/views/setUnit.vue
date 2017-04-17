@@ -163,13 +163,13 @@ export default {
           { required: true, message: '请输入地址', trigger: 'blur' },
         ],
         longitude: [
-          { type: Number, required: true, message: '请输入Ap经度', trigger: 'blur' },
+          {required: true, message: '请输入Ap经度', trigger: 'blur' },
         ],
         latitude: [
-          { type: Number,required: true, message: '请输入Ap纬度', trigger: 'blur' },
+          {required: true, message: '请输入Ap纬度', trigger: 'blur' },
         ],
         cnt: [
-          { type: Number,required: true, message: '请输入Ap数量', trigger: 'blur' },
+          {required: true, message: '请输入Ap数量', trigger: 'blur' },
         ],
       }
     }

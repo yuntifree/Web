@@ -69,8 +69,7 @@
                 label="操作"
                 width="100">
                 <span>
-                  <el-button @click="editArea($index,row)" type="text" size="small">编辑</el-button>
-                  <el-button @click="delTime($index,row)" type="text" size="small">删除</el-button>
+                  <el-button @click="delUnit($index,row)" type="text" size="small">删除</el-button>
                 </span>
               </el-table-column>
             </el-table>
@@ -90,9 +89,12 @@
         <div class="edit-form">
           <div class="form-title">{{modal.text}}</div>
           <el-form ref="form" :model="postInfo" :rules="rules" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="name" prop="name">
-              <el-input  v-model.trim="postInfo.name" placeholder="请输入地域名称"></el-input>
-            </el-form-item>        
+            <el-form-item label="单元id" prop="units">
+              <el-input ref="unit" v-model="postInfo.units" placeholder="请输入单元id"></el-input>
+            </el-form-item> 
+            <el-form-item label="区域id" prop="aid">
+              <el-input type="number" v-model.number="postInfo.aid" placeholder="请输入地域id" auto-complete="off"></el-input>
+            </el-form-item>       
             <el-form-item>
               <el-button type="primary" v-if="modal.addShow" @click="addPost">确定</el-button>
               <el-button type="primary" v-else @click="editPost">确定</el-button>
@@ -147,11 +149,16 @@ export default {
       alertShow: false,
       alertMsg: '',
       postInfo: {
-        name: '',
+        units: '',
+        aid:  '',
       },
       rules: {
-        name: [
-          { required: true, message: '请输入名称', trigger: 'blur' },
+        units: [
+          { required: true, message: '请输入单元id', trigger: 'blur' },
+        ],
+        aid: [
+          { required: true, message: '请输入区域id'},
+          { type: 'number', message: '年龄必须为数字值'}
         ]
       }
     }
@@ -203,15 +210,9 @@ export default {
         }
       });
     },
-    editArea(idx, row) {
-      CGI.extend(this.postInfo, row);
-      this.selIdx = idx;
-      this.modal.text = '修改';
-      this.modal.addShow = false;
-      this.modal.editShow = true;
-    },
+
     addArea() {
-      CGI.objClear(this.postInfo);
+      this.postInfo.name = '';
       this.modal.text = '增加';
       this.modal.addShow = true;
       this.modal.editShow = true;
@@ -219,49 +220,51 @@ export default {
     addPost() {
       var _this = this;
       this.$refs['form'].validate((valid) => {
+        var units = [];
         if (valid) {
-          var param = {
-            name: this.postInfo.name,
-          }
-          CGI.post(this.$store.state,'add_area', param, function(resp) {
-            if (resp.errno === 0) {
-              var u = {}
-              u.id = resp.data.id;
-              u.name = param.name;
-              _this.infos.push(u);
-              _this.modal.editShow = false;
-            } else {
-              _this.alertInfo(resp.desc);
+          units = this.postInfo.units.split(',');
+          var postCfg = true;
+          for(var i=0; i< units.length; i++) {
+            units[i] = ~~units[i];
+            if (!units[i]) {
+              _this.alertInfo('请输入有效的单元id');
+              postCfg = false;
             }
-          })
+          }
+          Array.prototype.unique3 = function(){
+           var res = [];
+           var json = {};
+           for(var i = 0; i < this.length; i++){
+            if(!json[this[i]]){
+             res.push(this[i]);
+             json[this[i]] = 1;
+            }
+           }
+           return res;
+          }
+          if (postCfg) {
+            var param = {
+              type: 0,
+              aid: this.postInfo.aid,
+              units: units.unique3(),
+            }
+            CGI.post(this.$store.state,'mod_area_unit', param, function(resp) {
+              if (resp.errno === 0) {
+                this.getData(true);
+                _this.modal.editShow = false;
+              } else {
+                _this.alertInfo(resp.desc);
+              }
+            })
+          }      
         }
       })
       
     },
-    editPost() {
-      var _this = this;
-      this.$refs['form'].validate((valid) => {
-        if (valid) {
-          var param = {
-            id: this.infos[this.selIdx].id,
-            name: this.postInfo.name,
-            deleted: 0
-          }
-          CGI.post(this.$store.state, 'mod_area', param, function(resp) {
-            if (resp.errno === 0) {
-              _this.infos[_this.selIdx].name = param.name;
-              _this.modal.editShow = false;
-            } else {
-              _this.alertInfo(resp.desc);
-            }
-          })
-        }
-      })
-    },
-    delTime(idx, row) {
+    delUnit(idx, row) {
       this.selIdx = idx;
       this.dialogCfg.title = '删除';
-      this.dialogCfg.text = '确认要删除' + row.name +'吗';
+      this.dialogCfg.text = '确认要删除' + row.unid +'吗';
       this.modal.dialogShow = true;
     },
     delPost() {
