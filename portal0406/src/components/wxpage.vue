@@ -53,7 +53,7 @@
 .wxpage-info-text {
   margin-top: 0.24rem;
   font-size: 0.29rem;
-  padding-left: 0.56rem;
+  padding: 0 0.56rem;
   color: #838383;
 }
 .wxpage-info-btn {
@@ -81,7 +81,7 @@
     <div  v-if="wxpage.local && wxpage.local.length>0" v-show="localShow" class="wxpage-inner">
       <div class="wxpage-info"  v-for="local in wxpage.local">
          <div>
-           <p class="g-clearfix info-logo"><!--a class="img-logo g-fl" href="" :style="{ background: 'url('+local.icon+') -170px -170px'}"></a--><img class="img-logo g-fl" :src="local.icon"><span class="g-fl logo-text">{{local.name}}</span></p>
+           <p class="g-clearfix info-logo"><img class="img-logo g-fl" :src="local.icon"><span class="g-fl logo-text">{{local.name}}</span></p>
            <p class="wxpage-info-text g-tac">{{local.abstract}}</p>
            <button class="wxpage-info-btn g-tac" @click="linkWx(local.dst)">进入公众号</button>
          </div>

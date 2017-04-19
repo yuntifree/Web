@@ -1,7 +1,7 @@
 <template>
-  <div class="videos top176">
+  <div class="videos top88">
     <download></download>
-    <tab :selidx="tabIdx" @tab-change="tabChange"></tab>
+    <!--tab :selidx="tabIdx" @tab-change="tabChange"></tab-->
     <div class="live-body g-clearfix">
       <div class="liveBox-li"  v-for="item in items" @click="liveReport">
         <a :href="getLiveurl(item)">
@@ -239,5 +239,8 @@ export default {
   position: absolute;
   right: 0.2rem;
   top: 0.2rem;
+}
+.top88 {
+  padding-top: 0.88rem;
 }
 </style>

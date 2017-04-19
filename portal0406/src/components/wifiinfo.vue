@@ -5,6 +5,9 @@ html,body,.info {
   min-height: 100%;
   background-color: #fff;
 }
+.info {
+  overflow: auto;
+}
 .banner {
   width: 100%;
   height: auto;
@@ -238,11 +241,15 @@ html,body,.info {
   width: auto;
   height: 1.2rem;
   overflow-x: auto;
+  overflow-scrolling : touch;
+   -webkit-overflow-scrolling : touch;
 }
 
 .tab-lists ul{
   width: 7.2rem;
   overflow: auto;
+  overflow-scrolling : touch;
+   -webkit-overflow-scrolling : touch;
 }
 .tab-lists li{
   width: 1.2rem;
@@ -262,7 +269,7 @@ html,body,.info {
 }
 </style>
 <template>
-  <div class="info">
+  <div class="info" id="news" @scroll="scrollNew">
     <div class="banner" ref="banner" v-if="menu.banners &&menu.banners.length>0">
       <swipe class="my-swipe"><!-- "-->
         <swipe-item v-for="(banner,idx) in menu.banners">
@@ -277,7 +284,7 @@ html,body,.info {
       <div class="search-context g-clearfix">
         <label for="search" class="search-label g-fl"><img src="http://img.yunxingzh.com/9e008505-d8f2-49d8-ae24-56134a53e771.png" alt=""></label>
         <form action="">
-          <input type="search" id="search" class="search-ipt g-fl"  v-model="search" ref="search" placeholder="东莞市旅游" @keyup.enter="doSearch" @focus="iptFocus=true" @blur="iptFocus=false">
+          <input type="search" id="search" class="search-ipt g-fl"  v-model="search" ref="search" placeholder="搜索或输入网址" @keyup.enter="doSearch" @focus="iptFocus=true" @blur="iptFocus=false">
         </form>
         <p class="search-evt g-clearfix" v-if="iptFocus">
           <img class="g-fl" @click="emptySeach" src="http://img.yunxingzh.com/dd0dcc2e-6eac-4280-80a7-1b90ea1cd6de.png" alt="">
@@ -455,29 +462,6 @@ export default {
       return ret;
     },
     changetab(idx,tab) {
-      /*switch (idx) {
-        case 0:
-          this.tabIdx =  this.newShow = 0;
-          break;
-        case 1:
-          this.tabIdx = this.newShow = 1;
-          break;
-        case 2:
-          this.tabIdx = this.newShow = 2;
-          break;
-        case 3:
-          this.tabIdx = this.newShow = 3;
-          break;
-        case 4:
-          this.tabIdx = this.newShow = 4;
-          break;
-        case 5:
-          this.tabIdx = this.newShow = 5;
-          break;
-        case 6:
-          this.tabIdx = this.newShow = 6;
-          break;
-      }*/
       this.tabIdx = this.newShow = idx;
       this.newsType = tab.type;
       this.$store.state.tabIdx = idx;
@@ -507,7 +491,19 @@ export default {
         this.alertInfo('请输入搜索内容');
       } else {
         search = encodeURI(search);
-        location.href = 'https://www.baidu.com/from=844b/s?&sa=tb&ts=2751889&t_kt=0&ie=utf-8&rsv_t=27f2ii5Qh1ivm7QL33kiG6oYxfW9rXiA41%252BH2PKFyQLQO57fZELehp6bQA&ms=1&rsv_pq=7355972231312562541&ss=101&t_it=1&rqlang=zh&rsv_sug4=3346&inputT=2434&oq=123&word=' + search
+        location.href = 'https://www.baidu.com/from=844b/?ms=1&word=' + search
+      }
+    },
+    scrollNew() {
+      var news = document.getElementById('news')
+      var sum = news.scrollHeight; 
+      console.log('sum'+sum);
+      console.log(news.scrollTop + news.clientHeight);
+      if (sum <= news.scrollTop + news.clientHeight) { 
+        this.$store.state.loadArticle = true;
+          //this.loadMore()
+      } else {
+        this.$store.state.loadArticle = true;
       }
     },
     cancleSearch() {

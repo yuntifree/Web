@@ -10,7 +10,8 @@ const state = {
   uid: 0,
   token: '',
   newsname: 0,
-  tabIdx: 0
+  tabIdx: 0,
+  loadArticle: false
 }
 
 export default new Vuex.Store({

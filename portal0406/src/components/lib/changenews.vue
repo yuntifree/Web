@@ -3,12 +3,12 @@
 </style>
 <template>
 <div class="newslist">
-  <div  class="newslist-inner" ref="news" @scroll="scrollNew">
+  <div  class="newslist-inner" ref="news">
     <div v-for="(item,idx) in items"
         class="item-container"
         @click="link(item,idx)">
           <dl class="g-clearfix">
-           <dt class="g-fr list-img1"><img v-lazy="item.img"></dt>
+           <dt class="g-fr list-img1"><img  v-if="item.img" v-lazy="item.img"></dt>
            <dd class="list1-info g-fl">
              <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
              <p class="item-desc"><span v-if="item.source">{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
@@ -54,6 +54,9 @@ export default {
   computed: {
     tabIdx() {
       return this.$store.state.tabIdx;
+    },
+    loadArticle() {
+      return this.$store.state.loadArticle;
     }
   },
   components: {
@@ -62,6 +65,11 @@ export default {
   watch: {
     tabIdx() {
       this.loadData(this.newstype || 0);
+    },
+    loadArticle() {
+      if (this.$store.state.loadArticle) {
+        this.loadMore();
+      }
     }
   },
   mounted() {
@@ -89,7 +97,8 @@ export default {
                 this.useCache = true;
                 var _this = this;
                 this.$nextTick(function() {
-                  _this.$refs.news.style.height = _this.$refs.news.clientHeight-50 + 'px';
+                  //_this.$refs.news.style.height = _this.$refs.news.clientHeight-50 + 'px';
+                document.getElementById('news').style.height = document.getElementById('news').clientHeight - 100 + 'px';
                 })
               }
             } 
@@ -122,7 +131,8 @@ export default {
               this.items = this.items.concat(resp.data.infos);
             }
             this.$nextTick(function() {
-              _this.$refs.news.style.height = _this.$refs.news.clientHeight -100 + 'px';
+              document.getElementById('news').style.height = document.getElementById('news').clientHeight - 100 + 'px';
+              //console.log(document.getElementById('news').style.height);
             })
             this.nomore = resp.data.hasmore ? false : true;
             this.loading = false;
@@ -143,7 +153,7 @@ export default {
     },
     loadMore() {
       if (this.nomore) {
-        this.alertInfo('全都在这没有更多了');
+        this.tipBox('全都在这没有更多了');
       } else {
         var len = this.items.length-1;
         if (!this.nomore && len >= 0) {
@@ -152,12 +162,6 @@ export default {
             this.getData(this.items[len].seq);
           },1500)
         }
-      }
-    },
-    scrollNew() {
-      var sum = this.$refs.news.scrollHeight; 
-      if (sum <= this.$refs.news.scrollTop + this.$refs.news.clientHeight) { 
-          this.loadMore()
       }
     },
     link(item,idx) {
@@ -180,7 +184,7 @@ export default {
     tipBox(val) {
       this.tips.msg = val;
       this.tips.show = true;
-    i},
+    },
     formatTime(ctime) {
       return ctime.substr(0, ctime.length - 3)
     }

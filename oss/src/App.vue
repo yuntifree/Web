@@ -46,6 +46,7 @@ import setTime from './components/views/setTime.vue'
 import setArea from './components/views/setArea.vue'
 import setaAdarea from './components/views/setAdarea.vue'
 import setUnit from './components/views/setUnit.vue'
+import setWx from './components/views/setWx.vue'
 
 export default {
   name: 'app',
@@ -95,7 +96,8 @@ export default {
     setTime,
     setArea,
     setaAdarea,
-    setUnit
+    setUnit,
+    setWx
   },
   // for share components View using.
   mounted() {
