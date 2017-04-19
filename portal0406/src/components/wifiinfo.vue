@@ -424,7 +424,12 @@ export default {
           this.$nextTick(function() {
             var width = _this.menu.tablist.length * 1.2;
             _this.$refs.menulist.style.width = width + 'rem';
-            var tab = 'tab'+this.$store.state.tabIdx;
+            var tab;
+            if (!this.$store.state.tabIdx) {
+              tab = 'tab' + 0
+            } else {
+              tab = 'tab'+this.$store.state.tabIdx;
+            }
             document.getElementById(tab).scrollIntoView();
           })
         } else {

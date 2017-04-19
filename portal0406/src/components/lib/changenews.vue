@@ -68,8 +68,10 @@ export default {
     this.$nextTick(()=>{
       if (sessionStorage) {
         try {
-          var i = sessionStorage.getItem('tabIdx') || 0;
-          this.loadData(i);
+          var i = ~~sessionStorage.getItem('tabIdx') || 0;
+          if (i == this.idx) {
+            this.getData()
+          }
         } catch(e) {}
       }
     })
@@ -90,10 +92,7 @@ export default {
                   _this.$refs.news.style.height = _this.$refs.news.clientHeight-50 + 'px';
                 })
               }
-            } else {
-              var list = [];
-              this.useCache = true;
-            }
+            } 
           } catch(e) {}
         } 
         if (!this.useCache) {
@@ -106,7 +105,7 @@ export default {
         uid: uid,
         token: token,
         seq:seq || 0,
-        type: this.newstype || 0,
+        type: this.idx || 0,
         num: 20
       }
       var _this = this;
