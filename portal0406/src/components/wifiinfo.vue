@@ -149,7 +149,7 @@ html,body,.wifilink,.info {
 //news
 .newslist-inner {
   overflow: auto;
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.2rem;
 }
 .item-container {
   width: 94%;
@@ -163,19 +163,19 @@ html,body,.wifilink,.info {
   color: $color43;
   margin-bottom: 0.2rem;
 }
-.item-imgs {
+/* .item-imgs {
   margin: 0.15rem 0;
 }
 .item-imgs li{
   overflow: hidden;
-}
-.list-img3 li {
+} */
+/* .list-img3 li {
   @include containerSize(32%,1.48rem);
   margin-right: 2%;
 }
 .item-imgs li:last-child {
   margin-right: 0;
-}
+} */
 .img-list {
   @include containerSize(100%, auto);
   min-height: 1.5rem;
@@ -263,7 +263,7 @@ html,body,.wifilink,.info {
 }
 .make-space {
   width: 100%;
-  height:0.4rem;
+  height:0.2rem;
   position: fixed;
   left:0;
   bottom: 0;
@@ -304,7 +304,7 @@ html,body,.wifilink,.info {
         </li>
       </ul>
       <div class="margin-line"></div>
-      <div class="tab-lists" ref="tablist">
+      <div class="tab-lists" ref="tablist" id="tablist">
         <div class="tab-inner">
           <ul  ref="menulist">
             <li class="g-fl g-tac"
@@ -493,7 +493,7 @@ export default {
         this.alertInfo('请输入搜索内容');
       } else {
         search = encodeURI(search);
-        location.href = 'https://www.baidu.com/from=844b/?ms=1&word=' + search;
+        location.href = 'https://www.baidu.com/from=844b/s?ms=1&word=' + search;
       }
     },
     scrollNew() {

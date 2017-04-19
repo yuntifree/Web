@@ -121,6 +121,10 @@ export default {
             if (param.seq==0) {
               this.ready = true;
               this.items = resp.data.infos;
+              this.$nextTick(function() {
+                console.log('setheight')
+                _this.setHeight();
+              })
             } else {
               this.items = this.items.concat(resp.data.infos);
             }
@@ -140,6 +144,11 @@ export default {
           this.tipBox(resp.desc);
         }
       });
+    },
+    setHeight() {
+      var screenHeight = window.screen.height;
+      var height = document.getElementById('tablist').offsetTop;
+      document.body.style.height = screenHeight + height + 'px';
     },
     loadMore() {
       var len = this.items.length-1;
