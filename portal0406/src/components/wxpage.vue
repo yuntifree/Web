@@ -62,7 +62,7 @@
   display: block;
   margin: 0.44rem auto 0;
   border-radius: 0.08rem;
-  border: solid 2px #04be02;
+  border: solid 1px #04be02;
   font-size: 0.32rem;
   color: #04be02;
 }
@@ -110,13 +110,6 @@
         </dl>
       </div>
     </div>
-    <!--dl class="g-clearfix">
-      <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
-      <dd class="list1-info g-fl">
-        <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
-        <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
-      </dd>
-   </dl-->
   </div>
 </template>
 

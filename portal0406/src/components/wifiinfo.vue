@@ -1,12 +1,14 @@
 <style lang="scss">
 @import '../assets/css/swipe.css','../assets/css/common.scss';
-html,body,.info {
-  @include containerSize(100%, auto);
+html,body,.wifilink,.info {
+  @include containerSize(100%, 100%);
   min-height: 100%;
   background-color: #fff;
 }
 .info {
   overflow: auto;
+  overflow-scrolling : touch;
+  -webkit-overflow-scrolling : touch;
 }
 .banner {
   width: 100%;
@@ -284,9 +286,9 @@ html,body,.info {
       <div class="search-context g-clearfix">
         <label for="search" class="search-label g-fl"><img src="http://img.yunxingzh.com/9e008505-d8f2-49d8-ae24-56134a53e771.png" alt=""></label>
         <form action="">
-          <input type="search" id="search" class="search-ipt g-fl"  v-model="search" ref="search" placeholder="搜索或输入网址" @keyup.enter="doSearch" @focus="iptFocus=true" @blur="iptFocus=false">
+          <input type="search" id="search" class="search-ipt g-fl"  v-model="search" ref="search" placeholder="搜索或输入网址" @keyup="SearchLen" @keyup.enter="doSearch">
         </form>
-        <p class="search-evt g-clearfix" v-if="iptFocus">
+        <p class="search-evt g-clearfix" v-show="iptFocus">
           <img class="g-fl" @click="emptySeach" src="http://img.yunxingzh.com/dd0dcc2e-6eac-4280-80a7-1b90ea1cd6de.png" alt="">
           <span class="search-cancle" @click="cancleSearch">取消</span>
         </p>
@@ -295,7 +297,7 @@ html,body,.info {
     <div>
       <ul class="menu-list g-clearfix">
         <li class="g-fl list-item" v-for="(list,index) in menu.menulist">
-          <a :href="getOpenLink(list,index)" :target="getBlank(list,index)">
+          <a :href="getOpenLink(list,index)">
           <img :src="list.icon">
           <span class="g-tac title-name" v-text="list.text"></span>
           </a>
@@ -491,19 +493,23 @@ export default {
         this.alertInfo('请输入搜索内容');
       } else {
         search = encodeURI(search);
-        location.href = 'https://www.baidu.com/from=844b/?ms=1&word=' + search
+        location.href = 'https://www.baidu.com/from=844b/?ms=1&word=' + search;
       }
     },
     scrollNew() {
-      var news = document.getElementById('news')
-      var sum = news.scrollHeight; 
-      console.log('sum'+sum);
-      console.log(news.scrollTop + news.clientHeight);
-      if (sum <= news.scrollTop + news.clientHeight) { 
-        this.$store.state.loadArticle = true;
-          //this.loadMore()
-      } else {
-        this.$store.state.loadArticle = true;
+      this.$nextTick(()=> {
+        var news = document.getElementById('news')
+        var sum = news.scrollHeight; 
+        if (sum <= news.scrollTop + news.clientHeight) { 
+          this.$store.state.loadArticle = true;
+        } else {
+          this.$store.state.loadArticle = false;
+        }
+      })
+    },
+    SearchLen() {
+      if (this.search.length >0) {
+        this.iptFocus = true;
       }
     },
     cancleSearch() {

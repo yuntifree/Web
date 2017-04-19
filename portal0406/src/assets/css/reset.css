@@ -38,6 +38,8 @@ time, mark, audio, video,label{
   box-sizing:border-box;
   -webkit-box-sizing:border-box;
   font-weight: normal;
+  overflow-scrolling : touch;
+  -webkit-overflow-scrolling : touch;
 }
 *{
   margin:0;

@@ -6,7 +6,7 @@
   <div  class="newslist-inner" ref="news">
     <div v-for="(item,idx) in items"
         class="item-container"
-        @click="link(item,idx)">
+        @click="link(item)">
           <dl class="g-clearfix">
            <dt class="g-fr list-img1"><img  v-if="item.img" v-lazy="item.img"></dt>
            <dd class="list1-info g-fl">
@@ -15,8 +15,10 @@
            </dd>
          </dl>
     </div>
-    <p class="item-desc more-desc g-tac" v-show="!loading">全都在这没有更多了</p>
-    <p class=" item-desc more-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
+    <p class=" item-desc more-desc g-tac" v-if="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
+    <template v-else>
+      <p class="item-desc more-desc g-tac" v-if="!hasmore">全都在这没有更多了</p>
+    </template>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
@@ -40,16 +42,13 @@ export default {
       items: [],
       ready: false,
       loading: false,
-      nomore: false,
+      hasmore: true,
       useCache: false,
     }
   },
   props: {
     newstype: Number,
     idx: Number
-  },
-  activated() {
-    return this.newstype;
   },
   computed: {
     tabIdx() {
@@ -64,7 +63,7 @@ export default {
   },
   watch: {
     tabIdx() {
-      this.loadData(this.newstype || 0);
+      this.loadData(this.tabIdx || 0);
     },
     loadArticle() {
       if (this.$store.state.loadArticle) {
@@ -78,7 +77,7 @@ export default {
         try {
           var i = ~~sessionStorage.getItem('tabIdx') || 0;
           if (i == this.idx) {
-            this.getData()
+            this.loadData(i)
           }
         } catch(e) {}
       }
@@ -95,11 +94,6 @@ export default {
               if (list) {
                 this.items = list;
                 this.useCache = true;
-                var _this = this;
-                this.$nextTick(function() {
-                  //_this.$refs.news.style.height = _this.$refs.news.clientHeight-50 + 'px';
-                document.getElementById('news').style.height = document.getElementById('news').clientHeight - 100 + 'px';
-                })
               }
             } 
           } catch(e) {}
@@ -130,16 +124,12 @@ export default {
             } else {
               this.items = this.items.concat(resp.data.infos);
             }
-            this.$nextTick(function() {
-              document.getElementById('news').style.height = document.getElementById('news').clientHeight - 100 + 'px';
-              //console.log(document.getElementById('news').style.height);
-            })
-            this.nomore = resp.data.hasmore ? false : true;
+            this.hasmore = !!resp.data.hasmore;
             this.loading = false;
             this.$store.state.type = param.type;
             if (sessionStorage) {
               try {
-                sessionStorage.setItem('cache_'+this.newstype, JSON.stringify(this.items));
+                sessionStorage.setItem('cache_'+this.idx, JSON.stringify(this.items));
               } catch(e) {
               }
             }
@@ -152,23 +142,21 @@ export default {
       });
     },
     loadMore() {
-      if (this.nomore) {
-        this.tipBox('全都在这没有更多了');
-      } else {
-        var len = this.items.length-1;
-        if (!this.nomore && len >= 0) {
-          this.loading = true;
-          setTimeout(()=>{
-            this.getData(this.items[len].seq);
-          },1500)
-        }
+      var len = this.items.length-1;
+      if (len >= 0) {
+        this.loading = true;
+        setTimeout(()=>{
+          this.getData(this.items[len].seq);
+        },1000)
       }
     },
-    link(item,idx) {
+    link(item) {
       item.visited = true;
       if (sessionStorage) {
         try {
-          sessionStorage.setItem('cache_'+this.newstype, JSON.stringify(this.items));
+          //console.log('cache_'+idx);
+          sessionStorage.setItem('cache_'+this.idx, JSON.stringify(this.items));
+          console.log('save link');
         } catch(e) {
         }
       }
