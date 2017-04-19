@@ -17,6 +17,8 @@ export default {
 <style lang="scss">
 @import './assets/css/reset.css';
 .wifilink {
+  width: 100%;
+  height: auto;
   max-width: 750px;
   margin: 0 auto;
 }

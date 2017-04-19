@@ -7,46 +7,13 @@
     <div v-for="(item,idx) in items"
         class="item-container"
         @click="link(item,idx)">
-      <!--新闻有3张图片-->
-      <template v-if="item.images">
-        <template v-if="item.images.length>2 && !item.stype">
-          <div class="list-img3">
-            <p class="item-title" :class="{'item-visited':item.visited}">{{item.title}}</p>
-            <ul class="g-clearfix item-imgs">
-              <li v-for="imgs in item.images"
-                  class="g-fl"><img v-lazy="imgs" class="img-list">
-              </li>
-            </ul>
-            <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
-          </div>
-        </template>
-        <!--新闻有1、2张图片-->
-        <template v-if="item.images.length==1 || item.images.length==2 && !item.stype">
           <dl class="g-clearfix">
-           <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
+           <dt class="g-fr list-img1"><img v-lazy="item.img"></dt>
            <dd class="list1-info g-fl">
              <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
-             <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
+             <p class="item-desc"><span v-if="item.source">{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
            </dd>
          </dl>
-        </template>
-        <!--广告-->
-        <template  v-if="item.stype">
-          <div>
-            <p class="item-title g-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
-            <div class="adv-img"><img v-lazy="item.images[0]"></div>
-            <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
-          </div>
-        </template>
-      </template>
-
-      <!--无图片新闻-->
-      <template v-if="!item.images">
-        <div>
-          <p class="item-title g-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
-          <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
-        </div>
-      </template>
     </div>
     <p class="item-desc more-desc g-tac" v-show="!loading">全都在这没有更多了</p>
     <p class=" item-desc more-desc g-tac" v-show="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
@@ -99,7 +66,6 @@ export default {
   },
   mounted() {
     this.$nextTick(()=>{
-      // 存下union
       if (sessionStorage) {
         try {
           var i = sessionStorage.getItem('tabIdx') || 0;
@@ -124,6 +90,9 @@ export default {
                   _this.$refs.news.style.height = _this.$refs.news.clientHeight-50 + 'px';
                 })
               }
+            } else {
+              var list = [];
+              this.useCache = true;
             }
           } catch(e) {}
         } 
@@ -137,10 +106,11 @@ export default {
         uid: uid,
         token: token,
         seq:seq || 0,
-        type: this.newstype || 0
+        type: this.newstype || 0,
+        num: 20
       }
       var _this = this;
-      CGI.post('hot', param, (resp)=>{
+      CGI.post('get_mpwx_article', param, (resp)=>{
         if (resp.errno === 0) {
           if (resp.data.infos && resp.data.infos.length >0) {
             resp.data.infos.forEach((item)=>{
@@ -154,7 +124,6 @@ export default {
             }
             this.$nextTick(function() {
               _this.$refs.news.style.height = _this.$refs.news.clientHeight -100 + 'px';
-              console.log(_this.$refs.news.style.height);
             })
             this.nomore = resp.data.hasmore ? false : true;
             this.loading = false;
@@ -174,11 +143,6 @@ export default {
       });
     },
     loadMore() {
-      // if (this.useCache) {
-      //   this.useCache = false;
-      //   return;
-      // }
-      console.log(this.items.length);
       if (this.nomore) {
         this.alertInfo('全都在这没有更多了');
       } else {
@@ -206,7 +170,7 @@ export default {
         }
       }
       var param = {
-        type: 1,
+        type: 17,
         id: item.id,
         uid: uid,
         token: token

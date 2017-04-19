@@ -288,7 +288,7 @@ html,body,.info {
     <div>
       <ul class="menu-list g-clearfix">
         <li class="g-fl list-item" v-for="(list,index) in menu.menulist">
-          <a :href="getOpenLink(list,index)" :target="index < 5 ? '_blank' : ''">
+          <a :href="getOpenLink(list,index)" :target="getBlank(list,index)">
           <img :src="list.icon">
           <span class="g-tac title-name" v-text="list.text"></span>
           </a>
@@ -297,11 +297,15 @@ html,body,.info {
       <div class="margin-line"></div>
       <div class="tab-lists" ref="tablist">
         <div class="tab-inner">
-          <ul  ref="menulist"><li class="g-fl g-tac"
+          <ul  ref="menulist">
+            <li class="g-fl g-tac"
                 v-for="(tab,idx) in menu.tablist"
                 v-text="tab.text"
                 :class="newShow ==idx ? 'cur': ''"
-                @click="changetab(idx)"></li></ul>
+                :id="'tab'+idx"
+                @click="changetab(idx,tab)">
+            </li>
+          </ul>
         </div>
       </div>
       <changenews :newstype="newsType"
@@ -388,7 +392,6 @@ export default {
           this.$store.state.tabIdx = sessionStorage.getItem('tabIdx');
         } catch(e) {}
       }
-
       this.getData();
     })
   },
@@ -421,6 +424,8 @@ export default {
           this.$nextTick(function() {
             var width = _this.menu.tablist.length * 1.2;
             _this.$refs.menulist.style.width = width + 'rem';
+            var tab = 'tab'+this.$store.state.tabIdx;
+            document.getElementById(tab).scrollIntoView();
           })
         } else {
           this.alertInfo(resp.desc);
@@ -435,32 +440,41 @@ export default {
       } else {
         url = list.url;
       }
-      return url
+      return url;
     },
-    changetab(idx,e) {
-      switch (idx) {
+    getBlank(list,idx) {
+      var ret = '';
+      if (list.routername) {
+        ret = '_blank';
+      } //else {}
+      return ret;
+    },
+    changetab(idx,tab) {
+      /*switch (idx) {
         case 0:
-          this.tabIdx = this.newsType = this.newShow = 0;
+          this.tabIdx =  this.newShow = 0;
           break;
         case 1:
-          this.tabIdx = this.newsType = this.newShow = 1;
+          this.tabIdx = this.newShow = 1;
           break;
         case 2:
-          this.tabIdx = this.newsType = this.newShow = 2;
+          this.tabIdx = this.newShow = 2;
           break;
         case 3:
-          this.tabIdx = this.newsType = this.newShow = 3;
+          this.tabIdx = this.newShow = 3;
           break;
         case 4:
-          this.tabIdx = this.newsType = this.newShow = 4;
+          this.tabIdx = this.newShow = 4;
           break;
         case 5:
-          this.tabIdx = this.newsType = this.newShow = 5;
+          this.tabIdx = this.newShow = 5;
           break;
         case 6:
-          this.tabIdx = this.newsType = this.newShow = 6;
+          this.tabIdx = this.newShow = 6;
           break;
-      }
+      }*/
+      this.tabIdx = this.newShow = idx;
+      this.newsType = tab.type;
       this.$store.state.tabIdx = idx;
       if (sessionStorage) {
         try {
