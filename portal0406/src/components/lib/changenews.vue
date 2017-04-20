@@ -5,15 +5,22 @@
 <div class="newslist">
   <div  class="newslist-inner">
     <div v-for="(item,idx) in items"
-        class="item-container"
-        @click="link(item)">
-          <dl class="g-clearfix">
-           <dt class="g-fr list-img1"><img  v-if="item.img" v-lazy="item.img"></dt>
-           <dd class="list1-info g-fl">
-             <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
-             <p class="item-desc"><span v-if="item.source">{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
-           </dd>
-         </dl>
+        class="item-container">
+        <template  v-if="!item.type">
+           <dl class="g-clearfix" @click="link(item)">
+            <dt class="g-fr list-img1"><img  v-if="item.img" v-lazy="item.img"></dt>
+            <dd class="list1-info g-fl">
+              <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
+              <p class="item-desc"><span v-if="item.source">{{item.source}}</span><span v-if="item.ctime">{{formatTime(item.ctime)}}</span></p>
+            </dd>
+          </dl>
+        </template>
+        <template v-else>
+          <div @click="link(item)">
+            <p class="item-title g-ellipsis">{{item.title}}</p>
+            <div class="adv-img"><img v-lazy="item.img"></div>
+          </div>
+        </template>
     </div>
     <p class=" item-desc more-desc g-tac" v-if="loading">加载中<img src="../../assets/images/loading.gif" height="12" width="12" alt=""></p>
     <template v-else>
@@ -121,6 +128,14 @@ export default {
             if (param.seq==0) {
               this.ready = true;
               this.items = resp.data.infos;
+              if (this.ads.length >1) {
+                this.items.splice(2,0,this.ads[0]);
+              }
+              if (this.ads.length >= 2) {
+                for(var i=1; i < this.ads.length; i++) {
+                  this.items.splice(9*i,0,this.ads[i]);
+                }
+              }
               this.$nextTick(function() {
                 _this.setHeight();
               })

@@ -256,6 +256,12 @@ html,body,.wifilink,.info {
   bottom: 0;
   background-color: #fff;
 }
+.ad-info {
+  width: 94%;
+  margin: 0 auto;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 0.24rem 0;
+}
 </style>
 <template>
   <div class="info" id="news" ref="news" @scroll="scrollNew">
@@ -304,12 +310,14 @@ html,body,.wifilink,.info {
           </ul>
         </div>
       </div>
-      <div v-for="ad in menu.ads" @click="adLink(ad)">
-        <p class="item-title g-ellipsis">{{ad.title}}</p>
-        <div class="adv-img"><img v-lazy="ad.img"></div>
-        <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
-      </div>
+      <!--div class="ad-info">
+        <div v-for="ad in menu.ads" @click="adLink(ad)">
+          <p class="item-title g-ellipsis">{{ad.title}}</p>
+          <div class="adv-img"><img v-lazy="ad.img"></div>
+        </div>
+      </div-->
       <changenews :newstype="newsType"
+                  :ads="menu.ads"
                   v-for="(news,i) in menu.tablist"
                   :idx="i"
                   v-show="newShow == i">
