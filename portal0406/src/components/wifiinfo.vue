@@ -163,19 +163,6 @@ html,body,.wifilink,.info {
   color: $color43;
   margin-bottom: 0.2rem;
 }
-/* .item-imgs {
-  margin: 0.15rem 0;
-}
-.item-imgs li{
-  overflow: hidden;
-} */
-/* .list-img3 li {
-  @include containerSize(32%,1.48rem);
-  margin-right: 2%;
-}
-.item-imgs li:last-child {
-  margin-right: 0;
-} */
 .img-list {
   @include containerSize(100%, auto);
   min-height: 1.5rem;
@@ -191,10 +178,12 @@ html,body,.wifilink,.info {
   @include containerSize(32%, 1.5rem);
   max-width: 2.28rem;
   overflow: hidden;
+  background-color: #f1f1f1;
 }
 .list-img1 img{
   @include containerSize(100%, auto);
   min-height: 1.5rem;
+  background-color: #f1f1f1;
 }
 .item-desc {
   font-size: 0.24rem;
@@ -383,7 +372,6 @@ export default {
     if (sessionStorage) {
       try {
         this.newShow = sessionStorage.getItem('tabIdx') || 0;
-        this.search = '';
       } catch(e){}
     }
   },
@@ -496,6 +484,8 @@ export default {
       } else {
         search = encodeURI(search);
         location.href = 'https://www.baidu.com/from=844b/s?ms=1&word=' + search;
+      this.search = '';
+      this.iptFocus = false;
       }
     },
     scrollNew() {
@@ -517,6 +507,7 @@ export default {
     cancleSearch() {
       this.search = '';
       this.$refs.search.blur();
+      this.iptFocus = false;
     },
     alertInfo(val) {
       this.tips.msg = val;
