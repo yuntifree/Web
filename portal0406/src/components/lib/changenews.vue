@@ -122,7 +122,6 @@ export default {
               this.ready = true;
               this.items = resp.data.infos;
               this.$nextTick(function() {
-                console.log('setheight')
                 _this.setHeight();
               })
             } else {

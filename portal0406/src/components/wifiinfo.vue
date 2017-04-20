@@ -337,7 +337,7 @@ import CGI from '../lib/cgi.js'
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
-var live = query.live || '';
+var adtype = ~~query.adtype || 0;
 
 // 通过时间戳来判断是非第一次进入该页面
 var union = query.union || '';
@@ -409,6 +409,7 @@ export default {
       var param = {
         uid: uid,
         token: token,
+        adtype: adtype
       }
       CGI.post('get_weather_news', param, (resp)=> {
         if (resp.errno === 0) {
@@ -420,10 +421,8 @@ export default {
         }
       })
       if (/(iPhone|iPad)/i.test(navigator.userAgent)) {  //判断iPhone|iPad|iPod|iOS
-          //alert(navigator.userAgent);  
           param.phoneterm = 1;
       } else if (/(Android)/i.test(navigator.userAgent)) {   //判断Android
-          //alert(navigator.userAgent); 
           param.phoneterm = 0;
       } 
       CGI.post('get_portal_content', param, (resp)=> {
