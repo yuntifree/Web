@@ -271,9 +271,9 @@ html,body,.wifilink,.info {
 }
 </style>
 <template>
-  <div class="info" id="news" @scroll="scrollNew">
+  <div class="info" id="news" ref="news" @scroll="scrollNew">
     <div class="banner" ref="banner" v-if="menu.banners &&menu.banners.length>0">
-      <swipe class="my-swipe"><!-- "-->
+      <swipe class="my-swipe">
         <swipe-item v-for="(banner,idx) in menu.banners">
           <img class="banner-img" :ref="'bannerimg'" :src="banner.img" @click="openLink(banner)" @load="imgLoad(idx)">
         </swipe-item>
@@ -304,8 +304,8 @@ html,body,.wifilink,.info {
         </li>
       </ul>
       <div class="margin-line"></div>
-      <div class="tab-lists" ref="tablist" id="tablist">
-        <div class="tab-inner">
+      <div class="tab-lists">
+        <div class="tab-inner" ref="tablist" id="tablist">
           <ul  ref="menulist">
             <li class="g-fl g-tac"
                 v-for="(tab,idx) in menu.tablist"
@@ -432,13 +432,12 @@ export default {
           this.$nextTick(function() {
             var width = _this.menu.tablist.length * 1.2;
             _this.$refs.menulist.style.width = width + 'rem';
-            var tab;
-            if (!this.$store.state.tabIdx) {
-              tab = 'tab' + 0
-            } else {
-              tab = 'tab'+this.$store.state.tabIdx;
+            
+            if (sessionStorage) {
+              try {
+               _this.$refs.tablist.scrollLeft = sessionStorage.getItem('tabLeft') || 0; 
+              } catch(e) {}
             }
-            document.getElementById(tab).scrollIntoView();
           })
         } else {
           this.alertInfo(resp.desc);
@@ -466,9 +465,12 @@ export default {
       this.tabIdx = this.newShow = idx;
       this.newsType = tab.type;
       this.$store.state.tabIdx = idx;
+      
       if (sessionStorage) {
         try {
           sessionStorage.setItem('tabIdx', idx);
+          sessionStorage.setItem('tabLeft', this.$refs.tablist.scrollLeft);
+          sessionStorage.setItem('tabTop', this.$refs.news.scrollTop);
         } catch(e) {}
       }
     },

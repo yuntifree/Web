@@ -3,7 +3,7 @@
 </style>
 <template>
 <div class="newslist">
-  <div  class="newslist-inner" ref="news">
+  <div  class="newslist-inner">
     <div v-for="(item,idx) in items"
         class="item-container"
         @click="link(item)">
@@ -29,7 +29,6 @@ import CGI from '../../lib/cgi'
 var query = CGI.query();
 var uid = ~~(query.uid) || 0;
 var token = query.token || '';
-var scrollY = [];
 var cache = [];
 export default {
   data() {
@@ -133,6 +132,7 @@ export default {
             if (sessionStorage) {
               try {
                 sessionStorage.setItem('cache_'+this.idx, JSON.stringify(this.items));
+                this.$refs.news.scrollTop = 200;
               } catch(e) {
               }
             }
@@ -148,6 +148,11 @@ export default {
       var screenHeight = window.screen.height;
       var height = document.getElementById('tablist').offsetTop;
       document.body.style.height = screenHeight + height + 'px';
+      if (sessionStorage) {
+        try {
+          document.getElementById('news').scrollTop = sessionStorage.getItem('tabTop') || 0;
+        } catch(e){}
+      }
     },
     loadMore() {
       var len = this.items.length-1;
@@ -162,9 +167,7 @@ export default {
       item.visited = true;
       if (sessionStorage) {
         try {
-          //console.log('cache_'+idx);
           sessionStorage.setItem('cache_'+this.idx, JSON.stringify(this.items));
-          console.log('save link');
         } catch(e) {
         }
       }
