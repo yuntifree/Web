@@ -258,6 +258,12 @@ html,body,.wifilink,.info {
   bottom: 0;
   background-color: #fff;
 }
+.ad-info {
+  width: 94%;
+  margin: 0 auto;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 0.24rem 0;
+}
 </style>
 <template>
   <div class="info" id="news" ref="news" @scroll="scrollNew">
@@ -306,7 +312,14 @@ html,body,.wifilink,.info {
           </ul>
         </div>
       </div>
+      <!--div class="ad-info">
+        <div v-for="ad in menu.ads" @click="adLink(ad)">
+          <p class="item-title g-ellipsis">{{ad.title}}</p>
+          <div class="adv-img"><img v-lazy="ad.img"></div>
+        </div>
+      </div-->
       <changenews :newstype="newsType"
+                  :ads="menu.ads"
                   v-for="(news,i) in menu.tablist"
                   :idx="i"
                   v-show="newShow == i">
@@ -508,6 +521,18 @@ export default {
       this.search = '';
       this.$refs.search.blur();
       this.iptFocus = false;
+    },
+    adLink(ad) {
+      var param = {
+        id: ad.id,
+        type: 18,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
+      if (ad.dst.length>0) {
+        location.href = ad.dst;
+      }
     },
     alertInfo(val) {
       this.tips.msg = val;
