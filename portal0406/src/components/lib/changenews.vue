@@ -47,7 +47,8 @@ export default {
   },
   props: {
     newstype: Number,
-    idx: Number
+    idx: Number,
+    ads: Array
   },
   computed: {
     tabIdx() {

@@ -163,19 +163,6 @@ html,body,.wifilink,.info {
   color: $color43;
   margin-bottom: 0.2rem;
 }
-/* .item-imgs {
-  margin: 0.15rem 0;
-}
-.item-imgs li{
-  overflow: hidden;
-} */
-/* .list-img3 li {
-  @include containerSize(32%,1.48rem);
-  margin-right: 2%;
-}
-.item-imgs li:last-child {
-  margin-right: 0;
-} */
 .img-list {
   @include containerSize(100%, auto);
   min-height: 1.5rem;
@@ -316,6 +303,11 @@ html,body,.wifilink,.info {
             </li>
           </ul>
         </div>
+      </div>
+      <div v-for="ad in menu.ads" @click="adLink(ad)">
+        <p class="item-title g-ellipsis">{{ad.title}}</p>
+        <div class="adv-img"><img v-lazy="ad.img"></div>
+        <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
       </div>
       <changenews :newstype="newsType"
                   v-for="(news,i) in menu.tablist"
@@ -517,6 +509,14 @@ export default {
     cancleSearch() {
       this.search = '';
       this.$refs.search.blur();
+    },
+    adLink(ad) {
+      if (ad.dst.length>0) {
+        location.href = ad.dst;
+      }
+      var param = {
+        id: ad.id
+      }
     },
     alertInfo(val) {
       this.tips.msg = val;
