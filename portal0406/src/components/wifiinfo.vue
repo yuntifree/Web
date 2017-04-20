@@ -383,6 +383,7 @@ export default {
     if (sessionStorage) {
       try {
         this.newShow = sessionStorage.getItem('tabIdx') || 0;
+        this.search = '';
       } catch(e){}
     }
   },
