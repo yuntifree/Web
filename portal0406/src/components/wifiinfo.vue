@@ -511,11 +511,15 @@ export default {
       this.$refs.search.blur();
     },
     adLink(ad) {
+      var param = {
+        id: ad.id,
+        type: 18,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
       if (ad.dst.length>0) {
         location.href = ad.dst;
-      }
-      var param = {
-        id: ad.id
       }
     },
     alertInfo(val) {
