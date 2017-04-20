@@ -292,7 +292,7 @@ html,body,.wifilink,.info {
     <div>
       <ul class="menu-list g-clearfix">
         <li class="g-fl list-item" v-for="(list,index) in menu.menulist">
-          <a :href="getOpenLink(list,index)">
+          <a :href="getOpenLink(list,index)"  @click="menuLink(list)">
           <img :src="list.icon">
           <span class="g-tac title-name" v-text="list.text"></span>
           </a>
@@ -456,6 +456,16 @@ export default {
       }
       return url;
     },
+    menuLink(list) {
+      var param = {
+        id: list.id,
+        type: 8,
+        name: list.name,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
+    },
     getBlank(list,idx) {
       var ret = '';
       if (list.routername) {
@@ -475,6 +485,13 @@ export default {
           sessionStorage.setItem('tabTop', this.$refs.news.scrollTop);
         } catch(e) {}
       }
+      var param = {
+        name: tab.name,
+        type: 7,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
     },
     imgLoad(idx) {
       if (idx == 0) {
@@ -483,6 +500,13 @@ export default {
       }
     },
     openLink(ban) {
+      var param = {
+        id: ban.id,
+        type: 10,
+        uid: uid,
+        token: token
+      }
+      CGI.reportClick(param);
       if (ban.dst.length > 0) {
         location.href = ban.dst;
       }

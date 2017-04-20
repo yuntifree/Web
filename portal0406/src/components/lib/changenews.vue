@@ -5,9 +5,10 @@
 <div class="newslist">
   <div  class="newslist-inner">
     <div v-for="(item,idx) in items"
-        class="item-container">
+        class="item-container"
+        @click="link(item)">
         <template  v-if="!item.type">
-           <dl class="g-clearfix" @click="link(item)">
+           <dl class="g-clearfix">
             <dt class="g-fr list-img1"><img  v-if="item.img" v-lazy="item.img"></dt>
             <dd class="list1-info g-fl">
               <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
@@ -16,7 +17,7 @@
           </dl>
         </template>
         <template v-else>
-          <div @click="link(item)">
+          <div>
             <p class="item-title g-ellipsis">{{item.title}}</p>
             <div class="adv-img"><img v-lazy="item.img"></div>
           </div>
@@ -129,7 +130,7 @@ export default {
               this.ready = true;
               this.items = resp.data.infos;
               if (this.ads.length >1) {
-                this.items.splice(2,0,this.ads[0]);
+                this.items.splice(1,0,this.ads[0]);
               }
               if (this.ads.length >= 2) {
                 for(var i=1; i < this.ads.length; i++) {
@@ -188,7 +189,7 @@ export default {
         }
       }
       var param = {
-        type: 17,
+        type: item.type ? 18 : 17,
         id: item.id,
         uid: uid,
         token: token
