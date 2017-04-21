@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>徽章详情</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" href="css/badge.css">
+</head>
+<body>
+  <div class="badge-info">
+
+  </div>
+  <script type="text/html" id="tplInfo">
+    <img class="badge-info-img" src="{{img}}">
+    <h2 class="g-tac badge-info-title">{{title}}</h2>
+    {{if level}}
+      <p class="g-tac badge-info-level">{{level | $status}}</p>
+    {{/if}}
+    <p class="g-tac badge-info-desc">{{desc}}</p>
+  </script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/template.js"></script>
+  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript">
+    font();
+    function font() {
+      if (document && window) {
+        // init font
+      var docEl = document.documentElement;
+      var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+      var dpr = isIOS? Math.min(window.devicePixelRatio, 3) : 1;
+        dpr = window.top === window.self? dpr : 1; //被iframe引用时，禁止缩放
+      var scale = 1 / dpr;
+      var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+      docEl.dataset.dpr = dpr;
+      var metaEl = document.createElement('meta');
+      metaEl.name = 'viewport';
+      metaEl.content = 'initial-scale=1,maximum-scale=1, minimum-scale=1';
+      docEl.firstElementChild.appendChild(metaEl);
+      var recalc = function () {
+        var width = docEl.clientWidth;
+        if (width / dpr > 750) {
+          width = 750 * dpr;
+        }
+        docEl.style.fontSize = 100 * (width / 750) + 'px';
+      };
+      recalc();
+      if (!document.addEventListener) return;
+      window.addEventListener(resizeEvt, recalc, false);
+      }
+    }
+    function query(){
+      var url = window.document.location.href.toString();
+      url = url.substr(url.indexOf('?') + 1);
+      if (typeof(url) === 'string') {
+        var u = url.split('&');
+        var get = {};
+        for (var i in u) {
+          if (typeof(u[i]) === 'string') {
+            var j = u[i].split('=');
+            get[j[0]] = j[1];
+          }
+        }
+        return get;
+      } else {
+        return {};
+      }
+    }
+
+    //init ui
+    var type = query().type || '';
+    var level = ~~(query().level) || 0;
+    var lng = query().lng;
+    //压缩
+    template.defaults.minimize = true;
+    //过滤器 激活状态
+     template.defaults.imports.$status = function(value){
+      var ret = '';
+      if (level > 5) {
+        ret = '未激活'
+      } else {
+        ret = '当前等级 ' + value + '级';
+      }
+      return ret;
+     };
+     //语言区别
+     switch (lng) {
+      case 'en' : 
+        $('.badge-info').append(template('tplInfo', dataEn[type]))
+        break;
+      case 'ch' :
+        $('.badge-info').append(template('tplInfo', dataCh[type]))
+        break;
+      case 'thai':
+        $('.badge-info').append(template('tplInfo', dataThai[type]))
+        break;
+     }
+  </script>
+</body>
+</html>
