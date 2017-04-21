@@ -8,7 +8,7 @@ var dataCh = {
   charm: {
     img: './images/badge/badge_charm.png',
     title: '魅力徽章',
-    level: '',
+    level: 2,
     desc: '用户的魅力徽章是根据用户被打招呼的数量来评定用户的魅力值，被打招呼的数量越高，魅力等级就越高。魅力徽章会展示在个人主页，等级越高徽章的颜色越耀眼，吸引更多人的关注'
   },
   cramer: {
@@ -58,7 +58,6 @@ var dataEn= {
     img: './images/badge/badge_charm.png',
     title: 'Charm Badge',
     level: 3,
-    level: '',
     desc: 'The user’s charm badge is based on the number of “be said hi”of users , the higher the number of “be said hi”, the higher the charm level. Charm badge will be showed on the home page, the higher the level ,the more glaring color of the badge , which can make your profile page attract more people’s attention too'
   },
   cramer: {

@@ -2,11 +2,12 @@ html {
   width: 100%;
   min-height: 100%;
   padding-bottom: 0.5rem;
+  background-color: rgb(252,249,239);
 }
 .badge-info {
   width: 100%;
   height: auto;
-  padding-top: 2.46rem;
+  padding-top: 2rem;
 }
 .badge-info-img {
   display: block;
@@ -15,19 +16,19 @@ html {
   margin: 0 auto;
 }
 .badge-info-title {
-  margin-top: 1.24rem;
+  margin-top: 0.8rem;
   font-size: 0.48rem;
   color: rgb(69,32,6);
 }
 .badge-info-level {
-  padding: 0 5%;
-  line-height: 150%;
+  padding: 0 12%;
+  line-height: 148%;
   margin-top: 0.3rem;
   font-size: 0.28rem;
   color:rgb(192,152,132);
 }
 .badge-info-desc {
-  padding: 0 5%;
+  padding: 0 12%;
   margin-top: 0.4rem;
   line-height: 150%;
   color: rgb(171,166,158);
