@@ -78,6 +78,10 @@
     "title":"portalMenu",
     "name": "setPortalMenu",
     "icon": "yonghuxinxi"
+    },{
+    "title":"接口统计",
+    "name": "setInterface",
+    "icon": "yonghuxinxi"
     }]
   },{
     "title":"广告管理",
