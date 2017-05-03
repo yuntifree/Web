@@ -13,8 +13,8 @@
   overflow: hidden;
 }
 .chart {
-  width: 600px;
-  height: 400px;
+  width: 800px;
+  height: 440px;
   background-color: #fff;
   margin-top: 5px;
 }
@@ -43,129 +43,171 @@
 import CGI from '../../lib/cgi.js'
 var chartInst;
 var chartOption = {
-    title : {
-        text: '接口统计信息',
-        x: 'center',
-        align: 'right'
+  title : {
+    text: '接口统计信息',
+    x: 'center',
+    align: 'right'
+  },
+  grid: {
+    bottom: 80,
+    y: 100,
+  },
+  toolbox: {
+    feature: {
+      dataZoom: {
+          yAxisIndex: 'none'
+      },
+      restore: {},
+      saveAsImage: {}
+    }
+  },
+  tooltip : {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross',
+      animation: false,
+      label: {
+          backgroundColor: '#505765'
+      }
+    }
+  },
+  legend: {
+      data:['get_check_code 请求次数',
+      'get_check_code 失败率(%)',
+      'portal_login 请求次数',
+      'portal_login 失败率(%)',
+      'one_click_login 请求次数',
+      'one_click_login 失败率(%)'],
+      top: 30,
     },
-    grid: {
-        bottom: 80
+  dataZoom: [
+    {
+      show: true,
+      realtime: true,
+      start: 65,
+      end: 85
     },
-    toolbox: {
-        feature: {
-            dataZoom: {
-                yAxisIndex: 'none'
-            },
-            restore: {},
-            saveAsImage: {}
-        }
+    {
+      type: 'inside',
+      realtime: true,
+      start: 65,
+      end: 85
+    }
+  ],
+  xAxis : [
+    {
+      type : 'category',
+      boundaryGap : false,
+      axisLine: {onZero: false},
+      data : []
+    }
+  ],
+  yAxis: [
+    {
+      name: '次数：次',
+      type: 'value'
     },
-    tooltip : {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            animation: false,
-            label: {
-                backgroundColor: '#505765'
-            }
-        }
+    {
+      name: '失败率：%',
+      type: 'value',
+      min: 0,
+      max: 100
+    }
+  ],
+  series: [
+    {
+      name:'get_check_code 请求次数',
+      type:'line',
+      smooth: true,
+      symbol: 'circle',
+      symbolSize : 8,
+      animation: false,
+      lineStyle: {
+          normal: {
+              width: 1,
+              //color: '#47b23c',
+          }
+      },    
+      data:[]
     },
-    legend: {
-        data:['','',''],
-        x: 'left'
+    {
+      name:'get_check_code 失败率(%)',
+      type:'line',
+      smooth: true,
+      symbol: 'arrow',
+      symbolSize : 8,
+      animation: false,
+      lineStyle: {
+          normal: {
+              width: 1,
+              //color: '#72ebb4'
+          }
+      },    
+      data:[]
     },
-    dataZoom: [
         {
-            show: true,
-            realtime: true,
-            start: 65,
-            end: 85
-        },
+      name:'portal_login 请求次数',
+      type:'line',
+      smooth: true,
+      symbol: 'rect',
+      symbolSize : 8,
+      animation: false,
+      lineStyle: {
+          normal: {
+              width: 1,
+              //color: '#eb72bf'
+          }
+      },    
+      data:[]
+    },
+    {
+      name:'portal_login 失败率(%)',
+      type:'line',
+      smooth: true,
+      symbol: 'roundRect',
+      symbolSize : 8,
+      animation: false,
+      lineStyle: {
+          normal: {
+              width: 1,
+              //color: '#edbcdb'
+          }
+      },    
+      data:[]
+    },
         {
-            type: 'inside',
-            realtime: true,
-            start: 65,
-            end: 85
-        }
-    ],
-    xAxis : [
-        {
-            type : 'category',
-            boundaryGap : false,
-            axisLine: {onZero: false},
-            data : []/*.map(function (str) {
-                return str.replace(' ', '\n')
-            })*/
-        }
-    ],
-    yAxis: [
-        {
-            name: '单位：次',
-            type: 'value'
-        },
-    ],
-    series: [
-        {
-          name:'点击请求次数',
-          type:'line',
-          animation: false,
-          lineStyle: {
-              normal: {
-                  width: 1
-              }
-          },
-          markArea: {
-              silent: true,
-              data: [[{
-                  xAxis: '2009/9/12\n7:00'
-              }, {
-                  xAxis: '2009/9/22\n7:00'
-              }]]
-          },
-          data:[]
-        },
-        {
-          name:'成功返回次数',
-          type:'line',
-          yAxisIndex:1,
-          animation: false,
-          lineStyle: {
-              normal: {
-                  width: 1
-              }
-          },
-          markArea: {
-              silent: true,
-              data: [[{
-                  xAxis: '2009/9/10\n7:00'
-              }, {
-                  xAxis: '2009/9/20\n7:00'
-              }]]
-          },
-          data: []
-        },
-        {
-          name:'失败次数',
-          type:'line',
-          yAxisIndex:1,
-          animation: false,
-          lineStyle: {
-              normal: {
-                  width: 1
-              }
-          },
-          markArea: {
-              silent: true,
-              data: [[{
-                  xAxis: '2009/9/10\n7:00'
-              }, {
-                  xAxis: '2009/9/20\n7:00'
-              }]]
-          },
-          data: []
-        }
-    ]
+      name:'one_click_login 请求次数',
+      type:'line',
+      smooth: true,
+      symbol: 'triangle',
+      symbolSize : 8,
+      animation: false,
+      lineStyle: {
+          normal: {
+              width: 1,
+              //color: '#f5ae05'
+          }
+      },    
+      data:[]
+    },
+    {
+      name:'one_click_login 失败率(%)',
+      type:'line',
+      smooth: true,
+      symbol: 'diamond',
+      symbolSize : 8,
+      animation: false,
+      lineStyle: {
+          normal: {
+              width: 1,
+              //color: '#efd79f'
+          }
+      },    
+      data:[]
+    }
+  ]
 };
+
 
 export default {
   data() {
@@ -226,8 +268,7 @@ export default {
       });
     }
     CGI.loadScript('https://cdn.bootcss.com/echarts/3.5.4/echarts.common.min.js', 'chartjs', ()=>{
-      chartInst = echarts.init(this.$refs.tableContent);
-      //chartInst.setOption(chartOption);
+      chartInst = echarts.init(this.$refs.chart);
     })
     this.getData(true, 'get_check_code');
     this.getData(true, 'portal_login');
@@ -250,48 +291,35 @@ export default {
           var data = resp.data;
           switch (name) {
             case 'get_check_code': 
-              this.portalLogin = data.infos;
               data.infos.forEach(function(item){
-                chartOption.xAxis[0].data.push(item.ctime);
-                chartOption.series[0].data.push(item.req);
-                chartOption.series[1].data.push(item.succrsp);
-                chartOption.series[2].data.push(item.req-item.succrsp);
+                item.ctime = item.ctime.replace(' ', '\n')
+                chartOption.xAxis[0].data.unshift(item.ctime);
+                chartOption.series[0].data.unshift(item.req);
+                var fail = ((item.req-item.succrsp)/item.req).toFixed(2)*100;
+                chartOption.series[1].data.unshift(fail);
               })
               break;
             case 'portal_login':
-              this.portalLogin = data.infos;
               data.infos.forEach(function(item){
-                /*chartOption.xAxis.data.push(item.ctime);
-                chartOption.series[0].data.push(item.req);
-                chartOption.series[1].data.push(item.succrsp);
-                chartOption.series[2].data.push(item.req-item.succrsp);*/
+                chartOption.series[2].data.unshift(item.req);
+                var fail = ((item.req-item.succrsp)/item.req).toFixed(2)*100;
+                chartOption.series[3].data.unshift(fail);
               })
-              //chartOption.series[1].data = data.infos;
               break;
             case 'one_click_login':
-              this.portalLogin = data.infos;
               data.infos.forEach(function(item){
-                /*chartOption.xAxis.data.push(item.ctime);
-                chartOption.series[0].data.push(item.req);
-                chartOption.series[1].data.push(item.succrsp);
-                chartOption.series[2].data.push(item.req-item.succrsp);*/
+                chartOption.series[4].data.unshift(item.req);
+                var fail = ((item.req-item.succrsp)/item.req).toFixed(2)*100;
+                chartOption.series[5].data.unshift(fail);
               })
               break;
           }
-          //chartInst.setOption(chartOption);
+          chartInst.setOption(chartOption);
           this.dataReady = true;
         } else {
           this.alertInfo(resp.desc);
         }
       });
-    },
-    handleSizeChange(val) {
-      console.log('每页 ${val} 条');
-    },
-    handleCurrentChange(val) {
-      this.pageCfg.start = (val-1)*30;
-      this.getData();
-      console.log('当前页: ${val}');
     },
     alertInfo(val) {
       this.alertShow = true;
