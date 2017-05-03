@@ -48,11 +48,12 @@ var chartOption = {
     x: 'center',
     align: 'right'
   },
+  color: ['#47b23c','#9de978','#da44eb','#edbcdb','#f5ae05','#efd79f'],
   grid: {
     bottom: 80,
     y: 100,
   },
-  toolbox: {
+  /*toolbox: {
     feature: {
       dataZoom: {
           yAxisIndex: 'none'
@@ -60,7 +61,7 @@ var chartOption = {
       restore: {},
       saveAsImage: {}
     }
-  },
+  },*/
   tooltip : {
     trigger: 'axis',
     axisPointer: {
@@ -79,6 +80,7 @@ var chartOption = {
       'one_click_login 请求次数',
       'one_click_login 失败率(%)'],
       top: 30,
+      selectedMode: 'multiple'
     },
   dataZoom: [
     {
@@ -125,7 +127,6 @@ var chartOption = {
       lineStyle: {
           normal: {
               width: 1,
-              //color: '#47b23c',
           }
       },    
       data:[]
@@ -137,10 +138,10 @@ var chartOption = {
       symbol: 'arrow',
       symbolSize : 8,
       animation: false,
+      yAxisIndex:1,
       lineStyle: {
           normal: {
               width: 1,
-              //color: '#72ebb4'
           }
       },    
       data:[]
@@ -155,7 +156,6 @@ var chartOption = {
       lineStyle: {
           normal: {
               width: 1,
-              //color: '#eb72bf'
           }
       },    
       data:[]
@@ -167,10 +167,10 @@ var chartOption = {
       symbol: 'roundRect',
       symbolSize : 8,
       animation: false,
+      yAxisIndex:1,
       lineStyle: {
           normal: {
               width: 1,
-              //color: '#edbcdb'
           }
       },    
       data:[]
@@ -185,7 +185,6 @@ var chartOption = {
       lineStyle: {
           normal: {
               width: 1,
-              //color: '#f5ae05'
           }
       },    
       data:[]
@@ -196,11 +195,12 @@ var chartOption = {
       smooth: true,
       symbol: 'diamond',
       symbolSize : 8,
+      symbolColor: '#efd79f', 
       animation: false,
+      yAxisIndex:1,
       lineStyle: {
           normal: {
               width: 1,
-              //color: '#efd79f'
           }
       },    
       data:[]
@@ -295,21 +295,21 @@ export default {
                 item.ctime = item.ctime.replace(' ', '\n')
                 chartOption.xAxis[0].data.unshift(item.ctime);
                 chartOption.series[0].data.unshift(item.req);
-                var fail = ((item.req-item.succrsp)/item.req).toFixed(2)*100;
+                var fail = (((item.req-item.succrsp)/item.req)*100).toFixed(2);
                 chartOption.series[1].data.unshift(fail);
               })
               break;
             case 'portal_login':
               data.infos.forEach(function(item){
                 chartOption.series[2].data.unshift(item.req);
-                var fail = ((item.req-item.succrsp)/item.req).toFixed(2)*100;
+                var fail = (((item.req-item.succrsp)/item.req)*100).toFixed(2);
                 chartOption.series[3].data.unshift(fail);
               })
               break;
             case 'one_click_login':
               data.infos.forEach(function(item){
                 chartOption.series[4].data.unshift(item.req);
-                var fail = ((item.req-item.succrsp)/item.req).toFixed(2)*100;
+                var fail = (((item.req-item.succrsp)/item.req)*100).toFixed(2);
                 chartOption.series[5].data.unshift(fail);
               })
               break;
