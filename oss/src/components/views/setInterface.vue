@@ -24,7 +24,7 @@
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
-          <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
+          <button class="btn btn-default btn-ssm" @click="dataLoad()">刷新</button>
         </div>
       </header>
       <div class="tab_container" ref="tableContent">
@@ -48,12 +48,12 @@ var chartOption = {
     x: 'center',
     align: 'right'
   },
-  color: ['#47b23c','#9de978','#da44eb','#edbcdb','#f5ae05','#efd79f'],
+  color: ['#47b23c','#9de978','#da44eb','#edbcdb','#ff8f00','#efd79f'],
   grid: {
     bottom: 80,
     y: 100,
   },
-  /*toolbox: {
+  toolbox: {
     feature: {
       dataZoom: {
           yAxisIndex: 'none'
@@ -61,7 +61,7 @@ var chartOption = {
       restore: {},
       saveAsImage: {}
     }
-  },*/
+  },
   tooltip : {
     trigger: 'axis',
     axisPointer: {
@@ -223,10 +223,7 @@ export default {
         text: '',
       },
       pageCfg: {
-        total: 1,
-        limit: 30,
         start: 0,
-        currentPage: 1,
       },
       selId: -1,
       selected: {
@@ -270,22 +267,23 @@ export default {
     CGI.loadScript('https://cdn.bootcss.com/echarts/3.5.4/echarts.common.min.js', 'chartjs', ()=>{
       chartInst = echarts.init(this.$refs.chart);
     })
-    this.getData(true, 'get_check_code');
-    this.getData(true, 'portal_login');
-    this.getData(true, 'one_click_login');
+    this.dataLoad();
   },
   methods: {
+    dataLoad() {
+      this.getData(true, 'get_check_code');
+      this.getData(true, 'portal_login');
+      this.getData(true, 'one_click_login');
+    },
     getData(reload,name) {
       if (reload) {
-        this.pageCfg.currentPage = 1;
         this.pageCfg.start = 0;
       }
       var param = {
         seq: this.pageCfg.start,
-        num: 30,
+        num: 60,
         name: name
       }
-
       CGI.post(this.$store.state, 'get_api_stat', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
@@ -296,6 +294,7 @@ export default {
                 chartOption.xAxis[0].data.unshift(item.ctime);
                 chartOption.series[0].data.unshift(item.req);
                 var fail = (((item.req-item.succrsp)/item.req)*100).toFixed(2);
+                fail = fail < 0 ? 0 : fail;
                 chartOption.series[1].data.unshift(fail);
               })
               break;
@@ -303,6 +302,7 @@ export default {
               data.infos.forEach(function(item){
                 chartOption.series[2].data.unshift(item.req);
                 var fail = (((item.req-item.succrsp)/item.req)*100).toFixed(2);
+                fail = fail < 0 ? 0 : fail;
                 chartOption.series[3].data.unshift(fail);
               })
               break;
@@ -310,6 +310,7 @@ export default {
               data.infos.forEach(function(item){
                 chartOption.series[4].data.unshift(item.req);
                 var fail = (((item.req-item.succrsp)/item.req)*100).toFixed(2);
+                fail = fail < 0 ? 0 : fail;
                 chartOption.series[5].data.unshift(fail);
               })
               break;
