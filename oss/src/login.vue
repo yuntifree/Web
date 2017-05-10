@@ -14,7 +14,6 @@
       <div class="but">
         <input class="butt" type="button" value="登录" @click="login">
       </div>
-      <!-- <p class="login_error" v-if="error">用户名或者密码错误，请重新输入</p> -->
       <p class="login_error" v-if="error">{{errmsg}}</p>
     </div>
   </section>
@@ -44,21 +43,30 @@ export default {
             var data = resp.data;
             this.$store.state.username = this.username;
             // save username into localStorage
-            localStorage.username = this.username;
+            if (localStorage) {
+              try {
+                localStorage.username = this.username;
+              } catch(e) {}
+            }
+            if (sessionStorage) {
+              try {
+                sessionStorage.menuIdx = 0;
+              } catch(e) {}
+            }
             this.$store.state.uid = data.uid;
             // sidebar
-            this.$store.state.sidebar = data.roleconf;
+            this.$store.state.sidebar = this.$store.state.sidebar.concat(data.roleconf);
             // set login
             CGI.login(this.$store.state, data);
             // sidebar            
-            this.$store.state.paths = [this.$store.state.sidebar[0].title, this.$store.state.sidebar[0].menus[0].title];
+            /*this.$store.state.paths = [this.$store.state.sidebar[0].title, this.$store.state.sidebar[0].menus[0].title];
             this.$store.state.selItem = this.$store.state.paths[1];
             this.$store.state.view = this.$store.state.sidebar[0].menus[0].name;
             
             sessionStorage.menus = JSON.stringify({
               view: this.$store.state.view,
               paths: this.$store.state.paths
-            });
+            });*/
           } else {
             this.$store.state.logined = false;
             this.errmsg = resp.desc;

@@ -15,6 +15,7 @@ const state = {
   imgUrl: [],
   viewName: '',
   selItem: '',
+  menuIdx: 0
 }
 
 export default new Vuex.Store({

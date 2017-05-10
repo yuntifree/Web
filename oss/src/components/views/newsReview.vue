@@ -109,9 +109,9 @@
             </el-form-item>
             <el-form-item label="标签">
               <el-checkbox-group v-model="checkedTags" @change="handleChecked">
-                <el-checkbox v-for="tag in tagsInfo" :label="tag.id">{{tag.content}}</el-checkbox>
+                <el-checkbox v-for="tag in tagsInfo.tags" :label="tag.id">{{tag.content}}</el-checkbox>
               </el-checkbox-group>
-              <span class="btn btn-info btn-sm" v-show="tagsInfo.hasmore" @click="edit('','',tagsInfo[tagsInfo.length-1].seq)">点击加载更多</span>
+              <span class="btn btn-info btn-sm" v-show="tagMore" @click="edit('','',tagsInfo[tagsInfo.length-1].seq)">点击加载更多</span>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="editPost">确定</el-button>
@@ -180,6 +180,7 @@ export default {
       editInfo: {},
       alertShow: false,
       alertMsg: '',
+      tagMore: false
     }
   },
   computed: {

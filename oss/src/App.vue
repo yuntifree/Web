@@ -3,7 +3,7 @@
     <template v-if="logined">
       <uheader welcome="欢迎来到管理后台"></uheader>
       <secondarybar :user="user" path="首页"></secondarybar>
-      <sidebar :sidebars="sidebars"></sidebar>
+      <sidebar></sidebar>
       <section id="main" class="column" ref="container">
         <transition name="fade" mode="out-in">
           <components :is="currentView"></components>
@@ -64,9 +64,6 @@ export default {
     },
     user() {
       return this.$store.state.username + ' 你好';
-    },
-    sidebars() {
-      return (this.$store.state.sidebar);
     }
   },
   components: {

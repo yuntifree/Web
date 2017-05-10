@@ -2,7 +2,7 @@
   <aside id="sidebar" class="column">
     <template>
       <div v-for="(menu,idx) in menus">
-        <h3 @click="showMenu(idx,true)">{{menu.title}}</h3>
+        <h3 @click="showMenu(idx)">{{menu.title}}</h3>
         <ul class="toggle" v-show="menu.show">
           <li v-for="item in menu.menus" :class="{checked: selItem == item.title}" @click="onSelect(menu.title, item.title, item.name)">
             <i :class="['iconfont', 'icon-' + item.icon]"></i>
@@ -10,16 +10,6 @@
           </li>
         </ul>
       </div>
-      <!--h3>{{yyqSidebars.title}}</h3>
-      <div v-for="(menu,idx) in yyqSidebars.innermenus">
-        <h3 class="yyq-title" @click="showMenu(idx,false)">{{menu.innertitle}}</h3>
-        <ul class="toggle" v-show="menu.show">
-          <li v-for="item in menu.menus" :class="{checked: selItem == item.title}" @click="onSelect(menu.innertitle, item.title, item.name)">
-            <i :class="['iconfont', 'icon-' + item.icon]"></i>
-            <a :href="item.url">{{item.title}}</a>
-          </li>
-        </ul>
-      </div-->
     </template>
     <footer class="sidebar-footer">
       <p><strong>Copyright &copy; 2016 云行智慧</strong></p>
@@ -35,14 +25,50 @@ export default {
     return {
       selItem: '',
       menus: [],
+      menuIdx: 0
     }
   },
   props: {
     sidebars: Array,
   },
   mounted() {
-    this.selItem = this.$store.state.paths[1];
-    this.menus = CGI.clone(this.sidebars)
+    this.menus = this.$store.state.sidebar;
+    var viewName = '';
+    var viewTitle = '';
+    var subTitle = '';
+    if (sessionStorage) {
+      try {
+        viewName = sessionStorage.getItem('viewName');
+        viewTitle = sessionStorage.getItem('viewTitle');
+        subTitle = sessionStorage.getItem('subTitle');
+      } catch(e) {}
+    }
+    //console.log(viewName);
+    for (var i=0; i<this.menus.length; i++) {
+      for (var j=0; j<this.menus[i].menus.length; j++) {
+        if (this.menus[i].menus[j].title == subTitle) {
+          this.selItem = subTitle;
+          this.menus[0].show = false;
+          this.menus[i].show = true;
+          this.$store.state.paths = [viewTitle, subTitle];
+          this.$store.state.view = viewName;
+          break;
+        }
+      }
+    }
+    if (viewName == '') {
+      this.$store.state.paths = [this.$store.state.sidebar[0].title, this.$store.state.sidebar[0].menus[0].title];
+      this.$store.state.selItem = this.$store.state.paths[1];
+      this.$store.state.view = this.$store.state.sidebar[0].menus[0].name;
+    }   
+    if (sessionStorage) {
+      try {
+        sessionStorage.menus = JSON.stringify({
+          view: this.$store.state.view,
+          paths: this.$store.state.paths,
+        });
+      } catch(e) {}
+    } 
   },
   methods: {
     onSelect(title, subtitle, view) {
@@ -50,12 +76,23 @@ export default {
       this.$store.state.paths = [title, subtitle];
       this.selItem = this.$store.state.selItem = subtitle;
       this.$store.state.viewName = view;
+      if (sessionStorage) {
+        try {
+          sessionStorage.setItem('viewName', view);
+          sessionStorage.setItem('viewTitle', title);
+          sessionStorage.setItem('subTitle', subtitle); 
+          console.log(this.menuIdx); 
+          this.menus[this.menuIdx].show = false;
+        } catch(e){}
+      }
     },
-    showMenu(idx, type) {
-      if (type) {
-        this.menus[idx].show = !this.menus[idx].show;
-      } else {
-        this.yyqSidebars.innermenus[idx].show = !this.yyqSidebars.innermenus[idx].show;
+    showMenu(idx) {
+      this.menus[idx].show = !this.menus[idx].show;
+      if (sessionStorage) {
+        try {
+          this.menuIdx = sessionStorage.getItem('menuIdx');
+          sessionStorage.setItem('menuIdx', idx);
+        } catch(e){}
       }
     }
   }

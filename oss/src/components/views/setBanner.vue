@@ -139,11 +139,6 @@
               <el-col :span="11">
                 <el-time-picker type="fixed-time" placeholder="选择时间" v-model="dateInfo.date2" style="width: 100%;"></el-time-picker>
               </el-col>
-              <!--el-date-picker
-                v-model="value1"
-                type="datetime"
-                placeholder="选择日期时间">
-              </el-date-picker-->
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="editPost">确定</el-button>
@@ -235,8 +230,10 @@ export default {
     }
   },
   mounted() {
+    console.log(this.tableHeight);
     if (!this.tableHeight) {
       this.$nextTick(()=> {
+        console.log(this.$refs.tableContent.offsetHeight);
         this.$store.state.tableHeight = this.$refs.tableContent.offsetHeight;
       });
     }
@@ -293,6 +290,7 @@ export default {
     edit(idx,row) {
       this.selIdx = idx;
       CGI.extend(this.postInfo,row);
+      console.log(JSON.stringify(row));
       this.dateInfo.date1 = '';
       this.dateInfo.date2 = '';
       this.modal.addShow = false;
@@ -347,7 +345,22 @@ export default {
       } 
       param.dbg = ~~param.dbg;
       param.online = ~~param.online;
-      CGI.post(this.$store.state, action, param, (resp)=> {
+      if (addBanner) {
+        var u = CGI.clone(this.postInfo);
+        u.id = resp.data.id;
+        this.infos.push(u);
+      } else {
+        CGI.extend(this.infos[this.selIdx], this.postInfo);
+        if (param.priority) {
+          this.infos[this.selIdx].priority = param.priority;
+        }
+        if (param.expire) {
+          this.infos[this.selIdx].expire = param.expire;
+        }
+      }
+      this.modal.editShow = false;
+      this.selIdx = -1;
+      /*CGI.post(this.$store.state, action, param, (resp)=> {
         if (resp.errno === 0) {
           if (addBanner) {
             var u = CGI.clone(this.postInfo);
@@ -367,7 +380,7 @@ export default {
         } else {
           this.alertInfo(resp.desc);
         }
-      })
+      })*/
     },
     makeDate() {
       var date = CGI.dateFormat(this.dateInfo.date1, 'yyyy-MM-dd');
@@ -384,10 +397,6 @@ export default {
         this.alertInfo('请输入图片地址');
         ret = false;
       }
-      /*if (this.postInfo.dst.length <= 0) {
-        this.alertInfo('请输入跳转地址');
-        ret = false;
-      }*/ 
       if (this.modal.addShow) {
         if (this.dateInfo.date1.length <= 0) {
           this.alertInfo('请选择过期日期');
