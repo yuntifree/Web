@@ -12,7 +12,7 @@ html,body,.wifilink,.info {
 }
 .banner {
   width: 100%;
-  height: auto;
+  height: 3.08rem;
   position: relative;
 }
 .my-swipe {
