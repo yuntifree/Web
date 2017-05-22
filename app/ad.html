@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8">
+  <title>东莞无限</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style type="text/css">
+  html,body {
+    min-height: 100%;
+    background-color: #ed3247;
+  }
+  body {
+    padding-bottom: 0.96rem;
+  }
+  .info {
+    width: 94%;
+    height: auto;
+    margin: 0 auto;
+  }
+  .info-img {
+    display: block;
+    width: 100%;
+  }
+  .info-link {
+    z-index: 100;
+    position: relative;
+    display: block;
+    width: 5rem;
+    height: 1.66rem;
+    margin: -0.83rem auto 0;
+    background: url('http://img.yunxingzh.com/387e0a31-a5fa-4199-b566-24d7a14efcb3.png') no-repeat center center;
+    -webkit-background-size: contain;
+    background-size: contain;
+  }
+  .info-date {
+    width: 4.2rem;
+    margin: 0 auto 0.22rem;
+  }
+  .info-date img{
+    display: block;
+    width: 0.36rem;
+    height: 0.36rem;
+    margin-right: 0.03rem;
+  }
+  .info-date span{
+    font-size: 0.3rem;
+    line-height:0.3rem;
+    margin-top: 0.06rem;
+    color: #fff;
+  }
+  .info-time {
+    font-size: 0.32rem;
+    color: #fff;
+  }
+  .info-time {
+    width: 5rem;
+    height: auto;
+    margin: 0 auto;
+  }
+  .info-time span {
+    display: block;
+    width: 0.58rem;
+    height: 0.58rem;
+    line-height: 0.62rem;
+    padding-left: 0.08rem;
+    margin-right: 0.16rem;
+    background: url('images/ico_area.png') no-repeat center center;
+    -webkit-background-size: contain;
+    background-size: contain;
+    font-size: 0.32rem;
+    letter-spacing: 0.06rem;
+    color: #000;
+  }
+  .info-time i {
+    margin-right: 0.16rem;
+    line-height: 0.62rem;
+    font-size: 0.32rem;
+  }
+  .info-time i:last-child{
+    margin-right: 0;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="info">
+    <img class="info-img" src="http://img.yunxingzh.com/6fb9d30d-2560-4e44-a457-87918713f77d.png">
+    <a class="info-link" href="https://weidian.com/item.html?itemID=2103157521" target="_blank"></a>
+    <p class="info-date g-clearfix"><img class="g-fl" src="images/ico_clock.png"><span class="g-fl">距离换购截止日期还有:</span></p>
+    <p class="info-time">
+        <span class="time-day g-fl" id="day">00</span><i class="g-fl">天</i>
+        <span class="time-hour g-fl" id="hour">00</span><i class="g-fl">时</i>
+        <span class="time-minu g-fl" id="minute">00</span><i class="g-fl">分</i>
+        <span class="time-sec g-fl" id="second">00</span><i class="g-fl">秒</i>
+    </p>
+  </div>
+  <script type="text/javascript">
+    adapt();
+    function adapt() {
+      if (document && window) {
+        // init font
+        var docEl = document.documentElement;
+        var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+        var dpr = isIOS ? Math.min(window.devicePixelRatio, 3) : 1;
+        dpr = window.top === window.self ? dpr : 1; //被iframe引用时，禁止缩放
+        var scale = 1 / dpr;
+        var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+        docEl.dataset.dpr = dpr;
+        var metaEl = document.createElement('meta');
+        metaEl.name = 'viewport';
+        metaEl.content = 'initial-scale=1,maximum-scale=1, minimum-scale=1';
+        docEl.firstElementChild.appendChild(metaEl);
+        var recalc = function() {
+          var width = docEl.clientWidth;
+          if (width / dpr > 640) {
+              width = 640 * dpr;
+          }
+          docEl.style.fontSize = 100 * (width / 950) + 'px';
+        };
+        recalc();
+        if (!document.addEventListener) return;
+        window.addEventListener(resizeEvt, recalc, false);
+      }
+    }
+    var interval = 1000; 
+    var day1,hour, minute, second;
+    function ShowCountDown(year,month,day) { 
+      var now = new Date(); 
+      var endDate = new Date(year, month-1, day); 
+      var leftTime=endDate.getTime()-now.getTime(); 
+      var leftsecond = parseInt(leftTime/1000); 
+      //var day1=parseInt(leftsecond/(24*60*60*6)); 
+      day1=Math.floor(leftsecond/(60*60*24)); 
+      hour=Math.floor((leftsecond-day1*24*60*60)/3600); 
+      minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60); 
+      second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60); 
+      day1 = makeVal(day1);
+      hour = makeVal(hour);
+      minute = makeVal(minute);
+      second = makeVal(second);
+      document.getElementById('day').innerHTML = day1;
+      document.getElementById('hour').innerHTML = hour;
+      document.getElementById('minute').innerHTML = minute;
+      document.getElementById('second').innerHTML = second;
+    }
+    function makeVal(val) {
+      var ret = val;
+      if (val < 10) {
+        ret = '0' + val;
+      }
+      return ret;
+    }
+    window.setInterval(function(){ShowCountDown(2017,05,28);}, interval);
+
+  </script>  
+</body>
+
+</html>
