@@ -15,6 +15,7 @@ var wlanusermac = query.wlanusermac || ''; //'f45c89987347';
 var wlanapmac = query.wlanapmac || '';
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com'; //'http://www.baidu.com';
 var autologin = 0;
+var taobao = 0;
 //var useragent = navigator.userAgent;
 var canClick = true;
 
@@ -30,6 +31,7 @@ var ssid = ""; //AP设备信号名称，非必须
 var bssid = "";
 var jumpUrl = "";
 var connected = false;
+var data = {};
 
 
 var loginParam = {
@@ -139,8 +141,11 @@ function font(bFont) {
   var screenWidth = document.documentElement.clientWidth;
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
-      var data = resp.data;
-      autologin = data.autologin;
+      data = resp.data;
+      //autologin = data.autologin;
+      //taobao = data.taobao;
+      autologin=1;
+      taobao = 1;
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
       secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
@@ -156,12 +161,25 @@ function font(bFont) {
         $('.login').css('height', '100%');
       } else {
         if (autologin) {
-          $('.login').append(template('tplOnelogin', data));
-          $('.login').append(template('tplBottom', ads));
+          //一键登录
+          if (taobao) {
+            //淘宝登录
+            $('.login').append(template('tplOnetaobao', data));
+            $('.login').append(template('tplBottom', ads));
+          } else {
+            //一键登录
+            $('.login').append(template('tplOnelogin', data));
+            $('.login').append(template('tplBottom', ads));
+          }  
         } else {
-          //验证码登录
-          $('.login').append(template('tplIptlogin', data));
-          $('.login').append(template('tplBottom', ads));
+          //密码登录
+          if (taobao) {
+            $('.login').append(template('tplIpttaobao', data));
+            $('.login').append(template('tplBottom', ads));
+          } else {
+            $('.login').append(template('tplIptlogin', data));
+            $('.login').append(template('tplBottom', ads));
+          }
         }
         setTimeout(function() {
           setHeight()
@@ -331,6 +349,11 @@ function portalLogin(param, wx) {
       sendTest();
       if (wx) {
         callWeixin();
+      } else if (taobao){
+        $('.login').append(template('tplCover', data));
+        setTimeout(function() {
+          location.replace = data.dst;
+        },3000)
       } else {
         if (CGI.isIE()) {
           location.replace(firsturl);
@@ -367,6 +390,11 @@ function oneClickLogin(auto, callWX) {
         // 如果需要，调用微信
         if (callWX) {
           callWeixin();
+        } else if (taobao) {
+          $('.login').append(template('tplCover', data));
+          setTimeout(function() {
+            location.replace = data.dst;
+          },3000)
         } else {
           if (CGI.isIE()) {
             location.replace(firsturl);

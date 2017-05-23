@@ -148,6 +148,7 @@ video {
 .login {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 .login-top-bg {
   width: 100%;
@@ -515,6 +516,23 @@ video {
 }
 .pc-ques {
   font-size: 12px;
+}
+.tb-btn {
+  background-color: #ff9933;
+}
+.con-cover {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #fff;
+}
+.tao-cover {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 
