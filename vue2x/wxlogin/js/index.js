@@ -306,7 +306,12 @@ function pcRegClick(e) {
 function mobRegClick(e) {
   if (canClick) {
     disableButton();
-    regClick(true);
+    if (taobao) {
+      regClick(false);
+    } else {
+      regClick(true);
+    }
+    
     /*disableButton();
     oneClickLogin(false, true);*/
   }
@@ -322,7 +327,11 @@ function pcOneClick(e) {
 function mobOneClick(e) {
   if (canClick) {
     disableButton();
-    oneClickLogin(false, true);
+    if (taobao) {
+      oneClickLogin(false, false);
+    } else {
+      oneClickLogin(false, true);
+    }
   }
 }
 
