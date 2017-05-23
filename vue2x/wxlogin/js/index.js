@@ -361,9 +361,9 @@ function portalLogin(param, wx) {
       if (wx) {
         callWeixin();
       } else if (taobao){
-        $('.login').append(template('tplCover', data));
+        $('.login').append(template('tplCover', resp.data));
         setTimeout(function() {
-          location.replace = data.dst;
+          location.replace(resp.data.dst);
         },3000)
       } else {
         if (CGI.isIE()) {
@@ -402,9 +402,10 @@ function oneClickLogin(auto, callWX) {
         if (callWX) {
           callWeixin();
         } else if (taobao) {
-          $('.login').append(template('tplCover', data));
+          console.log(JSON.stringify(data));
+          $('.login').append(template('tplCover', resp.data));
           setTimeout(function() {
-            location.replace = data.dst;
+            location.replace(resp.data.dst);
           },3000)
         } else {
           if (CGI.isIE()) {
