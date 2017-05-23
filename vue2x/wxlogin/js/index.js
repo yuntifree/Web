@@ -31,7 +31,6 @@ var ssid = ""; //AP设备信号名称，非必须
 var bssid = "";
 var jumpUrl = "";
 var connected = false;
-var data = {};
 
 
 var loginParam = {
@@ -141,7 +140,7 @@ function font(bFont) {
   var screenWidth = document.documentElement.clientWidth;
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
-      data = resp.data;
+      var data = resp.data;
       autologin = data.autologin;
       taobao = data.taobao;
       //autologin=1;
@@ -177,8 +176,8 @@ function font(bFont) {
             $('.login').append(template('tplIpttaobao', data));
             $('.login').append(template('tplBottom', ads));
           } else {
+            $('.login').append(template('tplCover', resp.data));
             $('.login').append(template('tplIptlogin', data));
-            $('.login').append(template('tplBottom', ads));
           }
         }
         setTimeout(function() {
@@ -361,10 +360,7 @@ function portalLogin(param, wx) {
       if (wx) {
         callWeixin();
       } else if (taobao){
-        $('.login').append(template('tplCover', resp.data));
-        setTimeout(function() {
-          location.replace(resp.data.dst);
-        },3000)
+        callTaobao(resp.data);
       } else {
         if (CGI.isIE()) {
           location.replace(firsturl);
@@ -402,11 +398,7 @@ function oneClickLogin(auto, callWX) {
         if (callWX) {
           callWeixin();
         } else if (taobao) {
-          console.log(JSON.stringify(data));
-          $('.login').append(template('tplCover', resp.data));
-          setTimeout(function() {
-            location.replace(resp.data.dst);
-          },3000)
+          callTaobao(resp.data);
         } else {
           if (CGI.isIE()) {
             location.replace(firsturl);
@@ -438,6 +430,26 @@ function disableButton() {
   setTimeout(function() {
     canClick = true;
   }, 3000)
+}
+//taobao 
+function callTaobao(data) {
+  $('.login').append(template('tplCover', data));
+  var text = 3;
+  var timer = setInterval(function() {
+    if (text > 0) {
+      text--;
+      $('.time-count').text(text);
+    } else {
+      location.replace(data.dst);
+    }
+  },1000);
+  if (text == 0) {
+    clearInterval(timer);
+  }
+  $('.tao-url').click(function() {
+    clearInterval(timer);
+    location.replace(data.dst);
+  })
 }
 
 // make apple happy!

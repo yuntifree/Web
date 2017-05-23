@@ -534,6 +534,21 @@ video {
   width: 100%;
   height: auto;
 }
+.tao-link {
+  width: 1.4rem;
+  height: auto;
+  padding: 0.12rem 0.2rem;
+  border-radius: 0.1rem;
+  position: absolute;
+  top: 0.8rem;
+  right: 0.6rem;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.tao-link span {
+  font-size: 0.28rem;
+  line-height: 0.5rem;
+  color: #fff;
+}
 
 
 
