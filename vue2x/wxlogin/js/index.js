@@ -290,8 +290,10 @@ function getCode() {
 }
 
 function touchStart(e) {
-  $('.btn').css('backgroundColor', '#19A717');
-  setTimeout(function() {$('.btn').css('backgroundColor', '#42bd40');}, 300);
+  var startColor = taobao ? '#f93' : '#42bd40';
+  var endColor = taobao ? '#F5800B' : '#19A717';
+  $('.btn').css('backgroundColor', endColor);
+  setTimeout(function() {$('.btn').css('backgroundColor', startColor);}, 300);
 }
 
 function pcRegClick(e) {
