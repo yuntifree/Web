@@ -198,7 +198,7 @@ export default {
       if (num == 4) {
         p = 'http://api.yunxingzh.com/'
       } else {
-        p = 'http://wx.yunxingzh.com/'
+        p = 'http://120.76.236.185/'
       }
       var ret = p+row.dir+'?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&portaltype=1&adtype=1&s=1#/home';
       return ret

@@ -198,7 +198,7 @@ export default {
       if (num == 0) {
         p = 'http://api.yunxingzh.com/'
       } else {
-        p = 'http://wx.yunxingzh.com/'
+        p = 'http://120.76.236.185/'
       }
       var ret = p+row.dir+'?wsmp-theme=1001&wsmp-page=0&wsmp-time=-1&wsmp-portal=103&wlanacname=2043.0769.200.00&wlanuserip=10.96.72.28&wlanacip=120.197.159.10&wlanusermac=f45c89987347&wlanapmac=a85840cdf2a0&wlanuserfirsturl=http://qq.com';
       return ret
