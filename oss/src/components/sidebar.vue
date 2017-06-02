@@ -56,9 +56,9 @@ export default {
         }
       }
     }
-    if (viewName == '') {
+    if (!viewName) {
       this.$store.state.paths = [this.$store.state.sidebar[0].title, this.$store.state.sidebar[0].menus[0].title];
-      this.$store.state.selItem = this.$store.state.paths[1];
+      this.selItem = this.$store.state.selItem = this.$store.state.paths[1];
       this.$store.state.view = this.$store.state.sidebar[0].menus[0].name;
     }   
     if (sessionStorage) {
