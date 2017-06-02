@@ -439,22 +439,20 @@ function disableButton() {
   }, 3000)
 }
 
-function countdown(param, wx, onclick) {
+function countdown(param, wx, oneclick) {
   $('.login').append(template('tplCover', taobaoCover));
   var text = 3;
   var timer = setInterval(function() {
     if (text > 0) {
       text--;
       $('.time-count').text(text);
-    } else {
-      if (onclick) {
-        oneClickLogin(param,wx);
-      } else {
-        portalLogin(param, wx)
-      }
-      clearInterval(timer);
     }
   },1000);
+  if (oneclick) {
+    oneClickLogin(param,wx);
+  } else {
+    portalLogin(param, wx)
+  }
   $('.tao-link').click(function() {
     if (onclick) {
       oneClickLogin(param,wx);
