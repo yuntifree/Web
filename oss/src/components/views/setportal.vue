@@ -200,7 +200,12 @@ export default {
       } else {
         p = 'http://120.76.236.185/'
       }
-      var ret = p +row.dir+'wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&s=1#/home';
+      var dir = row.dir;
+      console.log(dir.indexOf('.html'));
+      if (dir.indexOf('.html') === -1) {
+        dir = row.dir + '/wifilink.html'
+      }
+      var ret = p +dir+'?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&s=1#/home';
       return ret;
     },
     handleSizeChange(val) {
