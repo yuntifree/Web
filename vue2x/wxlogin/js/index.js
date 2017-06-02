@@ -446,13 +446,15 @@ function countdown(param, wx, oneclick) {
     if (text > 0) {
       text--;
       $('.time-count').text(text);
+      if(text == 1) {
+        if (oneclick) {
+          oneClickLogin(param,wx);
+        } else {
+          portalLogin(param, wx)
+        }
+      }
     }
   },1000);
-  if (oneclick) {
-    oneClickLogin(param,wx);
-  } else {
-    portalLogin(param, wx)
-  }
   $('.tao-link').click(function() {
     if (onclick) {
       oneClickLogin(param,wx);
@@ -465,9 +467,6 @@ function countdown(param, wx, oneclick) {
 //taobao 
 function callTaobao(data) { 
   location.replace(data.dst);
-  /*$('.tao-link').click(function() {
-    location.replace(data.dst);
-  })*/
 }
 
 // make apple happy!
