@@ -31,6 +31,7 @@ var ssid = ""; //AP设备信号名称，非必须
 var bssid = "";
 var jumpUrl = "";
 var connected = false;
+var taobaoCover = {};
 
 
 var loginParam = {
@@ -140,7 +141,7 @@ function font(bFont) {
   var screenWidth = document.documentElement.clientWidth;
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
-      var data = resp.data;
+      var data = taobaoCover = resp.data;
       autologin = data.autologin;
       taobao = data.taobao;
       //autologin=1;
@@ -176,8 +177,8 @@ function font(bFont) {
             $('.login').append(template('tplIpttaobao', data));
             $('.login').append(template('tplBottom', ads));
           } else {
-            $('.login').append(template('tplCover', resp.data));
             $('.login').append(template('tplIptlogin', data));
+            $('.login').append(template('tplBottom', ads));
           }
         }
         setTimeout(function() {
@@ -327,7 +328,8 @@ function mobOneClick(e) {
   if (canClick) {
     disableButton();
     if (taobao) {
-      oneClickLogin(false, false);
+      countdown(false,false,true);
+      //oneClickLogin(false, false);
     } else {
       oneClickLogin(false, true);
     }
@@ -344,7 +346,11 @@ function regClick(wx) {
       tipShow('请输入验证码');
     } else {
       param.code = code;
-      portalLogin(param, wx);
+      if (taobao) {
+        countdown(param,wx,false);
+      } else {
+        portalLogin(param, wx);
+      }
     }
   } else {
     // tip in checkphone
@@ -362,6 +368,7 @@ function portalLogin(param, wx) {
       } else if (taobao){
         callTaobao(resp.data);
       } else {
+        console.log(jumpUrl);
         if (CGI.isIE()) {
           location.replace(firsturl);
         } else {
@@ -431,25 +438,38 @@ function disableButton() {
     canClick = true;
   }, 3000)
 }
-//taobao 
-function callTaobao(data) {
-  $('.login').append(template('tplCover', data));
+
+function countdown(param, wx, onclick) {
+  $('.login').append(template('tplCover', taobaoCover));
   var text = 3;
   var timer = setInterval(function() {
     if (text > 0) {
       text--;
       $('.time-count').text(text);
     } else {
-      location.replace(data.dst);
+      if (onclick) {
+        oneClickLogin(param,wx);
+      } else {
+        portalLogin(param, wx)
+      }
+      clearInterval(timer);
     }
   },1000);
-  if (text == 0) {
+  $('.tao-link').click(function() {
+    if (onclick) {
+      oneClickLogin(param,wx);
+    } else {
+      portalLogin(param, wx)
+    }
     clearInterval(timer);
-  }
-  $('.tao-url').click(function() {
-    clearInterval(timer);
-    location.replace(data.dst);
   })
+}
+//taobao 
+function callTaobao(data) { 
+  location.replace(data.dst);
+  /*$('.tao-link').click(function() {
+    location.replace(data.dst);
+  })*/
 }
 
 // make apple happy!
