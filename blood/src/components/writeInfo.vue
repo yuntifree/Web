@@ -231,6 +231,7 @@ export default {
       }
       this.infoTimer = this.infos[idx].timeslots;
       this.$store.state.ads = this.infos[idx].address;
+      console.log(this.$store.state.ads);
     },
     reserveSub() {
       if(this.makeParam()) {
@@ -248,6 +249,7 @@ export default {
         CGI.post('submit_reserve_info', param, (resp)=>{
           if (resp.errno === 0) {
             this.$store.state.code = resp.data.code;
+            console.log(this.$store.state.code)
             this.$router.push({name: 'success'})
           } else {
             this.alertInfo(resp.desc);

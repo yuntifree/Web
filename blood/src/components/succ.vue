@@ -70,7 +70,7 @@
       <span class="g-fl reserve-info-l">咨询电话:</span>
       <span class="g-fr reserve-info-r">85558889</span>
     </p>
-    <p class="reserve-award g-tac">如约献血即可免费获得<br/>价值680元依Q兔健康枕</p>
+    <p class="reserve-award g-tac">如约献血即有机会获得<br/>价值680元依Q兔健康枕</p>
     <img class="sucd-pillow" src="http://img.yunxingzh.com/936f4333-58f3-418e-9abb-3b52cfd9e016.png">
     <p class="succ-tip g-tac color760">*请截图妥善保存预约码</p>
   </div>
@@ -86,12 +86,9 @@ export default {
       ads: ''
     }
   },
-  mounted() {
+  activated() {
     this.code = this.$store.state.code;
     this.ads = this.$store.state.ads;
-  },
-  methods: {
-
   }
 }
 </script>
