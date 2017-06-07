@@ -231,7 +231,7 @@ export default {
       }
       this.infoTimer = this.infos[idx].timeslots;
       this.$store.state.ads = this.infos[idx].address;
-      console.log(this.$store.state.ads);
+      this.$store.state.phone = this.infos[idx].phone;
     },
     reserveSub() {
       if(this.makeParam()) {

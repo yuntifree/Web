@@ -68,7 +68,7 @@
     </p>
     <p class="reserve-info g-clearfix">
       <span class="g-fl reserve-info-l">咨询电话:</span>
-      <span class="g-fr reserve-info-r">85558889</span>
+      <span class="g-fr reserve-info-r">{{phone}}</span>
     </p>
     <p class="reserve-award g-tac">如约献血即有机会获得<br/>价值680元依Q兔健康枕</p>
     <img class="sucd-pillow" src="http://img.yunxingzh.com/936f4333-58f3-418e-9abb-3b52cfd9e016.png">
@@ -83,12 +83,14 @@ export default {
   data() {
     return {
       code: 0,
-      ads: ''
+      ads: '',
+      phone: ''
     }
   },
   activated() {
     this.code = this.$store.state.code;
     this.ads = this.$store.state.ads;
+    this.phone = this.$store.state.phone
   }
 }
 </script>

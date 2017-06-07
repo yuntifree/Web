@@ -8,7 +8,8 @@ Vue.use(Vuex);
 
 const state = {
   code: 0,
-  ads: ''
+  ads: '',
+  phone: ''
 }
 
 export default new Vuex.Store({
