@@ -29,7 +29,7 @@ body,
   display: block;
   width:84%;
   line-height: 0.9rem;
-  margin: 0.5rem auto 0;
+  margin: 0.4rem auto 0;
   font-size: 0.32rem;
   background-color: #fa685d;
   color: #fff;

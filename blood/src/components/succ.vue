@@ -14,7 +14,7 @@
   font-size: 0.36rem;
   font-weight: 500;
   color: #1e2c3d;
-  @include marGin(bottom, 0.75rem);
+  @include marGin(bottom, 0.19rem);
 }
 .reserve-info {
   color: #1e2c3d;
@@ -42,22 +42,37 @@
 }
 .sucd-pillow {
   @extend %blockAuto;
-  @include containerSize(84%, auto);
- @include marGin(top, 0.36rem);
+  @include containerSize(25%, auto);
+ @include marGin(top, 0.68rem);
 }
 .succ-tip {
-  @include marGin(top, 0.6rem);
+  @include marGin(top, 1rem);
   font-size: 0.32rem;
   font-weight: 500;
 }
 .color760 {
   color: #da4760;
 }
+.succ-text {
+  font-size: 0.3rem;
+  line-height: 150%;
+  color: #1e2c3d;
+  @include marGin(top, 0.19rem);
+}
+.succ-img {
+  @extend %blockAuto;
+  @include containerSize(100%, auto);
+}
+.dg-blood {
+  font-size: 0.26rem;
+}
 </style>
 
 <template>
   <div class="succ">
     <h2 class="succ-tit g-tac">您已经成功预约</h2>
+    <p class="g-tac succ-text">如约献血即有机会免费获得<br/>健康枕或抱枕</p>
+    <img class="succ-img" src="http://img.yunxingzh.com/1602aa8d-e672-46a7-97d5-eba303549b12.png">
     <p class="reserve-info g-clearfix">
       <span class="g-fl reserve-info-l">预&nbsp;&nbsp;约&nbsp;码：</span>
       <span class="g-fl reserve-info-r color760">{{code}}</span>
@@ -70,9 +85,9 @@
       <span class="g-fl reserve-info-l">咨询电话:</span>
       <span class="g-fr reserve-info-r">{{phone}}</span>
     </p>
-    <p class="reserve-award g-tac">如约献血即有机会获得<br/>价值680元依Q兔健康枕</p>
-    <img class="sucd-pillow" src="http://img.yunxingzh.com/936f4333-58f3-418e-9abb-3b52cfd9e016.png">
     <p class="succ-tip g-tac color760">*请截图妥善保存预约码</p>
+    <img class="sucd-pillow" src="http://img.yunxingzh.com/090785b8-9e6d-4535-a77d-cf8ec637b76c.png">
+    <p class="dg-blood g-tac">东莞市中心血站</p>
   </div>
 </template>
 
