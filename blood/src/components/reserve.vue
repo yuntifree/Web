@@ -38,6 +38,7 @@
   background-color: #828282;
 }
 .info-ad {
+  @include marGin(top,-0.4rem)
   color: #4a4a4a;
   font-size: 0.4rem;
   font-weight: 600;

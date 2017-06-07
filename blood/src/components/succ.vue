@@ -12,7 +12,7 @@
 }
 .succ-tit {
   font-size: 0.36rem;
-  font-weight: 500;
+  font-weight: 800;
   color: #1e2c3d;
   @include marGin(bottom, 0.19rem);
 }
