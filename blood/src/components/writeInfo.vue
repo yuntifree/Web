@@ -198,9 +198,9 @@ export default {
     },
     getDate() {
       var now = new Date();
-      var st2 = new Date('2017/06/19');
-      if (now.getTime() < st2.getTime()) {
-        now = st2
+      var starttime = new Date('2017/06/19');
+      if (now.getTime() < starttime.getTime()) {
+        now = starttime
       }
       var endTime = new Date('2017/06/25');
       var formatSt = CGI.dateFormat(now,'yyyy-MM-dd');
