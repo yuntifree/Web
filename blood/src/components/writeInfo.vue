@@ -198,9 +198,12 @@ export default {
     },
     getDate() {
       var now = new Date();
-      var startTime = new Date();
+      var st2 = new Date('2017/06/19');
+      if (now.getTime() < st2.getTime()) {
+        now = st2
+      }
       var endTime = new Date('2017/06/25');
-      var formatSt = CGI.dateFormat(startTime,'yyyy-MM-dd');
+      var formatSt = CGI.dateFormat(now,'yyyy-MM-dd');
       var formatEnd = CGI.dateFormat(endTime,'yyyy-MM-dd');
       var dateLen = getTime(formatEnd,formatSt);
       function getTime(end, st)
@@ -211,11 +214,11 @@ export default {
           var time_ = end - st;
           return (time_/(3600*24));
       }
-      if (startTime.getTime() < endTime.getTime()) {
+      if (now.getTime() < endTime.getTime()) {
         var i = 0;
         while (i <= dateLen) {
-          now = new Date(now.getTime() + 24 * 60 * 60 * 1000);
           this.infoDate.push(now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate());
+          now = new Date(now.getTime() + 24 * 60 * 60 * 1000);
           i ++;
         }
       }
@@ -249,7 +252,6 @@ export default {
         CGI.post('submit_reserve_info', param, (resp)=>{
           if (resp.errno === 0) {
             this.$store.state.code = resp.data.code;
-            console.log(this.$store.state.code)
             this.$router.push({name: 'success'})
           } else {
             this.alertInfo(resp.desc);
