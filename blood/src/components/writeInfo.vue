@@ -184,7 +184,7 @@ export default {
   },
   mounted() {
     this.getInfo();
-    this.getDate();
+    //this.getDate();
   },
   methods: {
     getInfo() {
@@ -226,6 +226,8 @@ export default {
     makeDate() {
       var len = this.infos.length;
       var idx = -1;
+      this.infoTimer = [];
+      this.infoDate = [];
       for (var i=0; i<len; i++) {
         if (this.infos[i].id === this.subinfo.sid) {
           idx = i;
@@ -233,19 +235,20 @@ export default {
         }
       }
       this.infoTimer = this.infos[idx].timeslots;
+      this.infoDate = this.infos[idx].days;
       this.$store.state.ads = this.infos[idx].address;
       this.$store.state.phone = this.infos[idx].phone;
     },
     reserveSub() {
       if(this.makeParam()) {
-        var date = CGI.dateFormat(this.subinfo.date, 'yyyy年MM月dd日');
+        //var date = CGI.dateFormat(this.subinfo.date, 'yyyy年MM月dd日');
         var btype = ~~this.subinfo.btype;
         var pillow = ~~this.subinfo.pillow
         var param = {
           name: this.subinfo.name, //用户姓名
           phone: this.subinfo.phone + '', //用户手机号
           sid: this.subinfo.sid, //站点id
-          date: date + ' ' + this.subinfo.time, //预约献血时间
+          date: this.subinfo.date + ' ' + this.subinfo.time, //预约献血时间
           btype: btype, //血型 0-A型 1-B型 2-AB型 3-O型
           pillow: pillow
         }
