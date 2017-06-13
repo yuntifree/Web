@@ -1,0 +1,40 @@
+.binddr-img {
+  width: 112rpx;
+  height: 112rpx;
+  display: block;
+  margin: 88rpx auto 0;
+}
+.binddr-tip {
+  color: #1ed2af;
+  font-size: 34rpx;
+  margin: 24rpx 0 52rpx;
+}
+.binddr-ipt {
+  width: 92%;
+  height: 84rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+.ipt-l{
+  width: 21%;
+  text-align: justify;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #282828;
+  margin-right: 57rpx;
+}
+.binddr-ipt-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.ipt-r-holder {
+  font-size: 36rpx;
+  color: #b4b4b4;
+}
+.bindder-btn {
+  margin-top: 115rpx;
+}
+

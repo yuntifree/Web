@@ -1,0 +1,22 @@
+<!--index.wxml-->
+<view class="container patientinfo">
+  <view class="patientinfo-list" wx:for="{{info}}" wx:for-index="idx" wx:key="ptinfo">
+    <view class="patientinfo-list-top">
+      <view>
+        <text class="list-top-name">{{item.name}}</text>
+        <text class="list-top-text" wx:if="{{item.mcard}}">{{item.mcard}}</text>
+      </view>
+      <text class="list-top-text list-top-phone">{{item.phone}}</text>
+    </view>
+    <view class="patientinfo-list-bot">
+      <view class="list-bot-img g-tac" data-index="{{idx}}" bindtap="delPt">
+          <image src="../../images/patient/ico_trash.png"></image>
+      </view>
+      <view class="list-bot-img g-tac" data-index="{{idx}}" bindtap="editPt">
+        <image src="../../images/patient/ico_write.png"></image>
+      </view>
+    </view>
+  </view>  
+  <button class="patientinfo-btn g-tac" bindtap="addPt">新增患者</button>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

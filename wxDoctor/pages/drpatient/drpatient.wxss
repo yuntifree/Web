@@ -1,0 +1,57 @@
+.drpaient-list {
+  width: 92%;
+  margin: 0 auto;
+  padding-bottom: 24rpx;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+.drpaient-head {
+  position: relative;
+  width: 20%;
+}
+.drpaient-img {
+  width: 114rpx;
+  height: 114rpx;
+}
+.drpaient-chat-num {
+  width: 36rpx;
+  height: 36rpx;
+  display: block;
+  line-height: 36rpx;
+  position: absolute;
+  right: 18rpx;
+  bottom: 0;
+  background-color: #e5001c;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 50%;
+}
+.drpaient-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+}
+.info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+  padding-bottom: 10rpx;
+}
+.info-text-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #282828;
+}
+.info-text-chat {
+  display: block;
+  font-size: 26rpx;
+  color:  #828282;
+  width: 100%;
+}
+.info-text-time {
+  font-size: 24rpx;
+  color: #b4b4b4;
+}

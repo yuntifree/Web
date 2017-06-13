@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="container">
+  <image class="doctorcode-img" src="../../images/login/ico_report.png" background-size="cover"></image>
+  <text class="doctorcode-text g-tac">
+    暂时未受到患者回诊咨询\n
+    <text class="coloraf">长按</text>保存以上二维码并引导患者扫描\n
+    即可绑定患者，接收回诊咨询\n
+    <text class="coloraf">*二维码也可在【个人中心】找到</text>
+  </text>
+  <button class="btn doctorcode-btn">扫描医生二维码</button>
+</view>

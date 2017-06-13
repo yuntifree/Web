@@ -1,0 +1,56 @@
+/**app.wxss**/
+page {
+  height: 100%;
+}
+page,view,text,input,button,image{
+  box-sizing: border-box;
+}
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /**justify-content: space-between;**/
+  box-sizing: border-box;
+  padding-botton:40rpx;
+} 
+.g-tac {
+    text-align: center;
+}
+.g-ellipsis{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.lines-ellipsis {
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.btn {
+  width: 65%;
+  position: relative;
+  line-height: 88rpx;
+  margin-top: 100rpx;
+  border-radius: 14rpx;
+  background-color: #1ed2af;
+  color: #fff;
+  font-size: 36rpx;
+}
+.coloraf {
+  color: #1ed2af;
+}
+.tip-show {
+  padding: 10rpx 20rpx;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 6rpx;
+  position: fixed;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 28rpx;
+}

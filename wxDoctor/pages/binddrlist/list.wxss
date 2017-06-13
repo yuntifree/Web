@@ -1,0 +1,60 @@
+.binddoctor-list {
+  display: flex;
+  flex-direction: row;
+  width: 92%;
+  height: auto;
+  margin: 0 auto;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+.binddoctor-img {
+  width: 20%;
+  height: 140rpx;
+}
+.binddoctor-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 3%;
+  width: 80%;
+}
+.binddoctor-name {
+  margin-top: 2rpx;
+}
+.inner-name {
+  padding-top: 6rpx;
+  font-size: 32rpx;
+  color: #282828;
+  font-weight: 500;
+}
+.inner-hospital {
+  padding: 8rpx 20rpx;
+  margin: 0 24rpx;
+  font-size: 22rpx;
+  background-color: #1cc5a4;
+  color: #fff;
+  border-radius: 10rpx;
+}
+.inner-cate {
+  padding: 8rpx 20rpx;
+  background-color: #ffbb2a;
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 10rpx;
+}
+.chat-time {
+  display: block;
+  font-size: 22rpx;
+  color: #b4b4b4;
+}
+.chat-text {
+  width: 100%;
+  display: block;
+  margin-top: 6rpx;
+  font-size: 26rpx;
+  color: #b4b4b4;
+}
+.click-inquiry {
+  font-size: 26rpx;
+  color: #1cc4a3;
+}

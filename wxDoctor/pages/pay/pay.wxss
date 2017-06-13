@@ -1,0 +1,17 @@
+@import "../template/drinfo/drinfo.wxss";
+.pay-money-tip {
+  font-size: 30rpx;
+  color: #282828;
+  line-height: 150%;
+  margin-top: 99rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.pay-money {
+  font-size: 40rpx;
+  color: #f1951c;
+}
+.pay-btn {
+  margin-top: 24rpx;
+}

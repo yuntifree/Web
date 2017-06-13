@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<view wx:if="{{hasphone}}" class="container">
+  <image bindtap="bindViewTap" class="reset-img" src="../../images/login/img_ownpic.png" background-size="cover"></image>
+  <text class="reset-welcome g-tac">欢迎使用东莞回诊通\n请输入您的手机号与密码进行注册</text>
+  <view class="reset-ipt">
+    <image class="ipt-icon" src="../../images/login/loading_icon_phone.png"></image>
+    <input class="ipt-phone" placeholder-class="res-holder" type="number" placeholder="请输入手机号" 
+    bindinput="makePhone"
+    value="{{phone}}"
+    focus="{{phoneFocus}}"></input>
+  </view>
+  <view class="reset-ipt">
+    <image class="ipt-icon" src="../../images/login/loading_icon_key.png"></image>
+    <input class="ipt-phone"  type="number"  placeholder-class="res-holder" 
+    focus="{{codeFocus}}" 
+    value="{{code}}" 
+    bindinput="makeCode" placeholder="请输入验证码"></input>
+    <text class="res-code g-tac" bindtap="getCode">{{codeText}}</text>
+  </view>
+  <button class="btn" bindtap="makeReg">注册</button>
+  <text class="res-tip g-tac">登录您的账号将与本微信绑定\n下次无需登录，如需更换微信请联系\n0755-86700641</text>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

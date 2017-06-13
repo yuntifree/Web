@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="drpaient-list">
+    <view class="drpaient-head">
+      <image class="drpaient-img" src="../../images/login/ico_report.png"></image>
+      <text class="drpaient-chat-num g-tac">1</text>
+    </view>
+    <view class="drpaient-info">
+      <view class="info-text">
+        <text class="info-text-name">张三</text>
+        <text class="info-text-chat g-ellipsis">医生您好,请问我的医生您好,请问我的医生您好,请问我的医生您好,请问我的</text>
+      </view>
+      <text class="info-text-time">2016/05/03</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,24 @@
+<!--index.wxml-->
+<view class="container">
+  <scroll-view class="binddoctor-list" scroll-y style="height: 100%;"
+    bindscrolltoupper="upper" 
+    bindscrolltolower="lower" 
+    bindscroll="scroll" 
+    scroll-top="{{scrollTop}}">
+    <image class="binddoctor-img" src="../../images/login/ico_report.png"></image>
+    <view class="binddoctor-info">
+      <view class="binddoctor-name">
+        <text class="inner-name">张三</text>
+        <text class="inner-hospital">东坑医院</text>
+        <text class="inner-cate">内科</text>
+      </view>
+      <!--view>
+        <text class="chat-time">12:30</text>
+        <text class="chat-text g-ellipsis">医生您好,请问我的医生您好,请问我的医生您好,请问我的医生您好,请问我的医生您好,请问我的医生您好,请问我的医生您好,请问我的</text>
+      </view-->
+      <view>
+        <text class="click-inquiry">点击问诊开始咨询</text>
+      </view>
+    </view>
+  </scroll-view> 
+</view>

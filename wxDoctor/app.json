@@ -1,0 +1,45 @@
+{
+  "pages":[
+    "pages/binddrlist/list",
+    "pages/patientinfo/patientinfo",
+    "pages/binddr/binddr",
+    "pages/pay/pay",
+    "pages/index/index",
+    "pages/scancode/scancode",
+    "pages/drconfirm/drconfirm",
+    "pages/drcode/drcode",
+    "pages/drchat/drchat",
+    "pages/wallet/wallet",
+    "pages/unbinddr/unbinddr",
+    "pages/writepatient/writepatient",
+    "pages/drpatient/drpatient",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/drcode/drcode",
+      "iconPath": "images/tab/msg_gray.png",
+      "selectedIconPath": "images/tab/msg_green.png",
+      "text": "问诊"
+    }, {
+      "pagePath": "pages/wallet/wallet",
+      "iconPath": "images/tab/money_gray.png",
+      "selectedIconPath": "images/tab/money_green.png",
+      "text": "钱包"
+    }, {
+      "pagePath": "pages/drconfirm/drconfirm",
+      "iconPath": "images/tab/personal_gray.png",
+      "selectedIconPath": "images/tab/personal_green.png",
+      "text": "个人中心"
+    }],
+    "color": "#b4b4b4",
+    "selectedColor": "#1ed2af",
+    "borderStyle": "white"
+  }
+}

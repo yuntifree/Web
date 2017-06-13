@@ -1,0 +1,5 @@
+<view class="container">
+  <image class="scan-img" src="../../images/login/ico_report.png" background-size="cover"></image>
+  <text class="scan-text g-tac">欢迎使用东莞回诊通\n请扫描二维码绑定医生</text>
+  <button class="btn scan-btn" bindtap="getcode">扫描医生二维码</button>
+</view>

@@ -1,0 +1,24 @@
+<!--index.wxml-->
+<view class="container">
+  <image class="binddr-img" src="../../images/login/img_ownpic.png"></image>
+  <text class="binddr-tip g-tac">请先绑定患者的医疗信息</text>
+  <view class="binddr-ipt">
+    <view class="ipt-l binddr-ipt-name">姓<text class="g-fr">名</text></view>
+    <input class="ipt-r" bindinput="makeName" placeholder-class="ipt-r-holder" placeholder="请输入姓名" 
+      value="{{info.name}}"
+      focus="{{nameFocus}}"></input>
+  </view>
+  <view class="binddr-ipt">
+    <text class="ipt-l">联系电话</text>
+    <input class="ipt-r" bindinput="makePhone" placeholder-class="ipt-r-holder" placeholder="请输入联系电话" 
+      value="{{info.phone}}"
+      focus="{{phoneFocus}}"></input>
+  </view>
+  <view class="binddr-ipt">
+    <text class="ipt-l">医疗卡号</text>
+    <input class="ipt-r" bindinput="makeCard" placeholder-class="ipt-r-holder" placeholder="请输入医疗卡号" 
+    value="{{info.mcard}}"></input>
+  </view>
+  <button class="btn bindder-btn" bindtap="saveInfo">保存</button>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

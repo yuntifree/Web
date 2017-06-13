@@ -1,0 +1,14 @@
+.scan-img {
+  width: 168rpx;
+  height: 168rpx;
+  margin-top: 248rpx;
+}
+.scan-text {
+  margin-top: 54rpx;
+  line-height: 150%;
+  font-size: 36rpx;
+  color: #282828;
+}
+.scan-btn {
+  margin-top: 108rpx;
+}

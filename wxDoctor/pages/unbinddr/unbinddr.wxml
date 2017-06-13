@@ -1,0 +1,5 @@
+<import src="../template/drinfo/drinfo.wxml"/>
+<view class="container">
+  <template is="item"/>
+  <button class="btn unbinddr-btn">解绑医生</button>
+</view>

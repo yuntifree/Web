@@ -1,0 +1,54 @@
+.reset-img {
+  width: 120rpx;
+  height: 120rpx;
+  margin-top: 47rpx;
+  border-radius: 50%;
+}
+
+.reset-welcome {
+  margin-top: 36rpx;
+  line-height: 150%;
+  font-size: 30rpx;
+  color: #282828;
+  margin-bottom: 72rpx;
+}
+.reset-ipt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  width: 65%;
+  height: 100rpx;
+  border-bottom: 1px solid #dcdcdc;
+}
+.res-ipt-code {
+  justify-content: space-between;
+}
+.ipt-icon {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 22rpx;
+  margin-top: 3rpx;
+}
+
+.ipt-phone {
+  font-size: 36rpx;
+}
+.res-holder{
+  color: #b4b4b4;
+}
+.res-code {
+  width: 200rpx;
+  padding-left: 11px;
+  font-size: 28rpx;
+  color: #1ed2af;
+  position: relative;
+  border-left: 1px solid #1ed2af;
+}
+
+.res-tip {
+  margin-top: 34rpx;
+  font-size: 26rpx;
+  color: #969696;
+  line-height: 150%;
+}

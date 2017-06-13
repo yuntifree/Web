@@ -1,0 +1,68 @@
+.patientinfo {
+  width: 100%;
+  height: 100%;
+  padding: 54rpx;
+  position: relative;
+  background-color: #f0eff5;
+}
+.patientinfo-list {
+  width: 94%;
+  margin: 0 auto 34rpx;
+  background-color: #fff;
+  border:  1rpx solid #1ed2af;
+  border-radius: 10rpx;
+}
+.patientinfo-list-top {
+  height: 134rpx;
+  padding: 0 24rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.list-top-name {
+  font-size: 34rpx;
+  color: #282828;
+  margin-right: 24rpx;
+}
+.list-top-text {
+  font-size: 26rpx;
+   color: #282828;
+}
+.list-top-text {
+  margin-top: 8rpx;
+}
+.patientinfo-list-bot {
+  width: 100%;
+  height: 72rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #78e4cf;
+  border-bottom-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+}
+.list-bot-img {
+  width: 50%;
+  position: relative;
+}
+.list-bot-img image {
+  width: 32rpx;
+  height: 34rpx;
+}
+.list-bot-img:last-child{
+  border-left: 1px solid #fff;
+}
+.patientinfo-btn {
+  width: 100%;
+  height: 98rpx;
+  line-height: 98rpx;
+  background-color: #1ed2af;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  border-radius: 0;
+  color: #fff;
+  font-size: 36rpx;
+}

@@ -1,0 +1,47 @@
+<view class="container drchat">
+  <view class="drchat-menu">
+    <text class="menu-pait g-tac" bindtap="getPatient">获取患者信息</text> 
+    <text class="menu-pait g-tac" bindtap="endInquiry">结束问诊</text>
+  </view> 
+  <view class="dr-patient" wx:if="{{patientShow}}"> 
+    <view class="dr-patient-info">
+      <text class="info-tit g-tac">患者信息：</text>
+      <view class="info-list"><text class="weight500">姓</text><text class="weight500">名：</text><text>{{patientInfo.name}}</text></view>
+      <view class="info-list"><text class="weight500">医疗卡号：</text><text>{{patientInfo.card}}</text></view>
+      <view class="info-list"><text class="weight500">联系电话：</text><text>{{patientInfo.phone}}</text></view>
+    </view>
+  </view>
+  <scroll-view class="drchat-info" scroll-y style="height: 100%;" 
+      bindscrolltoupper="upper" 
+      bindscrolltolower="lower" 
+      bindscroll="scroll" 
+      scroll-top="{{scrollTop}}"
+      scroll-into-view="red">
+    <view wx:for="{{chatLists}}" wx:key="chat">
+      <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.timer}}</text>
+      <view wx:if="{{item.dr}}" class="drchat-r">
+        <image class="drchat-head  drchat-head-r" src="../../images/login/img_ownpic.png"/>
+        <text class="drchat-msg drchat-msg-r">{{item.text}}</text>
+      </view>
+      <view wx:else class="drchat-l">
+        <image class="drchat-head" src="{{item.head}}"/>
+        <view class="drchat-msg">{{item.text}}</view>
+      </view>
+    </view>
+    <text class="red" id="red">123</text>
+  </scroll-view> 
+  <view class="sub-chat">
+    <input class="chat-ipt" bindinput="bindKeyInput" type="text"></input>
+    <image class="chat-pic" src="../../images/patient/ico_camera.png" bindtap="makImg"></image>
+    <button class="chat-btn" bindtap="tapSub">发送</button>
+  </view>
+  <view class="drchat-shadow" wx:if="{{endShow}}">
+    <view class="end-quiry">
+      <text class="g-tac end-tit">结束本次问诊</text>
+      <view class="end-btn-con">
+        <button class="end-btn" bindtap="cancelEnd">取消</button>
+        <button class="end-btn" bindtap="checkEnd">结束</button>
+      </view>
+    </view>
+  </view>
+</view>
