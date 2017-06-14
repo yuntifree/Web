@@ -1,18 +1,19 @@
 {
   "pages":[
+    "pages/patientchat/patientchat",
+    "pages/drpatient/drpatient",
+    "pages/wallet/wallet",
     "pages/binddrlist/list",
+    "pages/drconfirm/drconfirm",
     "pages/patientinfo/patientinfo",
     "pages/binddr/binddr",
     "pages/pay/pay",
     "pages/index/index",
     "pages/scancode/scancode",
-    "pages/drconfirm/drconfirm",
     "pages/drcode/drcode",
     "pages/drchat/drchat",
-    "pages/wallet/wallet",
     "pages/unbinddr/unbinddr",
     "pages/writepatient/writepatient",
-    "pages/drpatient/drpatient",
     "pages/logs/logs"
   ],
   "window":{
@@ -23,7 +24,7 @@
   },
   "tabBar": {
     "list": [{
-      "pagePath": "pages/drcode/drcode",
+      "pagePath": "pages/drpatient/drpatient",
       "iconPath": "images/tab/msg_gray.png",
       "selectedIconPath": "images/tab/msg_green.png",
       "text": "问诊"

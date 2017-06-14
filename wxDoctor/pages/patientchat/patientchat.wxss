@@ -100,12 +100,20 @@
   position: relative;
 }
 .drchat-head-r {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
   margin-left:  20rpx;
 }
 .drchat-msg-r {
+  max-width: 60%;
+  display: inline-block;
+  margin-left: 20rpx;
+  padding: 24rpx 30rpx;
   background-color: #d7f2ec;
   border-top-left-radius: 10rpx;
   border-top-right-radius: 0;
+  position: relative;
 }
 .chat-talk {
   width: 20rpx;
@@ -117,7 +125,7 @@
   left: 0;
 }
 .chat-img {
-  width: 80rpx;
+  width: 200rpx;
   height: 100rpx;
 }
 .chat-talk-r {

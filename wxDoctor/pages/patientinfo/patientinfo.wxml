@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container patientinfo">
   <view class="patientinfo-list" wx:for="{{info}}" wx:for-index="idx" wx:key="ptinfo">
-    <view class="patientinfo-list-top">
+    <view class="patientinfo-list-top" data-index="{{idx}}" bindtap="goPay">
       <view>
         <text class="list-top-name">{{item.name}}</text>
         <text class="list-top-text" wx:if="{{item.mcard}}">{{item.mcard}}</text>

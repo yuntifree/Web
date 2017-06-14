@@ -40,9 +40,16 @@ function checkTel(tel) {
   var ret = isMob.test(tel);
   return ret;
 }
-
+function clone(obj) {
+    var ret = {};
+    for (var p in obj) {
+      ret[p] = obj[p];
+    }
+    return ret;
+}
 module.exports = {
   formatTime: formatTime,
   dateFormat: dateFormat,
-  checkTel: checkTel
+  checkTel: checkTel,
+  clone: clone
 }

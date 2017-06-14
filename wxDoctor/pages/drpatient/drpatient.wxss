@@ -1,7 +1,11 @@
+.con-inner {
+  width: 100%;
+  height: 100%;
+}
 .drpaient-list {
   width: 92%;
   margin: 0 auto;
-  padding-bottom: 24rpx;
+  padding: 24rpx 0;
   display: flex;
   flex-direction: row;
   border-bottom: 1rpx solid #dcdcdc;
@@ -9,22 +13,22 @@
 .drpaient-head {
   position: relative;
   width: 20%;
+  max-width: 114rpx;
 }
 .drpaient-img {
   width: 114rpx;
   height: 114rpx;
+  border-radius: 50%;
 }
 .drpaient-chat-num {
-  width: 36rpx;
-  height: 36rpx;
+  width: 30rpx;
+  height: 30rpx;
   display: block;
-  line-height: 36rpx;
   position: absolute;
-  right: 18rpx;
+  right: 0rpx;
   bottom: 0;
   background-color: #e5001c;
   color: #fff;
-  font-size: 24rpx;
   border-radius: 50%;
 }
 .drpaient-info {
@@ -32,6 +36,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 80%;
+  padding-left: 14rpx;
 }
 .info-text {
   display: flex;
@@ -54,4 +59,21 @@
 .info-text-time {
   font-size: 24rpx;
   color: #b4b4b4;
+}
+
+/** drcode **/
+.doctorcode-img {
+  width: 400rpx;
+  height: 400rpx;
+  margin: 259rpx auto 0;
+}
+.doctorcode-text {
+  display: block;
+  margin-top: 34rpx;
+  line-height: 80%;
+  font-size: 30rpx;
+  color: #282828;
+}
+.doctorcode-btn {
+  margin-top: 120rpx;
 }

@@ -1,10 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var tuid = app.globalData.tuid
-var uid = app.globalData.uid
-var token = app.globalData.token
-var URL = app.globalData.reqUrl
+var tuid,drid,uid,token,URL;
 Page({
   data: {
     info: {},
@@ -13,14 +10,19 @@ Page({
   },
   //事件处理函数
   onLoad: function () {
+    tuid = app.globalData.tuid;
+    drid = app.globalData.drid;
+    uid = app.globalData.uid;
+    token = app.globalData.token;
+    URL = app.globalData.reqUrl;
     this.getData();
   },
   getData: function() {
     var _this = this;
     var param = {
       uid: uid,
+      tuid: drid,
       token: token,
-      tuid: tuid
     }
     wx.request({
       url: URL +'get_doctor_info',

@@ -3,22 +3,26 @@ var QR = require("../../utils/qrcode.js");
 
 //获取应用实例
 var app = getApp()
-var URL = app.globalData.reqUrl
-var uid = app.globalData.uid
-var token = app.globalData.token
-var qrUrl = 'tuid=' +uid
+var URL,uid,token;
+var qrUrl;
 Page({
   data: {
     info: {},
     iptMoney: 0,
+    iptFocus: false,
     tipMsg: '',
     tipShow: false,
     maskHidden:true,
     imagePath:'',
-    placeholder: qrUrl
   },
   //事件处理函数
   onLoad: function () {
+    URL = app.globalData.reqUrl;
+    uid =  app.globalData.tuid;
+    token = app.globalData.token;
+    qrUrl = {
+      tuid: app.globalData.uid
+    }
     this.getData();
   },
   getData: function() {
@@ -28,6 +32,7 @@ Page({
       uid: uid,
       token: token
     };
+    console.log(JSON.stringify(param));
     wx.request({
       url: URL + 'get_doctor_info',
       method: 'POST',
@@ -49,7 +54,7 @@ Page({
             iptMoney: fee
           })
           var size = _this.setCanvasSize();//动态设置画布大小
-          var initUrl = _this.data.placeholder;
+          var initUrl = qrUrl;
           _this.createQrCode(initUrl,"mycanvas",size.w,size.h);
         } else {
           console.log(resp.desc);
@@ -95,6 +100,9 @@ Page({
         }
       })
     } else {
+      this.setData({
+        iptFocus: true
+      })
       this.tip('请输入正确的金额');
     }
   },

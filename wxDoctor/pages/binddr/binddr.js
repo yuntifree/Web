@@ -1,11 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp();
-var tuid = app.globalData.tuid
-var uid = app.globalData.uid
-var token = app.globalData.token
-var URL = app.globalData.reqUrl
-var hasrelation = app.globalData.hasrelation
+var tuid,uid,token,URL,hasrelation;
 
 Page({
   data: {
@@ -16,6 +12,11 @@ Page({
   },
   //事件处理函数
   onLoad: function () {
+    tuid = app.globalData.tuid;
+    uid = app.globalData.uid;
+    token = app.globalData.token;
+    URL = app.globalData.reqUrl;
+    hasrelation = app.globalData.hasrelation;
     this.getData();
   },
   getData: function() {

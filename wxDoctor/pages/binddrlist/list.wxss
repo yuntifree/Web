@@ -50,7 +50,7 @@
 .chat-text {
   width: 100%;
   display: block;
-  margin-top: 6rpx;
+  margin-top: 10rpx;
   font-size: 26rpx;
   color: #b4b4b4;
 }

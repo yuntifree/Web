@@ -1,9 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var uid = app.globalData.uid
-var token = app.globalData.token
-var URL = app.globalData.reqUrl
+var uid,token,URL;
 
 Page({
   data: {
@@ -21,6 +19,9 @@ Page({
     this.getData();
   },
   getData: function() {
+    uid = app.globalData.uid;
+    token = app.globalData.token;
+    URL = app.globalData.reqUrl;
     var _this = this;
     var param = {
       uid: uid,
@@ -106,6 +107,14 @@ Page({
     app.globalData.editPt = this.data.info[idx];
     wx.navigateTo({
       url: '../writepatient/writepatient'
+    })
+  },
+  goPay(e) {
+    var idx = e.currentTarget.dataset.index;
+    app.globalData.ptid = this.data.info[idx].id;
+    console.log(app.globalData.ptid);
+    wx.navigateTo({
+      url: '../pay/pay'
     })
   },
   tip: function(val) {

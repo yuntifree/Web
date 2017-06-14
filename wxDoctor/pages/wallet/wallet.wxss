@@ -44,11 +44,18 @@
 }
 .wallet-ipt {
   width: 270rpx;
+  height: 50rpx;
+  line-height: 60rpx;
   margin-top: 97rpx;
-  padding: 10rpx 0;
+  /**padding: 10rpx 0;**/
   font-size: 36rpx;
   border-bottom: 1rpx solid #bebebe;
 }
 .wallet-ipt-plhd {
   color: #bebebe;
+}
+.mindraw-tip {
+  font-size: 28rpx;
+  color: #f1951c;
+  margin-top: 20rpx;
 }

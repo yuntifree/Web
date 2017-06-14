@@ -32,6 +32,8 @@ App({
     reqUrl: 'https://api.yunxingzh.com/inquiry/',
     hasrelation: 0,
     editPt: {},
-    drHead: './images/doctor/ico_personal.png'
+    drHead: './images/doctor/ico_personal.png',
+    ptid: 0,
+    drid: 0
   }
 })

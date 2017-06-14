@@ -5,34 +5,34 @@
       bindscrolltolower="lower" 
       bindscroll="scroll" 
       scroll-top="{{scrollTop}}"
-      scroll-into-view="">
-    <view wx:for="{{chatLists}}" wx:key="chat">
+      scroll-into-view="{{toView}}">
+    <view wx:for="{{chatLists}}" wx:key="chat" wx:for-index="idx" id="{{'list'+ item.seq}}">
       <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.ctime}}</text>
       <view wx:if="{{item.flag}}" class="drchat-r">
-        <image class="drchat-head  drchat-head-r" src="{{item.ptHead}}"/>
-        <view wx:if="{{item.type==1}}" class="drchat-msg drchat-msg-r">{{item.content}}
-          <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"></image>
+        <image class="drchat-head-r" src="{{item.ptHead}}"/>
+        <view wx:if="{{item.type==1}}" class="drchat-msg-r">{{item.content}}
+          <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
-        <view wx:if="{{item.type==2}}" class="drchat-msg drchat-msg-r">
-          <image class="chat-img" src="{{item.content}}"/>
-          <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"></image>
+        <view wx:else class="drchat-msg drchat-msg-r">
+          <image class="chat-img" mode="aspectFit" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
+          <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
       </view>
       <view wx:else class="drchat-l">
         <image class="drchat-head" src="{{item.drHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg">{{item.content}}
-          <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"></image>
+          <image class="chat-talk chat-talk-l" src="../../images/login/img_talk_white.png"/>
         </view>
         <view wx:if="{{item.type==2}}" class="drchat-msg drchat-msg-r">
-          <image class="drchat-head" src="{{item.content}}"/>
-          <image class="chat-img" src="../../images/login/img_talk.png"></image>
+          <image class="drchat-head" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
+          <image class="chat-img" src="../../images/login/img_talk.png"/>
         </view>
       </view>
     </view>
   </scroll-view> 
   <view class="sub-chat">
-    <input class="chat-ipt" bindinput="bindKeyInput" type="text" value="{{iptVal}}" focus="{{iptFocus}}"></input>
-    <image class="chat-pic" src="../../images/patient/ico_camera.png" bindtap="makeImg"></image>
+    <input class="chat-ipt" bindinput="bindKeyInput" type="text" value="{{iptVal}}" focus="{{iptFocus}}"/>
+    <image class="chat-pic" src="../../images/patient/ico_camera.png" bindtap="makeImg"/>
     <button class="chat-btn" bindtap="tapSub">发送</button>
   </view>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>

@@ -3,14 +3,14 @@
     <view class="list-inner">
       <text class="list-inner-tit">您已收到问诊费：</text>
       <view class="list-inner-r">
-        <text class="list-inner-money">10</text>
+        <text class="list-inner-money">{{info.balance ? info.balance /100 : 0}}</text>
         <text class="list-inner-unit">元</text>
       </view>
     </view>
     <view class="list-inner">
       <text class="list-inner-tit">历史收到问诊费：</text>
       <view class="list-inner-r">
-        <text class="list-inner-money">10</text>
+        <text class="list-inner-money">{{info.total ? info.total/100 :0}}</text>
         <text class="list-inner-unit">元</text>
       </view>
     </view>
@@ -19,18 +19,23 @@
     <view class="list-inner">
       <text class="list-inner-tit">提现中：</text>
       <view class="list-inner-r">
-        <text class="list-inner-money">10</text>
+        <text class="list-inner-money">{{info.draw? info.draw/100 : 0}}</text>
         <text class="list-inner-unit">元</text>
       </view>
     </view>
     <view class="list-inner">
       <text class="list-inner-tit">历史提现金额：</text>
       <view class="list-inner-r">
-        <text class="list-inner-money">10</text>
+        <text class="list-inner-money">{{info.totaldraw ? info.totaldraw/100: 0}}</text>
         <text class="list-inner-unit">元</text>
       </view>
     </view>
   </view>
- <input class="g-tac wallet-ipt" placeholder-class="wallet-ipt-plhd" type="number" placeholder="请输入提现金额"></input>
-  <button class="btn">提现</button>
+  <input class="g-tac wallet-ipt" placeholder-class="wallet-ipt-plhd" placeholder="请输入提现金额"
+    value="{{money}}"
+    bindinput="makeDraw"
+    focus="{{feeFocus}}"></input>
+  <button bindtap="applyPay" disabled="{{info.balance<info.mindraw}}" class="btn" >提现</button>
+  <text class="mindraw-tip">最低提现金额为50元</text>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

@@ -1,16 +1,42 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="drpaient-list">
-    <view class="drpaient-head">
-      <image class="drpaient-img" src="../../images/login/ico_report.png"></image>
-      <text class="drpaient-chat-num g-tac">1</text>
-    </view>
-    <view class="drpaient-info">
-      <view class="info-text">
-        <text class="info-text-name">张三</text>
-        <text class="info-text-chat g-ellipsis">医生您好,请问我的医生您好,请问我的医生您好,请问我的医生您好,请问我的</text>
+  <scroll-view class="con-inner" 
+      wx:if="{{ptInfo}}"
+      scroll-y style="height: 100%;" 
+      bindscrolltoupper="upper" 
+      bindscrolltolower="lower" 
+      bindscroll="scroll" 
+      scroll-top="{{scrollTop}}"
+      scroll-into-view="">
+    <view class="drpaient-list" wx:for="{{info}}" 
+      wx:key="drpt" 
+      wx:for-index="idx" 
+      bindtap="goDrchat"
+      >
+      <view class="drpaient-head">
+        <image class="drpaient-img" src="{{item.headurl}}"></image>
+        <text class="drpaient-chat-num g-tac" wx:if="{{item.reddot}}"></text>
       </view>
-      <text class="info-text-time">2016/05/03</text>
+      <view class="drpaient-info">
+        <view class="info-text">
+          <text class="info-text-name">{{item.nickname}}</text>
+          <text class="info-text-chat g-ellipsis">{{item.type==1 ? item.content : '[图片]'}}</text>
+        </view>
+        <text class="info-text-time">{{item.ctime}}</text>
+      </view>
     </view>
+  </scroll-view>
+  <view wx:else class="con-inner">
+  <view class="doctorcode-img img-box" >
+        <canvas bindtap="previewImg" hidden="{{canvasHidden}}" style="width: 400rpx;height: 400rpx;margin: 36rpx auto 34rpx;border:1rpx solid #b4b4b4" canvas-id="mycanvas"/>
+        <!--<image bindtap="previewImg" mode="scaleToFill" src="{{imagePath}}"></image>-->
+    </view>
+    <text class="doctorcode-text g-tac">
+      暂时未受到患者回诊咨询\n
+      <text class="coloraf">长按</text>保存以上二维码并引导患者扫描\n
+      即可绑定患者，接收回诊咨询\n
+      <text class="coloraf">*二维码也可在【个人中心】找到</text>
+    </text>
   </view>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

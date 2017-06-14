@@ -3,11 +3,7 @@
 var util = require('../../utils/util.js')
 var dateFormat = util.dateFormat;
 var app = getApp()
-var tuid = app.globalData.tuid
-var uid = app.globalData.uid
-var token = app.globalData.token
-var URL = app.globalData.reqUrl
-var drHead = app.globalData.drHead
+var tuid,uid,token,URL,drHead;
 var ptHead = ''
 Page({
   data: {
@@ -21,33 +17,50 @@ Page({
       type: 1,
       timeshow: false
     },
-    patientInfo: {
-      name: '赵五',
-      card: '0000001',
-      phone: '13100000000'
-    },
     patientShow: false,
     endShow: false,
     userInfo: {},
-    iptFocus: false
+    iptFocus: false,
+    toView: ''
   },
   //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../scancode/scancode'
-    })
-  },
   onLoad: function () {
-    //this.makeTime();
+    tuid = app.globalData.tuid;
+    uid = app.globalData.uid;
+    token = app.globalData.token;
+    URL = app.globalData.reqUrl;
+    drHead = app.globalData.drHead;
     var _this = this;
+    //wx.clearStorage();
     app.getUserInfo(function(userInfo){
       //获取患者头像
       ptHead = app.globalData.userInfo.avatarUrl;
-      _this.getData(0);
+      var msg = [];
+      wx.getStorage({
+        key: 'msg',
+        success: function(res) {
+          msg = res.data;
+          _this.setData({
+            chatLists: msg,
+          })
+          _this.setData( {
+            toView: 'list' +msg[msg.length-1].seq
+            }
+          )
+          //_this.getData(-1 || 0, true);
+        },
+        fail: function(res) {
+          _this.getData(-1,true);
+        } 
+      })
+      /*setInterval(function() {
+        console.log(_this.data.chatLists[len].seq);
+        _this.getData(_this.data.chatLists[len].seq || 0, true);
+      },1500)*/
     })
     //this.getData(0);
   },
-  getData(seq) {
+  getData(seq,before) {
     var _this = this;
     var param = {
       uid: uid,
@@ -69,34 +82,73 @@ Page({
         var resp = res.data;
         if (resp.errno === 0) {
           var data = resp.data;
-          if (data.infos && data.infos.length >0) {
-            _this.setData({
-              chatLists: data.infos
-            })
-            var len = _this.data.chatLists.length;
+          var infos = data.infos;
+          var pre = false;
+          if (infos && infos.length >0) {
+            var len = infos.length;
             for (var i=0; i<len; i++) {
-              var flag = "chatLists["+i+"].flag";
-              var ptHead2 = "chatLists["+i+"].ptHead";
-              var drHead2 = "chatLists["+i+"].drHead"
-              if (uid == _this.data.chatLists[i].uid) {
-                _this.setData({
-                  [flag]: true
-                })
+              if (uid == infos[i].uid) {
+                infos[i].flag = true;
               } else {
-                _this.setData({
-                  [flag]: false
-                })
+                infos[i].flag = false;
               }
-              _this.setData({
-                [ptHead2]: ptHead,
-                [drHead2]: drHead
-              })
+              infos[i].ptHead = ptHead;
+              infos[i].drHead = drHead;
             }
-            _this.makeTime();
+            _this.saveMsg(infos);
+            //_this.makeTime();
           }
         } else {
           _this.tip(resp.desc);
         }
+      }
+    })
+  },
+  saveMsg(serverMsg) {
+    var _this = this;
+    var localMsg = [];
+    wx.getStorage({
+      key: 'msg',
+      success: function(res) {
+        localMsg = res.data;
+        for (var i=0; i<serverMsg.length; i++) {
+          for(var j=0; j<localMsg.length; j++) {
+            if (serverMsg[i].id == localMsg[j].id) {
+              serverMsg.splice(i,1);
+              i--;
+              break;
+            }
+          }
+        }
+        _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
+        //重置数据
+        _this.setData({
+          chatLists: _this.data.chatLists,
+          toView: 'list'+(_this.data.chatLists.last.seq)
+        })
+        //setStorage
+        _this.setMsg(true,serverMsg);
+      },
+      fail: function(res) {
+        //重置数据
+        _this.setData({
+          chatLists: _this.data.chatLists.concat(serverMsg),
+          toView: 'list'+serverMsg[serverMsg.length-1].seq
+        })
+        //setStorage
+        _this.setMsg(false)
+      }
+    })
+  },
+  setMsg: function(repeat,serverMsg) {
+    wx.setStorage({
+      key:"msg",
+      data: repeat ? this.data.chatLists.concat(serverMsg) : this.data.chatLists,
+      success: function(res) {
+        console.log('suc'+res)
+      } ,
+      fail: function(res) {
+        console.log('fail'+res)
       }
     })
   },
@@ -202,7 +254,8 @@ Page({
     var flag2 = "chatLists["+len+"].flag";
     var timeshow2 = "chatLists["+len+"].timeshow";
     var ptHead2 = "chatLists["+len+"].ptHead";
-    var drHead2 = "chatLists["+len+"].drHead"
+    var drHead2 = "chatLists["+len+"].drHead";
+    var seq = "chatLists["+len+"].seq"
     this.setData({
       [content2]: this.data.subInfo.content,
       [ctime2]: this.data.subInfo.ctime,
@@ -210,7 +263,11 @@ Page({
       [flag2]: 1,
       [timeshow2]: this.data.subInfo.timeshow,
       [ptHead2]: ptHead,
-      iptVal: ''
+      [seq]: this.data.chatLists[len-1].seq + 1,
+      iptVal: '',
+    })
+    this.setData({
+      toView: 'list'+ (this.data.chatLists[len-1].seq+1)
     })
   },
   endInquiry(e) {
@@ -241,23 +298,21 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFile = res.tempFilePaths
-        console.log(JSON.stringify(res));
+        var tempFile = res.tempFilePaths;
         wx.uploadFile({
           url: URL + 'upload_img', //仅为示例，非真实的接口地址
           filePath: tempFile[0],
           name: 'file',
           success: function(resp){
-            var data = resp.data
+            var data = JSON.parse(resp.data);
             //do something
             var param = {
               tuid: tuid,
               type: 2,
-              content: tempFile[0],
+              content: data.data.filename,
               uid: uid,
               token: token
             }
-            var _this = this;
             wx.request({
               url: URL + 'send_chat',
               method: 'POST',
@@ -270,7 +325,11 @@ Page({
               success: function(res) {
                 var resp = res.data;
                 if (resp.errno == 0) {
-                  //_this.addChat(2)
+                  var con = "subInfo.content";
+                  _this.setData({
+                    [con]: data.data.filename
+                  })
+                  _this.addChat(2)
                 } else {
                   _this.tip(resp.desc);
                 }
@@ -284,9 +343,36 @@ Page({
       }
     })
   },
-  upper: function(e) {
-    //console.log(e)
+  previewImg:function(e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.src, // 当前显示图片的http链接
+      urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
+    })
   },
+  upper: function(e) {
+    var i = 0;
+    /*wx.getStorage({
+      key: 'msg',
+      success: function(res) {
+        var msg = JSON.parse(res.data);
+        var temMsg;
+        var idx = (msg.length-1) - i*5
+        if (msg.length>5) {
+          temMsg = msg.splice(idx, 5);
+        } else{
+          temMsg = msg.splice(idx, msg.length);
+        }
+        /*this.setData({
+          info: temMsg
+        })
+        console.log(temMsg)
+        this.getData(msg[msg.length-1].seq,true);
+      },
+      fail: function(res) {
+        this.tip('全都在这没有更多了');
+      } 
+    })*/
+  }, 
   lower: function(e) {
     //console.log(e)
   },

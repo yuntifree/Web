@@ -1,8 +1,6 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var uid = app.globalData.uid
-var token = app.globalData.token
 
 Page({
   data: {
