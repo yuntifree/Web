@@ -47,9 +47,9 @@
   @include containerSize(0.4rem, auto);
   @include pos(top,0,left,0);
 }
-/* .ipt-text {
-  @include marGin(left,0.06rem);
-} */
+.cant-tip {
+  color: #b4b4b4;
+}
 .writeinfo-btn{
   width: 100%;
   margin-top: 0.34rem;
@@ -119,22 +119,23 @@
           <label class="ipt-text" for="one">A型血</label>
           <img v-show="subinfo.btype==='0'" class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
         </li>
-        <li class="g-fl write-btype-info">
-          <input class="ipt-radio" type="radio" id="two" value="1" v-model="subinfo.btype">
+        <!--li class="g-fl write-btype-info">
+          <input class="ipt-radio" type="radio" id="two" value="1" v-model="subinfo.btype" disabled="true">
           <label class="ipt-text" for="two">B型血</label>
           <img v-show="subinfo.btype==='1'" class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
         </li>
         <li class="g-fl write-btype-info">
-          <input class="ipt-radio" type="radio" id="three" value="2" v-model="subinfo.btype">
+          <input class="ipt-radio" type="radio" id="three" value="2" v-model="subinfo.btype" disabled="true">
           <label class="ipt-text" for="three">AB型血</label>
           <img v-show="subinfo.btype==='2'"class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
-        </li>
+        </li-->
         <li class="g-fl write-btype-info">
           <input class="ipt-radio" type="radio" id="four" value="3" v-model="subinfo.btype">
           <label class="ipt-text" for="four">O型血</label>
           <img v-show="subinfo.btype==='3'" class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
         </li>
       </ul>
+      <p class="cant-tip">现东莞B型血及AB型血已饱和，暂不纳入本次活动</p>
       <h2 class="info-tit reserver-blood-tit">是否需要健康枕</h2>
        <ul class="write-btype g-clearfix">
         <li class="g-fl write-btype-info">
