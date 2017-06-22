@@ -36,11 +36,11 @@ Page({
     ptid = app.globalData.ptid;
     if (timer == null) {
       this.checkTimer();
-    }  
+    }
     wx.showNavigationBarLoading();
   },
   onLoad: function () {
-    //页面五层处理 
+    //页面五层处理
     ptid = app.globalData.ptid;
     uid = app.globalData.uid;
     token = app.globalData.token;
@@ -66,7 +66,7 @@ Page({
       },
       fail: function(res) {
         _this.getData(-1,true);
-      } 
+      }
     })
   },
   checkTimer: function() {
@@ -75,16 +75,17 @@ Page({
       key: 'endInquiry'+ptid,
       success: function(res) {
         _this.setData({
-          end: res.data,
-          mounted: true
+          end: res.data
         })
         wx.hideNavigationBarLoading();
         _this.startTimer();
       },
-      fail: function(res) {
-        console.log(res);
+      complete: function() {
+        _this.setData({
+          mounted: true
+        })
       }
-    })    
+    })
   },
   startTimer() {
     //3秒拉一次
@@ -94,7 +95,7 @@ Page({
         var len = _this.data.chatLists.length-1;
         if (len > 0) {
           _this.getData(_this.data.chatLists[len].seq, true);
-        } 
+        }
       },1500)
     }
   },
@@ -204,7 +205,7 @@ Page({
       })
       this.setData({
         toView: 'list' + msgList[msgList.length-1].seq
-      })      
+      })
     } else {
       console.log('fillAndScroll empty')
     }
@@ -344,7 +345,7 @@ Page({
     })
     this.setData({
       iptVal: '',
-      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].seq + 1)      
+      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].seq + 1)
     })
     this.setMsg();
   },
@@ -387,7 +388,7 @@ Page({
             console.log(JSON.stringify(res));
           }
         })
-      }, 
+      },
       fail: function(res) {
         _this.tip(textFail)
       }

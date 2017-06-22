@@ -94,28 +94,22 @@ Page({
     if (status == 0) {
       if (haspatient) {
         wx.navigateTo({
-          url: '../patientinfo/patientinfo'
+          url: '/pages/patientinfo/patientinfo'
         })
       } else {
         wx.navigateTo({
-          url: '../writepatient/writepatient'
+          url: '/pages/writepatient/writepatient'
         })
-      } 
+      }
     } else {
       wx.navigateTo({
-        url: '../patientchat/patientchat'
-      }) 
-    } 
+        url: '/pages/patientchat/patientchat'
+      })
+    }
   },
   addDr: function() {
-    wx.redirectTo({
-      url: '../scancode/scancode',
-      success: function(res) {
-        console.log(res);
-      },
-      fail: function(res){
-        console.log(res);
-      }
+    wx.navigateTo({
+      url: '/pages/scancode/scancode'
     })
   },
   delDr: function(e) {

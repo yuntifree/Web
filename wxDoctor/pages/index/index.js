@@ -6,7 +6,6 @@ var URL = app.globalData.reqUrl
 Page({
   data: {
     viewShow: false,
-    sid: '',
     hasphone: 0,
     hasrelation: 0,
     codeText: '获取验证码',
@@ -21,83 +20,50 @@ Page({
   //事件处理函数
   onLoad: function () {
     wx.showNavigationBarLoading()
-    this.checkLogin();
+    app.init(this.checkLogin)
   },
   checkLogin() {
     var that = this;
-    wx.login({
-      success: function(res) {
-        if (res.code) {
-          //发起网络请求
-          wx.request({
-            url: URL + 'submit_code',
-            method: 'POST',
-            data: {
-              data: {
-                code:res.code 
-              }
-            },
-            success: function(res) {
-              var resp = res.data;
-              if (resp.errno ===0) {
-                var data = resp.data;
-                if (data.flag) {
-                  that.setData({
-                    hasphone: data.hasphone ? data.hasphone : 0,
-                    role: data.role ? data.role : 0,
-                    hasrelation: data.hasrelation ? data.hasrelation : 0
-                  })
-                  app.globalData.uid = data.uid;
-                  app.globalData.token = data.token;
-                  app.globalData.hasrelation = data.hasrelation ? data.hasrelation : 0;
-                  app.globalData.haspatient = data.haspatient ? data.haspatient : 0;
-                  that.checkPhone();
-                } else {
-                  that.setData({
-                    sid: data.sid
-                  })
-                  that.getUser();
-                }
-              } else {
-                that.tip(resp.desc);
-              }
-            }
-          })
-        } else {
-          that.tip('获取用户登录态失败！' + res.errMsg)
-        }
+    var userData = app.globalData.userData
+    if (userData) {
+      // 是否登陆过
+      if (userData.flag) {
+        that.setData({
+          hasphone: ~~userData.hasphone,
+          role: ~~userData.role,
+          hasrelation: ~~userData.hasrelation
+        })
+        app.globalData.uid = userData.uid;
+        app.globalData.token = userData.token;
+        app.globalData.hasrelation = ~~userData.hasrelation
+        app.globalData.haspatient = ~~userData.haspatient
+
+        that.checkPhone();
+      } else {
+        that.login();
       }
-    });
+    } else {
+      that.tip("获取用户信息失败~")
+    }
   },
-  getUser: function() {
+  login: function() {
     var that = this;
-    wx.getUserInfo({
-      success: function(res) {
-        var param = {
-          sid: that.data.sid,
-          rawData: res.rawData,
-          signature: res.signature,
-          encryptedData: res.encryptedData,
-          iv: res.iv
-        }
-        //console.log(param);
-        that.wxReset(param);
-      },
-      fail: function(res) {
-        that.tip(res);
-      } 
-    })
-  },
-  wxReset: function(param) {
-    var that = this;
+    var raw = app.globalData.rawUserInfo
+    var userData = app.globalData.userData
     wx.request({
-      url: URL + 'login', 
+      url: URL + 'login',
       method: 'POST',
       data: {
-         data: param
+        data: {
+          sid: userData.sid,
+          rawData: raw.rawData,
+          signature: raw.signature,
+          encryptedData: raw.encryptedData,
+          iv: raw.iv
+        }
       },
       header: {
-          'content-type': 'application/json'
+        'content-type': 'application/json'
       },
       success: function(res) {
         var resp = res.data;
@@ -105,7 +71,7 @@ Page({
           var data = resp.data;
           app.globalData.uid = data.uid;
           app.globalData.token = data.token;
-          app.globalData.hasrelation = data.hasrelation ? data.hasrelation : 0;
+          app.globalData.hasrelation = ~~data.hasrelation;
         } else {
           that.tip(resp.desc);
         }
@@ -115,18 +81,13 @@ Page({
   },
   checkPhone() {
     var navUrl = '';
+    wx.hideNavigationBarLoading()
     if (this.data.hasphone) {
       if (this.data.role) {
         wx.switchTab({
-          url: '/pages/drpatient/drpatient',
-          success: function(res) {
-            console.log(res)
-          },
-          fail: function(res){
-            console.log(res);
-          }
+          url: '/pages/drpatient/drpatient'
         })
-        wx.hideNavigationBarLoading()
+
       } else {
         if (this.data.hasrelation) {
           navUrl = '../binddrlist/list'
@@ -134,22 +95,14 @@ Page({
           navUrl = '../scancode/scancode'
         }
         wx.redirectTo({
-          url: navUrl,
-          success: function(res){
-              console.log(res);
-            },
-            fail: function(res){
-              console.log(res);
-            }
+          url: navUrl
         })
-        wx.hideNavigationBarLoading()
       }
     } else {
       this.setData({
         phoneFocus: true,
         viewShow: true
       })
-      wx.hideNavigationBarLoading()
     }
   },
   makePhone(e) {
@@ -236,7 +189,7 @@ Page({
       success: function(res) {
         var resp = res.data;
         if (resp.errno === 0) {
-          var role = resp.data.role ? resp.data.role : 0;
+          var role = ~~resp.data.role
           if (role) {
             wx.switchTab({
               url: '/pages/drpatient/drpatient',
@@ -258,7 +211,7 @@ Page({
               }
             })
           }
-          
+
         } else if (resp.errno == 102) {
           _this.tip(resp.desc);
           _this.setData({
@@ -287,7 +240,7 @@ Page({
         })
         ret = false
       }
-    } 
+    }
     return ret;
   },
   tip: function(val) {

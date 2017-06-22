@@ -28,20 +28,21 @@ Page({
     timer = null;
    //事件处理函数
   },
+  onShow: function() {
+    if (timer == null) {
+      this.checkEnd()
+    }
+  },
   onUnload: function() {
     clearInterval(timer);
     timer = null;
   },
-  onShow: function() {
-    if (timer == null) {
-      this.checkEnd();
-    } 
-    wx.showNavigationBarLoading()
-  },
   //事件处理函数
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      ptHead = app.globalData.userInfo.avatarUrl
+    wx.showNavigationBarLoading()
+    var userInfo = app.globalData.rawUserInfo.userInfo
+    if (userInfo) {
+      ptHead = userInfo.avatarUrl
     } else {
       ptHead = '../../images/doctor/ico_personal.png'
     }
@@ -53,18 +54,21 @@ Page({
     drHead = app.globalData.drHead;
     var _this = this;
     var msg = [];
+
     //wx.clearStorage();
     wx.getStorage({
       key: 'msg'+tuid,
       success: function(res) {
         msg = res.data;
         _this.fillAndScroll(msg)
-        _this.getData(msg[msg.length-1].seq, true);
+        _this.getData(msg[msg.length-1].seq);
       },
       fail: function(res) {
-        _this.getData(-1,true);
-      } 
+        _this.getData(-1);
+      }
     })
+
+    this.checkEnd()
   },
   checkEnd: function() {
     var _this = this;
@@ -73,33 +77,33 @@ Page({
       success: function(res) {
         _this.setData({
           end: res.data,
-          mounted: true
         })
-        wx.hideNavigationBarLoading()
         _this.startTimer();
       },
-      fail: function(res) {
-        console.log(res);
+      complete: function() {
+        _this.setData({
+          mounted: true
+        })
       }
-    })    
+    })
   },
   startTimer: function() {
     //3秒拉一次
     console.log(this.data.end);
     var _this = this;
-    if (!this.data.end) {
+    if (!this.data.end && timer == null) {
       timer = setInterval(function() {
         var len = _this.data.chatLists.length-1;
         if (len > 0) {
           _this.getData(_this.data.chatLists[len].seq, true);
-        } 
+        }
         _this.setData({
           date: new Date().getTime() + ' '
         })
       },1500)
     }
   },
-  getData(seq,before) {
+  getData(seq) {
     var _this = this;
     var param = {
       uid: uid,
@@ -141,7 +145,7 @@ Page({
             }
             _this.saveMsg(infos);
           }
-          var tempStatus = data.status == 2 ? true : false;
+          var tempStatus = data.status == 2
           _this.setData({
             end: tempStatus,
             status: data.status
@@ -160,8 +164,11 @@ Page({
           _this.tip(resp.desc);
         }
       },
-      fail: function(res) {
+      fail: function() {
         _this.tip(failText);
+      },
+      complete: function() {
+        wx.hideNavigationBarLoading()
       }
     })
   },
@@ -202,7 +209,7 @@ Page({
       })
       this.setData({
         toView: 'list' + msgList[msgList.length-1].seq
-      })      
+      })
     } else {
       console.log('fillAndScroll empty')
     }
@@ -232,7 +239,7 @@ Page({
         this.setData({
           [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
         })
-      }   
+      }
     }
     for(var i=0; i<len; i++) {
       var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
@@ -414,7 +421,7 @@ Page({
   },
   upper: function(e) {
     //var i = 0;
-  }, 
+  },
   lower: function(e) {
     //console.log(e)
   },
