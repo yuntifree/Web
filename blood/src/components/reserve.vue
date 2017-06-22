@@ -13,7 +13,9 @@
   font-size: 0.32rem;
   line-height: 150%;
   color: #1e2c3d;
+  font-weight: 800;
   @include marGin(top, 0.09rem);
+  color: #fa685d;
 }
 .info-text span{
   color: #fa685d;
@@ -39,18 +41,18 @@
 }
 .info-ad {
   @include marGin(top,-0.4rem)
-  color: #4a4a4a;
-  font-size: 0.4rem;
-  font-weight: 600;
+  font-size: 0.3rem;
+  color: #9b9b9b;
+  margin-top: 1.3rem;
 }
 </style>
 <template>
   <div class="info">
-    <img src="http://img.yunxingzh.com/8afa363a-5ad5-4f69-81c6-c06f30e1de39.png">
-    <p class="g-tac info-ad">睡不着就睡她--<br/>依Q兔颈椎养护枕爱心赞助</p>
-    <p class="g-tac info-text">你知道吗？<br/>在东莞献血满200CC即可享受<br/><span>即可享受个人终生用血报销</span></p>
+    <img src="http://img.yunxingzh.com/e24d9de6-5342-47c0-81f9-7ed4c62d61cd.png">
+    <p class="g-tac info-text">献血成功还可享受个人终生用血报销</p>
     <router-link class="info-btn g-tac" to="/write">预约献血</router-link>
     <router-link class="info-rule g-fr g-tar" to="/rule">活动规则</router-link>
+    <div class="g-tac info-ad">睡不着就睡她--<br/>依Q兔颈椎养护枕爱心赞助</div>
   </div>
 </template>
 
