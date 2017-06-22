@@ -3,7 +3,7 @@ var util = require('../../utils/util.js')
 var dateFormat = util.dateFormat;
 //获取应用实例
 var app = getApp()
-var uid,token,URL;
+var uid,token,URL,haspatient;
 
 Page({
   data: {
@@ -12,13 +12,20 @@ Page({
     scrollTop: 100,
     info: [],
     tipShow: false,
-    tipMsg: ''
+    tipMsg: '',
+    infoNull: false,
+    hasmore: 0,
   },
   //事件处理函数
   onLoad: function () {
     uid = app.globalData.uid;
     token = app.globalData.token;
-    URL =app.globalData.reqUrl;
+    URL = app.globalData.reqUrl;
+    haspatient = app.globalData.haspatient;
+    this.getData(0);
+  },
+  onShow: function() {
+    haspatient = app.globalData.haspatient;
     this.getData(0);
   },
   getData: function(seq) {
@@ -44,13 +51,21 @@ Page({
           var data = resp.data;
           if (data.infos && data.infos.length >0) {
             _this.setData({
-              info: data.infos
+              info: data.infos,
+              hasmore: data.hasmore ? data.hasmore : 0
             })
             _this.makeTime();
+          } else {
+            _this.setData({
+              infoNull: true
+            })
           }
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function() {
+        _this.tip(failText);
       }
     })
   },
@@ -70,22 +85,66 @@ Page({
       }
     }
   },
-  goPt(e) {
+  goPt: function(e) {
     var idx = e.currentTarget.dataset.index;
     app.globalData.drid = this.data.info[idx].uid;
-    console.log(app.globalData.drid);
+    app.globalData.drHead = this.data.info[idx].doctor.headurl;
+    var status = this.data.info[idx].status;
+    console.log()
+    if (status == 0) {
+      if (haspatient) {
+        wx.navigateTo({
+          url: '../patientinfo/patientinfo'
+        })
+      } else {
+        wx.navigateTo({
+          url: '../writepatient/writepatient'
+        })
+      } 
+    } else {
+      wx.navigateTo({
+        url: '../patientchat/patientchat'
+      }) 
+    } 
+  },
+  addDr: function() {
+    wx.redirectTo({
+      url: '../scancode/scancode',
+      success: function(res) {
+        console.log(res);
+      },
+      fail: function(res){
+        console.log(res);
+      }
+    })
+  },
+  delDr: function(e) {
+    var idx = e.currentTarget.dataset.index;
+    app.globalData.drid = this.data.info[idx].uid;
     wx.navigateTo({
-      url: '../patientinfo/patientinfo'
+      url: '../unbinddr/unbinddr',
+      success: function(res){
+        console.log(res);
+      },
+      fail: function(res){
+        console.log(res);
+      }
     })
   },
   upper: function(e) {
-    //console.log(e)
+    console.log(e)
   },
   lower: function(e) {
-    //console.log(e)
+    if (this.data.hasmore) {
+      var len = this.data.info.length-1;
+      if (len >= 0) {
+        var seq = this.data.info[len].seq;
+        this.getData(seq);
+      }
+    }
   },
   scroll: function(e) {
-    //console.log(e)
+    console.log(e)
   },
   tip: function(val) {
     this.setData({

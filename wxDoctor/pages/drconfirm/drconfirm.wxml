@@ -15,10 +15,13 @@
     </view>
     <text class="drconfirm-tip g-tac">如个人信息有误，请联系\n0755-86700641</text>
     <view class="img-box">
-        <canvas bindtap="previewImg" longtap="previewImg" hidden="{{canvasHidden}}" style="width: 400rpx;height: 400rpx;margin: 36rpx auto 34rpx;border:1rpx solid #b4b4b4" canvas-id="mycanvas"/>
-        <!--<image bindtap="previewImg" mode="scaleToFill" src="{{imagePath}}"></image>-->
+        <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
     </view>
-    <text class="dr-text g-tac"><text class="coloraf">长按保存</text>以上二维码并引导患者扫描\n即可绑定患者，接收回诊咨询</text>
+    <text class="dr-text g-tac"><text class="coloraf"></text>让就诊人扫描\n即可绑定就诊人，接收回诊咨询</text>
   </scroll-view>
+  <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">
+    <image src="{{codeImg}}"/>
+    <text class="img-tip">点击屏幕即可关闭图片</text>
+  </view>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

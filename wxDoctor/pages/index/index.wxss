@@ -38,12 +38,12 @@
   color: #b4b4b4;
 }
 .res-code {
-  width: 200rpx;
   padding-left: 11px;
   font-size: 28rpx;
   color: #1ed2af;
   position: relative;
   border-left: 1px solid #1ed2af;
+  white-space: nowrap;
 }
 
 .res-tip {

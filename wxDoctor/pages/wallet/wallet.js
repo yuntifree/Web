@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var uid,token,URL;
+var failText = app.globalData.failText;
 Page({
   data: {
     info: {},
@@ -11,8 +12,8 @@ Page({
     feeFocus: false
   },
   //事件处理函数
-  onLoad: function () {
-    uid = app.globalData.tuid;
+  onLoad: function () {  
+    uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     this.getData();
@@ -41,6 +42,9 @@ Page({
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res) {
+        _this.tip(failText)
       }
     })
   },
@@ -85,6 +89,9 @@ Page({
           } else {
             _this.tip(resp.desc);
           }
+        },
+        fail: function(res) {
+          _this.tip(failText)
         }
       })
     } else {

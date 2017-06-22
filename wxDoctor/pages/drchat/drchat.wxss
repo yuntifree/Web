@@ -26,6 +26,17 @@
 .drchat-menu text:last-child {
   border-left: 1px solid #dcdcdc;
 }
+.menu-end {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 90rpx;
+  padding-top: 30rpx;
+  font-size: 30rpx;
+  color: #ffbb2a;
+}
 .dr-patient {
   width: 100%;
   height: 349rpx;
@@ -38,7 +49,7 @@
 }
 .dr-patient-info {
   width: 100%;
-  height: 258rpx;
+  /*height: 280rpx;*/
   padding: 30rpx 34rpx;
   background-color: #fff;
   border: 1rpx solid #1ed2af;
@@ -85,7 +96,7 @@
 .drchat-info {
   width: 92%;
   margin:  0 auto;
-  padding-top: 140rpx;
+  padding-top: 120rpx;
   box-sizing: border-box;
   padding-bottom: 100rpx;
 }
@@ -93,18 +104,45 @@
   max-width: 60%;
   display: inline-block;
   margin-left: 20rpx;
-  padding: 24rpx 30rpx 24rpx 40rpx;
+  padding: 24rpx 30rpx;
   background-color: #fff;
   border-radius: 10rpx;
   border-top-left-radius: 0;
+  position: relative;
+  font-size: 32rpx;
 }
 .drchat-head-r {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
   margin-left:  20rpx;
 }
 .drchat-msg-r {
-  background-color: #d7f2ec;
+  max-width: 60%;
+  display: inline-block;
+  margin-left: 20rpx;
+  padding: 24rpx 30rpx;
+  background-color: #bef1e4;
   border-top-left-radius: 10rpx;
   border-top-right-radius: 0;
+  position: relative;
+  font-size: 32rpx;
+}
+.chat-talk {
+  width: 20rpx;
+  height: 48rpx;
+  position: absolute;
+  top: 0;
+}
+.chat-talk-l {
+  left: 0;
+}
+.chat-img {
+  width: 240rpx;
+  height: 180rpx;
+}
+.chat-talk-r {
+  right:  -16rpx;
 }
 .sub-chat {
   box-sizing: border-box;
@@ -145,11 +183,24 @@
   font-size: 28rpx;
   color: #fff;
   background-color: #1ed2af;
+  margin: 0;
 }
-.red {
+.patient-tit {
+  display: block;
+  width: 100%;
   height: 100rpx;
+  line-height: 100rpx;
+  color: #368efc;
+  font-size: 26rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f0eff5;
 }
-.colorb2a {
+.end-btn {
+  background-color: #c9c9c9;
+}
+.drchat-menu .colorb2a {
   color: #ffbb2a;
 }
 .drchat-shadow {

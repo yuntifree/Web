@@ -2,10 +2,10 @@
 //获取应用实例
 var util = require('../../utils/util.js')
 var app = getApp()
-var URL = 'https://wxdev.yunxingzh.com/inquiry/'
+var URL = app.globalData.reqUrl
 Page({
   data: {
-    hasphone: false,
+    viewShow: false,
     sid: '',
     hasphone: 0,
     hasrelation: 0,
@@ -15,15 +15,12 @@ Page({
     phoneFocus: false,
     codeFocus: false,
     tipMsg: '',
-    tipShow: false
+    tipShow: false,
+    role: 0,
   },
   //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../scancode/scancode'
-    })
-  },
   onLoad: function () {
+    wx.showNavigationBarLoading()
     this.checkLogin();
   },
   checkLogin() {
@@ -53,7 +50,7 @@ Page({
                   app.globalData.uid = data.uid;
                   app.globalData.token = data.token;
                   app.globalData.hasrelation = data.hasrelation ? data.hasrelation : 0;
-                  //that.getUser();
+                  app.globalData.haspatient = data.haspatient ? data.haspatient : 0;
                   that.checkPhone();
                 } else {
                   that.setData({
@@ -93,7 +90,6 @@ Page({
   },
   wxReset: function(param) {
     var that = this;
-    param.sid = '66d72e8f8c6f442d95e445cbc3473861';
     wx.request({
       url: URL + 'login', 
       method: 'POST',
@@ -121,26 +117,39 @@ Page({
     var navUrl = '';
     if (this.data.hasphone) {
       if (this.data.role) {
-        if (this.data.hasrelation) {
-          navUrl = '../drpatient/drpatient'
-        } else {
-          navUrl = '../drcode/drcode'
-        } 
+        wx.switchTab({
+          url: '/pages/drpatient/drpatient',
+          success: function(res) {
+            console.log(res)
+          },
+          fail: function(res){
+            console.log(res);
+          }
+        })
+        wx.hideNavigationBarLoading()
       } else {
         if (this.data.hasrelation) {
-          navUrl = '../scancode/scancode'
+          navUrl = '../binddrlist/list'
         } else {
-          navUrl = '../patientinfo/patientinfo'
+          navUrl = '../scancode/scancode'
         }
+        wx.redirectTo({
+          url: navUrl,
+          success: function(res){
+              console.log(res);
+            },
+            fail: function(res){
+              console.log(res);
+            }
+        })
+        wx.hideNavigationBarLoading()
       }
-      wx.navigateTo({
-        url: navUrl
-      })
     } else {
       this.setData({
         phoneFocus: true,
-        hasphone: true
+        viewShow: true
       })
+      wx.hideNavigationBarLoading()
     }
   },
   makePhone(e) {
@@ -228,15 +237,28 @@ Page({
         var resp = res.data;
         if (resp.errno === 0) {
           var role = resp.data.role ? resp.data.role : 0;
-          var navUrl = '';
           if (role) {
-            navUrl = '../drcode/drcode'
+            wx.switchTab({
+              url: '/pages/drpatient/drpatient',
+              success: function(res) {
+                console.log(res)
+              },
+              fail: function(res){
+                console.log(res);
+              }
+            })
           } else {
-            navUrl = '../scancode/scancode'
+            wx.redirectTo({
+              url: '../scancode/scancode',
+              success: function(res){
+                console.log(res);
+              },
+              fail: function(res){
+                console.log(res);
+              }
+            })
           }
-          wx.navigateTo({
-            url: navUrl
-          })
+          
         } else if (resp.errno == 102) {
           _this.tip(resp.desc);
           _this.setData({

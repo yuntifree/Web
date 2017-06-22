@@ -2,7 +2,12 @@
   width: 100%;
   height: 100%;
   padding: 54rpx;
+  padding-bottom: 100rpx;
   position: relative;
+  background-color: #f0eff5;
+}
+.patient-inner {
+  width: 100%;
   background-color: #f0eff5;
 }
 .patientinfo-list {
@@ -11,23 +16,25 @@
   background-color: #fff;
   border:  1rpx solid #1ed2af;
   border-radius: 10rpx;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)
 }
 .patientinfo-list-top {
-  height: 134rpx;
-  padding: 0 24rpx;
+  width: 100%;
+  height: 67rpx;
+  padding: 20rpx 24rpx 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /**justify-content: space-between;**/
   align-items: center;
 }
-.list-top-name {
+.patientinfo-list-mid{
+  padding-top: 0;
+  padding-bottom: 20rpx;
+}
+.list-top-text {
   font-size: 34rpx;
   color: #282828;
   margin-right: 24rpx;
-}
-.list-top-text {
-  font-size: 26rpx;
-   color: #282828;
 }
 .list-top-text {
   margin-top: 8rpx;
@@ -53,16 +60,4 @@
 }
 .list-bot-img:last-child{
   border-left: 1px solid #fff;
-}
-.patientinfo-btn {
-  width: 100%;
-  height: 98rpx;
-  line-height: 98rpx;
-  background-color: #1ed2af;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  border-radius: 0;
-  color: #fff;
-  font-size: 36rpx;
 }

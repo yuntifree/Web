@@ -1,13 +1,14 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var uid,token,URL;
-
+var uid,token,URL,ptcid;
+var failText = app.globalData.failText;
 Page({
   data: {
     info: [],
     tipShow: false,
-    tipMsg: ''
+    tipMsg: '',
+    hasmore: 0
   },
   //事件处理函数
   bindViewTap: function() {
@@ -19,6 +20,7 @@ Page({
     this.getData();
   },
   getData: function() {
+    //页面五层处理
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
@@ -41,11 +43,15 @@ Page({
         if (resp.errno === 0) {
           var data = resp.data
           _this.setData({
-            info: data.infos
+            info: data.infos,
+            hasmore: data.hasmore ? data.hasmore : 0
           })
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res){
+        _this.tip(failText);
       }
     })
   },
@@ -62,8 +68,7 @@ Page({
           console.log('用户点击取消')
         }
       }
-    })
-    
+    })  
   },
   delConfirm(idx) {
     var _this = this;
@@ -88,34 +93,72 @@ Page({
           _this.setData({
             info: _this.data.info
            });
+          if (_this.data.info.length <=0) {
+            app.globalData.haspatient = 0;
+          }
           _this.tip('删除成功');
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res){
+        _this.tip(failText);
       }
     })
   },
   addPt() {
     app.globalData.editPt = {};
-    wx.navigateTo({
-      url: '../writepatient/writepatient'
+    wx.redirectTo({
+      url: '../writepatient/writepatient',
+      success: function(res){
+        console.log(res);
+      },
+      fail: function(res){
+        console.log(res);
+      }
     })
   },
   editPt(e) {
     var _this = this;
     var idx = e.currentTarget.dataset.index;
     app.globalData.editPt = this.data.info[idx];
-    wx.navigateTo({
-      url: '../writepatient/writepatient'
+    wx.redirectTo({
+      url: '../writepatient/writepatient',
+      success: function(res){
+        console.log(res);
+      },
+      fail: function(res){
+        console.log(res);
+      }
     })
   },
   goPay(e) {
     var idx = e.currentTarget.dataset.index;
-    app.globalData.ptid = this.data.info[idx].id;
-    console.log(app.globalData.ptid);
-    wx.navigateTo({
-      url: '../pay/pay'
+    app.globalData.ptcid = this.data.info[idx].id;
+    wx.redirectTo({
+      url: '../pay/pay',
+      success: function(res){
+        console.log(res);
+      },
+      fail: function(res){
+        console.log(res);
+      }
     })
+  },
+  upper: function(e) {
+    console.log(e)
+  },
+  lower: function(e) {
+    if (this.data.hasmore) {
+      var len = this.data.info.length-1;
+      if (len >= 0) {
+        var seq = this.data.info[len].seq;
+        this.getData(seq);
+      }
+    }
+  },
+  scroll: function(e) {
+    console.log(e)
   },
   tip: function(val) {
     this.setData({

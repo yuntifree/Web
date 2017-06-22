@@ -2,7 +2,7 @@
 //获取应用实例
 var app = getApp();
 var tuid,uid,token,URL,hasrelation;
-
+var failText = app.globalData.failText;
 Page({
   data: {
     info: {},
@@ -12,6 +12,7 @@ Page({
   },
   //事件处理函数
   onLoad: function () {
+    //页面五层处理
     tuid = app.globalData.tuid;
     uid = app.globalData.uid;
     token = app.globalData.token;
@@ -44,6 +45,9 @@ Page({
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res) {
+        _this.tip(textFail);
       }
     })
   },
@@ -70,18 +74,24 @@ Page({
       success: function(res) {
         var resp = res.data;
         if (resp.errno ===0) {
-          if (hasrelation) {
-            wx.navigateTo({
-              url: '../patientinfo/patientinfo'
-            })
-          } else {
-            wx.navigateTo({
-              url: '../writepatient/writepatient'
-            })
-          }
+          _this.setData({
+            cirShow: false
+          })
+          wx.navigateTo({
+            url: '../binddrlist/list',
+            success: function(res){
+              console.log(res);
+            },
+            fail: function(res){
+              console.log(res);
+            }
+          })
         } else {
           console.log(resp.desc);
         }
+      },
+      fail: function() {
+        _this.tip(textFail);
       }
     })
   },

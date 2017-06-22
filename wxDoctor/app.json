@@ -1,33 +1,31 @@
 {
   "pages":[
-    "pages/patientchat/patientchat",
-    "pages/drpatient/drpatient",
-    "pages/wallet/wallet",
-    "pages/binddrlist/list",
+    "pages/index/index",
+    "pages/writepatient/writepatient",
     "pages/drconfirm/drconfirm",
     "pages/patientinfo/patientinfo",
-    "pages/binddr/binddr",
+    "pages/patientchat/patientchat",
     "pages/pay/pay",
-    "pages/index/index",
+    "pages/binddrlist/list",
+    "pages/binddr/binddr",
     "pages/scancode/scancode",
-    "pages/drcode/drcode",
+    "pages/drpatient/drpatient",
     "pages/drchat/drchat",
     "pages/unbinddr/unbinddr",
-    "pages/writepatient/writepatient",
-    "pages/logs/logs"
+    "pages/wallet/wallet"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#1ed2af",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"white"
   },
   "tabBar": {
     "list": [{
       "pagePath": "pages/drpatient/drpatient",
       "iconPath": "images/tab/msg_gray.png",
       "selectedIconPath": "images/tab/msg_green.png",
-      "text": "问诊"
+      "text": "咨询"
     }, {
       "pagePath": "pages/wallet/wallet",
       "iconPath": "images/tab/money_gray.png",

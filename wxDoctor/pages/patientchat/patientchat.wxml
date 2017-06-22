@@ -1,12 +1,12 @@
-<view class="container drchat">
-  <text class="patient-tit g-tac">您已进入医生问诊室，快提出您的问题吧</text>
+<view class="container drchat" wx:if="{{mounted}}">
+  <text class="patient-tit g-tac">您已进入医生咨询室，快提出您的问题吧</text>
   <scroll-view class="drchat-info" scroll-y style="height: 100%;" 
       bindscrolltoupper="upper" 
       bindscrolltolower="lower" 
       bindscroll="scroll" 
       scroll-top="{{scrollTop}}"
       scroll-into-view="{{toView}}">
-    <view wx:for="{{chatLists}}" wx:key="chat" wx:for-index="idx" id="{{'list'+ item.seq}}">
+    <view wx:for="{{chatLists}}" wx:for-index="idx" id="{{'list'+ item.seq}}">
       <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.ctime}}</text>
       <view wx:if="{{item.flag}}" class="drchat-r">
         <image class="drchat-head-r" src="{{item.ptHead}}"/>
@@ -14,7 +14,7 @@
           <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
         <view wx:else class="drchat-msg drchat-msg-r">
-          <image class="chat-img" mode="aspectFit" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
+          <image class="chat-img" mode="aspectFill" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
           <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
       </view>
@@ -24,16 +24,26 @@
           <image class="chat-talk chat-talk-l" src="../../images/login/img_talk_white.png"/>
         </view>
         <view wx:if="{{item.type==2}}" class="drchat-msg drchat-msg-r">
-          <image class="drchat-head" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
-          <image class="chat-img" src="../../images/login/img_talk.png"/>
+          <image class="chat-img" mode="aspectFill" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
+          <image class="chat-talk chat-talk-l" src="../../images/login/img_talk.png"/>
         </view>
       </view>
     </view>
   </scroll-view> 
-  <view class="sub-chat">
-    <input class="chat-ipt" bindinput="bindKeyInput" type="text" value="{{iptVal}}" focus="{{iptFocus}}"/>
+  <view class="sub-chat" wx:if="{{!end}}">
+    <input class="chat-ipt" bindinput="bindKeyInput" type="text" 
+      value="{{iptVal}}" 
+      focus="{{iptFocus}}"
+      cursor-spacing="20"
+      bindconfirm="tapSub"
+      confirm-hold="true"
+      confirm-type="send"/>
     <image class="chat-pic" src="../../images/patient/ico_camera.png" bindtap="makeImg"/>
     <button class="chat-btn" bindtap="tapSub">发送</button>
+  </view>
+  <view class="sub-chat" wx:else>
+    <button class="chat-btn end-btn">本次咨询已结束</button>
+    <button class="chat-btn" bindtap="reInquiry">再次咨询</button>
   </view>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

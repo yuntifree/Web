@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container" wx:if="{{mounted}}">
   <scroll-view class="con-inner" 
       wx:if="{{ptInfo}}"
       scroll-y style="height: 100%;" 
@@ -10,7 +10,8 @@
       scroll-into-view="">
     <view class="drpaient-list" wx:for="{{info}}" 
       wx:key="drpt" 
-      wx:for-index="idx" 
+      wx:for-index="idx"
+      data-index="{{idx}}"
       bindtap="goDrchat"
       >
       <view class="drpaient-head">
@@ -27,16 +28,19 @@
     </view>
   </scroll-view>
   <view wx:else class="con-inner">
-  <view class="doctorcode-img img-box" >
-        <canvas bindtap="previewImg" hidden="{{canvasHidden}}" style="width: 400rpx;height: 400rpx;margin: 36rpx auto 34rpx;border:1rpx solid #b4b4b4" canvas-id="mycanvas"/>
-        <!--<image bindtap="previewImg" mode="scaleToFill" src="{{imagePath}}"></image>-->
-    </view>
+  <view class="img-box doctorcode-img " >
+    <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
+  </view>
     <text class="doctorcode-text g-tac">
-      暂时未受到患者回诊咨询\n
-      <text class="coloraf">长按</text>保存以上二维码并引导患者扫描\n
-      即可绑定患者，接收回诊咨询\n
+      暂时未受到就诊人咨询\n
+      <text class="coloraf"></text>请妥善截图保存，并引导患者扫描\n
+      即可绑定就诊人，接收回诊咨询\n
       <text class="coloraf">*二维码也可在【个人中心】找到</text>
     </text>
+  </view>
+  <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">
+    <image src="{{codeImg}}"/>
+    <text class="img-tip">点击屏幕即可关闭图片</text>
   </view>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

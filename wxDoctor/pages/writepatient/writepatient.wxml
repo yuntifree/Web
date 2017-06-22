@@ -1,24 +1,41 @@
 <!--index.wxml-->
 <view class="container">
   <image class="binddr-img" src="../../images/login/img_ownpic.png"></image>
-  <text class="binddr-tip g-tac">请先绑定患者的医疗信息</text>
-  <view class="binddr-ipt">
-    <view class="ipt-l binddr-ipt-name">姓<text class="g-fr">名</text></view>
-    <input class="ipt-r" bindinput="makeName" placeholder-class="ipt-r-holder" placeholder="请输入姓名" 
-      value="{{info.name}}"
-      focus="{{nameFocus}}"></input>
-  </view>
-  <view class="binddr-ipt">
-    <text class="ipt-l">联系电话</text>
-    <input class="ipt-r" bindinput="makePhone" placeholder-class="ipt-r-holder" placeholder="请输入联系电话" 
-      value="{{info.phone}}"
-      focus="{{phoneFocus}}"></input>
-  </view>
-  <view class="binddr-ipt">
-    <text class="ipt-l">医疗卡号</text>
-    <input class="ipt-r" bindinput="makeCard" placeholder-class="ipt-r-holder" placeholder="请输入医疗卡号" 
-    value="{{info.mcard}}"></input>
-  </view>
-  <button class="btn bindder-btn" bindtap="saveInfo">保存</button>
+  <text class="binddr-tip g-tac">请先绑定就诊人的医疗信息</text>
+  <form bindsubmit="saveInfo" class="pt-form">
+    <view class="binddr-ipt">
+      <view class="ipt-l binddr-ipt-name"><text>姓</text><text>名</text></view>
+      <input class="ipt-r" name="name" placeholder-class="ipt-r-holder" placeholder="请输入姓名" 
+        value="{{info.name}}" focus="{{nameFocus}}"></input>
+    </view>
+    <view class="binddr-ipt">
+      <view class="ipt-l binddr-ipt-name"><text>性</text><text>别</text></view>
+      <label class="binddr-gender">
+        <icon class="radio-icon" wx:if="{{info.gender == 1}}" type="success" size="16" data-gender="0" bindtap="selectMan"/> 
+        <icon class="radio-icon" wx:else type="circle" size="16" data-gender="1" bindtap="selectMan"/>
+        <text bindtap="selectMan" data-gender="1">男</text> 
+      </label>
+      <label class="binddr-gender">
+        <icon class="radio-icon" wx:if="{{info.gender == 2}}" type="success" data-gender="0" size="16" bindtap="selectFemale"/> 
+        <icon class="radio-icon" wx:else type="circle" size="16" data-gender="2" bindtap="selectFemale"/>
+        <text bindtap="selectFemale" data-gender="2">女</text> 
+      </label>
+    </view>
+    <view class="binddr-ipt">
+      <view class="ipt-l binddr-ipt-name"><text>年</text><text>龄</text></view>
+      <input class="ipt-r" name="age" placeholder-class="ipt-r-holder" placeholder="请输入年龄" 
+        value="{{info.age}}" focus="{{ageFocus}}"></input>
+    </view>
+    <view class="binddr-ipt">
+      <view class="ipt-l"><text>联</text><text>系</text><text>电</text><text>话</text></view>
+      <input class="ipt-r" name="phone" placeholder-class="ipt-r-holder" placeholder="请输入联系电话" 
+        value="{{info.phone}}" focus="{{phoneFocus}}"></input>
+    </view>
+    <view class="binddr-ipt">
+      <view class="ipt-l ipt-card"><text>医</text><text>疗</text><text>卡</text><text>号</text></view>
+      <input class="ipt-r" name="mcard" placeholder-class="ipt-r-holder" value="{{info.mcard}}" placeholder="选填" ></input>
+    </view>
+    <button class="btn bindder-btn" formType="submit">保存</button>
+  </form>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

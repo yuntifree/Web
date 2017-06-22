@@ -1,23 +1,50 @@
 //index.js
 //获取应用实例
 var app = getApp()
-
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {}
+    tipMsg: '',
+    tipShow: false,
   },
   onLoad: function () {
   },
   getcode: function() {
+    var _this = this;
     wx.scanCode({
-      success: (res) => {
-        //app.globalData.tuid = res.tuid;
-        app.globalData.tuid = 1
-        wx.navigateTo({
-          url: '../binddr/binddr'
-        })
-      }
+      success: function(res) {
+        var resp = res.result;
+        var resTuid = resp.substr(0,5);
+        console.log(resTuid);
+        if (resTuid == 'tuid=') {
+          var idx = resp.indexOf('=') +1;
+          resp = ~~(resp.substring(idx));
+          app.globalData.tuid = resp;
+          wx.redirectTo({
+            url: '../binddr/binddr',
+            success: function(res) {
+              console.log(res);
+            },
+            fail: function(res){
+              console.log(res);
+            }
+          })
+        } else {
+          _this.tip('二维码错误，请扫描正确的医生二维码')
+        }
+      },
     })
+  },
+  tip: function(val) {
+    this.setData({
+      tipMsg: val,
+      tipShow: true
+    })
+    var _this = this;
+    setTimeout(function() {
+      _this.setData({
+        tipMsg: '',
+        tipShow: false
+      })
+    },1500)
   }
 })

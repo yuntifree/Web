@@ -1,10 +1,10 @@
 //qrcode
-var QR = require("../../utils/qrcode.js");
+var QR = require("../../utils/wxqrcode.js");
 
 //获取应用实例
 var app = getApp()
-var URL,uid,token;
-var qrUrl;
+var URL, uid, token, qrUrl;
+var failText = app.globalData.failText;
 Page({
   data: {
     info: {},
@@ -12,17 +12,17 @@ Page({
     iptFocus: false,
     tipMsg: '',
     tipShow: false,
-    maskHidden:true,
-    imagePath:'',
+    maskHidden: true,
+    imagePath: '',
+    codeImg: '',
+    viewCode: false
   },
   //事件处理函数
-  onLoad: function () {
+  onLoad: function() {
     URL = app.globalData.reqUrl;
-    uid =  app.globalData.tuid;
+    uid = app.globalData.uid;
     token = app.globalData.token;
-    qrUrl = {
-      tuid: app.globalData.uid
-    }
+    qrUrl = 'tuid=' + app.globalData.uid;
     this.getData();
   },
   getData: function() {
@@ -32,7 +32,6 @@ Page({
       uid: uid,
       token: token
     };
-    console.log(JSON.stringify(param));
     wx.request({
       url: URL + 'get_doctor_info',
       method: 'POST',
@@ -47,21 +46,25 @@ Page({
         if (resp.errno === 0) {
           var fee = 0;
           if (resp.data.fee > 0) {
-             fee = (resp.data.fee / 100).toFixed(2)
+            fee = (resp.data.fee / 100).toFixed(2)
           }
           _this.setData({
             info: resp.data,
             iptMoney: fee
           })
-          var size = _this.setCanvasSize();//动态设置画布大小
           var initUrl = qrUrl;
-          _this.createQrCode(initUrl,"mycanvas",size.w,size.h);
+          var data = QR.createQrCodeImg(qrUrl, {
+            'size': 300
+          });
+          _this.setData({
+            codeImg: data
+          })
         } else {
           console.log(resp.desc);
         }
       },
       fail: function(res) {
-        console.log(res);
+        _this.tip(failText);
       }
     })
   },
@@ -96,7 +99,7 @@ Page({
           }
         },
         fail: function(res) {
-
+          _this.tip(failText);
         }
       })
     } else {
@@ -106,59 +109,18 @@ Page({
       this.tip('请输入正确的金额');
     }
   },
-  setCanvasSize:function(){
-    var size={};
-    try {
-        var res = wx.getSystemInfoSync();
-        var scale = 750/400;//不同屏幕下canvas的适配比例；设计稿是750宽
-        var width = res.windowWidth/scale;
-        var height = width;//canvas画布为正方形
-        size.w = width;
-        size.h = height;
-      } catch (e) {
-        // Do something when catch error
-        console.log("获取设备信息失败"+e);
-      } 
-    return size;
-  } ,
-  createQrCode:function(url,canvasId,cavW,cavH){
-    //调用插件中的draw方法，绘制二维码图片
-    QR.qrApi.draw(url,canvasId,cavW,cavH);
-
-  },
-  //获取临时缓存照片路径，存入data中
-  canvasToTempImage:function(){
-    var that = this;
-    wx.canvasToTempFilePath({
-      canvasId: 'mycanvas',
-      success: function (res) {
-          var tempFilePath = res.tempFilePath;
-          console.log("********"+tempFilePath);
-          that.setData({
-              imagePath:tempFilePath,
-          });
-      },
-      fail: function (res) {
-          console.log(res);
-      }
-    });
-  },
   //点击图片进行预览，长按保存分享图片
-  previewImg:function(e){
-    wx.canvasToTempFilePath({
-      canvasId: 'mycanvas',
-      success: function (res) {
-          var tempFilePath = res.tempFilePath;
-          wx.previewImage({
-            current: tempFilePath, // 当前显示图片的http链接
-            urls: [tempFilePath] // 需要预览的图片http链接列表
-          })
-          //console.log(this.data.imagePath);
-      },
-      fail: function (res) {
-          console.log(res);
-      }
-    });    
+  previewImg: function(e) {
+    console.log(e.currentTarget.dataset.src);
+    this.setData({
+      viewCode: true
+    })
+    //var result = base.decode(e.currentTarget.dataset.src); 
+  },
+  viewShow: function(e) {
+    this.setData({
+      viewCode: false
+    })
   },
   tip: function(val) {
     this.setData({
@@ -171,6 +133,6 @@ Page({
         tipMsg: '',
         tipShow: false
       })
-    },1500)
+    }, 1500)
   }
 })

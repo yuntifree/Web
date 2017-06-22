@@ -1,7 +1,7 @@
 <!--index.wxml-->
-<view wx:if="{{hasphone}}" class="container">
+<view wx:if="{{viewShow}}" class="container">
   <image bindtap="bindViewTap" class="reset-img" src="../../images/login/img_ownpic.png" background-size="cover"></image>
-  <text class="reset-welcome g-tac">欢迎使用东莞回诊通\n请输入您的手机号与密码进行注册</text>
+  <text class="reset-welcome g-tac">欢迎使用健康莞家\n请输入您的手机号与密码进行注册</text>
   <view class="reset-ipt">
     <image class="ipt-icon" src="../../images/login/loading_icon_phone.png"></image>
     <input class="ipt-phone" placeholder-class="res-holder" type="number" placeholder="请输入手机号" 

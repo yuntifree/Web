@@ -7,11 +7,9 @@
     scroll-top="{{scrollTop}}">
     <view class="binddoctor-list" wx:for="{{info}}" 
       wx:key="mydr" 
-      wx:for-index="idx"
-      data-index="{{idx}}"
-      bindtap="goPt">
-      <image class="binddoctor-img" src="{{item.doctor.headurl}}"></image>
-      <view class="binddoctor-info">
+      wx:for-index="idx">
+      <image class="binddoctor-img" src="{{item.doctor.headurl}}" data-index="{{idx}}" bindtap="delDr"></image>
+      <view class="binddoctor-info"  data-index="{{idx}}" bindtap="goPt">
         <view class="binddoctor-name">
           <text class="inner-name">{{item.doctor.name}}</text>
           <text class="inner-hospital">{{item.doctor.hospital}}</text>
@@ -22,10 +20,12 @@
           <text class="chat-text g-ellipsis">{{item.chat.type===1 ? item.chat.content :'[图片]'}}</text>
         </view>
         <view wx:else>
-          <text class="click-inquiry">点击问诊开始咨询</text>
+          <text class="click-inquiry">点击咨询开始咨询</text>
         </view>
       </view>
     </view>
   </scroll-view>
+  <text class="none-tip g-tac" wx:if="{{infoNull}}">您还没有已经绑定的医生，快去绑定吧~</text>
+  <button class="bottom-btn g-tac" bindtap="addDr"><image class="img-add" src="../../images/login/ico_add.png"/><text>绑定新医生</text></button>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text> 
 </view>

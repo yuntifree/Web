@@ -3,8 +3,8 @@
 var util = require('../../utils/util.js')
 var dateFormat = util.dateFormat;
 var app = getApp()
-var tuid,uid,token,URL,drHead;
-var ptHead = ''
+var tuid,uid,token,URL,drHead,ptHead,timer;
+var failText = app.globalData.failText;
 Page({
   data: {
     scrollTop: 100,
@@ -17,55 +17,94 @@ Page({
       type: 1,
       timeshow: false
     },
-    patientShow: false,
-    endShow: false,
-    userInfo: {},
     iptFocus: false,
-    toView: ''
+    toView: '',
+    end: false,
+    userInfo: {},
+    mounted: false
+  },
+  onHide: function() {
+    clearInterval(timer);
+    timer = null;
+   //事件处理函数
+  },
+  onUnload: function() {
+    clearInterval(timer);
+    timer = null;
+  },
+  onShow: function() {
+    if (timer == null) {
+      this.checkEnd();
+    } 
+    wx.showNavigationBarLoading()
   },
   //事件处理函数
   onLoad: function () {
-    tuid = app.globalData.tuid;
+    if (app.globalData.userInfo) {
+      ptHead = app.globalData.userInfo.avatarUrl
+    } else {
+      ptHead = '../../images/doctor/ico_personal.png'
+    }
+
+    tuid = app.globalData.drid;
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     drHead = app.globalData.drHead;
     var _this = this;
+    var msg = [];
     //wx.clearStorage();
-    app.getUserInfo(function(userInfo){
-      //获取患者头像
-      ptHead = app.globalData.userInfo.avatarUrl;
-      var msg = [];
-      wx.getStorage({
-        key: 'msg',
-        success: function(res) {
-          msg = res.data;
-          _this.setData({
-            chatLists: msg,
-          })
-          _this.setData( {
-            toView: 'list' +msg[msg.length-1].seq
-            }
-          )
-          //_this.getData(-1 || 0, true);
-        },
-        fail: function(res) {
-          _this.getData(-1,true);
-        } 
-      })
-      /*setInterval(function() {
-        console.log(_this.data.chatLists[len].seq);
-        _this.getData(_this.data.chatLists[len].seq || 0, true);
-      },1500)*/
+    wx.getStorage({
+      key: 'msg'+tuid,
+      success: function(res) {
+        msg = res.data;
+        _this.fillAndScroll(msg)
+        _this.getData(msg[msg.length-1].seq, true);
+      },
+      fail: function(res) {
+        _this.getData(-1,true);
+      } 
     })
-    //this.getData(0);
+  },
+  checkEnd: function() {
+    var _this = this;
+    wx.getStorage({
+      key: 'endInquiry'+tuid,
+      success: function(res) {
+        _this.setData({
+          end: res.data,
+          mounted: true
+        })
+        wx.hideNavigationBarLoading()
+        _this.startTimer();
+      },
+      fail: function(res) {
+        console.log(res);
+      }
+    })    
+  },
+  startTimer: function() {
+    //3秒拉一次
+    console.log(this.data.end);
+    var _this = this;
+    if (!this.data.end) {
+      timer = setInterval(function() {
+        var len = _this.data.chatLists.length-1;
+        if (len > 0) {
+          _this.getData(_this.data.chatLists[len].seq, true);
+        } 
+        _this.setData({
+          date: new Date().getTime() + ' '
+        })
+      },1500)
+    }
   },
   getData(seq,before) {
     var _this = this;
     var param = {
       uid: uid,
       token: token,
-      tuid: tuid,
+      tuid: tuid, //对方id
       seq: seq,
       num: 50
     }
@@ -85,6 +124,9 @@ Page({
           var infos = data.infos;
           var pre = false;
           if (infos && infos.length >0) {
+            if (param.seq == -1) {
+              infos = data.infos.reverse();
+            }
             var len = infos.length;
             for (var i=0; i<len; i++) {
               if (uid == infos[i].uid) {
@@ -94,13 +136,32 @@ Page({
               }
               infos[i].ptHead = ptHead;
               infos[i].drHead = drHead;
+              infos[i].timeshow = false;
+              infos[i].ctime = infos[i].ctime.replace(/-/g,'/');
             }
             _this.saveMsg(infos);
-            //_this.makeTime();
           }
+          var tempStatus = data.status == 2 ? true : false;
+          _this.setData({
+            end: tempStatus,
+            status: data.status
+          })
+          wx.setStorage({
+            key:"endInquiry" + tuid,
+            data: tempStatus,
+            success: function(res) {
+              console.log('suc endInquiry'+res)
+            } ,
+            fail: function(res) {
+              console.log('fail endInquiry'+res)
+            }
+          })
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res) {
+        _this.tip(failText);
       }
     })
   },
@@ -108,11 +169,12 @@ Page({
     var _this = this;
     var localMsg = [];
     wx.getStorage({
-      key: 'msg',
+      key: 'msg'+tuid,
       success: function(res) {
         localMsg = res.data;
         for (var i=0; i<serverMsg.length; i++) {
           for(var j=0; j<localMsg.length; j++) {
+            console.log(serverMsg[i].id + ',' +localMsg[j].id);
             if (serverMsg[i].id == localMsg[j].id) {
               serverMsg.splice(i,1);
               i--;
@@ -121,29 +183,34 @@ Page({
           }
         }
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
-        //重置数据
-        _this.setData({
-          chatLists: _this.data.chatLists,
-          toView: 'list'+(_this.data.chatLists.last.seq)
-        })
+        _this.fillAndScroll(_this.data.chatLists)
         //setStorage
-        _this.setMsg(true,serverMsg);
+        _this.setMsg();
       },
       fail: function(res) {
-        //重置数据
-        _this.setData({
-          chatLists: _this.data.chatLists.concat(serverMsg),
-          toView: 'list'+serverMsg[serverMsg.length-1].seq
-        })
-        //setStorage
-        _this.setMsg(false)
+        _this.data.chatLists = _this.data.chatLists.concat(serverMsg)
+        _this.fillAndScroll(_this.data.chatLists)
+        _this.setMsg()
       }
     })
   },
+  fillAndScroll: function(msgList) {
+    if (msgList) {
+      this.makeTime()
+      this.setData({
+        chatLists: msgList
+      })
+      this.setData({
+        toView: 'list' + msgList[msgList.length-1].seq
+      })      
+    } else {
+      console.log('fillAndScroll empty')
+    }
+  },
   setMsg: function(repeat,serverMsg) {
     wx.setStorage({
-      key:"msg",
-      data: repeat ? this.data.chatLists.concat(serverMsg) : this.data.chatLists,
+      key:"msg"+tuid,
+      data: this.data.chatLists,
       success: function(res) {
         console.log('suc'+res)
       } ,
@@ -155,19 +222,21 @@ Page({
   makeTime: function() {
     var len = this.data.chatLists.length;
     var text1,text2;
-    var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
-    for(var i=0;i <len;i++) {
-      if (i>0) {
-        text1 = new Date(this.data.chatLists[i-1].ctime).getTime();
-        text2 = new Date(this.data.chatLists[i].ctime).getTime();
-        if (text2-text1 >= 300000) {
-          var timeshow = "chatLists["+i+"].timeshow";
-          this.setData({
-            [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-          })
-        }
-      }
-      var ctime = "chatLists["+i+"].ctime"
+    for(var i=1;i<len;i++) {
+      text1 = new Date(this.data.chatLists[i-1].ctime).getTime();
+      text2 = new Date(this.data.chatLists[i].ctime).getTime();
+      //this.tip(new Date(this.data.chatLists[i-1].ctime));
+      if (text2-text1 >= 300000) {
+        var timeshow = "chatLists["+i+"].timeshow";
+        //this.tip(timeshow);
+        this.setData({
+          [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
+        })
+      }   
+    }
+    for(var i=0; i<len; i++) {
+      var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
+      var ctime = "chatLists["+i+"].ctime";
       var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy-MM-dd')).getTime();
       if (date === nowDate) {
         this.setData({
@@ -175,6 +244,10 @@ Page({
         })
       }
     }
+    var timeshow0 = "chatLists[0].timeshow";
+    this.setData({
+      [timeshow0]: true //key只需要用中括号括起来就变成变量啦,如
+    })
   },
   bindKeyInput(e) {
     this.setData({
@@ -239,62 +312,44 @@ Page({
       success: function(res) {
         var resp = res.data;
         if (resp.errno == 0) {
-          _this.addChat(1);
+          _this.addChat(1,resp.data.id);
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res) {
+        _this.tip(failText)
       }
     })
   },
-  addChat(type) {
+  addChat(type,id) {
     var len = this.data.chatLists.length;
-    var content2 = "chatLists["+len+"].content";
-    var ctime2 = "chatLists["+len+"].ctime";
-    var type2 = "chatLists["+len+"].type";
-    var flag2 = "chatLists["+len+"].flag";
-    var timeshow2 = "chatLists["+len+"].timeshow";
-    var ptHead2 = "chatLists["+len+"].ptHead";
-    var drHead2 = "chatLists["+len+"].drHead";
-    var seq = "chatLists["+len+"].seq"
+    var none = len<=0 ? true : false;
+    var addInfo =[{
+      id: id,
+      content: this.data.subInfo.content,
+      ctime: this.data.subInfo.ctime,
+      type: type,
+      flag: 1,
+      timeshow: this.data.subInfo.timeshow,
+      ptHead: ptHead,
+      drHead: drHead,
+      seq: none ? 1 :this.data.chatLists[len-1].seq + 1,
+    }]
     this.setData({
-      [content2]: this.data.subInfo.content,
-      [ctime2]: this.data.subInfo.ctime,
-      [type2]: type,
-      [flag2]: 1,
-      [timeshow2]: this.data.subInfo.timeshow,
-      [ptHead2]: ptHead,
-      [seq]: this.data.chatLists[len-1].seq + 1,
-      iptVal: '',
+      chatLists: this.data.chatLists.concat(addInfo),
+      iptVal: ''
     })
+    this.setMsg();
     this.setData({
-      toView: 'list'+ (this.data.chatLists[len-1].seq+1)
-    })
-  },
-  endInquiry(e) {
-    this.setData({
-      endShow: true
-    })
-  },
-  cancelEnd() {
-    this.setData({
-      endShow: false
-    })
-  },
-  checkEnd() {
-    this.setData({
-      endShow: false
-    })
-  },
-  getPatient(e) {
-    this.setData({
-      patientShow: !this.data.patientShow
+      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].seq + 1)
     })
   },
   makeImg(e) {
     var _this = this;
     wx.chooseImage({
       count: 1, // 默认9
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
@@ -329,10 +384,13 @@ Page({
                   _this.setData({
                     [con]: data.data.filename
                   })
-                  _this.addChat(2)
+                  _this.addChat(2,data.id)
                 } else {
                   _this.tip(resp.desc);
                 }
+              },
+              fail: function(res) {
+                console.log(res);
               }
             })
           }
@@ -349,29 +407,13 @@ Page({
       urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
     })
   },
+  reInquiry() {
+    wx.redirectTo({
+      url: '../patientinfo/patientinfo'
+    })
+  },
   upper: function(e) {
-    var i = 0;
-    /*wx.getStorage({
-      key: 'msg',
-      success: function(res) {
-        var msg = JSON.parse(res.data);
-        var temMsg;
-        var idx = (msg.length-1) - i*5
-        if (msg.length>5) {
-          temMsg = msg.splice(idx, 5);
-        } else{
-          temMsg = msg.splice(idx, msg.length);
-        }
-        /*this.setData({
-          info: temMsg
-        })
-        console.log(temMsg)
-        this.getData(msg[msg.length-1].seq,true);
-      },
-      fail: function(res) {
-        this.tip('全都在这没有更多了');
-      } 
-    })*/
+    //var i = 0;
   }, 
   lower: function(e) {
     //console.log(e)

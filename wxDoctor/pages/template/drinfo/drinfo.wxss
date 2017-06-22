@@ -14,10 +14,10 @@
 }
 .drinfo-title {
   display: block;
-  margin-top: 17rpx;
-  font-size: 28rpx;
+  margin-top: 20rpx;
+  font-size: 30rpx;
   color: #828282;
 }
 .drinfo-info {
-  margin-top: 10rpx;
+  margin-top: 14rpx;
 }

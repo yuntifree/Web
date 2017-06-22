@@ -1,5 +1,6 @@
 <import src="../template/drinfo/drinfo.wxml"/>
 <view class="container">
-  <template is="item"/>
-  <button class="btn unbinddr-btn">解绑医生</button>
+  <template is="item" data="{{drinfo: info}}"/>
+  <button class="btn unbinddr-btn" bindtap="unbindDr">解绑医生</button>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

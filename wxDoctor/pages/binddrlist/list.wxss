@@ -20,17 +20,19 @@
 }
 .binddoctor-name {
   margin-top: 2rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .inner-name {
-  padding-top: 6rpx;
-  font-size: 32rpx;
+  font-size: 36rpx;
   color: #282828;
   font-weight: 500;
 }
 .inner-hospital {
   padding: 8rpx 20rpx;
-  margin: 0 24rpx;
-  font-size: 22rpx;
+  margin: 0 30rpx;
+  font-size: 26rpx;
   background-color: #1cc5a4;
   color: #fff;
   border-radius: 10rpx;
@@ -39,7 +41,7 @@
   padding: 8rpx 20rpx;
   background-color: #ffbb2a;
   color: #fff;
-  font-size: 22rpx;
+  font-size: 26rpx;
   border-radius: 10rpx;
 }
 .chat-time {

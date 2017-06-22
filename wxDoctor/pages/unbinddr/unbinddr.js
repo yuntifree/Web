@@ -1,28 +1,112 @@
 //index.js
 //获取应用实例
-var app = getApp()
-var URL = 'https://wxdev.yunxingzh.com/inquiry/'
+var app = getApp();
+var drid,uid,token,URL,hasrelation;
+var failText = app.globalData.failText;
+
 Page({
   data: {
-    hasphone: false,
-    sid: '',
-    hasphone: 0,
-    hasrelation: 0,
-    userInfo: {}
+    info: {},
+    tipMsg: '',
+    tipShow: false,
   },
   //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../scancode/scancode'
+  onLoad: function () {
+    drid = app.globalData.drid;
+    uid = app.globalData.uid;
+    token = app.globalData.token;
+    URL = app.globalData.reqUrl;
+    hasrelation = app.globalData.hasrelation;
+    this.getData();
+  },
+  getData: function() {
+    var _this = this;
+    var param = {
+      uid: uid,
+      token: token,
+      tuid: drid
+    }
+    wx.request({
+      url: URL +'get_doctor_info',
+      method: 'POST',
+      data: {
+        data: param
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.errno == 0) {
+          _this.setData({
+            info: resp.data
+          })
+        } else {
+          _this.tip(resp.desc);
+        }
+      },
+      fail: function(res) {
+        _this.tip(failText)
+      }
     })
   },
-  onLoad: function () {
-    //调用应用实例的方法获取全局数据
-    /*app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })*/
+  unbindDr: function() {
+    var _this = this;
+    wx.showModal({
+      title: '删除',
+      content: '确认要解绑吗？',
+      success: function(res) {
+        if (res.confirm) {
+          _this.delConfirm();
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })  
   },
+  delConfirm: function() {
+    var _this = this;
+    var param = {
+      type: 1,
+      tuid: drid,
+      token: token,
+      uid: uid
+    }
+    wx.request({
+      url: URL + 'bind_op',
+      method: 'POST',
+      data: {
+        data: param
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.errno ===0) {
+          wx.navigateTo({
+            url: '../binddrlist/list'
+          })
+        } else {
+          console.log(resp.desc);
+        }
+      },
+      fail: function(res) {
+        _this.tip(failText)
+      }
+    })
+  },
+  tip: function(val) {
+    this.setData({
+      tipMsg: val,
+      tipShow: true
+    })
+    var _this = this;
+    setTimeout(function() {
+      _this.setData({
+        tipMsg: '',
+        tipShow: false
+      })
+    },1500)
+  }
 })

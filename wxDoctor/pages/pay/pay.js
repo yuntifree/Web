@@ -1,7 +1,8 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var tuid,drid,uid,token,URL;
+var drid,uid,token,URL,ptcid;
+var failText = app.globalData.failText;
 Page({
   data: {
     info: {},
@@ -10,11 +11,12 @@ Page({
   },
   //事件处理函数
   onLoad: function () {
-    tuid = app.globalData.tuid;
+    //页面五层处理
     drid = app.globalData.drid;
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
+    ptcid = app.globalData.ptcid;
     this.getData();
   },
   getData: function() {
@@ -46,16 +48,53 @@ Page({
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res) {
+        _this.tip(failText);
       }
     })
   },
-  payMoney() {
+  payMoney(e) {
     var _this = this;
-    var fee = ~~this.data.info.fee *100
+    var fee = this.data.info.fee *100;
+    var formid = e.detail.formId;
     var param = {
-      id: 1, //问诊id
+      doctor: drid,
+      pid: ptcid,
+      uid: uid,
+      token: token,
       fee: fee,
-      doctor: tuid,
+      formid: formid
+    }
+    wx.request({
+      url: URL + 'add_inquiry',
+      method: 'POST',
+      data: {
+        data: param
+      },
+      header: {
+        'content': 'application/json'
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.errno === 0) {
+          _this.startWxpay(resp.data.id)
+        } else {
+          _this.tip(resp.desc);
+        }
+      },
+      fail: function(res) {
+        _this.tip(failText);
+      }
+    })
+  },
+  startWxpay(id) {
+    var _this = this;
+    var fee = this.data.info.fee *100
+    var param = {
+      id: id, //咨询id
+      fee: fee,
+      doctor: drid,
       uid: uid,
       token: token
     }
@@ -75,6 +114,9 @@ Page({
         } else {
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res) {
+        _this.tip(failText);
       }
     })
   },
@@ -86,15 +128,18 @@ Page({
       signType: param.signtype,
       paySign: param.paysign,
       success:function(res){
-        wx.navigateTo({
-          url: '../patientchat/patientchat'
+        wx.redirectTo({
+          url: '../patientchat/patientchat',
+          success: function(res){
+            console.log(res);
+          },
+          fail: function(res){
+            console.log(res);
+          }
         })
       },
       fail:function(res){
-        wx.showToast({
-          title: res,
-        })
-        console.log(JSON.stringify(res))
+        console.log(res);
       }
     })
   },
