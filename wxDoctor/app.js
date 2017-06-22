@@ -11,16 +11,6 @@ App({
       //调用登录接口
       wx.login({
         success: function(res) {
-          // 获取信息
-          wx.getUserInfo({
-            success: function(res) {
-              that.globalData.rawUserInfo = res;
-            },
-            fail: function(res) {
-              that.showErrMsg('获取微信信息失败，请稍后重试~')
-            }
-          })
-
           // 提交code
           wx.request({
             url: that.globalData.reqUrl + 'submit_code',
@@ -37,7 +27,16 @@ App({
               var resp = res.data;
               if (resp.errno ===0) {
                 that.globalData.userData = resp.data;
-                typeof cb == "function" && cb();
+                // 获取头像
+                wx.getUserInfo({
+                  success: function(res) {
+                    that.globalData.rawUserInfo = res;
+                    typeof cb == "function" && cb();
+                  },
+                  fail: function(res) {
+                    that.showErrMsg('获取微信信息失败，请稍后重试~')
+                  }
+                })
               } else {
                 that.showErrMsg(resp.desc)
               }

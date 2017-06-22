@@ -1,14 +1,14 @@
 <view class="container wallet">
   <view class="wallet-list">
     <view class="list-inner">
-      <text class="list-inner-tit">您已收到咨询费：</text>
+      <text class="list-inner-tit">钱包余额：</text>
       <view class="list-inner-r">
         <text class="list-inner-money">{{info.balance ? info.balance /100 : 0}}</text>
         <text class="list-inner-unit">元</text>
       </view>
     </view>
     <view class="list-inner">
-      <text class="list-inner-tit">历史收到咨询费：</text>
+      <text class="list-inner-tit">历史总收入：</text>
       <view class="list-inner-r">
         <text class="list-inner-money">{{info.total ? info.total/100 :0}}</text>
         <text class="list-inner-unit">元</text>
@@ -37,5 +37,6 @@
     focus="{{feeFocus}}"></input>
   <button bindtap="applyPay" disabled="{{info.balance<info.mindraw}}" class="btn" >提现</button>
   <text class="mindraw-tip">最低提现金额为50元</text>
+  <text class="mindraw-tip wallet-ipt-plhd">申请提现后会有工作人员联系您</text>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

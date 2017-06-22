@@ -242,9 +242,9 @@ Page({
       }
     }
     for(var i=0; i<len; i++) {
-      var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
+      var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
       var ctime = "chatLists["+i+"].ctime";
-      var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy-MM-dd')).getTime();
+      var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy/MM/dd')).getTime();
       if (date === nowDate) {
         this.setData({
           [ctime]: dateFormat(this.data.chatLists[i].ctime,'hh:mm')
@@ -287,7 +287,7 @@ Page({
     if (len >0) {
       var time2 = new Date(this.data.chatLists[len-1].ctime);
       if (time2 == 'Invalid Date') {
-        time2 = new Date(dateFormat(new Date(),'yyyy-MM-dd') + ' ' +this.data.chatLists[len-1].ctime).getTime();
+        time2 = new Date(dateFormat(new Date(),'yyyy/MM/dd') + ' ' +this.data.chatLists[len-1].ctime).getTime();
       }
       if (time1-time2 >= 300000) {
         this.setData({

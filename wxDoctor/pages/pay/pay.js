@@ -129,7 +129,7 @@ Page({
       paySign: param.paysign,
       success:function(res){
         wx.redirectTo({
-          url: '../patientchat/patientchat',
+          url: '/pages/patientchat/patientchat',
           success: function(res){
             console.log(res);
           },

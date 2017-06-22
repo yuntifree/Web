@@ -19,14 +19,8 @@ Page({
           var idx = resp.indexOf('=') +1;
           resp = ~~(resp.substring(idx));
           app.globalData.tuid = resp;
-          wx.redirectTo({
-            url: '../binddr/binddr',
-            success: function(res) {
-              console.log(res);
-            },
-            fail: function(res){
-              console.log(res);
-            }
+          wx.navigateTo({
+            url: '/pages/binddr/binddr'
           })
         } else {
           _this.tip('二维码错误，请扫描正确的医生二维码')

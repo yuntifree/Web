@@ -38,15 +38,15 @@ Page({
         app.globalData.hasrelation = ~~userData.hasrelation
         app.globalData.haspatient = ~~userData.haspatient
 
-        that.checkPhone();
+        that.route();
       } else {
-        that.login();
+        that.wxRegister();
       }
     } else {
       that.tip("获取用户信息失败~")
     }
   },
-  login: function() {
+  wxRegister: function() {
     var that = this;
     var raw = app.globalData.rawUserInfo
     var userData = app.globalData.userData
@@ -75,24 +75,25 @@ Page({
         } else {
           that.tip(resp.desc);
         }
-        that.checkPhone();
+        that.route();
       }
     })
   },
-  checkPhone() {
+  route() {
     var navUrl = '';
     wx.hideNavigationBarLoading()
+    // 老用户
     if (this.data.hasphone) {
+      // 是否医生
       if (this.data.role) {
         wx.switchTab({
           url: '/pages/drpatient/drpatient'
         })
-
       } else {
         if (this.data.hasrelation) {
-          navUrl = '../binddrlist/list'
+          navUrl = '/pages/binddrlist/list'
         } else {
-          navUrl = '../scancode/scancode'
+          navUrl = '/pages/scancode/scancode'
         }
         wx.redirectTo({
           url: navUrl

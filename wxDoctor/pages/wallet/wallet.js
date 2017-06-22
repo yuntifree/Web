@@ -12,7 +12,7 @@ Page({
     feeFocus: false
   },
   //事件处理函数
-  onLoad: function () {  
+  onLoad: function () {
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
@@ -62,7 +62,7 @@ Page({
          token: token,
          fee: fee*100
       }
-      
+
       wx.request({
         url: URL + 'apply_draw',
         method: 'POST',
@@ -76,8 +76,10 @@ Page({
           var resp = res.data;
           if (resp.errno == 0) {
             var draw = "info.draw";
+            var balance = "info.balance"
             _this.setData({
               [draw]: _this.data.info.draw +　param.fee,
+              [balance]: _this.data.info.balance - param.fee,
               money: ''
             })
             _this.tip('提现申请成功');

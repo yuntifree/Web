@@ -62,7 +62,7 @@ Page({
           console.log('用户点击取消')
         }
       }
-    })  
+    })
   },
   delConfirm: function() {
     var _this = this;
@@ -84,8 +84,8 @@ Page({
       success: function(res) {
         var resp = res.data;
         if (resp.errno ===0) {
-          wx.navigateTo({
-            url: '../binddrlist/list'
+          wx.reLaunch({
+            url: '/pages/binddrlist/list'
           })
         } else {
           console.log(resp.desc);

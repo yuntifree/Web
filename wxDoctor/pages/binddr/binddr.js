@@ -77,14 +77,8 @@ Page({
           _this.setData({
             cirShow: false
           })
-          wx.navigateTo({
-            url: '../binddrlist/list',
-            success: function(res){
-              console.log(res);
-            },
-            fail: function(res){
-              console.log(res);
-            }
+          wx.reLaunch({
+            url: '/pages/binddrlist/list'
           })
         } else {
           console.log(resp.desc);

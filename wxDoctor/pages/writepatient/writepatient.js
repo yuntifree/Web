@@ -85,9 +85,9 @@ Page({
           if (resp.errno === 0) {
             if (action && !app.globalData.haspatient) {
               app.globalData.haspatient = 1;
-            } 
+            }
             wx.redirectTo({
-              url: '../patientinfo/patientinfo'
+              url: '/pages/patientinfo/patientinfo'
             })
           } else {
             _this.tip(resp.desc);

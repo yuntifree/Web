@@ -22,7 +22,6 @@ Page({
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     haspatient = app.globalData.haspatient;
-    this.getData(0);
   },
   onShow: function() {
     haspatient = app.globalData.haspatient;
@@ -52,12 +51,15 @@ Page({
           if (data.infos && data.infos.length >0) {
             _this.setData({
               info: data.infos,
-              hasmore: data.hasmore ? data.hasmore : 0
+              hasmore: ~~data.hasmore
             })
             _this.makeTime();
           } else {
-            _this.setData({
-              infoNull: true
+            // _this.setData({
+            //   infoNull: true
+            // })
+            wx.redirectTo({
+              url: '/pages/scancode/scancode'
             })
           }
         } else {
@@ -72,11 +74,11 @@ Page({
   makeTime: function() {
     var len = this.data.info.length;
     var text1,text2;
-    var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
+    var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
     for(var i=0;i <len;i++) {
       if (this.data.info[i].flag) {
         var ctime = "info["+i+"].chat.ctime"
-        var nowDate = new Date(dateFormat(this.data.info[i].chat.ctime,'yyyy-MM-dd')).getTime();
+        var nowDate = new Date(dateFormat(this.data.info[i].chat.ctime,'yyyy/MM/dd')).getTime();
         if (date === nowDate) {
           this.setData({
             [ctime]: dateFormat(this.data.info[i].chat.ctime,'hh:mm')
@@ -116,7 +118,7 @@ Page({
     var idx = e.currentTarget.dataset.index;
     app.globalData.drid = this.data.info[idx].uid;
     wx.navigateTo({
-      url: '../unbinddr/unbinddr',
+      url: '/pages/unbinddr/unbinddr',
       success: function(res){
         console.log(res);
       },

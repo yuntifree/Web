@@ -186,19 +186,18 @@ Page({
         //重置数据
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
         _this.fillAndScroll(_this.data.chatLists)
-        //setStorage
-        _this.setMsg();
       },
       fail: function(res) {
         //重置数据
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg)
         _this.fillAndScroll(_this.data.chatLists)
-        _this.setMsg()
       }
     })
   },
   fillAndScroll: function(msgList) {
     if (msgList) {
+      // 先保存，再处理时间
+      this.setMsg()
       this.makeTime()
       this.setData({
         chatLists: msgList
@@ -240,8 +239,8 @@ Page({
     }
     for (var i=0; i<len; i++) {
       var ctime = "chatLists["+i+"].ctime"
-      var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
-      var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy-MM-dd')).getTime();
+      var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
+      var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy/MM/dd')).getTime();
       if (date === nowDate) {
         this.setData({
           [ctime]: dateFormat(this.data.chatLists[i].ctime,'hh:mm')
@@ -271,7 +270,7 @@ Page({
     var timeshow = "subInfo.timeshow";
     var type = "subInfo.type"
     var flag = "subInfo.flag"
-    var date = dateFormat(new Date(),'hh:mm')
+    var date = dateFormat(new Date(), 'yyyy/MM/dd hh:mm')
     this.setData({
       [ctime]: date,
       [content]: this.data.iptVal,
@@ -284,7 +283,7 @@ Page({
     if (len >0) {
       var time2 = new Date(this.data.chatLists[len-1].ctime);
       if (time2 == 'Invalid Date') {
-        time2 = new Date(dateFormat(new Date(),'yyyy-MM-dd') + ' ' +this.data.chatLists[len-1].ctime).getTime();
+        time2 = new Date(dateFormat(new Date(),'yyyy/MM/dd') + ' ' +this.data.chatLists[len-1].ctime).getTime();
       }
       if (time1-time2 >= 300000) {
         this.setData({
