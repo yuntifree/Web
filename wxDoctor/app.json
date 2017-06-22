@@ -1,6 +1,5 @@
 {
   "pages":[
-    "pages/binddr/binddr",
     "pages/index/index",
     "pages/writepatient/writepatient",
     "pages/drconfirm/drconfirm",
@@ -8,7 +7,7 @@
     "pages/patientchat/patientchat",
     "pages/pay/pay",
     "pages/binddrlist/list",
-
+    "pages/binddr/binddr",
     "pages/scancode/scancode",
     "pages/drpatient/drpatient",
     "pages/drchat/drchat",
