@@ -52,7 +52,7 @@
 }
 .writeinfo-btn{
   width: 100%;
-  margin-top: 0.34rem;
+  margin-top: 0.54rem;
 }
 .select-info {
   position: relative;
@@ -80,6 +80,10 @@
 .sel-ipt {
   height: 1rem;
 }
+.info-text {
+  font-size: 0.32rem;
+  padding-top: 0.24rem;
+}
 </style>
 <template>
   <div class="write">
@@ -89,53 +93,18 @@
       <h2 class="info-tit">献血人信息</h2>
       <input class="write-ipt top24 g-tac" type="text" v-model="subinfo.name" placeholder="请输入姓名">
       <input class="write-ipt top24 g-tac" type="text" v-model="subinfo.phone" placeholder="请输入电话号码">
-      <h2 class="info-tit reserver-blood-tit">预约附近的血站</h2>
-      <div class="select-info top24">
-        <select class="write-ipt sel-ipt g-tac" v-model="subinfo.sid" @change="makeDate(idx)">
-          <option disabled value="">请选择血站</option>
-          <option v-for="(info,idx) in infos" :value="info.id">{{info.name}}</option>
-        </select>
-        <img class="select-img" src="http://img.yunxingzh.com/3305dedf-b47d-4ad2-993a-057617124170.png">
-      </div>
-      <div class="g-clearfix date-con">
-        <div class="select-info date-info g-fl">
-          <select class="write-ipt sel-ipt g-tac" v-model="subinfo.date">
-            <option disabled value="">请选择日期</option>
-            <option v-for="date in infoDate" :value="date">{{date}}</option>
-          </select>
-          <img class="select-img" src="http://img.yunxingzh.com/3305dedf-b47d-4ad2-993a-057617124170.png">
-        </div>
-        <div class="select-info date-info g-fl">
-        <select class="write-ipt sel-ipt g-tac" v-model="subinfo.time">
-          <option disabled value="">请选择时间</option>
-          <option v-for="time in infoTimer" :value="time">{{time}}</option>
-        </select>
-        <img class="select-img" src="http://img.yunxingzh.com/3305dedf-b47d-4ad2-993a-057617124170.png">
-      </div>
-      </div>
       <ul class="write-btype g-clearfix">
         <li class="g-fl write-btype-info">
           <input class="ipt-radio" type="radio" id="one" value="0" v-model="subinfo.btype">
           <label class="ipt-text" for="one">A型血</label>
           <img v-show="subinfo.btype==='0'" class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
         </li>
-        <!--li class="g-fl write-btype-info">
-          <input class="ipt-radio" type="radio" id="two" value="1" v-model="subinfo.btype" disabled="true">
-          <label class="ipt-text" for="two">B型血</label>
-          <img v-show="subinfo.btype==='1'" class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
-        </li>
-        <li class="g-fl write-btype-info">
-          <input class="ipt-radio" type="radio" id="three" value="2" v-model="subinfo.btype" disabled="true">
-          <label class="ipt-text" for="three">AB型血</label>
-          <img v-show="subinfo.btype==='2'"class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
-        </li-->
         <li class="g-fl write-btype-info">
           <input class="ipt-radio" type="radio" id="four" value="3" v-model="subinfo.btype">
           <label class="ipt-text" for="four">O型血</label>
           <img v-show="subinfo.btype==='3'" class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
         </li>
       </ul>
-      <p class="cant-tip">现东莞B型血及AB型血已饱和，暂不纳入本次活动</p>
       <h2 class="info-tit reserver-blood-tit">是否需要健康枕</h2>
        <ul class="write-btype g-clearfix">
         <li class="g-fl write-btype-info">
@@ -149,6 +118,9 @@
           <img v-show="subinfo.pillow==='0'" class="btype-checked" src="http://img.yunxingzh.com/1688f03b-5f07-425d-bc3b-c916d09ffd63.png">
         </li>
       </ul>
+      <h2 class="info-tit  reserver-blood-tit">活动细节</h2>
+      <p class="info-text">活动细节：2017年6月25日</p>
+      <p class="info-text">地点：旗峰山公园</p>
       <button class="info-btn writeinfo-btn" @click="reserveSub">预约献血</button>
     </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false">123</tip>
@@ -197,33 +169,6 @@ export default {
         }
       });
     },
-    getDate() {
-      var now = new Date();
-      var starttime = new Date('2017/06/19');
-      if (now.getTime() < starttime.getTime()) {
-        now = starttime
-      }
-      var endTime = new Date('2017/06/25');
-      var formatSt = CGI.dateFormat(now,'yyyy-MM-dd');
-      var formatEnd = CGI.dateFormat(endTime,'yyyy-MM-dd');
-      var dateLen = getTime(formatEnd,formatSt);
-      function getTime(end, st)
-      {
-          var end = arguments[0], st = arguments[1];
-          end = Date.parse(end)/1000;
-          st = Date.parse(st)/1000;
-          var time_ = end - st;
-          return (time_/(3600*24));
-      }
-      if (now.getTime() < endTime.getTime()) {
-        var i = 0;
-        while (i <= dateLen) {
-          this.infoDate.push(now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate());
-          now = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-          i ++;
-        }
-      }
-    },
     makeDate() {
       var len = this.infos.length;
       var idx = -1;
@@ -248,8 +193,8 @@ export default {
         var param = {
           name: this.subinfo.name, //用户姓名
           phone: this.subinfo.phone + '', //用户手机号
-          sid: this.subinfo.sid, //站点id
-          date: this.subinfo.date + ' ' + this.subinfo.time, //预约献血时间
+          sid: 8, //站点id
+          date: '2016年6月25日', //预约献血时间
           btype: btype, //血型 0-A型 1-B型 2-AB型 3-O型
           pillow: pillow
         }
@@ -265,10 +210,6 @@ export default {
     },
     makeParam() {
       var ret = true;
-      if (this.subinfo.name.length <= 0) {
-        ret = false;
-        this.alertInfo('请输入姓名');
-      } 
       if (this.subinfo.phone.length <= 0) {
         ret = false;
         this.alertInfo('请输入电话号码');
@@ -276,22 +217,10 @@ export default {
         ret = false;
         this.alertInfo('请输入正确的电话号码');
       }
-      if (!~~this.subinfo.sid) {
+      if (this.subinfo.name.length <= 0) {
         ret = false;
-        this.alertInfo('请选择血站');
-      }
-      if (this.subinfo.date.length <= 0) {
-        ret = false;
-        this.alertInfo('请选择献血日期');
-      }
-      if (this.subinfo.time.length <= 0) {
-        ret = false;
-        this.alertInfo('请选择献血时间');
-      }
-      if (this.subinfo.time.length <= 0) {
-        ret = false;
-        this.alertInfo('请选择献血时间');
-      }
+        this.alertInfo('请输入姓名');
+      } 
       return ret;
     },
     alertInfo(val) {

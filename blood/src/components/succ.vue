@@ -79,11 +79,11 @@
     </p>
     <p class="reserve-info g-clearfix">
       <span class="g-fl reserve-info-l">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
-      <span class="g-fr reserve-info-r">{{ads}}</span>
+      <span class="g-fr reserve-info-r">旗峰山公园</span>
     </p>
     <p class="reserve-info g-clearfix">
       <span class="g-fl reserve-info-l">咨询电话:</span>
-      <span class="g-fr reserve-info-r">{{phone}}</span>
+      <span class="g-fr reserve-info-r">13751283800</span>
     </p>
     <p class="succ-tip g-tac color760">*请截图妥善保存预约码</p>
     <img class="sucd-pillow" src="http://img.yunxingzh.com/090785b8-9e6d-4535-a77d-cf8ec637b76c.png">
@@ -104,8 +104,6 @@ export default {
   },
   activated() {
     this.code = this.$store.state.code;
-    this.ads = this.$store.state.ads;
-    this.phone = this.$store.state.phone
   }
 }
 </script>
