@@ -13,7 +13,7 @@ Page({
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '/pages/logs/logs'
     })
   },
   onLoad: function () {
@@ -68,7 +68,7 @@ Page({
           console.log('用户点击取消')
         }
       }
-    })  
+    })
   },
   delConfirm(idx) {
     var _this = this;
@@ -109,7 +109,7 @@ Page({
   addPt() {
     app.globalData.editPt = {};
     wx.redirectTo({
-      url: '../writepatient/writepatient',
+      url: '/pages/writepatient/writepatient',
       success: function(res){
         console.log(res);
       },
@@ -123,20 +123,17 @@ Page({
     var idx = e.currentTarget.dataset.index;
     app.globalData.editPt = this.data.info[idx];
     wx.redirectTo({
-      url: '../writepatient/writepatient',
-      success: function(res){
-        console.log(res);
-      },
-      fail: function(res){
-        console.log(res);
-      }
+      url: '/pages/writepatient/writepatient'
     })
   },
   goPay(e) {
     var idx = e.currentTarget.dataset.index;
+    if (idx == undefined) {
+      return;
+    }
     app.globalData.ptcid = this.data.info[idx].id;
     wx.redirectTo({
-      url: '../pay/pay',
+      url: '/pages/pay/pay',
       success: function(res){
         console.log(res);
       },

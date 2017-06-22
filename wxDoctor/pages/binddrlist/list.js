@@ -91,8 +91,7 @@ Page({
     var idx = e.currentTarget.dataset.index;
     app.globalData.drid = this.data.info[idx].uid;
     app.globalData.drHead = this.data.info[idx].doctor.headurl;
-    var status = this.data.info[idx].status;
-    console.log()
+    var status = ~~this.data.info[idx].status;
     if (status == 0) {
       if (haspatient) {
         wx.navigateTo({
@@ -110,21 +109,29 @@ Page({
     }
   },
   addDr: function() {
-    wx.navigateTo({
-      url: '/pages/scancode/scancode'
+    var _this = this;
+    wx.scanCode({
+      success: function(res) {
+        var resp = res.result;
+        var resTuid = resp.substr(0,5);
+        if (resTuid == 'tuid=') {
+          var idx = resp.indexOf('=') +1;
+          resp = ~~(resp.substring(idx));
+          app.globalData.tuid = resp;
+          wx.navigateTo({
+            url: '/pages/binddr/binddr'
+          })
+        } else {
+          _this.tip('二维码错误，请扫描正确的医生二维码')
+        }
+      },
     })
   },
   delDr: function(e) {
     var idx = e.currentTarget.dataset.index;
     app.globalData.drid = this.data.info[idx].uid;
     wx.navigateTo({
-      url: '/pages/unbinddr/unbinddr',
-      success: function(res){
-        console.log(res);
-      },
-      fail: function(res){
-        console.log(res);
-      }
+      url: '/pages/unbinddr/unbinddr'
     })
   },
   upper: function(e) {

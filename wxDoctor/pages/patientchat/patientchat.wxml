@@ -1,9 +1,9 @@
 <view class="container drchat" wx:if="{{mounted}}">
   <text class="patient-tit g-tac">您已进入医生咨询室，快提出您的问题吧</text>
-  <scroll-view class="drchat-info" scroll-y style="height: 100%;" 
-      bindscrolltoupper="upper" 
-      bindscrolltolower="lower" 
-      bindscroll="scroll" 
+  <scroll-view class="drchat-info" scroll-y style="height: 100%;"
+      bindscrolltoupper="upper"
+      bindscrolltolower="lower"
+      bindscroll="scroll"
       scroll-top="{{scrollTop}}"
       scroll-into-view="{{toView}}">
     <view wx:for="{{chatLists}}" wx:for-index="idx" id="{{'list'+ item.seq}}">
@@ -29,17 +29,16 @@
         </view>
       </view>
     </view>
-  </scroll-view> 
+  </scroll-view>
   <view class="sub-chat" wx:if="{{!end}}">
-    <input class="chat-ipt" bindinput="bindKeyInput" type="text" 
-      value="{{iptVal}}" 
+    <input class="chat-ipt" bindinput="bindKeyInput" type="text"
+      value="{{iptVal}}"
       focus="{{iptFocus}}"
       cursor-spacing="20"
       bindconfirm="tapSub"
       confirm-hold="true"
       confirm-type="send"/>
     <image class="chat-pic" src="../../images/patient/ico_camera.png" bindtap="makeImg"/>
-    <button class="chat-btn" bindtap="tapSub">发送</button>
   </view>
   <view class="sub-chat" wx:else>
     <button class="chat-btn end-btn">本次咨询已结束</button>

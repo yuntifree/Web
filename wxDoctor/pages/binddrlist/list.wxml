@@ -20,7 +20,7 @@
           <text class="chat-text g-ellipsis" wx:if="{{item.chat.type}}">{{item.chat.type==1 ? item.chat.content :'[图片]'}}</text>
         </view>
         <view wx:else>
-          <text class="click-inquiry">点击咨询开始咨询</text>
+          <text class="click-inquiry">点击开始咨询</text>
         </view>
       </view>
     </view>

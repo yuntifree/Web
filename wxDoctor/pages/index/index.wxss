@@ -19,7 +19,7 @@
   box-sizing: border-box;
   width: 65%;
   height: 100rpx;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1rpx solid #dcdcdc;
 }
 .res-ipt-code {
   justify-content: space-between;
@@ -38,11 +38,11 @@
   color: #b4b4b4;
 }
 .res-code {
-  padding-left: 11px;
+  padding-left: 22rpx;
   font-size: 28rpx;
   color: #1ed2af;
   position: relative;
-  border-left: 1px solid #1ed2af;
+  border-left: 1rpx solid #1ed2af;
   white-space: nowrap;
 }
 

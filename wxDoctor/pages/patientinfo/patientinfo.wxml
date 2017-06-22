@@ -2,16 +2,16 @@
 <view class="container patientinfo">
   <scroll-view class="patient-inner" scroll-y style="height: 100%;">
     <view class="patientinfo-list" wx:for="{{info}}" wx:for-index="idx" wx:key="ptinfo">
-      <view class="patientinfo-list-top" data-index="{{idx}}" bindtap="goPay">
-        <view>
-          <text class="list-top-text">{{item.name}}</text>
-          <text class="list-top-text" wx:if="{{item.gender}}">{{item.gender==1 ? '男' : '女'}}</text>
-          <text class="list-top-text" wx:if="{{item.age}}" >{{item.age}}岁</text>
-          <text class="list-top-text" wx:if="{{item.mcard}}">{{item.mcard}}</text>
+      <view data-index="{{idx}}" bindtap="goPay">
+        <view class="patientinfo-list-top">
+            <text class="list-top-text">{{item.name}}</text>
+            <text class="list-top-text" wx:if="{{item.gender}}">{{item.gender==1 ? '男' : '女'}}</text>
+            <text class="list-top-text" wx:if="{{item.age}}" >{{item.age}}岁</text>
+            <text class="list-top-text" wx:if="{{item.mcard}}">{{item.mcard}}</text>
         </view>
-      </view>
-      <view class="patientinfo-list-top patientinfo-list-mid" bindtap="goPay">
-        <text class="list-top-text">{{item.phone}}</text>
+        <view class="patientinfo-list-top patientinfo-list-mid">
+          <text class="list-top-text">{{item.phone}}</text>
+        </view>
       </view>
       <view class="patientinfo-list-bot">
         <view class="list-bot-img g-tac" data-index="{{idx}}" bindtap="delPt">
@@ -21,8 +21,8 @@
           <image src="../../images/patient/ico_write.png"></image>
         </view>
       </view>
-    </view> 
-  </scroll-view> 
+    </view>
+  </scroll-view>
   <button class="bottom-btn g-tac" bindtap="addPt"><image class="img-add" src="../../images/login/ico_add.png"/>新增就诊人</button>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

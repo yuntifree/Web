@@ -181,7 +181,6 @@ Page({
         localMsg = res.data;
         for (var i=0; i<serverMsg.length; i++) {
           for(var j=0; j<localMsg.length; j++) {
-            console.log(serverMsg[i].id + ',' +localMsg[j].id);
             if (serverMsg[i].id == localMsg[j].id) {
               serverMsg.splice(i,1);
               i--;
@@ -263,9 +262,6 @@ Page({
   },
   tapSub() {
     if (this.data.iptVal.length <=0) {
-      this.setData({
-        iptFocus: true
-      })
       this.tip('请输入发送内容');
       return;
     }
@@ -345,7 +341,8 @@ Page({
     }]
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
-      iptVal: ''
+      iptVal: '',
+      iptFocus: true
     })
     this.setMsg();
     this.setData({

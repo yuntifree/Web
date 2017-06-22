@@ -15,11 +15,11 @@
   width: 100%%;
   height: 98rpx;
   padding: 24rpx 0;
-  display: flex; 
+  display: flex;
   flex-direction: row;
   font-size: 36rpx;
   color: #646464;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1rpx solid #dcdcdc;
 }
 .confrim-list text {
   width: 181rpx;
@@ -34,8 +34,8 @@
 }
 .mon-ipt {
   display: block;
-  width: 181rpx;
-  padding: 2px 0;
+  width: 320rpx;
+  padding: 2rpx 0;
 }
 .mon-btn {
   height: 60rpx;

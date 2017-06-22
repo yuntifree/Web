@@ -24,7 +24,7 @@
   color: #1ed2af;
 }
 .drchat-menu text:last-child {
-  border-left: 1px solid #dcdcdc;
+  border-left: 1rpx solid #dcdcdc;
 }
 .menu-end {
   position: fixed;
@@ -148,7 +148,7 @@
   box-sizing: border-box;
   height: 98rpx;
   width: 100%;
-  padding: 0 30rpx;
+  padding: 0 20rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -161,7 +161,7 @@
 }
 .chat-ipt {
   box-sizing: border-box;
-  width: 489rpx;
+  width: 627rpx;
   height: 70rpx;
   line-height: 70rpx;
   padding: 0 10rpx;
@@ -173,7 +173,7 @@
 .chat-pic {
   width: 66rpx;
   height: 66rpx;
-  margin: 18rpx;
+  margin: 18rpx 0 18rpx 18rpx;
 }
 .chat-btn {
   height: 70rpx;
@@ -231,7 +231,7 @@
   margin-bottom: 91rpx;
 }
 .end-btn-con {
-  display: flex; 
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 }

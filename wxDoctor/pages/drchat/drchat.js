@@ -259,9 +259,6 @@ Page({
   },
   tapSub() {
     if (this.data.iptVal.length <=0) {
-      this.setData({
-        iptFocus: true
-      })
       this.tip('请输入发送内容');
       return;
     }
@@ -344,6 +341,7 @@ Page({
     })
     this.setData({
       iptVal: '',
+      iptFocus: true,
       toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].seq + 1)
     })
     this.setMsg();
