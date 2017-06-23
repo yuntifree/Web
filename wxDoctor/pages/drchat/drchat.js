@@ -82,11 +82,6 @@ Page({
         wx.hideNavigationBarLoading();
         _this.startTimer();
       },
-      complete: function() {
-        _this.setData({
-          mounted: true
-        })
-      }
     })
   },
   startTimer() {
@@ -149,22 +144,26 @@ Page({
           _this.setData({
             end: tempStatus,
           })
-          wx.setStorage({
-            key:"endInquiry"+ptid,
-            data: tempStatus,
-            success: function(res) {
-              console.log('suc endInquiry'+res)
-            } ,
-            fail: function(res) {
-              console.log('fail endInquiry'+res)
-            }
-          })
+          try {
+            wx.setStorageSync("endInquiry"+ptid, tempStatus)
+          } catch (e) {
+
+          }
         } else {
           _this.tip(resp.desc);
         }
       },
       fail: function(res) {
         _this.tip(textFail);
+      },
+      complete: function() {
+        wx.hideNavigationBarLoading()
+        if (!_this.data.mounted) {
+          _this.setData({
+            mounted: true
+          })
+          _this.checkTimer()
+        }
       }
     })
   },
@@ -325,7 +324,6 @@ Page({
   },
   addChat(type,id) {
     var len = this.data.chatLists.length;
-    var none = len<=0 ? true : false;
     var addInfo = [{
       id: id,
       content: this.data.subInfo.content,
@@ -335,7 +333,7 @@ Page({
       timeshow: this.data.subInfo.timeshow,
       ptHead: ptHead,
       drHead: drHead,
-      seq: none ? 1 :this.data.chatLists[len-1].id + 1,
+      seq: id,
     }]
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
@@ -343,7 +341,7 @@ Page({
     this.setData({
       iptVal: '',
       iptFocus: true,
-      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].id + 1)
+      toView: 'list'+ id
     })
     this.setMsg();
   },
@@ -378,13 +376,7 @@ Page({
           endShow: false
         })
         wx.switchTab({
-          url: '/pages/drpatient/drpatient',
-          success: function(res) {
-            console.log(JSON.stringify(res));
-          },
-          fail: function(res) {
-            console.log(JSON.stringify(res));
-          }
+          url: '/pages/drpatient/drpatient'
         })
       },
       fail: function(res) {
@@ -457,6 +449,7 @@ Page({
   },
   makImg(e) {
     var file = '';
+    var _this = this;
     if (sending) {
       return
     } else {

@@ -68,8 +68,6 @@ Page({
         _this.getData(-1);
       }
     })
-
-    this.checkEnd()
   },
   checkEnd: function() {
     var _this = this;
@@ -81,16 +79,10 @@ Page({
         })
         _this.startTimer();
       },
-      complete: function() {
-        _this.setData({
-          mounted: true
-        })
-      }
     })
   },
   startTimer: function() {
     //3秒拉一次
-    console.log(this.data.end);
     var _this = this;
     if (!this.data.end && timer == null) {
       timer = setInterval(function() {
@@ -151,16 +143,11 @@ Page({
             end: tempStatus,
             status: data.status
           })
-          wx.setStorage({
-            key:"endInquiry" + tuid,
-            data: tempStatus,
-            success: function(res) {
-              console.log('suc endInquiry'+res)
-            } ,
-            fail: function(res) {
-              console.log('fail endInquiry'+res)
-            }
-          })
+          try {
+            wx.setStorageSync("endInquiry" + tuid, tempStatus)
+          } catch(e) {
+
+          }
         } else {
           _this.tip(resp.desc);
         }
@@ -170,6 +157,12 @@ Page({
       },
       complete: function() {
         wx.hideNavigationBarLoading()
+        if (!_this.data.mounted) {
+          _this.setData({
+            mounted: true
+          })
+          _this.checkEnd()
+        }
       }
     })
   },
@@ -326,9 +319,7 @@ Page({
     })
   },
   addChat(type,id) {
-    console.log(id);
     var len = this.data.chatLists.length;
-    var none = len<=0 ? true : false;
     var addInfo =[{
       id: id,
       content: this.data.subInfo.content,
@@ -338,7 +329,7 @@ Page({
       timeshow: this.data.subInfo.timeshow,
       ptHead: ptHead,
       drHead: drHead,
-      seq: none ? 1 :id,
+      seq: id,
     }]
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
@@ -347,9 +338,8 @@ Page({
     })
     this.setMsg();
     this.setData({
-      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].id + 1)
+      toView: 'list'+ id
     })
-    console.log(this.data.toView);
   },
   makeImg(e) {
     var _this = this;
