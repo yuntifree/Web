@@ -326,6 +326,7 @@ Page({
     })
   },
   addChat(type,id) {
+    console.log(id);
     var len = this.data.chatLists.length;
     var none = len<=0 ? true : false;
     var addInfo =[{
@@ -337,7 +338,7 @@ Page({
       timeshow: this.data.subInfo.timeshow,
       ptHead: ptHead,
       drHead: drHead,
-      seq: none ? 1 :this.data.chatLists[len-1].id + 1,
+      seq: none ? 1 :id,
     }]
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
@@ -389,15 +390,15 @@ Page({
                 'content-type': 'application/json'
               },
               success: function(res) {
-                var resp = res.data;
-                if (resp.errno == 0) {
+                var respp = res.data;
+                if (respp.errno == 0) {
                   var con = "subInfo.content";
                   _this.setData({
                     [con]: data.data.filename
                   })
-                  _this.addChat(2,data.id)
+                  _this.addChat(2,respp.data.id)
                 } else {
-                  _this.tip(resp.desc);
+                  _this.tip(respp.desc);
                 }
               },
             })
