@@ -1,7 +1,7 @@
 <view class="container drchat" wx:if="{{mounted}}">
   <view class="drchat-menu" wx:if="{{!end}}">
-    <text class="menu-pait g-tac" bindtap="getPatient">获取就诊人信息</text>
-    <text class="menu-pait colorb2a g-tac" bindtap="endInquiry">结束咨询</text>
+    <view class="menu-pait g-tac" bindtap="getPatient" style="color:{{ptColor}}">获取就诊人信息</view>
+    <view class="colorb2a g-tac" bindtap="endInquiry">结束咨询</view>
   </view>
   <view wx:else class="menu-end g-tac">该就诊人已结束咨询</view>
   <view class="dr-patient" wx:if="{{patientShow}}">
@@ -22,7 +22,8 @@
       <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.ctime}}</text>
       <view wx:if="{{item.flag}}" class="drchat-r">
         <image class="drchat-head-r" src="{{item.drHead}}"/>
-        <view wx:if="{{item.type==1}}" class="drchat-msg-r">{{item.content}}
+        <view wx:if="{{item.type==1}}" class="drchat-msg-r">
+          <text>{{item.content}}</text>
           <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
         <view wx:else class="drchat-msg drchat-msg-r">
@@ -32,7 +33,8 @@
       </view>
       <view wx:else class="drchat-l">
         <image class="drchat-head" src="{{item.ptHead}}"/>
-        <view wx:if="{{item.type==1}}" class="drchat-msg">{{item.content}}
+        <view wx:if="{{item.type==1}}" class="drchat-msg">
+          <text>{{item.content}}</text>
           <image class="chat-talk chat-talk-l" src="../../images/login/img_talk_white.png"/>
         </view>
         <view wx:if="{{item.type==2}}" class="drchat-msg">

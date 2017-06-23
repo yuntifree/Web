@@ -21,7 +21,8 @@ Page({
     patientShow: false,
     endShow: false,
     end: false,
-    mounted: false
+    mounted: false,
+    ptColor: '#1ed2af'
   },
   //事件处理函数
   onHide: function() {
@@ -175,7 +176,6 @@ Page({
         localMsg = res.data;
         for (var i=0; i<serverMsg.length; i++) {
           for(var j=0; j<localMsg.length; j++) {
-            console.log(serverMsg[i].id + ',' +localMsg[j].id);
             if (serverMsg[i].id == localMsg[j].id) {
               serverMsg.splice(i,1);
               i--;
@@ -395,13 +395,16 @@ Page({
     var _this = this;
     if (this.data.ptInfo.name) {
       this.setData({
-        patientShow: !this.data.patientShow
+        patientShow: !this.data.patientShow,
+      })
+      this.setData({
+        ptColor: this.data.patientShow ? '#dcdcdc' : '1ed2af'
       })
     } else {
       wx.getStorage({
         key: 'ptInfo'+ptid,
         success: function(res) {
-          console.log(res);
+
           _this.setData({
             ptInfo: res.data,
             patientShow: true
