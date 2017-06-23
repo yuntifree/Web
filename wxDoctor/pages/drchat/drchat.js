@@ -493,15 +493,15 @@ Page({
                 'content-type': 'application/json'
               },
               success: function(res) {
-                var resp = res.data;
-                if (resp.errno == 0) {
+                var respp = res.data;
+                if (respp.errno == 0) {
                   var con = "subInfo.content";
                   _this.setData({
                     [con]: data.data.filename
                   })
-                  _this.addChat(2,data.id)
+                  _this.addChat(2,respp.data.id)
                 } else {
-                  _this.tip(resp.desc);
+                  _this.tip(respp.desc);
                 }
               },
               complete: function() {

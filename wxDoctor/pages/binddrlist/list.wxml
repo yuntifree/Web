@@ -28,6 +28,6 @@
     </view>
   </scroll-view>
   <text class="none-tip g-tac" wx:if="{{infoNull}}">您还没有已经绑定的医生，快去绑定吧~</text>
-  <button class="bottom-btn g-tac" bindtap="addDr"><image class="img-add" src="../../images/login/ico_scan.png"/><text>绑定新医生</text></button>
+  <button class="bottom-btn g-tac" bindtap="addDr"><image class="img-add" src="../../images/patient/ico_scan.png"/><text>绑定新医生</text></button>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>
