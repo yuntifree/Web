@@ -194,7 +194,7 @@ export default {
           name: this.subinfo.name, //用户姓名
           phone: this.subinfo.phone + '', //用户手机号
           sid: 8, //站点id
-          date: '2016年6月25日', //预约献血时间
+          date: '2017年6月25日', //预约献血时间
           btype: btype, //血型 0-A型 1-B型 2-AB型 3-O型
           pillow: pillow
         }
