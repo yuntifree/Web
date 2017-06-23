@@ -9,6 +9,7 @@ Page({
     info: {},
     tipMsg: '',
     tipShow: false,
+    btnBg: '#f6a623'
   },
   //事件处理函数
   onLoad: function () {
@@ -52,6 +53,9 @@ Page({
   },
   unbindDr: function() {
     var _this = this;
+    this.setData({
+      btnBg: '#e89712'
+    })
     wx.showModal({
       title: '删除',
       content: '确认要解绑吗？',
@@ -61,6 +65,11 @@ Page({
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
+      },
+      complete: function(res) {
+        _this.setData({
+          btnBg: '#f6a623'
+        })
       }
     })
   },

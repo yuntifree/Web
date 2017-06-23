@@ -1,12 +1,12 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/patientinfo/patientinfo",
+    "pages/pay/pay",
     "pages/drchat/drchat",
     "pages/writepatient/writepatient",
     "pages/drconfirm/drconfirm",
-    "pages/patientinfo/patientinfo",
     "pages/patientchat/patientchat",
-    "pages/pay/pay",
     "pages/binddrlist/list",
     "pages/binddr/binddr",
     "pages/scancode/scancode",

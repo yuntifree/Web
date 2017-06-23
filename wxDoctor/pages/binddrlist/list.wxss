@@ -1,11 +1,20 @@
 .binddoctor-list {
   display: flex;
   flex-direction: row;
-  width: 92%;
+  width: 100%;
   height: auto;
   margin: 0 auto;
-  padding: 30rpx 0;
-  border-bottom: 1rpx solid #dcdcdc;
+  padding: 30rpx 4%;
+  position: relative;
+}
+.binddoctor-line {
+  display:block;
+  width: 92%;
+  height: 2rpx;
+  background-color:  #dcdcdc;
+  position: absolute;
+  bottom: 0;
+  left: 4%;
 }
 .binddoctor-img {
   width: 20%;

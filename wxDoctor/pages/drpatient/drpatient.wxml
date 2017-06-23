@@ -21,7 +21,7 @@
       <view class="drpaient-info">
         <view class="info-text">
           <text class="info-text-name">{{item.nickname}}</text>
-          <text class="info-text-chat g-ellipsis">{{item.type==1 ? item.content : '[图片]'}}</text>
+          <text class="info-text-chat g-ellipsis" wx:if="{{item.type}}">{{item.type==1 ? item.content : '[图片]'}}</text>
         </view>
         <text class="info-text-time">{{item.ctime}}</text>
       </view>

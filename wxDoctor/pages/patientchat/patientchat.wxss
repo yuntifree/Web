@@ -92,14 +92,14 @@
   top: 0;
 }
 .chat-talk-l {
-  left: 0;
+  left: -18rpx;
 }
 .chat-img {
   width: 240rpx;
   height: 180rpx;
 }
 .chat-talk-r {
-  right:  -16rpx;
+  right:  -18rpx;
 }
 .sub-chat {
   box-sizing: border-box;
@@ -159,4 +159,7 @@
 }
 .end-btn {
   background-color: #c9c9c9;
+}
+.colaf {
+  background-color: #1ed2af;
 }

@@ -22,7 +22,7 @@
       <view wx:if="{{item.flag}}" class="drchat-r">
         <image class="drchat-head-r" src="{{item.drHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg-r">
-          <text>{{item.content}}</text>
+          <text selectable="true">{{item.content}}</text>
           <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
         <view wx:else class="drchat-msg drchat-msg-r">
@@ -33,7 +33,7 @@
       <view wx:else class="drchat-l">
         <image class="drchat-head" src="{{item.ptHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg">
-          <text>{{item.content}}</text>
+          <text selectable="true">{{item.content}}</text>
           <image class="chat-talk chat-talk-l" src="../../images/login/img_talk_white.png"/>
         </view>
         <view wx:if="{{item.type==2}}" class="drchat-msg">

@@ -8,7 +8,8 @@ Page({
     info: [],
     tipShow: false,
     tipMsg: '',
-    hasmore: 0
+    hasmore: 0,
+    selId: -1
   },
   //事件处理函数
   bindViewTap: function() {
@@ -126,11 +127,23 @@ Page({
       url: '/pages/writepatient/writepatient'
     })
   },
-  goPay(e) {
-    var idx = e.currentTarget.dataset.index;
+  changeBg(e) {
+    var idx = ~~e.currentTarget.dataset.index;
     if (idx == undefined) {
       return;
     }
+    this.setData({
+      selId: idx
+    })
+  },
+  goPay(e) {
+    var idx = ~~e.currentTarget.dataset.index;
+    if (idx == undefined) {
+      return;
+    }
+    this.setData({
+      selId: idx
+    })
     app.globalData.ptcid = this.data.info[idx].id;
     wx.redirectTo({
       url: '/pages/pay/pay',
@@ -139,7 +152,7 @@ Page({
       },
       fail: function(res){
         console.log(res);
-      }
+      },
     })
   },
   upper: function(e) {

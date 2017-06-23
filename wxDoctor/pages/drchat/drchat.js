@@ -61,7 +61,7 @@ Page({
           chatLists: msg,
         })
         _this.setData( {
-          toView: 'list' +msg[msg.length-1].seq
+          toView: 'list' +msg[msg.length-1].id
           }
         )
         _this.getData(msg[msg.length-1].seq, true);
@@ -204,7 +204,7 @@ Page({
         chatLists: msgList
       })
       this.setData({
-        toView: 'list' + msgList[msgList.length-1].seq
+        toView: 'list' + msgList[msgList.length-1].id
       })
     } else {
       console.log('fillAndScroll empty')
@@ -216,7 +216,7 @@ Page({
       data: this.data.chatLists,
       success: function(res) {
         console.log('suc'+res)
-      } ,
+      },
       fail: function(res) {
         console.log('fail'+res)
       }
@@ -335,7 +335,7 @@ Page({
       timeshow: this.data.subInfo.timeshow,
       ptHead: ptHead,
       drHead: drHead,
-      seq: none ? 1 :this.data.chatLists[len-1].seq + 1,
+      seq: none ? 1 :this.data.chatLists[len-1].id + 1,
     }]
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
@@ -343,7 +343,7 @@ Page({
     this.setData({
       iptVal: '',
       iptFocus: true,
-      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].seq + 1)
+      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].id + 1)
     })
     this.setMsg();
   },
@@ -523,6 +523,15 @@ Page({
     wx.previewImage({
       current: e.currentTarget.dataset.src, // 当前显示图片的http链接
       urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
+    })
+  },
+  makeClip(e) {
+    var val = e.currentTarget.dataset.clip;
+    wx.setClipboardData({
+      data: val,
+      success: function(res) {
+        console.log(res);
+      }
     })
   },
   upper: function(e) {

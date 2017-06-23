@@ -7,9 +7,10 @@
     scroll-top="{{scrollTop}}">
     <view class="binddoctor-list" wx:for="{{info}}"
       wx:key="mydr"
-      wx:for-index="idx">
+      wx:for-index="idx"
+      style="background-color: {{selId == idx ? '#f1f1f1' : '#fff'}}">
       <image class="binddoctor-img" src="{{item.doctor.headurl}}" data-index="{{idx}}" bindtap="delDr"></image>
-      <view class="binddoctor-info"  data-index="{{idx}}" bindtap="goPt">
+      <view class="binddoctor-info"  data-index="{{idx}}" bindtouchstart="changebg" bindtouchend="goPt">
         <view class="binddoctor-name">
           <text class="inner-name">{{item.doctor.name}}</text>
           <text class="inner-hospital">{{item.doctor.hospital}}</text>
@@ -23,9 +24,10 @@
           <text class="click-inquiry">点击开始咨询</text>
         </view>
       </view>
+      <text class="binddoctor-line"></text>
     </view>
   </scroll-view>
   <text class="none-tip g-tac" wx:if="{{infoNull}}">您还没有已经绑定的医生，快去绑定吧~</text>
-  <button class="bottom-btn g-tac" bindtap="addDr"><image class="img-add" src="../../images/login/ico_add.png"/><text>绑定新医生</text></button>
+  <button class="bottom-btn g-tac" bindtap="addDr"><image class="img-add" src="../../images/login/ico_scan.png"/><text>绑定新医生</text></button>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

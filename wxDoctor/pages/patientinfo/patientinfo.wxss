@@ -24,7 +24,7 @@
   padding: 20rpx 24rpx 0;
   display: flex;
   flex-direction: row;
-  /**justify-content: space-between;**/
+  /*justify-content: space-between;*/
   align-items: center;
 }
 .patientinfo-list-mid{
@@ -44,20 +44,31 @@
   height: 72rpx;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  background-color: #78e4cf;
+  justify-content: space-between;
   border-bottom-left-radius: 10rpx;
   border-bottom-right-radius: 10rpx;
 }
 .list-bot-img {
   width: 50%;
+  height: 100%;
+  padding-top: 20rpx;
+  background-color: #78e4cf;
   position: relative;
+}
+.list-bot-img:first-child {
+  border-bottom-left-radius: 10rpx;
+}
+.list-bot-img:last-child {
+  border-bottom-right-radius: 10rpx;
 }
 .list-bot-img image {
   width: 32rpx;
   height: 34rpx;
 }
-.list-bot-img:last-child{
-  border-left: 1rpx solid #fff;
+.bg {
+  background-color: rgba(0,0,0,0.1);
+}
+.bgaf {
+  background-color: #1ed2af;
 }

@@ -15,6 +15,7 @@ Page({
     tipMsg: '',
     infoNull: false,
     hasmore: 0,
+    selId: -1,
   },
   //事件处理函数
   onLoad: function () {
@@ -87,11 +88,20 @@ Page({
       }
     }
   },
+  changebg(e) {
+    var idx = e.currentTarget.dataset.index;
+    this.setData({
+      selId: idx
+    })
+  },
   goPt: function(e) {
     var idx = e.currentTarget.dataset.index;
     app.globalData.drid = this.data.info[idx].uid;
     app.globalData.drHead = this.data.info[idx].doctor.headurl;
     var status = ~~this.data.info[idx].status;
+    this.setData({
+      selId: -1
+    })
     if (status == 0) {
       if (haspatient) {
         wx.navigateTo({

@@ -208,8 +208,9 @@ Page({
         chatLists: msgList
       })
       this.setData({
-        toView: 'list' + msgList[msgList.length-1].seq
+        toView: 'list' + msgList[msgList.length-1].id
       })
+      console.log(this.data.toView);
     } else {
       console.log('fillAndScroll empty')
     }
@@ -232,10 +233,8 @@ Page({
     for(var i=1;i<len;i++) {
       text1 = new Date(this.data.chatLists[i-1].ctime).getTime();
       text2 = new Date(this.data.chatLists[i].ctime).getTime();
-      //this.tip(new Date(this.data.chatLists[i-1].ctime));
       if (text2-text1 >= 300000) {
         var timeshow = "chatLists["+i+"].timeshow";
-        //this.tip(timeshow);
         this.setData({
           [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
         })
@@ -338,7 +337,7 @@ Page({
       timeshow: this.data.subInfo.timeshow,
       ptHead: ptHead,
       drHead: drHead,
-      seq: none ? 1 :this.data.chatLists[len-1].seq + 1,
+      seq: none ? 1 :this.data.chatLists[len-1].id + 1,
     }]
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
@@ -347,8 +346,9 @@ Page({
     })
     this.setMsg();
     this.setData({
-      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].seq + 1)
+      toView: 'list'+ (none ? 1 :this.data.chatLists[len-1].id + 1)
     })
+    console.log(this.data.toView);
   },
   makeImg(e) {
     var _this = this;
@@ -425,6 +425,14 @@ Page({
     wx.redirectTo({
       url: '../patientinfo/patientinfo'
     })
+  },
+  makeClip(e) {
+    var val = e.currentTarget.dataset.clip;
+    wx.showToast({
+      title: val,
+      duration: 10000
+    })
+    this.tip(val)
   },
   upper: function(e) {
     //var i = 0;

@@ -7,7 +7,8 @@ Page({
   data: {
     info: {},
     tipShow: false,
-    tipMsg: ''
+    tipMsg: '',
+    btnBg: '#1ed2af',
   },
   //事件处理函数
   onLoad: function () {
@@ -56,6 +57,14 @@ Page({
   },
   payMoney(e) {
     var _this = this;
+    this.setData({
+      btnBg: '#oabf9c'
+    })
+    setTimeout(function(res) {
+      _this.setData({
+        btnBg: '#1ed2af'
+      })
+    },300)
     var fee = this.data.info.fee *100;
     var formid = e.detail.formId;
     var param = {
