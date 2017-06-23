@@ -5,6 +5,7 @@ var dateFormat = util.dateFormat;
 var app = getApp()
 var ptid,uid,token,URL,drHead,ptHead,timer;
 var textFail = app.globalData.textFail;
+var sending = false;
 Page({
   data: {
     scrollTop: 100,
@@ -456,6 +457,11 @@ Page({
   },
   makImg(e) {
     var file = '';
+    if (sending) {
+      return
+    } else {
+      sending = true
+    }
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -498,15 +504,18 @@ Page({
                   _this.tip(resp.desc);
                 }
               },
-              fail: function(res) {
-                console.log(res);
+              complete: function() {
+                sending = false
               }
             })
+          },
+          complete: function() {
+            sending = false
           }
         })
       },
-      fail: function(res) {
-        console.log(res);
+      complete: function() {
+        sending = false
       }
     })
   },
