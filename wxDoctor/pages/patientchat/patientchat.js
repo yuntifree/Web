@@ -400,18 +400,14 @@ Page({
                   _this.tip(resp.desc);
                 }
               },
-              complete: function() {
-                sending = false
-              }
             })
-          },
-          complete: function() {
-            sending = false
           }
         })
       },
       complete: function() {
-        sending = false
+        setTimeout(function() {
+          sending = false
+        }, 2000)
       }
     })
   },
