@@ -23,7 +23,8 @@ Page({
     endShow: false,
     end: false,
     mounted: false,
-    ptColor: '#1ed2af'
+    ptColor: '#1ed2af',
+    chkCamera: '../../images/patient/ico_camera.png'
   },
   //事件处理函数
   onHide: function() {
@@ -447,6 +448,13 @@ Page({
       })
     }
   },
+  changeCm(e){
+    if (!sending) {
+      this.setData({
+        chkCamera: '../../images/patient/ico_camera_press.png'
+      })
+    }
+  },
   makImg(e) {
     var file = '';
     var _this = this;
@@ -455,6 +463,9 @@ Page({
     } else {
       sending = true
     }
+    this.setData({
+      chkCamera: '../../images/patient/ico_camera.png'
+    })
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有

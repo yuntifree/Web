@@ -51,7 +51,7 @@
       bindconfirm="tapSub"
       confirm-hold="true"
       confirm-type="send"></input>
-    <image class="chat-pic" src="../../images/patient/ico_camera.png" bindtap="makImg"></image>
+    <image class="chat-pic" src="{{chkCamera}}" bindtouchstart="changeCm" bindtouchend="makImg"></image>
   </view>
   <view class="drchat-shadow" wx:if="{{endShow}}">
     <view class="end-quiry">

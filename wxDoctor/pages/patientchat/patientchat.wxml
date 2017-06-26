@@ -40,7 +40,7 @@
       bindconfirm="tapSub"
       confirm-hold="true"
       confirm-type="send"/>
-    <image class="chat-pic" src="../../images/patient/ico_camera.png" bindtap="makeImg"/>
+    <image class="chat-pic" src="{{chkCamera}}" bindtouchstart="changeCm" bindtouchend="makImg"/>
   </view>
   <view class="sub-chat" wx:else>
     <button class="chat-btn end-btn">本次咨询已结束</button>
