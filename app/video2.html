@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8">
+  <title>东莞无限安全教育视频</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style type="text/css">
+    .videos {
+      width: 94%;
+      margin: 0 auto;
+      border-bottom: 2px solid #e7e7e7;
+    }
+    .menu {
+      flex: 1;
+      text-align: center;
+      font-size: 32rpx;
+      line-height: 40rpx;
+    }
+    .cur {
+      color: #4a90f2;
+    }
+    .video-list {
+      width: 100%;
+      height: auto;
+      padding: 0.23rem 0.4rem;
+      background-color: #fff;
+      margin-top: 0.23rem;
+    }
+    .video-inner {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .video-img{
+      width: 100%;
+      height: 3.34rem;
+    }
+    .video-text {
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 1.2rem;
+      font-size: 0.32rem;
+      color:  #fff;
+      padding: 0 0.24rem;
+    }
+    .video-text-source {
+      margin-right: 0.16rem;
+      color: #fff;
+    }
+    .video-title {
+      display: block;
+      width: 100%;
+      font-size: 0.32rem;
+      line-height: 0.44rem;
+      color:  #262626;
+    }
+    .video-container {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5;
+    }
+    .video-container video {
+      width: 100%;
+      height: 100%;
+    }
+    .video-icon-play {
+      width: 0.94rem;
+      height: 0.94rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .item-desc {
+      font-size: 0.24rem;
+    }
+    .tip-info {
+      width: 140px;
+      padding: 10px;
+      position: absolute;
+      top:  50%;
+      left: 50%;
+      margin-left: -70px;
+      font-size: 14px;
+      background-color: rgba(0, 0, 0, 0.6);
+      background-color: #6b6b6b\0;
+      +background-color: #6b6b6b;
+      color: #fff;
+      border-radius: 5px;
+      display: none;
+    }
+    .vio-banner {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="section">
+    <img class="vio-banner" src="http://img.yunxingzh.com/5ccc7e1e-dda8-4e26-876d-0261c6622a0f.png"/>
+    <div class="video">
+    </div>
+    <p id="video-more" class="item-desc g-tac"></p>
+    <p class="tip-info"></p>
+    <script type="text/html" id="tplVideo">
+      {{each infos as value i}}
+        <div class="video-list">
+          <div class="video-inner">
+            <video controls poster="./images/img_banner.png" width="100%" height="auto"   data-idx={{i}}>
+               <source src={{value.dst}} type="video/mp4">
+               您的浏览器不能使用最新的视频播放方式呢
+            </video>
+            <div class="video-text g-clearfix">
+              <p class="g-fl"><span class="video-text-source">{{value.source}}</span></p>
+              <p class="g-fr click-num">{{value.click || 0}}次播放</p>
+            </div>
+          </div>
+          <p class="video-title g-ellipsis">{{value.title}}</p>
+        </div>
+      {{/each}}
+    </script>
+  </div>
+  <script type="text/javascript" src="lib/jquery.min.js"></script>
+  <script type="text/javascript" src="lib/template.js"></script>
+  <script type="text/javascript" src="lib/cgi.js"></script>
+  <script type="text/javascript" src="js/video.js"></script>
+</body>
+
+</html>
