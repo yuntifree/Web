@@ -65,7 +65,6 @@ Page({
             })
             _this.makeTime();
           } else {
-            var size = _this.setCanvasSize();//动态设置画布大小
             var initUrl = 'uid='+uid;
             var data = QR.createQrCodeImg(initUrl,{'size':300});
             _this.setData({
