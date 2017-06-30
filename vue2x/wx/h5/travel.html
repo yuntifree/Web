@@ -1,0 +1,83 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+<meta charset="utf-8"/>  
+<title>WIFI公益</title>  
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no, email=no"/> 
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    font-style: normal;
+    text-decoration: none;
+  }
+  .travel {
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+  }
+  .info-list {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-bottom: 13px;
+  }
+  .info-list:last-child {
+    margin-bottom: 0;
+  }
+  .info-list img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .info-title {
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+  }
+</style>
+</head>  
+<body>  
+  <div class="travel"></div>
+  <script type="text/html" id="tplTravel">
+    {{each infos as value i}}
+    <a class="info-list" href="{{value.dst}}">
+      <img src="{{value.img}}">
+      <p class="info-title">{{#value.title}}</p>
+    </a>
+    {{/each}}
+  </script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src='js/template.js'></script>
+  <script type="text/javascript" src="js/cgi.js"></script>
+  <script type="text/javascript">
+    CGI.get('get_travel_ad',{},function(resp) {
+      console.log(resp);
+      if (resp.errno === 0) {
+        var data = resp.data;
+        if (data.infos && data.infos.length >0) {
+          for (var i=0; i<data.infos.length; i++) {
+            data.infos[i].title = data.infos[i].title.replace('\n\n', '<br/>');
+          }
+        }
+        console.log(JSON.stringify(data.infos));
+        $('.travel').append(template('tplTravel',data));
+        console.log(JSON.stringify(data));
+      } else {
+        console.log(resp.desc);
+      }
+    })
+  </script>  
+</body>  
+</html>
