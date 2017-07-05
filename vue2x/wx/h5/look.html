@@ -1,0 +1,199 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+<meta charset="utf-8"/>  
+<title>WIFI公益</title>  
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no, email=no"/> 
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-size: 0.28rem;
+  }
+  a,i {
+    font-style: normal;
+    text-decoration: none;
+  }
+  li {
+    list-style: none;
+  }
+  button {
+    border:0;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    -webkit-appearance: none;
+  }
+  .g-tac {
+    text-align: center;
+  }
+  .g-ellipsis{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .colorff {
+    color: #4ea0ff;    
+  }
+  .look {
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+  }
+  .look-top {
+    width: 100%;
+    height: 1.2rem;
+    padding-top: 0.22rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+  }
+  .top-title,
+  .top-subtitle{
+    font-size: 0.32rem;
+    font-weight: 500;
+  }
+  .top-title span {
+    font-size: 0.4rem;
+  }
+  .top-subtitle {
+    margin: 0.16rem 0;
+  }
+  .look-list {
+    width: 90%;
+    margin: 1.6rem auto;
+    border-radius: 0.08rem;
+    box-shadow: 0 2px 10px 0 rgba(186, 218, 255, 0.8);
+  }
+  .list-info {
+    width: 100%;
+    height: 1rem;
+    padding: 0 0.2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0.08rem;
+    box-shadow: 0 2px 6px 0 rgba(186, 218, 255, 0.3);
+  }
+  .list-info-title  {
+    display: block;
+    width: 50%;
+  }
+  .list-info-total{
+    width: 20%;
+    text-align: right;
+  }
+  .list-info-lu {
+    width: 30%;
+    font-size: 0.26rem;
+    color: #9b9b9b;
+    text-align: right;
+  }
+  .list-info-lu i {
+    margin-right: 0.2rem;
+  }
+  .down-table {
+    width: 100%;
+    height: 1.4rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #fff;
+  }
+  .down-btn {
+    display: block;
+    width: 41%;
+    height: 0.92rem;
+    border-radius: 0.5rem;
+    line-height: 0.92rem;
+    text-align: center;
+    background-color: #4ea0ff;
+    color: #fff;
+    margin:  0 auto;
+    font-size: 0.32rem;
+    font-weight: 500;
+  }
+</style>
+</head>  
+<body>  
+  <div class="look">
+  </div>
+  <script type="text/html" id="tplLook">
+      <div class="look-top">
+        <p class="g-tac top-title">历史展示：<span class="colorff">{{total}}</span></p>
+        <p class="g-tac top-subtitle">点击情况：</p>
+      </div>
+      <table class="look-list">
+        {{each infos as value i}}
+          <tr class="list-info">
+            <td class="list-info-title g-ellipsis">{{value.title}}</td>
+            <td class="list-info-total"><i class="colorff">{{value.total}}</i>次</td>
+            <td class="list-info-lu">点击率:{{(value.total/total*100).toFixed(2)}}%</td>
+          </tr>
+        {{/each}}
+      </table>
+      <div class="down-table">
+        <a class="down-btn">下载统计表格</a>
+      </div>
+  </script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src='js/template.js'></script>
+  <script type="text/javascript" src="js/cgi.js"></script>
+  <script type="text/javascript">
+    adapt();
+    CGI.get('get_ad_click',{type:1},function(resp) {
+      if (resp.errno === 0) {
+        var data = resp.data;
+        $('.look').append(template('tplLook',data));
+        $('.down-btn').click(downTable());
+      } else {
+        console.log(resp.desc);
+      }
+    })
+    function downTable() {
+      // 使用outerHTML属性获取整个table元素的HTML代码（包括<table>标签），然后包装成一个完整的HTML文档，设置charset为urf-8以防止中文乱码
+      var html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementsByTagName("table")[0].outerHTML + "</body></html>";
+      // 实例化一个Blob对象，其构造函数的第一个参数是包含文件内容的数组，第二个参数是包含文件类型属性的对象
+      var blob = new Blob([html], { type: "application/vnd.ms-excel" });
+      var a = document.getElementsByTagName("a")[0];
+      // 利用URL.createObjectURL()方法为a元素生成blob URL
+      a.href = URL.createObjectURL(blob);
+      // 设置文件名，目前只有Chrome和FireFox支持此属性
+      a.download = "广告投放数据查询表.xls";
+    }
+    function adapt() {
+      if (document && window) {
+        // init font
+        var docEl = document.documentElement;
+        var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+        var dpr = isIOS ? Math.min(window.devicePixelRatio, 3) : 1;
+        dpr = window.top === window.self ? dpr : 1; //被iframe引用时，禁止缩放
+        var scale = 1 / dpr;
+        var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+        docEl.dataset.dpr = dpr;
+        var metaEl = document.createElement('meta');
+        metaEl.name = 'viewport';
+        metaEl.content = 'initial-scale=1,maximum-scale=1, minimum-scale=1';
+        docEl.firstElementChild.appendChild(metaEl);
+        var recalc = function() {
+          var width = docEl.clientWidth;
+          if (width / dpr > 750) {
+              width = 750 * dpr;
+          }
+          docEl.style.fontSize = 100 * (width / 750) + 'px';
+        };
+        recalc();
+        if (!document.addEventListener) return;
+        window.addEventListener(resizeEvt, recalc, false);
+      }
+    }
+  </script>  
+</body>  
+</html>
