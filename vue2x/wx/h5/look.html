@@ -2,7 +2,7 @@
 <html>  
 <head>  
 <meta charset="utf-8"/>  
-<title>WIFI公益</title>  
+<title>广告投放数据查询</title>  
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <meta name="format-detection" content="telephone=no, email=no"/> 
 <style type="text/css">
@@ -78,6 +78,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-between;
+    -webkit-align-items: center;
     border-radius: 0.08rem;
     box-shadow: 0 2px 6px 0 rgba(186, 218, 255, 0.3);
   }
@@ -147,7 +150,8 @@
   <script type="text/javascript" src="js/cgi.js"></script>
   <script type="text/javascript">
     adapt();
-    CGI.get('get_ad_click',{type:1},function(resp) {
+    var type = ~~CGI.query().type;
+    CGI.get('get_ad_click',{type:type},function(resp) {
       if (resp.errno === 0) {
         var data = resp.data;
         $('.look').append(template('tplLook',data));
