@@ -20,7 +20,7 @@ Page({
   //事件处理函数
   onLoad: function() {
     URL = app.globalData.reqUrl;
-    uid = app.globalData.tuid;
+    uid = app.globalData.uid;
     token = app.globalData.token;
     qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
     this.getData();
