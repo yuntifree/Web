@@ -85,3 +85,13 @@ page,view,text,input,button,image,textarea{
   height: 40rpx;
   margin-right: 10rpx;
 }
+.img-tip {
+  font-size: 28rpx;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 280rpx;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}

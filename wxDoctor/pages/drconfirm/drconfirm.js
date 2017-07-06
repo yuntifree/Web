@@ -15,7 +15,8 @@ Page({
     maskHidden: true,
     imagePath: '',
     codeImg: '',
-    viewCode: false
+    viewCode: false,
+    btnBg: '#1ed2af',
   },
   //事件处理函数
   onLoad: function() {
@@ -72,8 +73,16 @@ Page({
       iptMoney: e.detail.value
     })
   },
+  changeColor() {
+    this.setData({
+      btnBg: '#0ABF9C'
+    })
+  },
   saveFee: function() {
     var _this = this;
+    this.setData({
+      btnBg: '#1ed2af'
+    })
     if (this.data.iptMoney > 0 || this.data.iptMoney == 0) {
       var param = {
         uid: uid,
