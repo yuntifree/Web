@@ -5,7 +5,8 @@ Page({
   data: {
     tipMsg: '',
     tipShow: false,
-    btnBg: '#1ed2af'
+    btnBg: '#1ed2af',
+    helpBg: '#fff',
   },
   onLoad: function () {
   },
@@ -34,6 +35,20 @@ Page({
           _this.tip('二维码错误，请扫描正确的医生二维码')
         }
       },
+    })
+  },
+  helpColor: function() {
+    this.setData({
+      helpBg: '#f0f0f0'
+    })
+  },
+  getHelp: function() {
+    var _this = this;
+    this.setData({
+      helpBg: '#fff'
+    })
+    wx.navigateTo({
+      url: '/pages/rules/rules'
     })
   },
   tip: function(val) {

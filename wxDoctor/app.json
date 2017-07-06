@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/rules/rules",
     "pages/drconfirm/drconfirm",
     "pages/scancode/scancode",
     "pages/writepatient/writepatient",

@@ -2,5 +2,6 @@
   <image class="scan-img" src="../../images/login/ico_report.png" background-size="cover"></image>
   <text class="scan-text g-tac">欢迎使用健康莞家\n请扫描二维码绑定医生</text>
   <button class="btn scan-btn" bindtouchstart="changeColor" bindtouchend="getcode" style="background-color: {{btnBg}}">扫描医生二维码</button>
+  <button class="btn help-btn" bindtouchstart="helpColor" bindtouchend="getHelp" style="background-color: {{helpBg}}">使用帮助</button>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

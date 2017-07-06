@@ -17,19 +17,17 @@ Page({
     tipMsg: '',
     tipShow: false,
     role: 0,
-    btnBg: '#1ed2af'
+    btnBg: '#1ed2af',
+    second: 3
   },
   //事件处理函数
   onLoad: function (option) {
-    console.log(option.q);
     if (option.q) {
       var param = decodeURIComponent(option.q)
-      console.log(param)
       var resTuid = param.substr(param.indexOf('?') + 1,5)
       if (resTuid == 'tuid=') {
         var idx = param.indexOf('=') +1;
         drTuid = ~~(param.substring(idx));
-        console.log(drTuid)
       } else {
         console.log('can not find tuid')
       }
@@ -126,7 +124,21 @@ Page({
         phoneFocus: true,
         viewShow: true
       })
+      var timer = setInterval(function(){
+        if (_this.data.second <0) {
+          clearInterval(timer);
+        } else {
+          _this.setData({
+            second: --_this.data.second
+          })
+        } 
+      },1000)
     }
+  },
+  jump() {
+    this.setData({
+      second: 0
+    })
   },
   makePhone(e) {
     this.setData({

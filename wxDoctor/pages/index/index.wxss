@@ -33,15 +33,21 @@
 }
 .ipt-phone {
   font-size: 36rpx;
+  width: 400rpx;
+  height: 44rpx;
 }
 .ipt-phone2 {
   font-size: 36rpx;
   width: 250rpx;
+  height: 44rpx;
 }
 .res-holder{
   color: #b4b4b4;
 }
 .res-code {
+  width: 130rpx;
+  height: 44rpx;
+  line-height: 44rpx;
   padding-left: 22rpx;
   font-size: 28rpx;
   color: #1ed2af;
@@ -56,3 +62,25 @@
   color: #969696;
   line-height: 150%;
 }
+.splash {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+.splash-img {
+  width: 100%;
+  height: 100%;
+}
+.splash-sec {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+  padding: 20rpx 30rpx;
+  font-size: 28rpx;
+  color: #fff;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 8rpx;
+} 
