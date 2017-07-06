@@ -20,9 +20,9 @@ Page({
   //事件处理函数
   onLoad: function() {
     URL = app.globalData.reqUrl;
-    uid = app.globalData.uid;
+    uid = app.globalData.tuid;
     token = app.globalData.token;
-    qrUrl = 'tuid=' + app.globalData.uid;
+    qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
     this.getData();
   },
   getData: function() {
@@ -52,9 +52,8 @@ Page({
             info: resp.data,
             iptMoney: fee
           })
-          var initUrl = qrUrl;
           var data = QR.createQrCodeImg(qrUrl, {
-            'size': 300
+            'size': 200
           });
           _this.setData({
             codeImg: data

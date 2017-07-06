@@ -73,13 +73,22 @@
 .img-box {
   width: 400rpx;
   height: 400rpx;
-  padding: 23rpx;
   margin: 36rpx auto 34rpx;
-  border:1rpx solid #b4b4b4
+  /**border:1rpx solid #b4b4b4**/
+}
+.img-box2 {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 .drconfirm-codeimg {
-  width: 354rpx;
-  height: 354rpx;
+  width: 390rpx;
+  height: 390rpx;
+  padding: 20rpx;
+}
+.drconfirm-wxcodeimg {
+  width: 390rpx;
+  height: 444rpx;
+  padding: 0rpx;
 }
 .img-tip {
   font-size: 28rpx;

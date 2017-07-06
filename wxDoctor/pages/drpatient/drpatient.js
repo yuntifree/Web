@@ -5,7 +5,7 @@ var dateFormat = util.dateFormat;
 var QR = require("../../utils/wxqrcode.js");
 //获取应用实例
 var app = getApp()
-var tuid,uid,token,URL,hasrelation;
+var tuid,uid,token,URL,qrUrl;
 var failText = app.globalData.failText;
 Page({
   data: {
@@ -23,8 +23,8 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-    //hasrelation = app.globalData.hasrelation;
-    //this.getData(0)
+    qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
+    qrUrl = 
     this.getDr();
   },
   onShow: function() {
@@ -39,11 +39,6 @@ Page({
       seq: seq,
       num: 20
     }
-    var initUrl = 'uid='+uid;
-    var data = QR.createQrCodeImg(initUrl,{'size':300});
-    _this.setData({
-      codeImg: data
-    })
     wx.request({
       url: URL + 'get_chat_session',
       method: 'POST',
@@ -65,8 +60,7 @@ Page({
             })
             _this.makeTime();
           } else {
-            var initUrl = 'uid='+uid;
-            var data = QR.createQrCodeImg(initUrl,{'size':300});
+            var data = QR.createQrCodeImg(qrUrl,{'size':300});
             _this.setData({
               codeImg: data,
               mounted: true
@@ -80,36 +74,6 @@ Page({
         _this.tip(failText);
       }
     }) 
-  },
-  getDr() {
-    var _this = this;
-    var param = {
-      tuid: uid,
-      uid: uid,
-      token: token
-    }
-    wx.request({
-      url: URL +'get_doctor_info',
-      method: 'POST',
-      data: {
-        data: param
-      },
-      header: {
-        'content-type': 'applicatoin/json'
-      },
-      success: function(res) {
-        var resp = res.data;
-        if (resp.errno == 0) {
-          app.globalData.drHead = resp.data.headurl;
-          console.log(app.globalData.drHead);
-        } else {
-          _this.tip(resp.desc);
-        }
-      },
-      fail: function(res) {
-        _this.tip(failText)
-      }
-    })
   },
   makeTime: function() {
     var len = this.data.info.length;

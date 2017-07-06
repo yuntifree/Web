@@ -51,10 +51,15 @@ Page({
       }
     })
   },
+  changeColor() {
+    this.setData({
+      btnBg: '#e89712'
+    })
+  },
   unbindDr: function() {
     var _this = this;
     this.setData({
-      btnBg: '#e89712'
+      btnBg: '#f6a623'
     })
     wx.showModal({
       title: '删除',

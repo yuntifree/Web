@@ -55,9 +55,6 @@ Page({
     })
   },
   saveInfo: function(e) {
-    /*console.log(JSON.stringify(e.detail.value))
-    if (this.makeParam()){
-    }*/
     var value = e.detail.value;
     var _this = this;
     if (this.makeParam(value)) {
@@ -86,9 +83,16 @@ Page({
             if (action && !app.globalData.haspatient) {
               app.globalData.haspatient = 1;
             }
-            wx.redirectTo({
-              url: '/pages/patientinfo/patientinfo'
-            })
+            if (param.id) {
+              wx.redirectTo({
+                url: '/pages/patientinfo/patientinfo'
+              })
+            } else {
+              app.globalData.ptcid = resp.data.id;
+              wx.redirectTo({
+                url: '/pages/pay/pay'
+              })
+            }
           } else {
             _this.tip(resp.desc);
           }

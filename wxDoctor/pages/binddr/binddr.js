@@ -9,6 +9,7 @@ Page({
     tipMsg: '',
     tipShow: false,
     cirShow: false,
+    btnBg: '#1ed2af'
   },
   //事件处理函数
   onLoad: function () {
@@ -44,6 +45,7 @@ Page({
           })
         } else {
           _this.tip(resp.desc);
+          wx.navigateBack({})
         }
       },
       fail: function(res) {
@@ -51,10 +53,16 @@ Page({
       }
     })
   },
+  changeColor() {
+    this.setData({
+      btnBg: '#0ABF9C'
+    })
+  },
   bindDr: function() {
     var _this = this;
     this.setData({
-      cirShow: true
+      cirShow: true,
+      btnBg: '#1ed2af'
     })
     var param = {
       type: 0,

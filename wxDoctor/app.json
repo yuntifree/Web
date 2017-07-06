@@ -1,17 +1,17 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/drconfirm/drconfirm",
+    "pages/scancode/scancode",
+    "pages/writepatient/writepatient",
+    "pages/binddr/binddr",
+    "pages/unbinddr/unbinddr",
     "pages/patientinfo/patientinfo",
     "pages/pay/pay",
     "pages/drchat/drchat",
-    "pages/writepatient/writepatient",
-    "pages/drconfirm/drconfirm",
     "pages/patientchat/patientchat",
     "pages/binddrlist/list",
-    "pages/binddr/binddr",
-    "pages/scancode/scancode",
     "pages/drpatient/drpatient",
-    "pages/unbinddr/unbinddr",
     "pages/wallet/wallet"
   ],
   "window":{

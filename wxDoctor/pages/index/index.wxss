@@ -21,18 +21,22 @@
   height: 100rpx;
   border-bottom: 1rpx solid #dcdcdc;
 }
-.res-ipt-code {
+.reset-ipt2 {
   justify-content: space-between;
 }
 .ipt-icon {
+  display:block;
   width: 44rpx;
   height: 44rpx;
   margin-right: 22rpx;
-  margin-top: 3rpx;
+  margin-top: -2rpx;
 }
-
 .ipt-phone {
   font-size: 36rpx;
+}
+.ipt-phone2 {
+  font-size: 36rpx;
+  width: 250rpx;
 }
 .res-holder{
   color: #b4b4b4;

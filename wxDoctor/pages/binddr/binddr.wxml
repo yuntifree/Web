@@ -1,6 +1,6 @@
 <import src="../template/drinfo/drinfo.wxml"/>
 <view class="container">
   <template is="item" data="{{drinfo: info}}"/>
-  <button class="btn bindder-btn" bindtap="bindDr">绑定新医生 <image wx:if="{{cirShow}}" class="btn_circle" src="../../images/patient/ico_circle.png"></image></button>
+  <button class="btn bindder-btn" bindtouchstart="changeColor" bindtouchend="bindDr" style="background-color: {{btnBg}}">绑定新医生 <image wx:if="{{cirShow}}" class="btn_circle" src="../../images/patient/ico_circle.png"></image></button>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

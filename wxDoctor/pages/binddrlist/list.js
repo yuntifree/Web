@@ -16,6 +16,7 @@ Page({
     infoNull: false,
     hasmore: 0,
     selId: -1,
+    btnBg: '#1ed2af'
   },
   //事件处理函数
   onLoad: function () {
@@ -118,13 +119,22 @@ Page({
       })
     }
   },
+  changeColor() {
+    this.setData({
+      btnBg: '#0ABF9C'
+    })
+  },
   addDr: function() {
     var _this = this;
+    this.setData({
+      btnBg: '#1ed2af'
+    })
     wx.scanCode({
       success: function(res) {
         var resp = res.result;
+        _this.tip(resp);
         var resTuid = resp.substr(0,5);
-        if (resTuid == 'tuid=') {
+        /*if (resTuid == 'tuid=') {
           var idx = resp.indexOf('=') +1;
           resp = ~~(resp.substring(idx));
           app.globalData.tuid = resp;
@@ -133,7 +143,7 @@ Page({
           })
         } else {
           _this.tip('二维码错误，请扫描正确的医生二维码')
-        }
+        }*/
       },
     })
   },

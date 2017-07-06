@@ -3,6 +3,7 @@
 var util = require('../../utils/util.js')
 var app = getApp()
 var URL = app.globalData.reqUrl
+var drTuid;
 Page({
   data: {
     viewShow: false,
@@ -11,14 +12,28 @@ Page({
     codeText: '获取验证码',
     phone: '',
     code: '',
-    phoneFocus: false,
+    phoneFocus: true,
     codeFocus: false,
     tipMsg: '',
     tipShow: false,
     role: 0,
+    btnBg: '#1ed2af'
   },
   //事件处理函数
-  onLoad: function () {
+  onLoad: function (option) {
+    console.log(option.q);
+    if (option.q) {
+      var param = decodeURIComponent(option.q)
+      console.log(param)
+      var resTuid = param.substr(param.indexOf('?') + 1,5)
+      if (resTuid == 'tuid=') {
+        var idx = param.indexOf('=') +1;
+        drTuid = ~~(param.substring(idx));
+        console.log(drTuid)
+      } else {
+        console.log('can not find tuid')
+      }
+    }
     wx.showNavigationBarLoading()
     app.init(this.checkLogin)
   },
@@ -37,7 +52,6 @@ Page({
         app.globalData.token = userData.token;
         app.globalData.hasrelation = ~~userData.hasrelation
         app.globalData.haspatient = ~~userData.haspatient
-
         that.route();
       } else {
         that.wxRegister();
@@ -81,6 +95,7 @@ Page({
   },
   route() {
     var navUrl = '';
+    var _this = this;
     wx.hideNavigationBarLoading()
     // 老用户
     if (this.data.hasphone) {
@@ -90,14 +105,21 @@ Page({
           url: '/pages/drpatient/drpatient'
         })
       } else {
-        if (this.data.hasrelation) {
-          navUrl = '/pages/binddrlist/list'
+        if (drTuid) {
+          app.globalData.tuid = drTuid;
+          wx.redirectTo({
+            url: '/pages/binddr/binddr'
+          })
         } else {
-          navUrl = '/pages/scancode/scancode'
+          if (this.data.hasrelation) {
+            navUrl = '/pages/binddrlist/list'
+          } else {
+            navUrl = '/pages/scancode/scancode'
+          }
+          wx.redirectTo({
+            url: navUrl
+          })
         }
-        wx.redirectTo({
-          url: navUrl
-        })
       }
     } else {
       this.setData({
@@ -154,14 +176,23 @@ Page({
             }
           },1000);
           _this.setData({
+            phoneFocus: false,
             codeFocus: true
           })
         }
       }
     })
   },
+  changeColor() {
+    this.setData({
+      btnBg: '#0ABF9C'
+    })
+  },
   makeReg() {
     var _this = this;
+    this.setData({
+      btnBg: '#1ed2af'
+    })
     if (!this.makeParam()) {
       return;
     }
@@ -202,20 +233,27 @@ Page({
               }
             })
           } else {
-            wx.redirectTo({
-              url: '../scancode/scancode',
-              success: function(res){
-                console.log(res);
-              },
-              fail: function(res){
-                console.log(res);
-              }
-            })
+            if (drTuid) {
+              app.globalData.tuid = drTuid;
+              wx.redirectTo({
+                url: '/pages/binddr/binddr'
+              })
+            } else {
+              wx.redirectTo({
+                url: '/pages/scancode/scancode',
+                success: function(res){
+                  console.log(res);
+                },
+                fail: function(res){
+                  console.log(res);
+                }
+              })
+            }
           }
-
         } else if (resp.errno == 102) {
           _this.tip(resp.desc);
           _this.setData({
+            phoneFocus: false,
             codeFocus: true
           })
         } else{
@@ -229,6 +267,7 @@ Page({
     if (this.data.phone.length <=0) {
       this.tip('请输入电话号码');
       this.setData({
+        codeFocus: false,
         phoneFocus: true
       })
       ret = false
@@ -237,6 +276,7 @@ Page({
         this.tip('请输入正确的电话号码');
         this.setData({
           phone: '',
+          codeFocus: false,
           phoneFocus: true
         })
         ret = false
