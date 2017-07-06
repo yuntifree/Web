@@ -15,7 +15,8 @@
 .help-btn {
   margin-top: 36rpx;
   color: #1ed2af;
+  border: 2rpx solid #1ed2af;
 }
 .help-btn:after {
-  border: 2rpx solid #1ed2af;
+  border: 0;
 }

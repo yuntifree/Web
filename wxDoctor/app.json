@@ -1,9 +1,9 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/scancode/scancode",
     "pages/rules/rules",
     "pages/drconfirm/drconfirm",
-    "pages/scancode/scancode",
     "pages/writepatient/writepatient",
     "pages/binddr/binddr",
     "pages/unbinddr/unbinddr",
