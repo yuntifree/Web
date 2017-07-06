@@ -21,7 +21,7 @@
   <button class="btn" bindtouchstart="changeColor" bindtouchend="makeReg" style="background:{{btnBg}}">注册</button>
   <text class="res-tip g-tac">登录您的账号将与本微信绑定\n下次无需登录，如需更换微信请联系\n0755-86700641</text>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
-  <view class="splash" wx:if="{{second>0}}">
+  <view class="splash" wx:if="{{second>=0}}">
     <image class="splash-img" src="../../images/login/loading_hospital.png"/>
     <view class="splash-sec" bindtap="jump">{{second}} 通过</view>
   </view>

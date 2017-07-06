@@ -22,7 +22,7 @@
   border-bottom: 1rpx solid #dcdcdc;
 }
 .reset-ipt2 {
-  justify-content: space-between;
+  position: relative;
 }
 .ipt-icon {
   display:block;
@@ -33,7 +33,6 @@
 }
 .ipt-phone {
   font-size: 36rpx;
-  width: 400rpx;
   height: 44rpx;
 }
 .ipt-phone2 {
@@ -45,11 +44,13 @@
   color: #b4b4b4;
 }
 .res-code {
-  width: 130rpx;
   height: 44rpx;
   line-height: 44rpx;
   padding-left: 22rpx;
   font-size: 28rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
   color: #1ed2af;
   position: relative;
   border-left: 1rpx solid #1ed2af;

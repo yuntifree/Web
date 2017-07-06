@@ -121,12 +121,14 @@ Page({
       }
     } else {
       this.setData({
-        phoneFocus: true,
         viewShow: true
       })
       var timer = setInterval(function(){
         if (_this.data.second <0) {
           clearInterval(timer);
+          _this.setData({
+            phoneFocus: true
+          })
         } else {
           _this.setData({
             second: --_this.data.second

@@ -24,12 +24,9 @@ Page({
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
-    qrUrl = 
-    this.getDr();
   },
   onShow: function() {
     this.getData(0)
-    this.getDr();
   },
   getData(seq) {
     var _this = this;
