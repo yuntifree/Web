@@ -53,7 +53,7 @@ Page({
       }
     })
   },
-  changeColor() {
+  changeColor: function() {
     this.setData({
       btnBg: '#0ABF9C'
     })

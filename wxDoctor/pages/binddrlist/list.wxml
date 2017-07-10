@@ -9,20 +9,22 @@
       wx:key="mydr"
       wx:for-index="idx"
       style="background-color: {{selId == idx ? '#f1f1f1' : '#fff'}}">
-      <image class="binddoctor-img" src="{{item.doctor.headurl}}" data-index="{{idx}}" bindtap="delDr"></image>
-      <view class="binddoctor-info"  data-index="{{idx}}" bindtouchstart="changebg" bindtouchend="goPt">
-        <view class="binddoctor-name">
-          <text class="inner-name">{{item.doctor.name}}</text>
-          <text class="inner-hospital">{{item.doctor.hospital}}</text>
-          <text class="inner-cate">{{item.doctor.department}}</text>
+      <view class="info-left">
+        <image class="binddoctor-img" src="{{item.doctor.headurl}}" data-index="{{idx}}" bindtap="delDr"></image>
+        <view class="binddoctor-info"  data-index="{{idx}}" bindtouchstart="changebg" bindtouchend="goPt">
+          <view class="binddoctor-name">
+            <text class="inner-name">{{item.doctor.name}}</text>
+            <text class="inner-text inner-depm">{{item.doctor.department}}</text>
+            <text class="inner-text" wx:if="{{item.doctor.department.length<6}}">{{item.doctor.title}}</text>
+          </view>
+          <text wx:if="{{item.flag}}" class="chat-text g-ellipsis" wx:if="{{item.chat.type}}">{{item.chat.type==1 ? item.chat.content :'[图片]'}}</text>
+          <text wx:else class="click-inquiry">点击开始咨询</text>
         </view>
-        <view wx:if="{{item.flag}}">
-          <text class="chat-time">{{item.chat.ctime}}</text>
-          <text class="chat-text g-ellipsis" wx:if="{{item.chat.type}}">{{item.chat.type==1 ? item.chat.content :'[图片]'}}</text>
-        </view>
-        <view wx:else>
-          <text class="click-inquiry">点击开始咨询</text>
-        </view>
+      </view>
+      <view class="binddoctor-info info-right">
+        <text class="text-sty" wx:if="{{item.flag}}">咨询中</text>
+        <text class="text-sty fee-sty" wx:if="{{!item.flag&&item.doctor.fee}}">{{(item.doctor.fee/100)}}元/次</text>
+        <text class="chat-time">{{item.chat.ctime}}</text>
       </view>
       <text class="binddoctor-line"></text>
     </view>

@@ -1,0 +1,43 @@
+.setcode-title {
+  font-size: 36rpx;
+  font-weight: 500;
+  line-height: 150%;
+  margin: 108rpx auto 163rpx;
+}
+.form-area {
+  width: 100%;
+}
+.section {
+  width: 327rpx;
+  padding: 10rpx;
+  margin: 0 auto;
+  border-bottom: 2rpx solid #bebebe;
+  position: relative;
+}
+.section2 {
+  margin-top: 65rpx;
+}
+.setcode-ipt {
+  font-size: 36rpx;
+}
+.btn-area {
+  width: 100%;
+}
+.holder-ipt {
+  color: #bebebe;
+}
+.set-tip {
+  width: 340rpx;
+  margin: 16rpx auto 0;
+  font-size: 24rpx;
+  color: #ee001d;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: -44rpx;
+}
+.set-tip image{
+ width: 28rpx;
+ height: 28rpx;
+}

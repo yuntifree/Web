@@ -95,3 +95,6 @@ page,view,text,input,button,image,textarea{
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
 }
+button::after {
+  border: 0;
+}

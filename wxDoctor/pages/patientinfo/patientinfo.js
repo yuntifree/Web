@@ -9,7 +9,8 @@ Page({
     tipShow: false,
     tipMsg: '',
     hasmore: 0,
-    selId: -1
+    selId: -1,
+    btnBg: '#78e4cf'
   },
   //事件处理函数
   bindViewTap: function() {
@@ -42,11 +43,18 @@ Page({
       success: function(res){
         var resp =res.data;
         if (resp.errno === 0) {
-          var data = resp.data
-          _this.setData({
-            info: data.infos,
-            hasmore: data.hasmore ? data.hasmore : 0
-          })
+          var data = resp.data;
+          if (data.infos && data.infos.length > 0) {
+            var infos = data.infos;
+            for (var i=0,len=infos.length;i<len;i++) {
+              infos[i].delBg = '#78e4cf',
+              infos[i].editBg = '#78e4cf'
+            }
+            _this.setData({
+              info: infos,
+              hasmore: data.hasmore ? data.hasmore : 0
+            })
+          }
         } else {
           _this.tip(resp.desc);
         }
@@ -56,9 +64,27 @@ Page({
       }
     })
   },
+  changeBg(e) {
+    var data = e.currentTarget.dataset;
+    var idx = data.index;
+    var text = data.text;
+    var bg = ''
+    if (text == 'del') {
+      bg = "info["+idx+"].delBg"
+    } else {
+      bg = "info["+idx+"].editBg"    
+    }
+    this.setData({
+      [bg]: '#1ed2af'
+    })
+  },
   delPt(e) {
     var _this = this;
     var idx = e.currentTarget.dataset.index;
+    var bg = "info["+idx+"].delBg";
+    _this.setData({
+      [bg]: '#78e4cf'
+    })
     wx.showModal({
       title: '删除',
       content: '确认要删除' + this.data.info[idx].name +'吗？',
@@ -68,6 +94,9 @@ Page({
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
+      },
+      fail: function(res) {
+        console.log(res)
       }
     })
   },
@@ -122,27 +151,37 @@ Page({
   editPt(e) {
     var _this = this;
     var idx = e.currentTarget.dataset.index;
+    var bg = "info["+idx+"].editBg";
     app.globalData.editPt = this.data.info[idx];
+    _this.setData({
+      [bg]: '#78e4cf'
+    })
     wx.redirectTo({
       url: '/pages/writepatient/writepatient'
     })
   },
-  changeBg(e) {
+  changeViewBg: function(e) {
     var idx = ~~e.currentTarget.dataset.index;
     if (idx == undefined) {
       return;
     }
     this.setData({
-      selId: idx
+      viewBg: true
     })
   },
-  goPay(e) {
+  changeBtnBg: function(e) {
+    this.setData({
+      btnBg: '1ed2af'
+    })
+  },
+  goPay: function(e) {
     var idx = ~~e.currentTarget.dataset.index;
     if (idx == undefined) {
       return;
     }
     this.setData({
-      selId: idx
+      viewBg: false,
+      btnBg: '#78e4cf'
     })
     app.globalData.ptcid = this.data.info[idx].id;
     wx.redirectTo({

@@ -52,7 +52,7 @@ Page({
     ptHead = app.globalData.ptHead;
     var _this = this;
     //wx.clearStorage();
-      //获取就诊人头像
+      //获取咨询者头像
     var msg = [];
     wx.getStorage({
       key: 'msg'+ptid,

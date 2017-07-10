@@ -35,7 +35,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 80%;
+  width: 85%;
   padding-left: 14rpx;
 }
 .info-text {
@@ -100,5 +100,19 @@
   left: 50%;
   margin-left: -250rpx;
   margin-top: -250rpx;
+}
+.info-text2 {
+  width: auto;
+  text-align: right;
+}
+.pay-sign {
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background-color: #60c64b;
+  color: #fff;
+  font-size: 26rpx;
+}
+.end-sign {
+  background-color: '#1cc5a4';
 }
 

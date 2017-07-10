@@ -23,7 +23,11 @@
           <text class="info-text-name">{{item.nickname}}</text>
           <text class="info-text-chat g-ellipsis" wx:if="{{item.type}}">{{item.type==1 ? item.content : '[图片]'}}</text>
         </view>
-        <text class="info-text-time">{{item.ctime}}</text>
+        <view class="info-text info-text2">
+          <text class="pay-sign" wx:if="item.status!==2">已付费</text>
+          <text class="pay-sign end-sign" wx:else>已结束</text>
+          <text class="info-text-time">{{item.ctime}}</text>
+        </view>
       </view>
     </view>
   </scroll-view>
@@ -32,9 +36,9 @@
     <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
   </view>
     <text class="doctorcode-text g-tac">
-      暂时未受到就诊人咨询\n
+      暂时未受到咨询者咨询\n
       <text class="coloraf"></text>请妥善截图保存，并引导患者扫描\n
-      即可绑定就诊人，接收回诊咨询\n
+      即可绑定咨询者，接收回诊咨询\n
       <text class="coloraf">*二维码也可在【个人中心】找到</text>
     </text>
   </view>

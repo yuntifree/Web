@@ -69,12 +69,12 @@ App({
     reqUrl: 'https://api.yunxingzh.com/inquiry/',
     hasrelation: 0, //是否有绑医生/病人
     haspatient: 0, //是否有绑病患卡片（病人端）
-    editPt: {}, //修改就诊人信息
-    ptHead: '../../images/doctor/ico_personal.png', //就诊人头像
+    editPt: {}, //修改咨询者信息
+    ptHead: '../../images/doctor/ico_personal.png', //咨询者头像
     drHead: '../../images/doctor/ico_personal.png', //医生头像
-    ptid: 2, //被选就诊人id
+    ptid: 2, //被选咨询者id
     drid: 1, //被选择医生id
-    ptcid: 0, //就诊人卡片id
+    ptcid: 0, //咨询者卡片id
     failText: '网络请求失败'
   }
 })

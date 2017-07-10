@@ -52,9 +52,13 @@
 .list-bot-img {
   width: 50%;
   height: 100%;
-  padding-top: 20rpx;
   background-color: #78e4cf;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  color: #fff;
 }
 .list-bot-img:first-child {
   border-bottom-left-radius: 10rpx;
