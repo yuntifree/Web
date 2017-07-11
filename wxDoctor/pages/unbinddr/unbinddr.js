@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp();
-var drid,uid,token,URL,hasrelation;
+var drid,uid,token,URL;
 var failText = app.globalData.failText;
 
 Page({
@@ -17,7 +17,6 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-    hasrelation = app.globalData.hasrelation;
     this.getData();
   },
   getData: function() {

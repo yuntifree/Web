@@ -130,6 +130,7 @@ Page({
     })
   },
   wxPay: function(param) {
+    var _this = this;
     wx.requestPayment({
       timeStamp: param.timestamp + '',
       nonceStr: param.noncestr,
@@ -148,7 +149,7 @@ Page({
         })
       },
       fail:function(res){
-        console.log(res);
+        _this.tip(failText);
       }
     })
   },

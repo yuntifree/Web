@@ -4,7 +4,7 @@ var dateFormat = util.dateFormat;
 //获取应用实例
 var app = getApp()
 var uid,token,URL,haspatient;
-
+var failText = app.globalData.failText;
 Page({
   data: {
     inquiry: false,
@@ -144,6 +144,9 @@ Page({
           _this.tip('二维码错误，请扫描正确的医生二维码')
         }
       },
+      fail: function(res) {
+        _this.tip(failText)
+      }
     })
   },
   delDr: function(e) {

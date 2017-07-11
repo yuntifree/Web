@@ -42,11 +42,23 @@
   font-size: 36rpx;
   border-bottom: 1rpx solid #bebebe;
 }
+.code-ipt {
+  margin-top: 50rpx;
+}
 .wallet-ipt-plhd {
   color: #bebebe;
 }
 .mindraw-tip {
   font-size: 28rpx;
-  color: #f1951c;
+  color: #969696;
   margin-top: 20rpx;
+  line-height: 150%;
+}
+.forget-code {
+  width: 65%;
+  height: auto;
+  margin: 26rpx auto 40rpx;
+  color: #1ed2af;
+  font-size: 26rpx;
+  text-align: right;
 }

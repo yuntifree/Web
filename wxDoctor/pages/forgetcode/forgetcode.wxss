@@ -1,0 +1,34 @@
+.forgetcode {
+  width: 90%;
+  height: auto;
+  margin: 30rpx auto 0;
+}
+.ipt-container {
+  width: 100%;
+  height: auto;
+  border-radius: 8rpx;
+  border: 2rpx solid #b4b4b4;
+}
+.ipt-inner {
+  padding:26rpx 30rpx;
+  position: relative;
+  border-bottom: 2rpx solid #b4b4b4;
+  position: relative;
+}
+.ipt-inner:last-child {
+  border-bottom: 0;
+}
+.int-inner input {
+  font-size: 36rpx;
+}
+.get-code {
+  padding-left: 20rpx;
+  position: absolute;
+  top:50%;
+  right: 20rpx;
+  margin-top: -14rpx;
+  font-size: 28rpx;
+  color: #1ed2af;
+  border-left: 1rpx solid #1ed2af;
+  z-index: 10;
+}

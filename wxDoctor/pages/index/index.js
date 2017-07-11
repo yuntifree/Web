@@ -4,11 +4,13 @@ var util = require('../../utils/util.js')
 var app = getApp()
 var URL = app.globalData.reqUrl
 var drTuid;
+var failText = app.globalData.failText;
 Page({
   data: {
     viewShow: false,
     hasphone: 0,
     hasrelation: 0,
+    haspasswd: 0,
     codeText: '获取验证码',
     phone: '',
     code: '',
@@ -44,7 +46,8 @@ Page({
         that.setData({
           hasphone: ~~userData.hasphone,
           role: ~~userData.role,
-          hasrelation: ~~userData.hasrelation
+          hasrelation: ~~userData.hasrelation,
+          haspasswd: ~~userData.haspasswd,
         })
         app.globalData.uid = userData.uid;
         app.globalData.token = userData.token;
@@ -99,9 +102,15 @@ Page({
     if (this.data.hasphone) {
       // 是否医生
       if (this.data.role) {
-        wx.switchTab({
-          url: '/pages/drpatient/drpatient'
-        })
+        if (this.data.haspasswd) {
+          wx.switchTab({
+            url: '/pages/drpatient/drpatient'
+          })
+        } else {
+          wx.redirectTo({
+            url: '/pages/setcode/setcode?reset=0'
+          })
+        }
       } else {
         if (drTuid) {
           app.globalData.tuid = drTuid;
@@ -194,6 +203,9 @@ Page({
             codeFocus: true
           })
         }
+      },
+      fail: function(res) {
+        _this.tip(failText)
       }
     })
   },
@@ -273,6 +285,9 @@ Page({
         } else{
           _this.tip(resp.desc);
         }
+      },
+      fail: function(res) {
+        _this.tip(failText)
       }
     })
   },

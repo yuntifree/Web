@@ -4,7 +4,7 @@ var util = require('../../utils/util.js')
 var dateFormat = util.dateFormat;
 var app = getApp()
 var ptid,uid,token,URL,drHead,ptHead,timer;
-var textFail = app.globalData.textFail;
+var failText = app.globalData.failText;
 var sending = false;
 Page({
   data: {
@@ -155,7 +155,7 @@ Page({
         }
       },
       fail: function(res) {
-        _this.tip(textFail);
+        _this.tip(failText);
       },
       complete: function() {
         wx.hideNavigationBarLoading()
@@ -319,7 +319,7 @@ Page({
         }
       },
       fail: function(res) {
-        _this.tip(textFail);
+        _this.tip(failText);
       }
     })
   },
@@ -381,7 +381,7 @@ Page({
         })
       },
       fail: function(res) {
-        _this.tip(textFail)
+        _this.tip(failText)
       }
     })
   },
@@ -441,7 +441,7 @@ Page({
               }
             },
             fail: function(res){
-              _this.tip(textFail);
+              _this.tip(failText);
             }
           })
         }

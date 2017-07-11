@@ -30,14 +30,16 @@
   <input class="g-tac wallet-ipt" placeholder-class="wallet-ipt-plhd" placeholder="请输入提现金额"
     value="{{money}}"
     bindinput="makeDraw"
-    focus="{{feeFocus}}"></input>
-  <input class="g-tac wallet-ipt" placeholder-class="wallet-ipt-plhd" placeholder="请输入提现密码"
+    focus="{{feeFocus}}"/>
+  <input class="g-tac wallet-ipt code-ipt" placeholder-class="wallet-ipt-plhd" placeholder="请输入提现密码"
     maxlength="6"
     value="{{psd}}"
     focus="{{codeFocus}}"
-    bindinput="makeBtnstatus"></input>
+    bindinput="makeBtnstatus"/>
   <button bindtap="checkCode" disabled="{{btnDisable&&info.balance<info.mindraw}}" class="btn" >提现</button>
-  <text class="mindraw-tip">最低提现金额为50元</text>
-  <text class="mindraw-tip wallet-ipt-plhd">申请提现后会有工作人员联系您</text>
+  <view class="forget-code">
+    <text class="forget-text" bindtap="fotgetpsd">忘记密码？</text>
+  </view>
+  <text class="mindraw-tip g-tac">最低提现金额为50元\n申请提现后会有工作人员联系您</text>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp();
-var tuid,uid,token,URL,hasrelation;
+var uid,token,URL;
 var failText = app.globalData.failText;
 Page({
   data: {
@@ -31,7 +31,6 @@ Page({
   //事件处理函数
   onLoad: function () {
     //页面五层处理
-    tuid = app.globalData.tuid;
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
@@ -84,7 +83,7 @@ Page({
         }
       },
       fail: function() {
-        _this.tip(textFail);
+        _this.tip(failText);
       }
     })
   },

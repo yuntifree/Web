@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
+var failText = app.globalData.failText;
 Page({
   data: {
     tipMsg: '',
@@ -35,6 +36,9 @@ Page({
           _this.tip('二维码错误，请扫描正确的医生二维码')
         }
       },
+      fail: function(res) {
+        _this.tip(failText)
+      }
     })
   },
   helpColor: function() {

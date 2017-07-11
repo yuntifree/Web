@@ -18,7 +18,7 @@ Page({
   },
   //事件处理函数
   onLoad: function () {
-    uid = app.globalData.tuid;
+    uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     this.getData();
@@ -99,6 +99,9 @@ Page({
             })
             _this.tip(resp.desc)
           }
+        },
+        fail: function(res) {
+          _this.tip(failText)
         }
       })
     } else {
@@ -149,6 +152,11 @@ Page({
       fail: function(res) {
         _this.tip(failText)
       }
+    })
+  },
+  fotgetpsd: function() {
+    wx.navigateTo({
+      url: '/pages/forgetcode/forgetcode'
     })
   },
   tip: function(val) {

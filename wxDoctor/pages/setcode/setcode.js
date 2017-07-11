@@ -1,75 +1,42 @@
 //index.js
 //获取应用实例
-var md5 = require('../../utils/md5.js');
+var util = require('../../utils/util.js');
 var app = getApp();
-var tuid,uid,token,URL,hasrelation;
+var uid,token,URL;
 var failText = app.globalData.failText;
 Page({
   data: {
-    info: {},
     tipMsg: '',
     tipShow: false,
-    cirShow: false,
     btnBg: '#1ed2af',
     password: '',
     checkword: '',
     rightCode: false,
     checkCode: false,
     btnDisable: true,
-    canPost: false
+    canPost: false,
+    title: ''
   },
   //事件处理函数
-  onLoad: function () {
+  onLoad: function (option) {
     //页面五层处理
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-  },
-  formSubmit:function(e) {
-    console.log(JSON.stringify(e.detail.value));
+    var reset = option.reset;
+    var title = ''
+    if (~~reset) {
+      title = '请重新设置您的提现密码'
+    } else {
+      title = '请设置您的提现密码\n用于咨询费提现'
+    }
+    this.setData({
+      title: title
+    })
   },
   changeColor: function() {
     this.setData({
       btnBg: '#0ABF9C'
-    })
-  },
-  bindDr: function() {
-    var _this = this;
-    this.setData({
-      cirShow: true,
-      btnBg: '#1ed2af'
-    })
-    var param = {
-      type: 0,
-      tuid: tuid,
-      token: token,
-      uid: uid
-    }
-    wx.request({
-      url: URL + 'bind_op',
-      method: 'POST',
-      data: {
-        data: param
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function(res) {
-        var resp = res.data;
-        if (resp.errno ===0) {
-          _this.setData({
-            cirShow: false
-          })
-          wx.reLaunch({
-            url: '/pages/binddrlist/list'
-          })
-        } else {
-          console.log(resp.desc);
-        }
-      },
-      fail: function() {
-        _this.tip(textFail);
-      }
     })
   },
   checkValfocus(e) {
@@ -149,13 +116,15 @@ Page({
         success: function(res) {
           var resp = res.data;
           if (resp.errno == 0) {
-
+            wx.switchTab({
+              url: '/pages/drpatient/drpatient'
+            })
           } else {
             _this.tip(resp.desc)
           }
         },
         fail: function(res) {
-          console.log(res)
+          _this.tip(failText)
         }
       })
     }
