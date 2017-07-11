@@ -8,7 +8,7 @@ Page({
   data: {
     tipMsg: '',
     tipShow: false,
-    btnBg: '#1ed2af',
+    btnBg: '#78e4cf',
     password: '',
     checkword: '',
     rightCode: false,
@@ -67,7 +67,7 @@ Page({
   },
   checkPassword: function(e) {
     var val = e.detail.value;
-    if (~~val !== this.data.password) {
+    if (~~val !== ~~this.data.password) {
       this.setData({
         checkCode: true,
         btnDisable: true
@@ -81,7 +81,7 @@ Page({
   },
   checkBtn: function(e) {
     var val = e.detail.value;
-    if (~~val == this.data.password) {
+    if (~~val == ~~this.data.password) {
       this.setData({
         btnDisable: false
       })
@@ -96,13 +96,21 @@ Page({
       checkCode: false,
     })
   },
+  changeBg: function(E) {
+    this.setData({
+      btnBg: '#1ed2af'
+    })
+  },
   formSubmit: function(e) {
     var _this = this;
+    this.setData({
+      btnBg: '#78e4cf'
+    });
     if (this.data.canPost) {
       var param = {
         uid: uid,
         token: token,
-        passwd: md5(e.detail.value.password),
+        passwd: md5(this.data.password),
       }
       wx.request({
         url: URL + 'set_draw_passwd',

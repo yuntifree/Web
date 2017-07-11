@@ -1,17 +1,17 @@
 <view class="container">
   <text class="g-tac setcode-title">{{title}}</text>
-  <form class="form-area" bindsubmit="formSubmit">
+  <view class="form-area">
     <view class="section">
-      <input class="setcode-ipt g-tac" name="password" maxlength="6" bindfocus="checkValfocus" bindblur="checkVal" value="{{password}}" placeholder="请设置6位数字密码" type="password" placeholder-class="holder-ipt"/>
+      <input class="setcode-ipt" name="password" maxlength="6" bindfocus="checkValfocus" bindblur="checkVal" value="{{password}}" placeholder="请设置6位数字密码" type="password" placeholder-class="holder-ipt"/>
        <view class="set-tip" wx:if="{{rightCode}}"><image src="../../images/doctor/ico_cancel.png"/><text>请输入6位数字密码</text></view>
     </view>
     <view class="section section2">
-      <input class="seccode-ipt g-tac" name="checkword" maxlength="6" bindfocus="checkPsdfocus" bindblur="checkPassword" value="{{checkword}}" bindinput="checkBtn" placeholder="请再次输入确认" type="password" placeholder-class="holder-ipt"/>
+      <input class="setcode-ipt" name="checkword" maxlength="6" bindfocus="checkPsdfocus" bindblur="checkPassword" value="{{checkword}}" bindinput="checkBtn" placeholder="请再次输入确认" type="password" placeholder-class="holder-ipt"/>
       <view class="set-tip" wx:if="{{checkCode}}"><image src="../../images/doctor/ico_cancel.png"/><text>两次密码不一致，请重新输入</text></view>
     </view>
     <view class="btn-area">
-      <button class="btn" formType="submit" disabled="{{btnDisable}}">确认</button>
+      <button class="btn setcode-btn" disabled="{{btnDisable}}" bindtouchstart="changeBg" bindtouchend="formSubmit" style="{{btnBg}}">确认</button>
     </view>
-  </form> 
+  </view> 
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

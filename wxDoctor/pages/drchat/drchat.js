@@ -65,6 +65,7 @@ Page({
           toView: 'list' +msg[msg.length-1].id
           }
         )
+        _this.makeTime();
         _this.getData(msg[msg.length-1].seq, true);
       },
       fail: function(res) {
@@ -224,6 +225,7 @@ Page({
     //console.log(JSON.stringify(this.data.chatLists));
   },
   makeTime: function() {
+    console.log(1);
     var len = this.data.chatLists.length;
     var text1,text2;
     for(var i=0;i <len;i++) {
@@ -268,7 +270,7 @@ Page({
     var timeshow = "subInfo.timeshow";
     var type = "subInfo.type"
     var flag = "subInfo.flag"
-    var date = dateFormat(new Date(), 'yyyy/MM/dd hh:mm')
+    var date = dateFormat(new Date(), 'yyyy/MM/dd hh:mm:ss')
     this.setData({
       [ctime]: date,
       [content]: this.data.iptVal,
@@ -345,6 +347,12 @@ Page({
       toView: 'list'+ id
     })
     this.setMsg();
+    var len = this.data.chatLists.length-1;
+    var ctime = 'chatLists['+len+'].ctime'
+    this.setData({
+      toView: 'list'+ id,
+      [ctime]: dateFormat(this.data.chatLists[len].ctime, 'hh:mm')
+    })
   },
   endInquiry(e) {
     this.setData({

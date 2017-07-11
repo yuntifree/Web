@@ -44,8 +44,10 @@ Page({
             info: resp.data
           })
         } else {
-          _this.tip(resp.desc);
-          wx.navigateBack({})
+          _this.tip('二维码错误，请扫描正确的二维码');
+          setTimeout(function(){
+            wx.navigateBack({})
+          },1500)
         }
       },
       fail: function(res) {

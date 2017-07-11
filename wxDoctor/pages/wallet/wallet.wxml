@@ -32,6 +32,7 @@
     bindinput="makeDraw"
     focus="{{feeFocus}}"/>
   <input class="g-tac wallet-ipt code-ipt" placeholder-class="wallet-ipt-plhd" placeholder="请输入提现密码"
+    type="password"
     maxlength="6"
     value="{{psd}}"
     focus="{{codeFocus}}"

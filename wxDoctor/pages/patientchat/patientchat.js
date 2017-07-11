@@ -264,7 +264,7 @@ Page({
     var timeshow = "subInfo.timeshow";
     var type = "subInfo.type"
     var flag = "subInfo.flag"
-    var date = dateFormat(new Date(),'hh:mm')
+    var date = dateFormat(new Date(),'yyyy/MM/dd hh:mm:ss');
     this.setData({
       [ctime]: date,
       [content]: this.data.iptVal,
@@ -324,7 +324,7 @@ Page({
     var addInfo =[{
       id: id,
       content: this.data.subInfo.content,
-      ctime: this.data.subInfo.ctime,
+      ctime: dateFormat(this.data.subInfo.ctime, 'hh:mm'),
       type: type,
       flag: 1,
       timeshow: this.data.subInfo.timeshow,
@@ -338,8 +338,11 @@ Page({
       iptFocus: true
     })
     this.setMsg();
+    var len = this.data.chatLists.length-1;
+    var ctime = 'chatLists['+len+'].ctime'
     this.setData({
-      toView: 'list'+ id
+      toView: 'list'+ id,
+      [ctime]: dateFormat(this.data.chatLists[len].ctime, 'hh:mm')
     })
   },
   changeCm(e){

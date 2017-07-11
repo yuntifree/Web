@@ -8,7 +8,7 @@
   width: 100%;
 }
 .section {
-  width: 327rpx;
+  width: 340rpx;
   padding: 10rpx;
   margin: 0 auto;
   border-bottom: 2rpx solid #bebebe;
@@ -18,13 +18,22 @@
   margin-top: 65rpx;
 }
 .setcode-ipt {
+  display: block;
+  width: 100%;
+  height: auto;
   font-size: 36rpx;
+  line-height: 40rpx;
 }
 .btn-area {
   width: 100%;
 }
+.setcode-btn {
+  margin-top: 200rpx;
+}
 .holder-ipt {
   color: #bebebe;
+  font-size: 36rpx;
+  line-height: 40rpx;
 }
 .set-tip {
   width: 340rpx;
