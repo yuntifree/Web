@@ -22,8 +22,8 @@
         </view>
       </view>
       <view class="binddoctor-info info-right">
-        <text class="text-sty" wx:if="{{item.status!==2}}">咨询中</text>
-        <text class="text-sty fee-sty" wx:if="{{item.status==2&&item.doctor.fee>0}}">{{(item.doctor.fee/100)}}元/次</text>
+        <text class="text-sty" wx:if="{{item.status==1}}">咨询中</text>
+        <text class="text-sty fee-sty" wx:if="{{item.status!==1&&item.doctor.fee>0}}">{{(item.doctor.fee/100)}}元/次</text>
         <text class="chat-time">{{item.chat.ctime}}</text>
       </view>
       <text class="binddoctor-line"></text>

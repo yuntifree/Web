@@ -149,7 +149,7 @@ Page({
         })
       },
       fail:function(res){
-        _this.tip(failText);
+        console.log(res);
       }
     })
   },

@@ -24,8 +24,8 @@
           <text class="info-text-chat g-ellipsis" wx:if="{{item.type}}">{{item.type==1 ? item.content : '[图片]'}}</text>
         </view>
         <view class="info-text info-text2">
-          <text class="pay-sign" wx:if="item.status!==2">已付费</text>
-          <text class="pay-sign end-sign" wx:else>已结束</text>
+          <text class="pay-sign end-sign" wx:if="{{item.status==2}}">已结束</text>
+          <text class="pay-sign" wx:else>已付费</text>
           <text class="info-text-time">{{item.ctime}}</text>
         </view>
       </view>

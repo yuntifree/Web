@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-var util = require('../../utils/util.js');
+var md5 = require('../../utils/md5.js');
 var app = getApp();
 var uid,token,URL;
 var failText = app.globalData.failText;
