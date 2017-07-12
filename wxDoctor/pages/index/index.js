@@ -50,8 +50,11 @@ Page({
         })
         app.globalData.uid = userData.uid;
         app.globalData.token = userData.token;
-        app.globalData.hasrelation = ~~userData.hasrelation
-        app.globalData.haspatient = ~~userData.haspatient
+        app.globalData.hasrelation = ~~userData.hasrelation;
+        app.globalData.haspatient = ~~userData.haspatient;
+        /*this.setData({
+          viewShow: true
+        })*/
         that.route();
       } else {
         that.wxRegister();

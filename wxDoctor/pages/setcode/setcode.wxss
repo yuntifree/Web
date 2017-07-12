@@ -23,8 +23,6 @@
   height: auto;
   font-size: 36rpx;
   line-height: 40rpx;
-  letter-spacing: 40rpx;
-  word-spacing: 40rpx;
 }
 .btn-area {
   width: 100%;
