@@ -32,6 +32,8 @@ Page({
       } else {
         console.log('can not find tuid')
       }
+    } else if (option.tuid) {
+      drTuid = ~~option.tuid
     }
     wx.showNavigationBarLoading()
     app.init(this.checkLogin)

@@ -25,6 +25,12 @@ Page({
     URL = app.globalData.reqUrl;
     qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
   },
+  onShareAppMessage: function () {
+    return {
+      title: '推荐给你一款好用的健康小程序',
+      path: '/pages/index/index?tuid='+uid
+    }
+  },
   onShow: function() {
     this.getData(0)
   },
@@ -70,7 +76,7 @@ Page({
       fail: function(res) {
         _this.tip(failText);
       }
-    }) 
+    })
   },
   makeTime: function() {
     var len = this.data.info.length;
@@ -105,7 +111,7 @@ Page({
     this.setData({
       viewCode: true
     })
-    //var result = base.decode(e.currentTarget.dataset.src); 
+    //var result = base.decode(e.currentTarget.dataset.src);
   },
   viewShow: function(e) {
     this.setData({
