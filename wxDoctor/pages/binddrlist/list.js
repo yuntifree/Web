@@ -50,7 +50,8 @@ Page({
         var resp = res.data;
         if (resp.errno == 0) {
           var data = resp.data;
-          if (data.infos && data.infos.length >0) {
+          var len = data.infos.length;
+          if (data.infos && len >0) {
             _this.setData({
               info: data.infos,
               hasmore: ~~data.hasmore
@@ -72,7 +73,6 @@ Page({
   },
   makeTime: function() {
     var len = this.data.info.length;
-    var text1,text2;
     var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
     for(var i=0;i <len;i++) {
       if (this.data.info[i].flag) {
@@ -81,6 +81,10 @@ Page({
         if (date === nowDate) {
           this.setData({
             [ctime]: dateFormat(this.data.info[i].chat.ctime,'hh:mm')
+          })
+        } else {
+          this.setData({
+            [ctime]: dateFormat(this.data.info[i].chat.ctime,'yyyy/MM/dd')
           })
         }
       }

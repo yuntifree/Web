@@ -17,7 +17,7 @@
     <view class="img-box img-box2">
         <image class="drconfirm-codeimg " src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
     </view>
-    <text class="dr-text g-tac"><text class="coloraf"></text>让咨询者扫描\n即可绑定咨询者，接收回诊咨询</text>
+    <text class="dr-text g-tac"><text class="coloraf"></text>让咨询者扫描此二维码，即可接收咨询\n建议<text style="color: #24cb9f">截图保存</text>二维码</text>
   </scroll-view>
   <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">
     <image src="{{codeImg}}"/>

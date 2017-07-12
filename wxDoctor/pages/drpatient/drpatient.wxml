@@ -36,10 +36,7 @@
     <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
   </view>
     <text class="doctorcode-text g-tac">
-      暂时未受到咨询者咨询\n
-      <text class="coloraf"></text>请妥善截图保存，并引导患者扫描\n
-      即可绑定咨询者，接收回诊咨询\n
-      <text class="coloraf">*二维码也可在【个人中心】找到</text>
+      让咨询者扫描此二维码，即可接收咨询\n*二维码也可在【个人中心】找到\n建议截图保存二维码
     </text>
   </view>
   <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">
