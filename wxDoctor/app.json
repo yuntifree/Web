@@ -1,11 +1,12 @@
 {
   "pages":[
-    "pages/screen/screen",
     "pages/index/index",
-    "pages/wallet/wallet",
+    "pages/screen/screen",
     "pages/setcode/setcode",
-    "pages/forgetcode/forgetcode",
+    "pages/drchat/drchat",
     "pages/scancode/scancode",
+    "pages/wallet/wallet",
+    "pages/forgetcode/forgetcode",
     "pages/binddrlist/list",
     "pages/drpatient/drpatient",
     "pages/patientinfo/patientinfo",
@@ -15,7 +16,6 @@
     "pages/binddr/binddr",
     "pages/unbinddr/unbinddr",
     "pages/pay/pay",
-    "pages/drchat/drchat",
     "pages/patientchat/patientchat"
   ],
   "window":{

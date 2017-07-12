@@ -19,8 +19,7 @@ Page({
     tipMsg: '',
     tipShow: false,
     role: 0,
-    btnBg: '#1ed2af',
-    second: 3
+    btnBg: '#1ed2af'
   },
   //事件处理函数
   onLoad: function (option) {
@@ -132,24 +131,7 @@ Page({
       this.setData({
         viewShow: true
       })
-      var timer = setInterval(function(){
-        if (_this.data.second <0) {
-          clearInterval(timer);
-          _this.setData({
-            phoneFocus: true
-          })
-        } else {
-          _this.setData({
-            second: --_this.data.second
-          })
-        } 
-      },1000)
     }
-  },
-  jump() {
-    this.setData({
-      second: 0
-    })
   },
   makePhone(e) {
     this.setData({

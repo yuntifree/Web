@@ -21,10 +21,10 @@ Page({
     var imgurl = '';
     var height = '';
     if (~~dr) {
-      imgurl = '../../images/login/drhelp.png'
-      height = '5535rpx'
+      imgurl = 'http://img.yunxingzh.com/a5c37aab-9bd9-4a64-a40e-309febbc8dc7.png'
+      height = '6589rpx'
     } else {
-      imgurl = '../../images/login/pthelp.png'
+      imgurl = 'http://img.yunxingzh.com/08b93d70-4501-4b76-ada0-f4259dd28835.png'
       height = '8564rpx'
     }
     this.setData({

@@ -156,7 +156,8 @@ Page({
   },
   fotgetpsd: function() {
     wx.navigateTo({
-      url: '/pages/forgetcode/forgetcode'
+      //url: '/pages/forgetcode/forgetcode'
+      url: '/pages/setcode/setcode?dr=1&screen=1'
     })
   },
   tip: function(val) {

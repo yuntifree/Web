@@ -208,9 +208,6 @@
   left: 0;
   background-color: #f0eff5;
 }
-.end-btn {
-  background-color: #c9c9c9;
-}
 .drchat-menu .colorb2a {
   color: #ffbb2a;
 }
@@ -232,8 +229,8 @@
   position: absolute;
   top:  50%;
   left: 50%;
-  margin-top: -263rpx;
-  margin-left: -218rpx;
+  margin-top: -158rpx;
+  margin-left: -263rpx;
 }
 .end-tit {
   display: block;
@@ -254,8 +251,10 @@
   background-color: #fff;
   color: #282828;
   font-size: 28rpx;
+  border: solid 1px #969696;
 }
 .end-btn:last-child {
   background-color: #1cc5a4;
   color: #fff;
+  border: 0;
 }

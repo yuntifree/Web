@@ -23,6 +23,8 @@
   height: auto;
   font-size: 36rpx;
   line-height: 40rpx;
+  letter-spacing: 40rpx;
+  word-spacing: 40rpx;
 }
 .btn-area {
   width: 100%;
@@ -34,6 +36,8 @@
   color: #bebebe;
   font-size: 36rpx;
   line-height: 40rpx;
+  word-spacing: normal;
+  letter-spacing: normal;
 }
 .set-tip {
   width: 340rpx;

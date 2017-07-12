@@ -57,9 +57,6 @@ Page({
             })
             _this.makeTime();
           } else {
-            // _this.setData({
-            //   infoNull: true
-            // })
             wx.redirectTo({
               url: '/pages/scancode/scancode'
             })

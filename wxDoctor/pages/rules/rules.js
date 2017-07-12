@@ -38,9 +38,15 @@ Page({
   },
   setIdx: function(e) {
     var idx = e.currentTarget.dataset.idx;
-    this.setData({
-      selIdx: idx
-    })
+    if (this.data.selIdx == idx) {
+      this.setData({
+        selIdx: -1
+      })
+    } else {
+      this.setData({
+        selIdx: idx
+      })
+    }
   },
   changeColor: function() {
     this.setData({

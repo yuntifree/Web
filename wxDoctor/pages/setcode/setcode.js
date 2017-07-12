@@ -9,21 +9,43 @@ Page({
     tipMsg: '',
     tipShow: false,
     btnBg: '#78e4cf',
+    btnUseBg: '#1ed2af',
     password: '',
     checkword: '',
     rightCode: false,
     checkCode: false,
     btnDisable: true,
     canPost: false,
-    title: ''
+    title: '',
+    second: 3
   },
   //事件处理函数
   onLoad: function (option) {
-    //页面五层处理
+    var _this = this;
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     var reset = option.reset;
+    var screen = option.screen;
+    console.log(option.screen);
+    if (~~screen) {
+      this.setData({
+        second: -1
+      })
+    } else {
+      var timer = setInterval(function(){
+        if (_this.data.second <0) {
+          clearInterval(timer);
+          _this.setData({
+            phoneFocus: true
+          })
+        } else {
+          _this.setData({
+            second: --_this.data.second
+          })
+        } 
+      },1000)
+    }
     var title = ''
     if (~~reset) {
       title = '请重新设置您的提现密码'
@@ -34,9 +56,22 @@ Page({
       title: title
     })
   },
+  jump() {
+    this.setData({
+      second: 0
+    })
+  },
   changeColor: function() {
     this.setData({
-      btnBg: '#0ABF9C'
+      btnUseBg: '#0ABF9C'
+    })
+  },
+  goUse: function() {
+    this.setData({
+      btnUseBg: '#1ed2af'
+    })
+    wx.navigateTo({
+      url: '/pages/screen/screen?dr=1'
     })
   },
   checkValfocus(e) {

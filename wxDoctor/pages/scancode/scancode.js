@@ -7,13 +7,46 @@ Page({
     tipMsg: '',
     tipShow: false,
     btnBg: '#1ed2af',
+    btnUseBg: '#1ed2af',
     helpBg: '#fff',
+    second: 3
   },
   onLoad: function () {
+    var _this = this;
+    var timer = setInterval(function(){
+      if (_this.data.second <0) {
+        clearInterval(timer);
+        _this.setData({
+          phoneFocus: true
+        })
+      } else {
+        _this.setData({
+          second: --_this.data.second
+        })
+      } 
+    },1000)
   },
-  changeColor() {
+  changeBg() {
     this.setData({
       btnBg: '#0ABF9C'
+    })
+  },
+  jump() {
+    this.setData({
+      second: 0
+    })
+  },
+  changeColor: function() {
+    this.setData({
+      btnUseBg: '#0ABF9C'
+    })
+  },
+  goUse: function() {
+    this.setData({
+      btnUseBg: '#1ed2af'
+    })
+    wx.navigateTo({
+      url: '/pages/screen/screen?dr=0'
     })
   },
   getcode: function() {
