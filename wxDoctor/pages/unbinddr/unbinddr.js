@@ -19,6 +19,12 @@ Page({
     URL = app.globalData.reqUrl;
     this.getData();
   },
+  onShareAppMessage: function () {
+    return {
+      title: '推荐给你一个好医生',
+      path: '/pages/index/index?tuid='+drid
+    }
+  },
   getData: function() {
     var _this = this;
     var param = {

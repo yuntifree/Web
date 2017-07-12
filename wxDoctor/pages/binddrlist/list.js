@@ -25,6 +25,13 @@ Page({
     URL = app.globalData.reqUrl;
     haspatient = app.globalData.haspatient;
   },
+  onShareAppMessage: function () {
+    var
+    return {
+      title: '推荐给你一款好用的健康小程序',
+      path: '/pages/index/index'
+    }
+  },
   onShow: function() {
     haspatient = app.globalData.haspatient;
     this.getData(0);
