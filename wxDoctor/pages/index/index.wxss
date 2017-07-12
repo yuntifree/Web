@@ -21,9 +21,8 @@
   height: 100rpx;
   border-bottom: 1rpx solid #dcdcdc;
   font-size: 40rpx;
-}
-.reset-ipt2 {
   position: relative;
+
 }
 .ipt-icon {
   display:block;
@@ -34,15 +33,15 @@
 }
 .ipt-phone {
   font-size: 36rpx;
+  width: 400rpx;
   height: 44rpx;
-}
-.ipt-phone2 {
-  font-size: 36rpx;
-  width: 250rpx;
-  height: 44rpx;
+  line-height: 44rpx;
 }
 .res-holder{
   color: #b4b4b4;
+  font-size: 36rpx;
+  height: 44rpx;
+  line-height: 44rpx;
 }
 .res-code {
   height: 44rpx;
@@ -50,10 +49,12 @@
   padding-left: 22rpx;
   font-size: 28rpx;
   position: absolute;
-  top: 0;
+  top: 50%;
   right: 0;
+  margin-top: -22rpx;
   color: #1ed2af;
-  position: relative;
   border-left: 1rpx solid #1ed2af;
   white-space: nowrap;
+  z-index: 10;
+  background-color: #fff;
 }
