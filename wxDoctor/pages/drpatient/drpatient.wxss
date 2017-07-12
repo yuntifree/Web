@@ -76,7 +76,7 @@
 .doctorcode-text {
   display: block;
   margin-top: 34rpx;
-  line-height: 80%;
+  line-height: 150%;
   font-size: 34rpx;
   color: #282828;
 }

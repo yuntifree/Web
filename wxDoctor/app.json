@@ -1,14 +1,14 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/drpatient/drpatient",
+    "pages/binddrlist/list",
     "pages/screen/screen",
     "pages/setcode/setcode",
     "pages/drchat/drchat",
     "pages/scancode/scancode",
     "pages/wallet/wallet",
     "pages/forgetcode/forgetcode",
-    "pages/binddrlist/list",
-    "pages/drpatient/drpatient",
     "pages/patientinfo/patientinfo",
     "pages/rules/rules",
     "pages/drconfirm/drconfirm",

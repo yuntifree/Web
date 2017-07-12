@@ -42,6 +42,7 @@
 .info-right {
   width: 132rpx;
   text-align: right;
+  padding-bottom: 0;
 }
 .binddoctor-name {
   margin-top: 2rpx;
@@ -77,6 +78,7 @@
   display: block;
   font-size: 22rpx;
   color: #b4b4b4;
+  line-height: 120%;
 }
 .chat-text {
   width: 100%;
