@@ -62,7 +62,7 @@ Page({
       key: 'msg'+uid+'-'+tuid,
       success: function(res) {
         msg = res.data;
-        _this.fillAndScroll(msg)
+        _this.data.chatLists = msg
         _this.getData(msg[msg.length-1].seq);
       },
       fail: function(res) {
@@ -138,8 +138,10 @@ Page({
               infos[i].timestr = infos[i].ctime.replace(/-/g,'/');
               infos[i].ctime = new Date(infos[i].timestr).getTime()
             }
-            _this.saveMsg(infos);
+          } else {
+            infos = []
           }
+          _this.saveMsg(infos);
           var tempStatus = data.status == 2
           _this.setData({
             end: tempStatus,
@@ -187,7 +189,6 @@ Page({
       },
       complete: function() {
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
-        _this.setMsg();
         _this.fillAndScroll(_this.data.chatLists)
       }
     })
@@ -198,6 +199,7 @@ Page({
       this.setData({
         chatLists: msgList
       })
+      this.setMsg();
       this.setData({
         toView: 'list' + msgList[msgList.length-1].id
       })

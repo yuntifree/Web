@@ -58,14 +58,15 @@ Page({
       key: 'msg'+uid+'-'+ptid,
       success: function(res) {
         msg = res.data;
-        _this.setData({
-          chatLists: msg,
-        })
-        _this.setData( {
-          toView: 'list' +msg[msg.length-1].id
-          }
-        )
-        _this.makeTime();
+        _this.data.chatLists = msg;
+        // _this.makeTime();
+        // _this.setData({
+        //   chatLists: _this.data.chatLists,
+        // })
+        // _this.setData( {
+        //   toView: 'list' +msg[msg.length-1].id
+        //   }
+        // )
         _this.getData(msg[msg.length-1].seq, true);
       },
       fail: function(res) {
@@ -140,9 +141,10 @@ Page({
               infos[i].timestr = infos[i].ctime.replace(/-/g,'/');
               infos[i].ctime = new Date(infos[i].timestr).getTime()
             }
-            _this.saveMsg(infos);
-            //_this.makeTime();
+          } else {
+            infos = []
           }
+          _this.saveMsg(infos);
           var tempStatus = data.status == 2 ? true : false;
           _this.setData({
             end: tempStatus,
@@ -190,7 +192,6 @@ Page({
       complete: function() {
         //重置数据
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
-        _this.setMsg()
         _this.fillAndScroll(_this.data.chatLists)
       }
     })
@@ -201,6 +202,7 @@ Page({
       this.setData({
         chatLists: msgList
       })
+      this.setMsg()
       this.setData({
         toView: 'list' + msgList[msgList.length-1].id
       })

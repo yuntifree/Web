@@ -54,8 +54,8 @@ Page({
             var info = data.infos;
             var today = dateFormat(new Date(), 'yyyy/MM/dd');
             info.forEach(function(item) {
-              item.chat.ctime = item.chat.ctime.replace(/-/g,'/')
               if (item.flag) {
+                item.chat.ctime = item.chat.ctime.replace(/-/g,'/')
                 var day = dateFormat(item.chat.ctime,'yyyy/MM/dd');
                 if (day === today) {
                   item.chat.ctime = dateFormat(item.chat.ctime,'hh:mm')
