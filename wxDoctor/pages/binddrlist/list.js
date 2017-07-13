@@ -52,14 +52,15 @@ Page({
           var data = resp.data;
           if (data.infos && data.infos.length >0) {
             var info = data.infos;
-            var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
+            var today = dateFormat(new Date(), 'yyyy/MM/dd');
             info.forEach(function(item) {
+              item.chat.ctime = item.chat.ctime.replace(/-/g,'/')
               if (item.flag) {
-                var nowDate = new Date(dateFormat(item.chat.ctime,'yyyy/MM/dd')).getTime();
-                if (date === nowDate) {
-                    item.chat.ctime = dateFormat(item.chat.ctime,'hh:mm')
+                var day = dateFormat(item.chat.ctime,'yyyy/MM/dd');
+                if (day === today) {
+                  item.chat.ctime = dateFormat(item.chat.ctime,'hh:mm')
                 } else {
-                    item.chat.ctime = dateFormat(item.chat.ctime,'yyyy/MM/dd')
+                  item.chat.ctime = dateFormat(item.chat.ctime,'yyyy-MM-dd')
                 }
               }
             })

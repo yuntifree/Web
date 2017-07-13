@@ -59,7 +59,7 @@ Page({
 
     //wx.clearStorage();
     wx.getStorage({
-      key: 'msg'+tuid,
+      key: 'msg'+uid+'-'+tuid,
       success: function(res) {
         msg = res.data;
         _this.fillAndScroll(msg)
@@ -172,7 +172,7 @@ Page({
     var _this = this;
     var localMsg = [];
     wx.getStorage({
-      key: 'msg'+tuid,
+      key: 'msg'+uid+'-'+tuid,
       success: function(res) {
         localMsg = res.data;
         for (var i=0; i<serverMsg.length; i++) {
@@ -184,14 +184,10 @@ Page({
             }
           }
         }
+      },
+      complete: function() {
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
         _this.setMsg();
-        _this.fillAndScroll(_this.data.chatLists)
-
-      },
-      fail: function(res) {
-        _this.data.chatLists = _this.data.chatLists.concat(serverMsg)
-        _this.setMsg()
         _this.fillAndScroll(_this.data.chatLists)
       }
     })
@@ -212,7 +208,7 @@ Page({
   },
   setMsg: function(repeat,serverMsg) {
     wx.setStorage({
-      key:"msg"+tuid,
+      key:"msg"+uid+'-'+tuid,
       data: this.data.chatLists,
       success: function(res) {
         console.log('suc'+res)
@@ -234,6 +230,8 @@ Page({
     }
     if (day == today) {
       time1.timestr = dateFormat(time1.ctime,'hh:mm')
+    } else {
+      time1.timestr = dateFormat(time1.ctime, 'yyyy-MM-dd hh:mm')
     }
   },
   makeTime: function() {

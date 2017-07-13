@@ -55,7 +55,7 @@ Page({
       //获取咨询者头像
     var msg = [];
     wx.getStorage({
-      key: 'msg'+ptid,
+      key: 'msg'+uid+'-'+ptid,
       success: function(res) {
         msg = res.data;
         _this.setData({
@@ -137,7 +137,8 @@ Page({
               infos[i].ptHead = ptHead;
               infos[i].drHead = drHead;
               infos[i].timeshow = false;
-              infos[i].ctime = infos[i].ctime.replace(/-/g,'/');
+              infos[i].timestr = infos[i].ctime.replace(/-/g,'/');
+              infos[i].ctime = new Date(infos[i].timestr).getTime()
             }
             _this.saveMsg(infos);
             //_this.makeTime();
@@ -173,7 +174,7 @@ Page({
     var _this = this;
     var localMsg = [];
     wx.getStorage({
-      key: 'msg'+ptid,
+      key: 'msg'+uid+'-'+ptid,
       success: function(res) {
         localMsg = res.data;
         for (var i=0; i<serverMsg.length; i++) {
@@ -185,21 +186,17 @@ Page({
             }
           }
         }
+      },
+      complete: function() {
         //重置数据
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
-        _this.fillAndScroll(_this.data.chatLists)
-      },
-      fail: function(res) {
-        //重置数据
-        _this.data.chatLists = _this.data.chatLists.concat(serverMsg)
+        _this.setMsg()
         _this.fillAndScroll(_this.data.chatLists)
       }
     })
   },
   fillAndScroll: function(msgList) {
     if (msgList) {
-      // 先保存，再处理时间
-      this.setMsg()
       this.makeTime()
       this.setData({
         chatLists: msgList
@@ -213,7 +210,7 @@ Page({
   },
   setMsg: function() {
     wx.setStorage({
-      key:"msg"+ptid,
+      key:"msg"+uid+'-'+ptid,
       data: this.data.chatLists,
       success: function(res) {
         console.log('suc'+res)
@@ -222,37 +219,31 @@ Page({
         console.log('fail'+res)
       }
     })
-    //console.log(JSON.stringify(this.data.chatLists));
+  },
+  compareTime: function(time1, time2) {
+    var today = dateFormat(new Date(), 'yyyy/MM/dd');
+    var day = dateFormat(time1.ctime,'yyyy/MM/dd');
+    if (time2) {
+      if (time1.ctime - time2.ctime >= 300 * 1000) {
+        time1.timeshow = true;
+      }
+    } else {
+      time1.timeshow = true
+    }
+    if (day == today) {
+      time1.timestr = dateFormat(time1.ctime,'hh:mm')
+    } else {
+      time1.timestr = dateFormat(time1.ctime, 'yyyy-MM-dd hh:mm')
+    }
   },
   makeTime: function() {
-    console.log(1);
-    var len = this.data.chatLists.length;
-    var text1,text2;
-    for(var i=0;i <len;i++) {
-      if (i>0) {
-        text1 = new Date(this.data.chatLists[i-1].ctime).getTime();
-        text2 = new Date(this.data.chatLists[i].ctime).getTime();
-        if (text2-text1 >= 300000) {
-          var timeshow = "chatLists["+i+"].timeshow";
-          this.setData({
-            [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-          })
-        }
+    var _this = this;
+    this.data.chatLists.forEach(function(item, i){
+      if (i > 0) {
+        _this.compareTime(item, _this.data.chatLists[i-1])
+      } else {
+        _this.compareTime(item)
       }
-    }
-    for (var i=0; i<len; i++) {
-      var ctime = "chatLists["+i+"].ctime"
-      var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
-      var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy/MM/dd')).getTime();
-      if (date === nowDate) {
-        this.setData({
-          [ctime]: dateFormat(this.data.chatLists[i].ctime,'hh:mm')
-        })
-      }
-    }
-    var timeshow0 = "chatLists[0].timeshow";
-    this.setData({
-      [timeshow0]: true //key只需要用中括号括起来就变成变量啦,如
     })
   },
   bindKeyInput(e) {
@@ -265,36 +256,22 @@ Page({
       this.tip('请输入发送内容');
       return;
     }
-    var ctime = "subInfo.ctime";
-    var content = "subInfo.content";
-    var timeshow = "subInfo.timeshow";
-    var type = "subInfo.type"
-    var flag = "subInfo.flag"
-    var date = dateFormat(new Date(), 'yyyy/MM/dd hh:mm:ss')
-    this.setData({
-      [ctime]: date,
-      [content]: this.data.iptVal,
-      [type]: 1,
-      [flag]: 1,
-      [timeshow]: false
-    });
-    var len = this.data.chatLists.length;
-    var time1 = new Date().getTime();
-    if (len >0) {
-      var time2 = new Date(this.data.chatLists[len-1].ctime);
-      if (time2 == 'Invalid Date') {
-        time2 = new Date(dateFormat(new Date(),'yyyy/MM/dd') + ' ' +this.data.chatLists[len-1].ctime).getTime();
-      }
-      if (time1-time2 >= 300000) {
-        this.setData({
-          [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-        })
-      }
-    } else {
-      this.setData({
-        [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-      })
+    this.data.subInfo = {
+      ctime: new Date().getTime(),
+      timestr: dateFormat(new Date(),'yyyy/MM/dd hh:mm:ss'),
+      content: this.data.iptVal,
+      type: 1,
+      flag: 1,
+      timeshow: false
     }
+
+    var len = this.data.chatLists.length;
+    if (len >0) {
+      this.compareTime(this.data.subInfo, this.data.chatLists[len-1])
+    } else {
+      this.compareTime(this.data.subInfo)
+    }
+
     var param = {
       tuid: ptid,
       type: 1,
@@ -331,6 +308,7 @@ Page({
       id: id,
       content: this.data.subInfo.content,
       ctime: this.data.subInfo.ctime,
+      timestr: dateFormat(this.data.subInfo.ctime, 'hh:mm'),
       type: type,
       flag: 1,
       timeshow: this.data.subInfo.timeshow,
@@ -342,16 +320,13 @@ Page({
       chatLists: this.data.chatLists.concat(addInfo),
     })
     this.setData({
+      chatLists: this.data.chatLists.concat(addInfo),
       iptVal: '',
-      iptFocus: true,
-      toView: 'list'+ id
+      iptFocus: true
     })
     this.setMsg();
-    var len = this.data.chatLists.length-1;
-    var ctime = 'chatLists['+len+'].ctime'
     this.setData({
       toView: 'list'+ id,
-      [ctime]: dateFormat(this.data.chatLists[len].ctime, 'hh:mm')
     })
   },
   endInquiry(e) {
