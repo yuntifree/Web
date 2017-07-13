@@ -1,7 +1,11 @@
 //app.js
 App({
-  onLaunch: function() {
+  onLaunch: function(option) {
     //调用API从本地缓存中获取数据
+    this.globalData.scene = ~~option.scene
+  },
+  onShow: function(option) {
+    this.globalData.scene = ~~option.scene
   },
   init: function(cb) {
     var that = this
@@ -75,6 +79,7 @@ App({
     ptid: 2, //被选咨询者id
     drid: 1, //被选择医生id
     ptcid: 0, //咨询者卡片id
-    failText: '网络请求失败'
+    failText: '网络请求失败',
+    scene: 0
   }
 })

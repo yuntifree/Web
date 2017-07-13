@@ -50,16 +50,17 @@ Page({
         var resp = res.data;
         if (resp.errno == 0) {
           var data = resp.data;
-          var len = data.infos.length;
-          if (data.infos && len >0) {
+          if (data.infos && data.infos.length >0) {
             _this.setData({
               info: data.infos,
               hasmore: ~~data.hasmore
             })
             _this.makeTime();
+            app.globalData.userData.hasrelation = 1
           } else {
+            app.globalData.userData.hasrelation = 0
             wx.redirectTo({
-              url: '/pages/scancode/scancode'
+              url: '/pages/scancode/scancode?screen=0'
             })
           }
         } else {

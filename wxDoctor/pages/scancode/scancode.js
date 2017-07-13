@@ -11,20 +11,27 @@ Page({
     helpBg: '#fff',
     second: 3
   },
-  onLoad: function () {
+  onLoad: function (option) {
     var _this = this;
-    var timer = setInterval(function(){
-      if (_this.data.second <0) {
-        clearInterval(timer);
-        _this.setData({
-          phoneFocus: true
-        })
-      } else {
-        _this.setData({
-          second: --_this.data.second
-        })
-      } 
-    },1000)
+    var screen = option.screen;
+    if (!~~screen) {
+      this.setData({
+        second: -1
+      })
+    } else {
+      var timer = setInterval(function(){
+        if (_this.data.second <0) {
+          clearInterval(timer);
+          _this.setData({
+            phoneFocus: true
+          })
+        } else {
+          _this.setData({
+            second: --_this.data.second
+          })
+        }
+      },1000)
+    }
   },
   changeBg() {
     this.setData({

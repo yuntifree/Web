@@ -29,11 +29,13 @@ Page({
       if (resTuid == 'tuid=') {
         var idx = param.indexOf('=') +1;
         drTuid = ~~(param.substring(idx));
+        app.globalData.tuid = drTuid;
       } else {
         console.log('can not find tuid')
       }
     } else if (option.tuid) {
       drTuid = ~~option.tuid
+      app.globalData.tuid = drTuid
     }
     wx.showNavigationBarLoading()
     app.init(this.checkLogin)
@@ -54,9 +56,9 @@ Page({
         app.globalData.token = userData.token;
         app.globalData.hasrelation = ~~userData.hasrelation;
         app.globalData.haspatient = ~~userData.haspatient;
-        /*this.setData({
-          viewShow: true
-        })*/
+        // this.setData({
+        //   viewShow: true
+        // })
         that.route();
       } else {
         that.wxRegister();
@@ -88,9 +90,10 @@ Page({
         var resp = res.data;
         if (resp.errno === 0) {
           var data = resp.data;
-          app.globalData.uid = data.uid;
-          app.globalData.token = data.token;
-          app.globalData.hasrelation = ~~data.hasrelation;
+          app.globalData.userData.uid = app.globalData.uid = data.uid;
+          app.globalData.userData.token = app.globalData.token = data.token;
+          app.globalData.userData.hasrelation = app.globalData.hasrelation = ~~data.hasrelation;
+          app.globalData.userData.flag = 1
         } else {
           that.tip(resp.desc);
         }
@@ -102,6 +105,7 @@ Page({
     var navUrl = '';
     var _this = this;
     wx.hideNavigationBarLoading()
+    console.log('this.data.hasphone='+this.data.hasphone)
     // 老用户
     if (this.data.hasphone) {
       // 是否医生
@@ -112,12 +116,11 @@ Page({
           })
         } else {
           wx.redirectTo({
-            url: '/pages/setcode/setcode?reset=0'
+            url: '/pages/setcode/setcode?reset=0&screen=1'
           })
         }
       } else {
         if (drTuid) {
-          app.globalData.tuid = drTuid;
           wx.redirectTo({
             url: '/pages/binddr/binddr'
           })
@@ -125,7 +128,7 @@ Page({
           if (this.data.hasrelation) {
             navUrl = '/pages/binddrlist/list'
           } else {
-            navUrl = '/pages/scancode/scancode'
+            navUrl = '/pages/scancode/scancode?screen=1'
           }
           wx.redirectTo({
             url: navUrl
@@ -235,6 +238,7 @@ Page({
         var resp = res.data;
         if (resp.errno === 0) {
           var role = ~~resp.data.role
+          app.globalData.userData.hasphone = 1
           if (role) {
             wx.switchTab({
               url: '/pages/drpatient/drpatient',

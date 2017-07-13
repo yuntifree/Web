@@ -53,6 +53,7 @@ Page({
         if (resp.errno == 0) {
           var data = resp.data;
           if (data.infos && data.infos.length > 0) {
+            app.globalData.userData.hasrelation = 1
             _this.setData({
               info: data.infos,
               hasmore: data.hasmore ? data.hasmore : 0
@@ -63,6 +64,7 @@ Page({
             })
             _this.makeTime();
           } else {
+            app.globalData.userData.hasrelation = 0
             var data = QR.createQrCodeImg(qrUrl,{'size':300});
             _this.setData({
               codeImg: data,

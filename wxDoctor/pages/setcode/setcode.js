@@ -27,7 +27,6 @@ Page({
     URL = app.globalData.reqUrl;
     var reset = option.reset;
     var screen = option.screen;
-    console.log(option.screen);
     if (~~screen) {
       this.setData({
         second: -1
@@ -43,7 +42,7 @@ Page({
           _this.setData({
             second: --_this.data.second
           })
-        } 
+        }
       },1000)
     }
     var title = ''
@@ -159,6 +158,7 @@ Page({
         success: function(res) {
           var resp = res.data;
           if (resp.errno == 0) {
+            app.globalData.userData.haspasswd = 1
             wx.switchTab({
               url: '/pages/drpatient/drpatient'
             })
