@@ -51,11 +51,22 @@ Page({
         if (resp.errno == 0) {
           var data = resp.data;
           if (data.infos && data.infos.length >0) {
+            var info = data.infos;
+            var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
+            info.forEach(function(item) {
+              if (item.flag) {
+                var nowDate = new Date(dateFormat(item.chat.ctime,'yyyy/MM/dd')).getTime();
+                if (date === nowDate) {
+                    item.chat.ctime = dateFormat(item.chat.ctime,'hh:mm')
+                } else {
+                    item.chat.ctime = dateFormat(item.chat.ctime,'yyyy/MM/dd')
+                }
+              }
+            })
             _this.setData({
-              info: data.infos,
+              info: info,
               hasmore: ~~data.hasmore
             })
-            _this.makeTime();
             app.globalData.userData.hasrelation = 1
           } else {
             app.globalData.userData.hasrelation = 0
@@ -71,25 +82,6 @@ Page({
         _this.tip(failText);
       }
     })
-  },
-  makeTime: function() {
-    var len = this.data.info.length;
-    var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
-    for(var i=0;i <len;i++) {
-      if (this.data.info[i].flag) {
-        var ctime = "info["+i+"].chat.ctime"
-        var nowDate = new Date(dateFormat(this.data.info[i].chat.ctime,'yyyy/MM/dd')).getTime();
-        if (date === nowDate) {
-          this.setData({
-            [ctime]: dateFormat(this.data.info[i].chat.ctime,'hh:mm')
-          })
-        } else {
-          this.setData({
-            [ctime]: dateFormat(this.data.info[i].chat.ctime,'yyyy/MM/dd')
-          })
-        }
-      }
-    }
   },
   changebg(e) {
     var idx = e.currentTarget.dataset.index;
@@ -158,9 +150,6 @@ Page({
       url: '/pages/unbinddr/unbinddr'
     })
   },
-  upper: function(e) {
-    console.log(e)
-  },
   lower: function(e) {
     if (this.data.hasmore) {
       var len = this.data.info.length-1;
@@ -169,9 +158,6 @@ Page({
         this.getData(seq);
       }
     }
-  },
-  scroll: function(e) {
-    console.log(e)
   },
   tip: function(val) {
     this.setData({

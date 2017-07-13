@@ -94,7 +94,7 @@ Page({
         _this.setData({
           date: new Date().getTime() + ' '
         })
-      },1500)
+      }, 3000)
     }
   },
   getData(seq) {
@@ -135,7 +135,8 @@ Page({
               infos[i].ptHead = ptHead;
               infos[i].drHead = drHead;
               infos[i].timeshow = false;
-              infos[i].ctime = infos[i].ctime.replace(/-/g,'/');
+              infos[i].timestr = infos[i].ctime.replace(/-/g,'/');
+              infos[i].ctime = new Date(infos[i].timestr).getTime()
             }
             _this.saveMsg(infos);
           }
@@ -184,14 +185,14 @@ Page({
           }
         }
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
-        _this.fillAndScroll(_this.data.chatLists)
-        //setStorage
         _this.setMsg();
+        _this.fillAndScroll(_this.data.chatLists)
+
       },
       fail: function(res) {
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg)
-        _this.fillAndScroll(_this.data.chatLists)
         _this.setMsg()
+        _this.fillAndScroll(_this.data.chatLists)
       }
     })
   },
@@ -221,32 +222,28 @@ Page({
       }
     })
   },
+  compareTime: function(time1, time2) {
+    var today = dateFormat(new Date(), 'yyyy/MM/dd');
+    var day = dateFormat(time1.ctime,'yyyy/MM/dd');
+    if (time2) {
+      if (time1.ctime - time2.ctime >= 300 * 1000) {
+        time1.timeshow = true;
+      }
+    } else {
+      time1.timeshow = true
+    }
+    if (day == today) {
+      time1.timestr = dateFormat(time1.ctime,'hh:mm')
+    }
+  },
   makeTime: function() {
-    var len = this.data.chatLists.length;
-    var text1,text2;
-    for(var i=1;i<len;i++) {
-      text1 = new Date(this.data.chatLists[i-1].ctime).getTime();
-      text2 = new Date(this.data.chatLists[i].ctime).getTime();
-      if (text2-text1 >= 300000) {
-        var timeshow = "chatLists["+i+"].timeshow";
-        this.setData({
-          [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-        })
+    var _this = this;
+    this.data.chatLists.forEach(function(item, i){
+      if (i > 0) {
+        _this.compareTime(item, _this.data.chatLists[i-1])
+      } else {
+        _this.compareTime(item)
       }
-    }
-    for(var i=0; i<len; i++) {
-      var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
-      var ctime = "chatLists["+i+"].ctime";
-      var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy/MM/dd')).getTime();
-      if (date === nowDate) {
-        this.setData({
-          [ctime]: dateFormat(this.data.chatLists[i].ctime,'hh:mm')
-        })
-      }
-    }
-    var timeshow0 = "chatLists[0].timeshow";
-    this.setData({
-      [timeshow0]: true //key只需要用中括号括起来就变成变量啦,如
     })
   },
   bindKeyInput(e) {
@@ -259,35 +256,20 @@ Page({
       this.tip('请输入发送内容');
       return;
     }
-    var ctime = "subInfo.ctime";
-    var content = "subInfo.content";
-    var timeshow = "subInfo.timeshow";
-    var type = "subInfo.type"
-    var flag = "subInfo.flag"
-    var date = dateFormat(new Date(),'yyyy/MM/dd hh:mm:ss');
-    this.setData({
-      [ctime]: date,
-      [content]: this.data.iptVal,
-      [type]: 1,
-      [flag]: 1,
-      [timeshow]: false
-    });
+    this.data.subInfo = {
+      ctime: new Date().getTime(),
+      timestr: dateFormat(new Date(),'yyyy/MM/dd hh:mm:ss'),
+      content: this.data.iptVal,
+      type: 1,
+      flag: 1,
+      timeshow: false
+    }
+
     var len = this.data.chatLists.length;
-    var time1 = new Date().getTime();
     if (len >0) {
-      var time2 = new Date(this.data.chatLists[len-1].ctime);
-      if (time2 == 'Invalid Date') {
-        time2 = new Date(dateFormat(new Date(),'yyyy/MM/dd') + ' ' +this.data.chatLists[len-1].ctime).getTime();
-      }
-      if (time1-time2 >= 300000) {
-        this.setData({
-          [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-        })
-      }
+      this.compareTime(this.data.subInfo, this.data.chatLists[len-1])
     } else {
-      this.setData({
-        [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-      })
+      this.compareTime(this.data.subInfo)
     }
     var param = {
       tuid: tuid,
@@ -324,7 +306,8 @@ Page({
     var addInfo =[{
       id: id,
       content: this.data.subInfo.content,
-      ctime: dateFormat(this.data.subInfo.ctime, 'hh:mm'),
+      ctime: this.data.subInfo.ctime,
+      timestr: dateFormat(this.data.subInfo.ctime, 'hh:mm'),
       type: type,
       flag: 1,
       timeshow: this.data.subInfo.timeshow,
@@ -338,11 +321,8 @@ Page({
       iptFocus: true
     })
     this.setMsg();
-    var len = this.data.chatLists.length-1;
-    var ctime = 'chatLists['+len+'].ctime'
     this.setData({
       toView: 'list'+ id,
-      [ctime]: dateFormat(this.data.chatLists[len].ctime, 'hh:mm')
     })
   },
   changeCm(e){

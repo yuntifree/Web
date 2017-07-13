@@ -6,8 +6,8 @@
       bindscroll="scroll"
       scroll-top="{{scrollTop}}"
       scroll-into-view="{{toView}}">
-    <view wx:for="{{chatLists}}" wx:for-index="idx" id="{{'list'+ item.seq}}">
-      <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.ctime}}</text>
+    <view wx:for="{{chatLists}}" wx:for-index="idx" wx:key="id" id="{{'list'+ item.seq}}">
+      <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.timestr}}</text>
       <view wx:if="{{item.flag}}" class="drchat-r">
         <image class="drchat-head-r" src="{{item.ptHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg-r">

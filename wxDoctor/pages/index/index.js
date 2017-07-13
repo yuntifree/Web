@@ -3,7 +3,6 @@
 var util = require('../../utils/util.js')
 var app = getApp()
 var URL = app.globalData.reqUrl
-var drTuid;
 var failText = app.globalData.failText;
 Page({
   data: {
@@ -19,7 +18,8 @@ Page({
     tipMsg: '',
     tipShow: false,
     role: 0,
-    btnBg: '#1ed2af'
+    btnBg: '#1ed2af',
+    drTuid: 0
   },
   //事件处理函数
   onLoad: function (option) {
@@ -28,19 +28,29 @@ Page({
       var resTuid = param.substr(param.indexOf('?') + 1,5)
       if (resTuid == 'tuid=') {
         var idx = param.indexOf('=') +1;
-        drTuid = ~~(param.substring(idx));
-        app.globalData.tuid = drTuid;
+        this.data.drTuid = ~~(param.substring(idx));
+        app.globalData.tuid = this.data.drTuid;
       } else {
         console.log('can not find tuid')
       }
     } else if (option.tuid) {
-      drTuid = ~~option.tuid
-      app.globalData.tuid = drTuid
+      this.data.drTuid = ~~option.tuid
+      app.globalData.tuid = this.data.drTuid
     }
-    wx.showNavigationBarLoading()
+    // 提示加载中
+    wx.showLoading({
+      title: '加载中...',
+      complete:function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
     app.init(this.checkLogin)
   },
   checkLogin() {
+    // 加载完毕
+    wx.hideLoading()
     var that = this;
     var userData = app.globalData.userData
     if (userData) {
@@ -120,7 +130,7 @@ Page({
           })
         }
       } else {
-        if (drTuid) {
+        if (this.data.drTuid) {
           wx.redirectTo({
             url: '/pages/binddr/binddr'
           })
@@ -250,8 +260,8 @@ Page({
               }
             })
           } else {
-            if (drTuid) {
-              app.globalData.tuid = drTuid;
+            if (this.data.drTuid) {
+              app.globalData.tuid = this.data.drTuid;
               wx.redirectTo({
                 url: '/pages/binddr/binddr'
               })

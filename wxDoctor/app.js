@@ -10,7 +10,7 @@ App({
   init: function(cb) {
     var that = this
     if (this.globalData.rawUserInfo) {
-      typeof cb == "function" && cb(this.globalData.rawUserInfo)
+      typeof cb == "function" && cb()
     } else {
       //调用登录接口
       wx.login({
@@ -31,22 +31,22 @@ App({
               var resp = res.data;
               if (resp.errno ===0) {
                 that.globalData.userData = resp.data;
-                // 获取头像
-                wx.getUserInfo({
-                  success: function(res) {
-                    that.globalData.rawUserInfo = res;
-                    typeof cb == "function" && cb();
-                  },
-                  fail: function(res) {
-                    that.showErrMsg('获取微信信息失败，请稍后重试~')
-                  }
-                })
+                typeof cb == "function" && cb()
               } else {
                 that.showErrMsg(resp.desc)
               }
             },
             fail: function(res) {
               that.showErrMsg('服务器傲娇了~')
+            }
+          })
+          // 获取头像
+          wx.getUserInfo({
+            success: function(res) {
+              that.globalData.rawUserInfo = res;
+            },
+            fail: function(res) {
+              that.showErrMsg('获取微信信息失败，请稍后重试~')
             }
           })
         },

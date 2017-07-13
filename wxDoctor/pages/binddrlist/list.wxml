@@ -1,9 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <scroll-view scroll-y style="height: 100%;"
-    bindscrolltoupper="upper"
     bindscrolltolower="lower"
-    bindscroll="scroll"
     scroll-top="{{scrollTop}}">
     <view class="binddoctor-list" wx:for="{{info}}"
       wx:key="mydr"
