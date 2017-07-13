@@ -55,12 +55,14 @@ Page({
             var today = dateFormat(new Date(), 'yyyy/MM/dd');
             info.forEach(function(item) {
               if (item.flag) {
-                item.chat.ctime = item.chat.ctime.replace(/-/g,'/')
-                var day = dateFormat(item.chat.ctime,'yyyy/MM/dd');
-                if (day === today) {
-                  item.chat.ctime = dateFormat(item.chat.ctime,'hh:mm')
-                } else {
-                  item.chat.ctime = dateFormat(item.chat.ctime,'yyyy-MM-dd')
+                if (item.chat) {
+                  item.chat.ctime = item.chat.ctime.replace(/-/g,'/')
+                  var day = dateFormat(item.chat.ctime,'yyyy/MM/dd');
+                  if (day === today) {
+                    item.chat.ctime = dateFormat(item.chat.ctime,'hh:mm')
+                  } else {
+                    item.chat.ctime = dateFormat(item.chat.ctime,'yyyy-MM-dd')
+                  }
                 }
               }
             })
@@ -138,9 +140,6 @@ Page({
         } else {
           _this.tip('二维码错误，请扫描正确的医生二维码')
         }
-      },
-      fail: function(res) {
-        _this.tip(failText)
       }
     })
   },

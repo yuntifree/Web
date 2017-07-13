@@ -260,8 +260,8 @@ Page({
               }
             })
           } else {
-            if (this.data.drTuid) {
-              app.globalData.tuid = this.data.drTuid;
+            if (_this.data.drTuid) {
+              app.globalData.tuid = _this.data.drTuid;
               wx.redirectTo({
                 url: '/pages/binddr/binddr'
               })

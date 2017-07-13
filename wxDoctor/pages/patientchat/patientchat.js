@@ -70,7 +70,11 @@ Page({
       success: function(res) {
         msg = res.data;
         _this.data.chatLists = msg
-        _this.getData(msg[msg.length-1].seq);
+        if (msg.length > 0) {
+          _this.getData(msg[msg.length-1].seq);
+        } else {
+          _this.getData(-1)
+        }
       },
       fail: function(res) {
         _this.getData(-1);
@@ -207,10 +211,11 @@ Page({
         chatLists: msgList
       })
       this.setMsg();
-      this.setData({
-        toView: 'list' + msgList[msgList.length-1].id
-      })
-      console.log(this.data.toView);
+      if (msgList.length > 0) {
+        this.setData({
+          toView: 'list' + msgList[msgList.length-1].id
+        })
+      }
     } else {
       console.log('fillAndScroll empty')
     }
@@ -258,16 +263,12 @@ Page({
       iptVal: e.detail.value
     })
   },
-  tapSub() {
-    if (this.data.iptVal.length <=0) {
-      this.tip('请输入发送内容');
-      return;
-    }
+  sendChat: function(type, content) {
     this.data.subInfo = {
       ctime: new Date().getTime(),
       timestr: dateFormat(new Date(),'yyyy/MM/dd hh:mm:ss'),
-      content: this.data.iptVal,
-      type: 1,
+      content: content,
+      type: type,
       flag: 1,
       timeshow: false
     }
@@ -280,7 +281,7 @@ Page({
     }
     var param = {
       tuid: tuid,
-      type: 1,
+      type: type,
       content: this.data.subInfo.content,
       uid: uid,
       token: token
@@ -298,7 +299,7 @@ Page({
       success: function(res) {
         var resp = res.data;
         if (resp.errno == 0) {
-          _this.addChat(1,resp.data.id);
+          _this.addChat(type, resp.data.id);
         } else {
           _this.tip(resp.desc);
         }
@@ -307,6 +308,13 @@ Page({
         _this.tip(failText)
       }
     })
+  },
+  tapSub() {
+    if (this.data.iptVal.length <=0) {
+      this.tip('请输入发送内容');
+      return;
+    }
+    this.sendChat(1, this.data.iptVal)
   },
   addChat(type,id) {
     var len = this.data.chatLists.length;
@@ -363,35 +371,7 @@ Page({
           success: function(resp){
             var data = JSON.parse(resp.data);
             //do something
-            var param = {
-              tuid: tuid,
-              type: 2,
-              content: data.data.filename,
-              uid: uid,
-              token: token
-            }
-            wx.request({
-              url: URL + 'send_chat',
-              method: 'POST',
-              data: {
-                data: param,
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-              success: function(res) {
-                var respp = res.data;
-                if (respp.errno == 0) {
-                  var con = "subInfo.content";
-                  _this.setData({
-                    [con]: data.data.filename
-                  })
-                  _this.addChat(2,respp.data.id)
-                } else {
-                  _this.tip(respp.desc);
-                }
-              },
-            })
+            _this.sendChat(2, data.data.filename)
           }
         })
       },
