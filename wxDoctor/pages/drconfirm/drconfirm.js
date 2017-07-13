@@ -107,7 +107,7 @@ Page({
         success: function(res) {
           var resp = res.data;
           if (resp.errno === 0) {
-            _this.tip('保存成功');
+            _this.tip('修改成功');
           } else {
             _this.tip(resp.desc);
           }

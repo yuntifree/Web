@@ -24,6 +24,14 @@ Page({
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     haspatient = app.globalData.haspatient;
+    wx.showLoading({
+      title: '加载中...',
+      complete: function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
   },
   onShow: function() {
     haspatient = app.globalData.haspatient;
@@ -83,6 +91,9 @@ Page({
       },
       fail: function() {
         _this.tip(failText);
+      },
+      complete: function() {
+        wx.hideLoading()
       }
     })
   },

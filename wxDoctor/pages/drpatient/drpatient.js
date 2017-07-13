@@ -24,6 +24,14 @@ Page({
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
+    wx.showLoading({
+      title: '加载中...',
+      complete: function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
   },
   onShareAppMessage: function () {
     return {
@@ -55,14 +63,15 @@ Page({
           if (data.infos && data.infos.length > 0) {
             app.globalData.userData.hasrelation = 1
             _this.setData({
-              info: data.infos,
-              hasmore: data.hasmore ? data.hasmore : 0
-            })
-            _this.setData({
               ptInfo: true,
               mounted: true
             })
+            _this.data.info = data.infos
             _this.makeTime();
+            _this.setData({
+              info: _this.data.info,
+              hasmore: data.hasmore ? data.hasmore : 0
+            })
           } else {
             app.globalData.userData.hasrelation = 0
             var data = QR.createQrCodeImg(qrUrl,{'size':300});
@@ -77,28 +86,27 @@ Page({
       },
       fail: function(res) {
         _this.tip(failText);
+      },
+      complete:function() {
+        wx.hideLoading()
       }
     })
   },
   makeTime: function() {
     var len = this.data.info.length;
     var text1,text2;
-    var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
-    for(var i=0;i <len;i++) {
-      if (this.data.info[i].ctime) {
-        var ctime = "info["+i+"].ctime"
-        var nowDate = new Date(dateFormat(this.data.info[i].ctime,'yyyy-MM-dd')).getTime();
-        if (date === nowDate) {
-          this.setData({
-            [ctime]: dateFormat(this.data.info[i].ctime,'hh:mm')
-          })
+    var today = dateFormat(new Date(), 'yyyy/MM/dd');
+    this.data.info.forEach(function(item) {
+      if (item.ctime) {
+        item.ctime = item.ctime.replace(/-/g,'/')
+        var day = dateFormat(item.ctime, 'yyyy/MM/dd')
+        if (day == today) {
+          item.ctime = dateFormat(item.ctime, 'hh:mm')
         } else {
-          this.setData({
-            [ctime]: dateFormat(this.data.info[i].ctime,'yyyy-MM-dd')
-          })
+          item.ctime = dateFormat(item.ctime, 'yyyy-MM-dd')
         }
       }
-    }
+    })
   },
   goDrchat(e) {
     var idx = e.currentTarget.dataset.index;

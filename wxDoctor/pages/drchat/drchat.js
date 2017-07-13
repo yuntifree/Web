@@ -24,7 +24,9 @@ Page({
     end: false,
     mounted: false,
     ptColor: '#1ed2af',
-    chkCamera: '../../images/patient/ico_camera.png'
+    chkCamera: '../../images/patient/ico_camera.png',
+    reachBottom: true,
+    bottomHeight: 0
   },
   //事件处理函数
   onHide: function() {
@@ -74,7 +76,7 @@ Page({
         msg = res.data;
         _this.data.chatLists = msg;
         if (msg.length > 0) {
-          _this.getData(msg[msg.length-1].seq, true);
+          _this.getData(msg[msg.length-1].seq);
         }
       },
       fail: function(res) {
@@ -87,11 +89,11 @@ Page({
     wx.getStorage({
       key: 'endInquiry'+ptid,
       success: function(res) {
-        _this.setData({
-          end: res.data
-        })
-        _this.startTimer();
+        _this.data.end = res.data
       },
+      complete: function() {
+        _this.startTimer();
+      }
     })
   },
   startTimer() {
@@ -100,13 +102,13 @@ Page({
     if (!this.data.end && !timer) {
       timer = setInterval(function() {
         var len = _this.data.chatLists.length-1;
-        if (len > 0) {
+        if (len >= 0) {
           _this.getData(_this.data.chatLists[len].seq, true);
         }
       },3000)
     }
   },
-  getData(seq,before) {
+  getData(seq, t) {
     var _this = this;
     var param = {
       uid: uid,
@@ -151,7 +153,7 @@ Page({
           } else {
             infos = []
           }
-          _this.saveMsg(infos);
+          _this.saveMsg(infos, t);
           var tempStatus = data.status == 2 ? true : false;
           _this.setData({
             end: tempStatus,
@@ -179,7 +181,7 @@ Page({
       }
     })
   },
-  saveMsg(serverMsg) {
+  saveMsg(serverMsg, t) {
     var _this = this;
     var localMsg = [];
     wx.getStorage({
@@ -195,8 +197,12 @@ Page({
             }
           }
         }
+        if (serverMsg.length > 0 || !t) {
+          _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
+          _this.fillAndScroll(_this.data.chatLists)
+        }
       },
-      complete: function() {
+      fail: function() {
         //重置数据
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
         _this.fillAndScroll(_this.data.chatLists)
@@ -210,7 +216,7 @@ Page({
         chatLists: msgList
       })
       this.setMsg()
-      if (msgList.length > 0) {
+      if (msgList.length > 0 && this.data.reachBottom) {
         this.setData({
           toView: 'list' + msgList[msgList.length-1].id
         })
@@ -503,10 +509,15 @@ Page({
     //console.log(e)
   },
   lower: function(e) {
-    //console.log(e)
+    // 到底了
+    this.data.reachBottom = true
+    this.data.bottomHeight = this.data.scrollTop
   },
   scroll: function(e) {
-    //console.log(e)
+    if (this.data.bottomHeight - e.detail.scrollTop > 50) {
+      this.data.reachBottom = false
+      console.log('reachBottom = false')
+    }
   },
   tip: function(val) {
     this.setData({

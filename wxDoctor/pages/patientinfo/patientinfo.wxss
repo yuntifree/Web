@@ -16,7 +16,8 @@
   background-color: #fff;
   border:  1rpx solid #1ed2af;
   border-radius: 10rpx;
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.2)
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 .patientinfo-list-top {
   width: 100%;
@@ -79,7 +80,12 @@
 }
 
 .card {
-  position: relative;
+  position: absolute;
+  top: 35%;
+  right: 60rpx;
+  color: #a1a1a1;
+  margin-top: -15rpx;
+  font-size: 28rpx;
 }
 .card:after, .card:before {
   border: 15rpx solid transparent;
@@ -88,12 +94,12 @@
   height: 0;
   position: absolute;
   top: 50%;
-  right: 24rpx;
+  right: -34rpx;
   margin-top: -15rpx;
-  content: ' '
+  content: '';
 }
 
 .card:before {
   border-left-color: #a1a1a1;
-  right: 22rpx;
+  right: -36rpx;
 }

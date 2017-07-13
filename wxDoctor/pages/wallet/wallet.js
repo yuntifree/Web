@@ -21,6 +21,8 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
+  },
+  onShow() {
     this.getData();
   },
   getData: function() {
