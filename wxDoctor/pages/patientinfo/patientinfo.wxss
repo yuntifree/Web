@@ -62,6 +62,7 @@
 }
 .list-bot-img:first-child {
   border-bottom-left-radius: 10rpx;
+  border-right: 2rpx solid #fff;
 }
 .list-bot-img:last-child {
   border-bottom-right-radius: 10rpx;
@@ -75,4 +76,24 @@
 }
 .bgaf {
   background-color: #1ed2af;
+}
+
+.card {
+  position: relative;
+}
+.card:after, .card:before {
+  border: 15rpx solid transparent;
+  border-left: 15rpx solid #fff;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 50%;
+  right: 24rpx;
+  margin-top: -15rpx;
+  content: ' '
+}
+
+.card:before {
+  border-left-color: #a1a1a1;
+  right: 22rpx;
 }

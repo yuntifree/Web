@@ -2,7 +2,7 @@
 <view class="container patientinfo">
   <scroll-view class="patient-inner" scroll-y style="height: 100%;">
     <view class="patientinfo-list" wx:for="{{info}}" wx:for-index="idx" wx:key="ptinfo">
-      <view data-index="{{idx}}" bindtouchstart="changeViewBg" bindtouchend="goPay" class="{{viewBg ? 'bg' :''}}">
+      <view data-index="{{idx}}" bindtouchstart="changeViewBg" bindtouchend="goPay" class="{{viewBg ? 'bg card' :'card'}}">
         <view class="patientinfo-list-top">
             <text class="list-top-text">{{item.name}}</text>
             <text class="list-top-text" wx:if="{{item.gender}}">{{item.gender==1 ? '男' : '女'}}</text>
