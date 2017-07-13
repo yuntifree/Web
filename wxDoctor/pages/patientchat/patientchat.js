@@ -41,7 +41,6 @@ Page({
   },
   //事件处理函数
   onLoad: function () {
-    wx.showNavigationBarLoading()
     var userInfo = app.globalData.rawUserInfo.userInfo
     if (userInfo) {
       ptHead = userInfo.avatarUrl
@@ -57,7 +56,15 @@ Page({
     var _this = this;
     var msg = [];
 
-    //wx.clearStorage();
+    wx.showLoading({
+      title: '加载中...',
+      complete: function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
+
     wx.getStorage({
       key: 'msg'+uid+'-'+tuid,
       success: function(res) {
@@ -160,11 +167,11 @@ Page({
         _this.tip(failText);
       },
       complete: function() {
-        wx.hideNavigationBarLoading()
         if (!_this.data.mounted) {
           _this.setData({
             mounted: true
           })
+          wx.hideLoading()
           _this.checkEnd()
         }
       }

@@ -40,7 +40,6 @@ Page({
     if (timer == null) {
       this.checkTimer();
     }
-    wx.showNavigationBarLoading();
   },
   onLoad: function () {
     //页面五层处理
@@ -48,25 +47,32 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-    drHead = app.globalData.drHead || '../../images/doctor/ico_personal.png';
+    var userInfo = app.globalData.rawUserInfo.userInfo
+    if (userInfo) {
+      drHead = userInfo.avatarUrl
+    } else {
+      drHead = '../../images/doctor/ico_personal.png'
+    }
     ptHead = app.globalData.ptHead;
     var _this = this;
     //wx.clearStorage();
       //获取咨询者头像
     var msg = [];
+
+    wx.showLoading({
+      title: '加载中...',
+      complete: function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
+
     wx.getStorage({
       key: 'msg'+uid+'-'+ptid,
       success: function(res) {
         msg = res.data;
         _this.data.chatLists = msg;
-        // _this.makeTime();
-        // _this.setData({
-        //   chatLists: _this.data.chatLists,
-        // })
-        // _this.setData( {
-        //   toView: 'list' +msg[msg.length-1].id
-        //   }
-        // )
         _this.getData(msg[msg.length-1].seq, true);
       },
       fail: function(res) {
@@ -82,7 +88,6 @@ Page({
         _this.setData({
           end: res.data
         })
-        wx.hideNavigationBarLoading();
         _this.startTimer();
       },
     })
@@ -162,11 +167,11 @@ Page({
         _this.tip(failText);
       },
       complete: function() {
-        wx.hideNavigationBarLoading()
         if (!_this.data.mounted) {
           _this.setData({
             mounted: true
           })
+          wx.hideLoading()
           _this.checkTimer()
         }
       }
@@ -318,9 +323,6 @@ Page({
       drHead: drHead,
       seq: id,
     }]
-    this.setData({
-      chatLists: this.data.chatLists.concat(addInfo),
-    })
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
       iptVal: '',
