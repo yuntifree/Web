@@ -64,6 +64,12 @@ App({
       duration: 1500
     })
   },
+  goIndex: function() {
+    this.globalData.rawUserInfo = null;
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  },
   globalData: {
     rawUserInfo: null,
     userData: null,

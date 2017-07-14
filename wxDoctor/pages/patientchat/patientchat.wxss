@@ -163,3 +163,6 @@
 .colaf {
   background-color: #1ed2af;
 }
+.padd50 {
+  padding-top: 65%;
+}

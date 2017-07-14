@@ -80,7 +80,10 @@ Page({
               mounted: true
             })
           }
-        } else {
+        } else if (resp.errno == 101) {
+          _this.tip(resp.desc);
+          app.goIndex();
+        }else {
           _this.tip(res.desc);
         }
       },

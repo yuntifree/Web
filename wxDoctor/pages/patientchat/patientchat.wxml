@@ -1,6 +1,6 @@
 <view class="container drchat" wx:if="{{mounted}}">
   <text class="patient-tit g-tac">您已进入医生咨询室，快提出您的问题吧</text>
-  <scroll-view class="drchat-info" scroll-y style="height:100%;"
+  <scroll-view class="{{chatLists.length<5&&iptFocus ? 'drchat-info padd50' : 'drchat-info'}}" scroll-y style="height:100%;"
       bindscrolltoupper="upper"
       bindscrolltolower="lower"
       bindscroll="scroll"

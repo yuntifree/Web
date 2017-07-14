@@ -9,7 +9,6 @@ var sending = false
 Page({
   data: {
     scrollTop: 100,
-    viewHeight: 100,
     chatLists: [],
     iptVal: '',
     subInfo: {
@@ -420,12 +419,12 @@ Page({
   },
   onFocus: function() {
     this.setData({
-      viewHeight: 50
+      iptFocus: true
     })
   },
   onBlur: function() {
     this.setData({
-      viewHeight: 100
+      iptFocus: false
     })
   },
   tip: function(val) {

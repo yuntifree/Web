@@ -85,6 +85,12 @@ Page({
               url: '/pages/scancode/scancode?screen=0'
             })
           }
+        } else if (resp.errno == 101) {
+          _this.tip(resp.desc);
+          wx.reLaunch({
+            url: '/pages/index/index'
+          })
+          //app.goIndex();
         } else {
           _this.tip(resp.desc);
         }

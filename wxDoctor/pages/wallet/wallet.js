@@ -46,6 +46,9 @@ Page({
           _this.setData({
             info: resp.data
           })
+        } else if(resp.errno == 101) {
+          _this.tip(resp.desc)
+          app.goIndex();
         } else {
           _this.tip(resp.desc);
         }
@@ -100,6 +103,8 @@ Page({
               codeFocus: true
             })
             _this.tip(resp.desc)
+          } else {
+            _this.tip(resp.desc);
           }
         },
         fail: function(res) {
@@ -158,8 +163,8 @@ Page({
   },
   fotgetpsd: function() {
     wx.navigateTo({
-      //url: '/pages/forgetcode/forgetcode'
-      url: '/pages/setcode/setcode?dr=1&screen=1'
+      url: '/pages/forgetcode/forgetcode'
+      //url: '/pages/setcode/setcode?dr=1&screen=1'
     })
   },
   tip: function(val) {

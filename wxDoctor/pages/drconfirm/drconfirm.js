@@ -65,8 +65,11 @@ Page({
           _this.setData({
             codeImg: data
           })
-        } else {
-          console.log(resp.desc);
+        } else if(resp.errno == 101){
+          _this.tip(resp.desc);
+          app.goIndex();
+        }else {
+          _this.tip(resp.desc);
         }
       },
       fail: function(res) {

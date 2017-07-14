@@ -46,9 +46,12 @@ Page({
         }, 3000)
       }
     })
+  },
+  onShow: function() {
+    console.log('index');
     app.init(this.checkLogin)
   },
-  checkLogin() {
+  checkLogin: function() {
     // 加载完毕
     wx.hideLoading()
     var that = this;
@@ -115,7 +118,7 @@ Page({
     var navUrl = '';
     var _this = this;
     wx.hideNavigationBarLoading()
-    console.log('this.data.hasphone='+this.data.hasphone)
+    console.log('this.data.hasphone='+this.data.drTuid)
     // 老用户
     if (this.data.hasphone) {
       // 是否医生
@@ -136,6 +139,7 @@ Page({
           })
         } else {
           if (this.data.hasrelation) {
+            console.log('/pages/binddrlist/list');
             navUrl = '/pages/binddrlist/list'
           } else {
             navUrl = '/pages/scancode/scancode?screen=1'

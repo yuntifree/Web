@@ -12,12 +12,13 @@
       <view class="info-list"><text class="weight500">联系电话：</text><text>{{ptInfo.phone}}</text></view>
     </view>
   </view>
-  <scroll-view class="drchat-info" scroll-y style="height: 100%;"
+  <scroll-view scroll-y style="height: 100%;"
       bindscrolltoupper="upper"
       bindscrolltolower="lower"
       bindscroll="scroll"
       scroll-top="{{scrollTop}}"
-      scroll-into-view="{{toView}}">
+      scroll-into-view="{{toView}}"
+      class="{{chatLists.length<5&&iptFocus ? 'drchat-info padd50' : 'drchat-info'}}">
     <view wx:for="{{chatLists}}" wx:key="id" wx:for-index="idx" id="{{'list'+ item.seq}}">
       <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.timestr}}</text>
       <view wx:if="{{item.flag}}" class="drchat-r">
@@ -47,7 +48,10 @@
   <view class="sub-chat">
     <input class="chat-ipt" bindinput="bindKeyInput"
       value="{{iptVal}}"
+      focus="{{iptFocus}}"
       type="text"
+      bindfocus="onFocus"
+      bindblur="onBlur"
       cursor-spacing="20"
       bindconfirm="tapSub"
       confirm-hold="true"

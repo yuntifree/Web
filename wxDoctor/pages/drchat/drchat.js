@@ -11,6 +11,7 @@ Page({
     scrollTop: 100,
     chatLists: [],
     iptVal: '',
+    iptFocus: false,
     subInfo: {
       content: '',
       ctime: '',
@@ -503,6 +504,16 @@ Page({
       success: function(res) {
         console.log(res);
       }
+    })
+  },
+  onFocus: function() {
+    this.setData({
+      iptFocus: true
+    })
+  },
+  onBlur: function() {
+    this.setData({
+      iptFocus: false
     })
   },
   upper: function(e) {
