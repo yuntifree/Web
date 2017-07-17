@@ -49,7 +49,7 @@ Page({
   },
   onShow: function() {
     console.log('index');
-    app.init(this.checkLogin)
+    app.init(this.checkLogin);
   },
   checkLogin: function() {
     // 加载完毕
@@ -124,6 +124,7 @@ Page({
       // 是否医生
       if (this.data.role) {
         if (this.data.haspasswd) {
+          console.log('/pages/binddrlist/list');
           wx.switchTab({
             url: '/pages/drpatient/drpatient'
           })
@@ -139,7 +140,6 @@ Page({
           })
         } else {
           if (this.data.hasrelation) {
-            console.log('/pages/binddrlist/list');
             navUrl = '/pages/binddrlist/list'
           } else {
             navUrl = '/pages/scancode/scancode?screen=1'

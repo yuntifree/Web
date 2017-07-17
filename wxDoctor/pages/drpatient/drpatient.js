@@ -16,11 +16,13 @@ Page({
     ptInfo: false,
     hasmore: 0,
     codeImg: '',
+    drinfo: {}
   },
   //事件处理函数
 
   onLoad: function () {
     uid = app.globalData.uid;
+    tuid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
@@ -60,8 +62,8 @@ Page({
         var resp = res.data;
         if (resp.errno == 0) {
           var data = resp.data;
-          if (data.infos && data.infos.length > 0) {
-            app.globalData.userData.hasrelation = 1
+          /*if (data.infos && data.infos.length > 0) {
+            app.globalData.hasrelation = 1
             _this.setData({
               ptInfo: true,
               mounted: true
@@ -72,17 +74,21 @@ Page({
               info: _this.data.info,
               hasmore: data.hasmore ? data.hasmore : 0
             })
-          } else {
-            app.globalData.userData.hasrelation = 0
+          } else {*/
+            app.globalData.hasrelation = 0;
+            _this.getDrinfo();
             var data = QR.createQrCodeImg(qrUrl,{'size':300});
             _this.setData({
               codeImg: data,
               mounted: true
             })
-          }
+          /*}*/
         } else if (resp.errno == 101) {
           _this.tip(resp.desc);
-          app.goIndex();
+          _this.setData({
+            mounted: false
+          })
+          //app.goIndex();
         }else {
           _this.tip(res.desc);
         }
@@ -92,6 +98,37 @@ Page({
       },
       complete:function() {
         wx.hideLoading()
+      }
+    })
+  },
+  getDrinfo: function() {
+    var _this = this;
+    var param = {
+      uid: uid,
+      token: token,
+      tuid: tuid
+    }
+    wx.request({
+      url: URL +'get_doctor_info',
+      method: 'POST',
+      data: {
+        data: param
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.errno == 0) {
+          _this.setData({
+            drinfo: resp.data
+          })
+        } else {
+          _this.tip(reso.desc);
+        }
+      },
+      fail: function(res) {
+        _this.tip(textFail);
       }
     })
   },

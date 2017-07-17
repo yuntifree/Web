@@ -1,8 +1,9 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/patientinfo/patientinfo",
     "pages/drpatient/drpatient",
+    "pages/drconfirm/drconfirm",
+    "pages/patientinfo/patientinfo",
     "pages/binddrlist/list",
     "pages/screen/screen",
     "pages/setcode/setcode",
@@ -10,9 +11,7 @@
     "pages/scancode/scancode",
     "pages/wallet/wallet",
     "pages/forgetcode/forgetcode",
-
     "pages/rules/rules",
-    "pages/drconfirm/drconfirm",
     "pages/writepatient/writepatient",
     "pages/binddr/binddr",
     "pages/unbinddr/unbinddr",

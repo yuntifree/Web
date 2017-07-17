@@ -1,0 +1,50 @@
+.drconfirm-drinfo-content {
+  width: 88%;
+  height: auto;
+  margin: 0 auto;
+  border: 2rpx solid #c8c8c8;
+  border-radius: 10rpx;
+  padding: 70rpx;
+}
+.drconfirm-drinfo {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  margin:0 auto 60rpx;
+}
+.img-box {
+  width: 400rpx;
+  height: auto;
+  margin: 0 auto;
+}
+.drconfirm-drinfo-head {
+  display: block;
+  width: 114rpx;
+  height: 114rpx;
+  object-fit: cover;
+  -webkit-object-fit: cover;
+}
+.drconfirm-drinfo-info {
+  width: 240rpx;
+  padding: 10rpx 0;
+  padding-left: 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.drconfirm-drinfo-name {
+  font-size: 32rpx;
+  color: #2b2b2b;
+}
+.drconfirm-drinfo-tit {
+  font-size: 26rpx;
+  color: #2b2b2b;
+}
+.drconfirm-drinfo-desc {
+  font-size: 26rpx;
+  color: #828282;
+}
+.drconfirm-drinfo-marginR {
+  margin-right: 8rpx;
+}

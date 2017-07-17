@@ -3,7 +3,7 @@
 var app = getApp()
 Page({
   data: {
-    drinfo: {}
+    info: {}
   },
   onLoad: function () {
     //调用应用实例的方法获取全局数据
