@@ -16,6 +16,7 @@ var wlanapmac = query.wlanapmac || '';
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com'; //'http://www.baidu.com';
 var autologin = 0;
 var taobao = 0;
+var delay = 5;
 //var useragent = navigator.userAgent;
 var canClick = true;
 
@@ -212,8 +213,24 @@ function initUI() {
     $('.pc-reg-btn').click(pcRegClick);
   } else {
     if (autologin) {
-      $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
-      $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
+      var btnText = $('#btn-login').text()
+      if (delay) {
+        $('.wx-btn').addClass('btn-disable')
+        var t = setInterval(function() {
+          delay--;
+          $('#btn-login').text(' (' + delay + ')')
+          if (delay == 0) {
+            $('.wx-btn').removeClass('btn-disable')
+            clearInterval(t)
+            $('#btn-login').text('')
+            $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
+            $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
+          }
+        },1000);
+      } else {
+        $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
+        $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
+      }
       // 发送自动认证请求, 不调用微信
       // oneClickLogin(true, false);
     } else {

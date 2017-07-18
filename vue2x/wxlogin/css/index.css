@@ -293,6 +293,7 @@ video {
   font-size: 0.36rem;
   color: #fff;
   text-align: center;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 .mob-btn {
     margin-top: 0.6rem;
@@ -302,7 +303,7 @@ video {
 .wx-btn {
   margin-top: 1.6rem;
   background-color: #42bd40;
-  position: relative
+  position: relative;
 }
 .btn-img-wechat {
   width: 0.44rem;
@@ -314,6 +315,18 @@ video {
   margin-top: -0.22rem;
   left: 1.2rem;
 } 
+#btn-login {
+  height: 0.44rem;
+  width: 0.6rem;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: 1.1rem;
+  margin-top: -0.44rem;
+}
+.btn-disable {
+  background-color: #88d887;
+}
 .click-btn {
   width: 1.74rem;
   line-height: 0.6rem;
