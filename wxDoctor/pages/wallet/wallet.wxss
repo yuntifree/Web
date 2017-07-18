@@ -1,14 +1,7 @@
 .wallet {
   width: 100%;
   height: 100%;
-  background-color: #f0eff5;
   padding-bottom: 40rpx;
-}
-.wallet-list {
-  width: 100%;
-  background-color: #fff;
-  border-bottom: 1rpx solid #dcdcdc;
-  margin-bottom: 30rpx;
 }
 .list-inner {
   width: 92%;
@@ -18,8 +11,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
-.list-inner:first-child {
   border-bottom: 1rpx solid #dcdcdc;
 }
 .list-inner-tit{
@@ -51,11 +42,23 @@
   font-size: 36rpx;
   border-bottom: 1rpx solid #bebebe;
 }
+.code-ipt {
+  margin-top: 50rpx;
+}
 .wallet-ipt-plhd {
   color: #bebebe;
 }
 .mindraw-tip {
   font-size: 28rpx;
-  color: #f1951c;
+  color: #969696;
   margin-top: 20rpx;
+  line-height: 150%;
+}
+.forget-code {
+  width: 65%;
+  height: auto;
+  margin: 26rpx auto 40rpx;
+  color: #1ed2af;
+  font-size: 26rpx;
+  text-align: right;
 }

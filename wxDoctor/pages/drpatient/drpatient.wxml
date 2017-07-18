@@ -1,4 +1,4 @@
-<!--index.wxml-->
+<import src="../template/drcodeinfo/drcodeinfo.wxml"/>
 <view class="container" wx:if="{{mounted}}">
   <scroll-view class="con-inner" 
       wx:if="{{ptInfo}}"
@@ -8,34 +8,39 @@
       bindscroll="scroll" 
       scroll-top="{{scrollTop}}"
       scroll-into-view="">
-    <view class="drpaient-list" wx:for="{{info}}" 
+    <view class="drpaitent-list" wx:for="{{info}}" 
       wx:key="drpt" 
       wx:for-index="idx"
       data-index="{{idx}}"
       bindtap="goDrchat"
       >
-      <view class="drpaient-head">
-        <image class="drpaient-img" src="{{item.headurl}}"></image>
-        <text class="drpaient-chat-num g-tac" wx:if="{{item.reddot}}"></text>
+      <view class="drpaitent-head">
+        <image class="drpaitent-img" src="{{item.headurl}}"></image>
+        <text class="drpaitent-chat-num g-tac" wx:if="{{item.reddot}}"></text>
       </view>
-      <view class="drpaient-info">
+      <view class="drpaitent-info">
         <view class="info-text">
           <text class="info-text-name">{{item.nickname}}</text>
           <text class="info-text-chat g-ellipsis" wx:if="{{item.type}}">{{item.type==1 ? item.content : '[图片]'}}</text>
         </view>
-        <text class="info-text-time">{{item.ctime}}</text>
+        <view class="info-text info-text2">
+          <text class="pay-sign end-sign" wx:if="{{item.status==2}}">已结束</text>
+          <text class="pay-sign" wx:else>已付费</text>
+          <text class="info-text-time">{{item.ctime}}</text>
+        </view>
       </view>
     </view>
   </scroll-view>
   <view wx:else class="con-inner">
-  <view class="img-box doctorcode-img " >
-    <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
-  </view>
+     <view class="drpatient-norelation g-tac">暂时未收到咨询</view>
+    <view class="drconfirm-drinfo-content">
+      <view class="img-box doctorcode-img ">
+        <template is="item" data="{{info: drinfo}}"/>
+        <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
+      </view>
+    </view>
     <text class="doctorcode-text g-tac">
-      暂时未受到就诊人咨询\n
-      <text class="coloraf"></text>请妥善截图保存，并引导患者扫描\n
-      即可绑定就诊人，接收回诊咨询\n
-      <text class="coloraf">*二维码也可在【个人中心】找到</text>
+        让咨询者扫描此二维码，即可接收咨询\n*二维码也可在【个人中心】找到\n建议截图保存二维码
     </text>
   </view>
   <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">

@@ -201,7 +201,6 @@ export default {
         p = 'http://120.76.236.185/'
       }
       var dir = row.dir;
-      console.log(dir.indexOf('.html'));
       if (dir.indexOf('.html') === -1) {
         dir = row.dir + '/wifilink.html'
       }

@@ -16,7 +16,8 @@
   background-color: #fff;
   border:  1rpx solid #1ed2af;
   border-radius: 10rpx;
-  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.2)
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 .patientinfo-list-top {
   width: 100%;
@@ -52,12 +53,17 @@
 .list-bot-img {
   width: 50%;
   height: 100%;
-  padding-top: 20rpx;
   background-color: #78e4cf;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  color: #fff;
 }
 .list-bot-img:first-child {
   border-bottom-left-radius: 10rpx;
+  border-right: 2rpx solid #fff;
 }
 .list-bot-img:last-child {
   border-bottom-right-radius: 10rpx;
@@ -71,4 +77,29 @@
 }
 .bgaf {
   background-color: #1ed2af;
+}
+
+.card {
+  position: absolute;
+  top: 35%;
+  right: 60rpx;
+  color: #a1a1a1;
+  margin-top: -15rpx;
+  font-size: 28rpx;
+}
+.card:after, .card:before {
+  border: 15rpx solid transparent;
+  border-left: 15rpx solid #fff;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 50%;
+  right: -34rpx;
+  margin-top: -15rpx;
+  content: '';
+}
+
+.card:before {
+  border-left-color: #a1a1a1;
+  right: -36rpx;
 }

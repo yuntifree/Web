@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp();
-var drid,uid,token,URL,hasrelation;
+var drid,uid,token,URL;
 var failText = app.globalData.failText;
 
 Page({
@@ -17,8 +17,13 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-    hasrelation = app.globalData.hasrelation;
     this.getData();
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '推荐给你一个好医生',
+      path: '/pages/index/index?tuid='+drid
+    }
   },
   getData: function() {
     var _this = this;

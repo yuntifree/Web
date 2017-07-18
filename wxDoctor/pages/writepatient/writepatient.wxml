@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <image class="binddr-img" src="../../images/login/img_ownpic.png"></image>
-  <text class="binddr-tip g-tac">请先绑定就诊人的医疗信息</text>
+  <text class="binddr-tip g-tac">请先绑定咨询者的医疗信息</text>
   <form bindsubmit="saveInfo" class="pt-form">
     <view class="binddr-ipt">
       <view class="ipt-l binddr-ipt-name"><text>姓</text><text>名</text></view>

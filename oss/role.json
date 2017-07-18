@@ -59,6 +59,10 @@
     "name": "setlogin",
     "icon": "yonghuxinxi"
     },{
+      "title": "登录页广告图",
+      "name": "loginAd",
+      "icon": "yonghuxinxi"
+    },{
     "title": "portal上线",
     "name": "setportal",
     "icon": "yonghuxinxi"
@@ -114,7 +118,8 @@
       "title": "ap单位管理",
       "name": "setUnit",
       "icon": "yonghuxinxi"
-    }]
+      }
+    ]
   }],
   "0": [{
     "title": "用户管理",

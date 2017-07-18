@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp();
-var tuid,uid,token,URL,hasrelation;
+var tuid,uid,token,URL
 var failText = app.globalData.failText;
 Page({
   data: {
@@ -12,13 +12,12 @@ Page({
     btnBg: '#1ed2af'
   },
   //事件处理函数
-  onLoad: function () {
+  onLoad: function (option) {
     //页面五层处理
     tuid = app.globalData.tuid;
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-    hasrelation = app.globalData.hasrelation;
     this.getData();
   },
   getData: function() {
@@ -44,8 +43,10 @@ Page({
             info: resp.data
           })
         } else {
-          _this.tip(resp.desc);
-          wx.navigateBack({})
+          _this.tip('二维码错误，请扫描正确的二维码');
+          setTimeout(function(){
+            wx.navigateBack({})
+          },1500)
         }
       },
       fail: function(res) {
@@ -53,7 +54,7 @@ Page({
       }
     })
   },
-  changeColor() {
+  changeColor: function() {
     this.setData({
       btnBg: '#0ABF9C'
     })
@@ -81,7 +82,7 @@ Page({
       },
       success: function(res) {
         var resp = res.data;
-        if (resp.errno ===0) {
+        if (resp.errno ==0) {
           _this.setData({
             cirShow: false
           })

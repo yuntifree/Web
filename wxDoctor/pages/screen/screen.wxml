@@ -1,0 +1,3 @@
+<view class="container screen">
+  <image src="{{imgurl}}" style="height: {{height}}"/>
+</view>

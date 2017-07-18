@@ -4,7 +4,7 @@ var dateFormat = util.dateFormat;
 //获取应用实例
 var app = getApp()
 var uid,token,URL,haspatient;
-
+var failText = app.globalData.failText;
 Page({
   data: {
     inquiry: false,
@@ -24,6 +24,14 @@ Page({
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     haspatient = app.globalData.haspatient;
+    wx.showLoading({
+      title: '加载中...',
+      complete: function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
   },
   onShow: function() {
     haspatient = app.globalData.haspatient;
@@ -51,43 +59,49 @@ Page({
         if (resp.errno == 0) {
           var data = resp.data;
           if (data.infos && data.infos.length >0) {
+            var info = data.infos;
+            var today = dateFormat(new Date(), 'yyyy/MM/dd');
+            info.forEach(function(item) {
+              if (item.flag) {
+                if (item.chat) {
+                  item.chat.ctime = item.chat.ctime.replace(/-/g,'/')
+                  var day = dateFormat(item.chat.ctime,'yyyy/MM/dd');
+                  if (day === today) {
+                    item.chat.ctime = dateFormat(item.chat.ctime,'hh:mm')
+                  } else {
+                    item.chat.ctime = dateFormat(item.chat.ctime,'yyyy-MM-dd')
+                  }
+                }
+              }
+            })
             _this.setData({
-              info: data.infos,
+              info: info,
               hasmore: ~~data.hasmore
             })
-            _this.makeTime();
+            app.globalData.userData.hasrelation = 1
           } else {
-            // _this.setData({
-            //   infoNull: true
-            // })
+            app.globalData.userData.hasrelation = 0
             wx.redirectTo({
-              url: '/pages/scancode/scancode'
+              url: '/pages/scancode/scancode?screen=0'
             })
           }
+        } else if (resp.errno == 101) {
+          _this.tip(resp.desc);
+          wx.reLaunch({
+            url: '/pages/index/index'
+          })
+          //app.goIndex();
         } else {
           _this.tip(resp.desc);
         }
       },
       fail: function() {
         _this.tip(failText);
+      },
+      complete: function() {
+        wx.hideLoading()
       }
     })
-  },
-  makeTime: function() {
-    var len = this.data.info.length;
-    var text1,text2;
-    var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
-    for(var i=0;i <len;i++) {
-      if (this.data.info[i].flag) {
-        var ctime = "info["+i+"].chat.ctime"
-        var nowDate = new Date(dateFormat(this.data.info[i].chat.ctime,'yyyy/MM/dd')).getTime();
-        if (date === nowDate) {
-          this.setData({
-            [ctime]: dateFormat(this.data.info[i].chat.ctime,'hh:mm')
-          })
-        }
-      }
-    }
   },
   changebg(e) {
     var idx = e.currentTarget.dataset.index;
@@ -132,9 +146,8 @@ Page({
     wx.scanCode({
       success: function(res) {
         var resp = res.result;
-        _this.tip(resp);
-        var resTuid = resp.substr(0,5);
-        /*if (resTuid == 'tuid=') {
+        var resTuid = resp.substr(resp.indexOf('?') + 1,5)
+        if (resTuid == 'tuid=') {
           var idx = resp.indexOf('=') +1;
           resp = ~~(resp.substring(idx));
           app.globalData.tuid = resp;
@@ -143,8 +156,8 @@ Page({
           })
         } else {
           _this.tip('二维码错误，请扫描正确的医生二维码')
-        }*/
-      },
+        }
+      }
     })
   },
   delDr: function(e) {
@@ -154,9 +167,6 @@ Page({
       url: '/pages/unbinddr/unbinddr'
     })
   },
-  upper: function(e) {
-    console.log(e)
-  },
   lower: function(e) {
     if (this.data.hasmore) {
       var len = this.data.info.length-1;
@@ -165,9 +175,6 @@ Page({
         this.getData(seq);
       }
     }
-  },
-  scroll: function(e) {
-    console.log(e)
   },
   tip: function(val) {
     this.setData({

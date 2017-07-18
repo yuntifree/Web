@@ -1,8 +1,10 @@
+@import "../template/drcodeinfo/drcodeinfo.wxss";
+
 .con-inner {
   width: 100%;
   height: 100%;
 }
-.drpaient-list {
+.drpaitent-list {
   width: 92%;
   margin: 0 auto;
   padding: 24rpx 0;
@@ -10,17 +12,17 @@
   flex-direction: row;
   border-bottom: 1rpx solid #dcdcdc;
 }
-.drpaient-head {
+.drpaitent-head {
   position: relative;
   width: 20%;
   max-width: 114rpx;
 }
-.drpaient-img {
+.drpaitent-img {
   width: 114rpx;
   height: 114rpx;
   border-radius: 50%;
 }
-.drpaient-chat-num {
+.drpaitent-chat-num {
   width: 30rpx;
   height: 30rpx;
   display: block;
@@ -31,11 +33,11 @@
   color: #fff;
   border-radius: 50%;
 }
-.drpaient-info {
+.drpaitent-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 80%;
+  width: 85%;
   padding-left: 14rpx;
 }
 .info-text {
@@ -62,21 +64,20 @@
 }
 
 /** drcode **/
-.img-box {
+/*.img-box {
   width: 400rpx;
   height: 400rpx;
   padding: 23rpx;
   margin: 259rpx auto 0;
   border:1rpx solid #b4b4b4
-}
+}*/
 .drconfirm-codeimg {
-  width: 354rpx;
-  height: 354rpx;
+  width: 390rpx;
+  height: 390rpx;
 }
 .doctorcode-text {
   display: block;
-  margin-top: 34rpx;
-  line-height: 80%;
+  line-height: 150%;
   font-size: 34rpx;
   color: #282828;
 }
@@ -100,5 +101,24 @@
   left: 50%;
   margin-left: -250rpx;
   margin-top: -250rpx;
+}
+.info-text2 {
+  width: auto;
+  text-align: right;
+}
+.pay-sign {
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background-color: #60c64b;
+  color: #fff;
+  font-size: 26rpx;
+}
+.end-sign {
+  background-color: #1cc5a4;
+}
+.drpatient-norelation {
+  color: #1ed2af;
+  font-size: 40rpx;
+  margin: 44rpx 0;
 }
 

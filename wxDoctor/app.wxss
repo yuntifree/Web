@@ -2,7 +2,7 @@
 page {
   height: 100%;
 }
-page,view,text,input,button,image{
+page,view,text,input,button,image,textarea{
   box-sizing: border-box;
 }
 .container {
@@ -85,4 +85,50 @@ page,view,text,input,button,image{
   height: 40rpx;
   margin-right: 10rpx;
 }
-
+.img-tip {
+  font-size: 28rpx;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 280rpx;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+button::after {
+  border: 0;
+}
+/** 闪屏  **/
+.splash {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+.splash-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.splash-sec {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+  padding: 20rpx 30rpx;
+  font-size: 28rpx;
+  color: #fff;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 8rpx;
+} 
+.use-btn {
+  width: 420rpx;
+  line-height: 100rpx;
+  position: absolute;
+  left: 50%;
+  bottom: 100rpx;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  border-radius: 50rpx;
+}

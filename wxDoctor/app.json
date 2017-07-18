@@ -1,18 +1,22 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/drpatient/drpatient",
     "pages/drconfirm/drconfirm",
+    "pages/patientinfo/patientinfo",
+    "pages/binddrlist/list",
+    "pages/screen/screen",
+    "pages/setcode/setcode",
+    "pages/drchat/drchat",
     "pages/scancode/scancode",
+    "pages/wallet/wallet",
+    "pages/forgetcode/forgetcode",
+    "pages/rules/rules",
     "pages/writepatient/writepatient",
     "pages/binddr/binddr",
     "pages/unbinddr/unbinddr",
-    "pages/patientinfo/patientinfo",
     "pages/pay/pay",
-    "pages/drchat/drchat",
-    "pages/patientchat/patientchat",
-    "pages/binddrlist/list",
-    "pages/drpatient/drpatient",
-    "pages/wallet/wallet"
+    "pages/patientchat/patientchat"
   ],
   "window":{
     "backgroundTextStyle":"light",

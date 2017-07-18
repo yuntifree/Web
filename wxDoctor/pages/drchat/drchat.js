@@ -4,13 +4,14 @@ var util = require('../../utils/util.js')
 var dateFormat = util.dateFormat;
 var app = getApp()
 var ptid,uid,token,URL,drHead,ptHead,timer;
-var textFail = app.globalData.textFail;
+var failText = app.globalData.failText;
 var sending = false;
 Page({
   data: {
     scrollTop: 100,
     chatLists: [],
     iptVal: '',
+    iptFocus: false,
     subInfo: {
       content: '',
       ctime: '',
@@ -24,7 +25,9 @@ Page({
     end: false,
     mounted: false,
     ptColor: '#1ed2af',
-    chkCamera: '../../images/patient/ico_camera.png'
+    chkCamera: '../../images/patient/ico_camera.png',
+    reachBottom: true,
+    bottomHeight: 0
   },
   //事件处理函数
   onHide: function() {
@@ -40,7 +43,6 @@ Page({
     if (timer == null) {
       this.checkTimer();
     }
-    wx.showNavigationBarLoading();
   },
   onLoad: function () {
     //页面五层处理
@@ -48,24 +50,35 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-    drHead = app.globalData.drHead || '../../images/doctor/ico_personal.png';
+    var userInfo = app.globalData.rawUserInfo.userInfo
+    if (userInfo) {
+      drHead = userInfo.avatarUrl
+    } else {
+      drHead = '../../images/doctor/ico_personal.png'
+    }
     ptHead = app.globalData.ptHead;
     var _this = this;
     //wx.clearStorage();
-      //获取就诊人头像
+      //获取咨询者头像
     var msg = [];
+
+    wx.showLoading({
+      title: '加载中...',
+      complete: function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
+
     wx.getStorage({
-      key: 'msg'+ptid,
+      key: 'msg'+uid+'-'+ptid,
       success: function(res) {
         msg = res.data;
-        _this.setData({
-          chatLists: msg,
-        })
-        _this.setData( {
-          toView: 'list' +msg[msg.length-1].id
-          }
-        )
-        _this.getData(msg[msg.length-1].seq, true);
+        _this.data.chatLists = msg;
+        if (msg.length > 0) {
+          _this.getData(msg[msg.length-1].seq);
+        }
       },
       fail: function(res) {
         _this.getData(-1,true);
@@ -77,27 +90,26 @@ Page({
     wx.getStorage({
       key: 'endInquiry'+ptid,
       success: function(res) {
-        _this.setData({
-          end: res.data
-        })
-        wx.hideNavigationBarLoading();
-        _this.startTimer();
+        _this.data.end = res.data
       },
+      complete: function() {
+        _this.startTimer();
+      }
     })
   },
   startTimer() {
     //3秒拉一次
     var _this = this;
-    if (!this.data.end) {
+    if (!this.data.end && !timer) {
       timer = setInterval(function() {
         var len = _this.data.chatLists.length-1;
-        if (len > 0) {
+        if (len >= 0) {
           _this.getData(_this.data.chatLists[len].seq, true);
         }
-      },1500)
+      },3000)
     }
   },
-  getData(seq,before) {
+  getData(seq, t) {
     var _this = this;
     var param = {
       uid: uid,
@@ -136,11 +148,13 @@ Page({
               infos[i].ptHead = ptHead;
               infos[i].drHead = drHead;
               infos[i].timeshow = false;
-              infos[i].ctime = infos[i].ctime.replace(/-/g,'/');
+              infos[i].timestr = infos[i].ctime.replace(/-/g,'/');
+              infos[i].ctime = new Date(infos[i].timestr).getTime()
             }
-            _this.saveMsg(infos);
-            //_this.makeTime();
+          } else {
+            infos = []
           }
+          _this.saveMsg(infos, t);
           var tempStatus = data.status == 2 ? true : false;
           _this.setData({
             end: tempStatus,
@@ -155,24 +169,24 @@ Page({
         }
       },
       fail: function(res) {
-        _this.tip(textFail);
+        _this.tip(failText);
       },
       complete: function() {
-        wx.hideNavigationBarLoading()
         if (!_this.data.mounted) {
           _this.setData({
             mounted: true
           })
+          wx.hideLoading()
           _this.checkTimer()
         }
       }
     })
   },
-  saveMsg(serverMsg) {
+  saveMsg(serverMsg, t) {
     var _this = this;
     var localMsg = [];
     wx.getStorage({
-      key: 'msg'+ptid,
+      key: 'msg'+uid+'-'+ptid,
       success: function(res) {
         localMsg = res.data;
         for (var i=0; i<serverMsg.length; i++) {
@@ -184,35 +198,37 @@ Page({
             }
           }
         }
+        if (serverMsg.length > 0 || !t) {
+          _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
+          _this.fillAndScroll(_this.data.chatLists)
+        }
+      },
+      fail: function() {
         //重置数据
         _this.data.chatLists = _this.data.chatLists.concat(serverMsg);
-        _this.fillAndScroll(_this.data.chatLists)
-      },
-      fail: function(res) {
-        //重置数据
-        _this.data.chatLists = _this.data.chatLists.concat(serverMsg)
         _this.fillAndScroll(_this.data.chatLists)
       }
     })
   },
   fillAndScroll: function(msgList) {
     if (msgList) {
-      // 先保存，再处理时间
-      this.setMsg()
       this.makeTime()
       this.setData({
         chatLists: msgList
       })
-      this.setData({
-        toView: 'list' + msgList[msgList.length-1].id
-      })
+      this.setMsg()
+      if (msgList.length > 0 && this.data.reachBottom) {
+        this.setData({
+          toView: 'list' + msgList[msgList.length-1].id
+        })
+      }
     } else {
       console.log('fillAndScroll empty')
     }
   },
   setMsg: function() {
     wx.setStorage({
-      key:"msg"+ptid,
+      key:"msg"+uid+'-'+ptid,
       data: this.data.chatLists,
       success: function(res) {
         console.log('suc'+res)
@@ -221,36 +237,31 @@ Page({
         console.log('fail'+res)
       }
     })
-    //console.log(JSON.stringify(this.data.chatLists));
+  },
+  compareTime: function(time1, time2) {
+    var today = dateFormat(new Date(), 'yyyy/MM/dd');
+    var day = dateFormat(time1.ctime,'yyyy/MM/dd');
+    if (time2) {
+      if (time1.ctime - time2.ctime >= 300 * 1000) {
+        time1.timeshow = true;
+      }
+    } else {
+      time1.timeshow = true
+    }
+    if (day == today) {
+      time1.timestr = dateFormat(time1.ctime,'hh:mm')
+    } else {
+      time1.timestr = dateFormat(time1.ctime, 'yyyy-MM-dd hh:mm')
+    }
   },
   makeTime: function() {
-    var len = this.data.chatLists.length;
-    var text1,text2;
-    for(var i=0;i <len;i++) {
-      if (i>0) {
-        text1 = new Date(this.data.chatLists[i-1].ctime).getTime();
-        text2 = new Date(this.data.chatLists[i].ctime).getTime();
-        if (text2-text1 >= 300000) {
-          var timeshow = "chatLists["+i+"].timeshow";
-          this.setData({
-            [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-          })
-        }
+    var _this = this;
+    this.data.chatLists.forEach(function(item, i){
+      if (i > 0) {
+        _this.compareTime(item, _this.data.chatLists[i-1])
+      } else {
+        _this.compareTime(item)
       }
-    }
-    for (var i=0; i<len; i++) {
-      var ctime = "chatLists["+i+"].ctime"
-      var date = new Date(dateFormat(new Date(), 'yyyy/MM/dd')).getTime();
-      var nowDate = new Date(dateFormat(this.data.chatLists[i].ctime,'yyyy/MM/dd')).getTime();
-      if (date === nowDate) {
-        this.setData({
-          [ctime]: dateFormat(this.data.chatLists[i].ctime,'hh:mm')
-        })
-      }
-    }
-    var timeshow0 = "chatLists[0].timeshow";
-    this.setData({
-      [timeshow0]: true //key只需要用中括号括起来就变成变量啦,如
     })
   },
   bindKeyInput(e) {
@@ -258,44 +269,25 @@ Page({
       iptVal: e.detail.value
     })
   },
-  tapSub() {
-    if (this.data.iptVal.length <=0) {
-      this.tip('请输入发送内容');
-      return;
+  sendChat: function(type, content) {
+    this.data.subInfo = {
+      ctime: new Date().getTime(),
+      timestr: dateFormat(new Date(),'yyyy/MM/dd hh:mm:ss'),
+      content: content,
+      type: type,
+      flag: 1,
+      timeshow: false
     }
-    var ctime = "subInfo.ctime";
-    var content = "subInfo.content";
-    var timeshow = "subInfo.timeshow";
-    var type = "subInfo.type"
-    var flag = "subInfo.flag"
-    var date = dateFormat(new Date(), 'yyyy/MM/dd hh:mm')
-    this.setData({
-      [ctime]: date,
-      [content]: this.data.iptVal,
-      [type]: 1,
-      [flag]: 1,
-      [timeshow]: false
-    });
+
     var len = this.data.chatLists.length;
-    var time1 = new Date().getTime();
     if (len >0) {
-      var time2 = new Date(this.data.chatLists[len-1].ctime);
-      if (time2 == 'Invalid Date') {
-        time2 = new Date(dateFormat(new Date(),'yyyy/MM/dd') + ' ' +this.data.chatLists[len-1].ctime).getTime();
-      }
-      if (time1-time2 >= 300000) {
-        this.setData({
-          [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-        })
-      }
+      this.compareTime(this.data.subInfo, this.data.chatLists[len-1])
     } else {
-      this.setData({
-        [timeshow]: true //key只需要用中括号括起来就变成变量啦,如
-      })
+      this.compareTime(this.data.subInfo)
     }
     var param = {
       tuid: ptid,
-      type: 1,
+      type: type,
       content: this.data.subInfo.content,
       uid: uid,
       token: token
@@ -313,15 +305,22 @@ Page({
       success: function(res) {
         var resp = res.data;
         if (resp.errno == 0) {
-          _this.addChat(1,resp.data.id);
+          _this.addChat(type, resp.data.id);
         } else {
           _this.tip(resp.desc);
         }
       },
       fail: function(res) {
-        _this.tip(textFail);
+        _this.tip(failText)
       }
     })
+  },
+  tapSub() {
+    if (this.data.iptVal.length <=0) {
+      this.tip('请输入发送内容');
+      return;
+    }
+    this.sendChat(1, this.data.iptVal)
   },
   addChat(type,id) {
     var len = this.data.chatLists.length;
@@ -329,6 +328,7 @@ Page({
       id: id,
       content: this.data.subInfo.content,
       ctime: this.data.subInfo.ctime,
+      timestr: dateFormat(this.data.subInfo.ctime, 'hh:mm'),
       type: type,
       flag: 1,
       timeshow: this.data.subInfo.timeshow,
@@ -338,13 +338,13 @@ Page({
     }]
     this.setData({
       chatLists: this.data.chatLists.concat(addInfo),
-    })
-    this.setData({
       iptVal: '',
-      iptFocus: true,
-      toView: 'list'+ id
+      iptFocus: true
     })
     this.setMsg();
+    this.setData({
+      toView: 'list'+ id,
+    })
   },
   endInquiry(e) {
     this.setData({
@@ -381,7 +381,7 @@ Page({
         })
       },
       fail: function(res) {
-        _this.tip(textFail)
+        _this.tip(failText)
       }
     })
   },
@@ -441,7 +441,7 @@ Page({
               }
             },
             fail: function(res){
-              _this.tip(textFail);
+              _this.tip(failText);
             }
           })
         }
@@ -480,35 +480,7 @@ Page({
           success: function(resp){
             var data = JSON.parse(resp.data);
             //do something
-            var param = {
-              tuid: ptid,
-              type: 2,
-              content: data.data.filename,
-              uid: uid,
-              token: token
-            }
-            wx.request({
-              url: URL + 'send_chat',
-              method: 'POST',
-              data: {
-                data: param,
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-              success: function(res) {
-                var respp = res.data;
-                if (respp.errno == 0) {
-                  var con = "subInfo.content";
-                  _this.setData({
-                    [con]: data.data.filename
-                  })
-                  _this.addChat(2,respp.data.id)
-                } else {
-                  _this.tip(respp.desc);
-                }
-              }
-            })
+            _this.sendChat(2, data.data.filename)
           }
         })
       },
@@ -534,14 +506,29 @@ Page({
       }
     })
   },
+  onFocus: function() {
+    this.setData({
+      iptFocus: true
+    })
+  },
+  onBlur: function() {
+    this.setData({
+      iptFocus: false
+    })
+  },
   upper: function(e) {
     //console.log(e)
   },
   lower: function(e) {
-    //console.log(e)
+    // 到底了
+    this.data.reachBottom = true
+    this.data.bottomHeight = this.data.scrollTop
   },
   scroll: function(e) {
-    //console.log(e)
+    if (this.data.bottomHeight - e.detail.scrollTop > 50) {
+      this.data.reachBottom = false
+      console.log('reachBottom = false')
+    }
   },
   tip: function(val) {
     this.setData({

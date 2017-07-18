@@ -16,20 +16,33 @@ Page({
     ptInfo: false,
     hasmore: 0,
     codeImg: '',
+    drinfo: {}
   },
   //事件处理函数
 
   onLoad: function () {
     uid = app.globalData.uid;
+    tuid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
-    qrUrl = 
-    this.getDr();
+    wx.showLoading({
+      title: '加载中...',
+      complete: function() {
+        setTimeout(function() {
+          wx.hideLoading()
+        }, 3000)
+      }
+    })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '推荐给你一款好用的健康小程序',
+      path: '/pages/index/index?tuid='+uid
+    }
   },
   onShow: function() {
     this.getData(0)
-    this.getDr();
   },
   getData(seq) {
     var _this = this;
@@ -49,51 +62,91 @@ Page({
         var resp = res.data;
         if (resp.errno == 0) {
           var data = resp.data;
-          if (data.infos && data.infos.length > 0) {
-            _this.setData({
-              info: data.infos,
-              hasmore: data.hasmore ? data.hasmore : 0
-            })
+          /*if (data.infos && data.infos.length > 0) {
+            app.globalData.hasrelation = 1
             _this.setData({
               ptInfo: true,
               mounted: true
             })
+            _this.data.info = data.infos
             _this.makeTime();
-          } else {
+            _this.setData({
+              info: _this.data.info,
+              hasmore: data.hasmore ? data.hasmore : 0
+            })
+          } else {*/
+            app.globalData.hasrelation = 0;
+            _this.getDrinfo();
             var data = QR.createQrCodeImg(qrUrl,{'size':300});
             _this.setData({
               codeImg: data,
               mounted: true
             })
-          }
-        } else {
+          /*}*/
+        } else if (resp.errno == 101) {
+          _this.tip(resp.desc);
+          _this.setData({
+            mounted: false
+          })
+          //app.goIndex();
+        }else {
           _this.tip(res.desc);
         }
       },
       fail: function(res) {
         _this.tip(failText);
+      },
+      complete:function() {
+        wx.hideLoading()
       }
-    }) 
+    })
+  },
+  getDrinfo: function() {
+    var _this = this;
+    var param = {
+      uid: uid,
+      token: token,
+      tuid: tuid
+    }
+    wx.request({
+      url: URL +'get_doctor_info',
+      method: 'POST',
+      data: {
+        data: param
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.errno == 0) {
+          _this.setData({
+            drinfo: resp.data
+          })
+        } else {
+          _this.tip(reso.desc);
+        }
+      },
+      fail: function(res) {
+        _this.tip(textFail);
+      }
+    })
   },
   makeTime: function() {
     var len = this.data.info.length;
     var text1,text2;
-    var date = new Date(dateFormat(new Date(), 'yyyy-MM-dd')).getTime();
-    for(var i=0;i <len;i++) {
-      if (this.data.info[i].ctime) {
-        var ctime = "info["+i+"].ctime"
-        var nowDate = new Date(dateFormat(this.data.info[i].ctime,'yyyy-MM-dd')).getTime();
-        if (date === nowDate) {
-          this.setData({
-            [ctime]: dateFormat(this.data.info[i].ctime,'hh:mm')
-          })
+    var today = dateFormat(new Date(), 'yyyy/MM/dd');
+    this.data.info.forEach(function(item) {
+      if (item.ctime) {
+        item.ctime = item.ctime.replace(/-/g,'/')
+        var day = dateFormat(item.ctime, 'yyyy/MM/dd')
+        if (day == today) {
+          item.ctime = dateFormat(item.ctime, 'hh:mm')
         } else {
-          this.setData({
-            [ctime]: dateFormat(this.data.info[i].ctime,'yyyy-MM-dd')
-          })
+          item.ctime = dateFormat(item.ctime, 'yyyy-MM-dd')
         }
       }
-    }
+    })
   },
   goDrchat(e) {
     var idx = e.currentTarget.dataset.index;
@@ -108,7 +161,7 @@ Page({
     this.setData({
       viewCode: true
     })
-    //var result = base.decode(e.currentTarget.dataset.src); 
+    //var result = base.decode(e.currentTarget.dataset.src);
   },
   viewShow: function(e) {
     this.setData({

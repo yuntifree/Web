@@ -1,27 +1,44 @@
+<import src="../template/drcodeinfo/drcodeinfo.wxml"/>
 <view class="container">
   <scroll-view class="drconfirm">
-    <image class="drconfirm-head" src="{{info.headurl}}"></image>
+    <image class="drconfirm-head" src="{{info.headurl}}" bindtap="changeHead"/>
     <view class="confrim-list"><text>姓名</text>{{info.name}}</view>
     <view class="confrim-list"><text>职称</text>{{info.title}}</view>
     <view class="confrim-list"><text>所属医院</text>{{info.hospital}}</view>
     <view class="confrim-list"><text>所属科室</text>{{info.department}}</view>
     <view class="confrim-list confrim-ipt-list">
       <text class>设置门诊费</text>
-      <input class="mon-ipt" type="text" 
-        value="{{iptMoney}}" 
-        focus="{{iptFocus}}" 
-        bindinput="bindFeeInput" placeholder="单位元">{{info.fee}}</input>
-      <button class="mon-btn" bindtouchend="saveFee">保存</button>
+      <input class="mon-ipt" type="text"
+        value="{{iptMoney}}"
+        focus="{{iptFocus}}"
+        bindinput="bindFeeInput" 
+        placeholder="单位元"
+        disabled="{{iptDisable}}">{{info.fee}}</input>
+      <button class="mon-btn" bindtouchstart="changeColor" bindtouchend="saveFee" style="background-color: {{btnBg}}">{{btnText}}</button>
     </view>
-    <text class="drconfirm-tip g-tac">如个人信息有误，请联系\n0755-86700641</text>
-    <view class="img-box img-box2">
-        <image class="drconfirm-codeimg " src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
+    <text class="drconfirm-tip g-tac">如个人信息有误，请联系\n0769-21660569</text>
+    <view class="drconfirm-drinfo-content">
+      <view class="img-box">
+        <template is="item" data="{{info: info}}"/>
+        <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
+      </view>
     </view>
-    <text class="dr-text g-tac"><text class="coloraf"></text>让就诊人扫描\n即可绑定就诊人，接收回诊咨询</text>
+    <text class="dr-text g-tac"><text class="coloraf"></text>让咨询者扫描此二维码，即可接收咨询\n建议<text style="color: #24cb9f">截图保存</text>二维码</text>
   </scroll-view>
   <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">
-    <image src="{{codeImg}}"/>
+    <image class="preview-img" src="{{codeImg}}"/>
     <text class="img-tip">点击屏幕即可关闭图片</text>
+  </view>
+  <view class="preview-code" wx:if="{{editHead}}">
+    <view class="edithead-inner">
+      <view class="edithead-list" bindtap="chooseHead">从手机相册中选择</view>
+      <text class="edit-line"></text>
+      <view class="edithead-list" bindtap="cancelEdit">取消</view>
+    </view>
+  </view>
+  <view class="preview-code" wx:if="{{checkHead}}">
+    <image class="checkhead-img" src="{{newHead}}" style="width: 100%;height: {{imgHeight}}"/>
+    <view class="checkhead-btn"><button bindtap="cancelCheck">取消</button><button bindtap="makeHead">确定</button></view>
   </view>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

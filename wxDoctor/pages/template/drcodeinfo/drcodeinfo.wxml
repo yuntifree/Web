@@ -1,0 +1,9 @@
+<template name="item">
+  <view class="drconfirm-drinfo">
+    <image class="drconfirm-drinfo-head" src="{{info.headurl}}"/>
+    <view class="drconfirm-drinfo-info">
+      <view><text class="drconfirm-drinfo-name drconfirm-drinfo-marginR">{{info.name}}</text><text class="drconfirm-drinfo-tit">{{info.title}}</text></view>
+      <view class="drconfirm-drinfo-desc"><text class="drconfirm-drinfo-marginR">{{info.hospital}}</text><text>{{info.department}}</text></view>
+    </view>
+  </view>
+</template>

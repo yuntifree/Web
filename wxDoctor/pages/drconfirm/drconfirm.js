@@ -15,15 +15,37 @@ Page({
     maskHidden: true,
     imagePath: '',
     codeImg: '',
-    viewCode: false
+    viewCode: false,
+    btnBg: '#1ed2af',
+    btnText: '修改',
+    iptDisable: true,
+    saveMoney: false,
+    editHead: false,
+    newHead: '',
+    checkHead: false,
+    imgHeight: '750rpx'
   },
   //事件处理函数
   onLoad: function() {
     URL = app.globalData.reqUrl;
-    uid = app.globalData.tuid;
+    uid = app.globalData.uid;
     token = app.globalData.token;
     qrUrl = 'http://api.yunxingzh.com/wxdoctor?tuid=' + app.globalData.uid;
     this.getData();
+    var _this = this;
+    wx.getSystemInfo({
+      success: function(res) {
+        _this.setData({
+          imgHeight: res.windowHeight +　'rpx'
+        })
+      }
+    })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '推荐给你一款好用的健康小程序',
+      path: '/pages/index/index?tuid='+uid
+    }
   },
   getData: function() {
     var _this = this;
@@ -58,8 +80,11 @@ Page({
           _this.setData({
             codeImg: data
           })
-        } else {
-          console.log(resp.desc);
+        } else if(resp.errno == 101){
+          _this.tip(resp.desc);
+          app.goIndex();
+        }else {
+          _this.tip(resp.desc);
         }
       },
       fail: function(res) {
@@ -72,8 +97,32 @@ Page({
       iptMoney: e.detail.value
     })
   },
+  changeColor() {
+    var iptDisable = true;
+    var saveMoney = false
+    if (this.data.iptDisable) {
+      iptDisable = false
+    } else {
+      saveMoney = true
+    }
+    this.setData({
+      btnBg: '#0ABF9C',
+      iptDisable: iptDisable,
+      iptFocus: true,
+      saveMoney: saveMoney,
+      btnText: '保存'
+    })
+  },
   saveFee: function() {
+    if (this.data.saveMoney) {
+      this.saveFeeEnd();
+    }
+  },
+  saveFeeEnd() {
     var _this = this;
+    this.setData({
+      btnBg: '#1ed2af'
+    })
     if (this.data.iptMoney > 0 || this.data.iptMoney == 0) {
       var param = {
         uid: uid,
@@ -92,7 +141,12 @@ Page({
         success: function(res) {
           var resp = res.data;
           if (resp.errno === 0) {
-            _this.tip('保存成功');
+            _this.setData({
+              iptDisable: true,
+              btnText: '修改',
+              saveMoney: false
+            })
+            _this.tip('修改成功');
           } else {
             _this.tip(resp.desc);
           }
@@ -114,11 +168,60 @@ Page({
     this.setData({
       viewCode: true
     })
-    //var result = base.decode(e.currentTarget.dataset.src); 
+    //var result = base.decode(e.currentTarget.dataset.src);
   },
   viewShow: function(e) {
     this.setData({
       viewCode: false
+    })
+  },
+  changeHead: function() {
+    this.setData({
+      editHead: true,
+      newHead: ''
+    })
+  },
+  chooseHead: function() {
+    var _this = this;
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFile = res.tempFilePaths;
+        wx.uploadFile({
+          url: URL + 'upload_img', //仅为示例，非真实的接口地址
+          filePath: tempFile[0],
+          name: 'file',
+          success: function(resp){
+            var data = JSON.parse(resp.data);
+            _this.setData({
+              newHead: data.data.filename,
+              checkHead: true,
+              editHead: false
+            })
+            console.log(data.data.filename);
+          }
+        })
+      }
+    })
+  },
+  cancelEdit: function(){
+    this.setData({
+      editHead: false
+    })
+  },
+  cancelCheck: function() {
+    console.log(1);
+    this.setData({
+      checkHead: false
+    })
+  },
+  makeHead: function() {
+    this.setData({
+      ['info.headurl']: this.data.newHead,
+      checkHead: false
     })
   },
   tip: function(val) {

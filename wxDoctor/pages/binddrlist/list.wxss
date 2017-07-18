@@ -1,11 +1,21 @@
 .binddoctor-list {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   height: auto;
   margin: 0 auto;
   padding: 30rpx 4%;
   position: relative;
+}
+.info-inner {
+  display: flex;
+  flex-direction: row;
+}
+.info-left {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
 }
 .binddoctor-line {
   display:block;
@@ -17,15 +27,22 @@
   left: 4%;
 }
 .binddoctor-img {
-  width: 20%;
-  height: 140rpx;
+  width: 114rpx;
+  height: 114rpx;
+  object-fit: cover;
+  margin-right: 30rpx;
 }
 .binddoctor-info {
+  width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: 3%;
-  width: 80%;
+  padding: 6rpx 0;
+}
+.info-right {
+  width: 132rpx;
+  text-align: right;
+  padding-bottom: 0;
 }
 .binddoctor-name {
   margin-top: 2rpx;
@@ -38,25 +55,31 @@
   color: #282828;
   font-weight: 500;
 }
-.inner-hospital {
-  padding: 8rpx 20rpx;
-  margin: 0 30rpx;
+.text-sty {
+  display: block;
+  width: 100%;
+  padding: 10rpx 0;
   font-size: 26rpx;
-  background-color: #1cc5a4;
+  background-color: #60c64b;
   color: #fff;
   border-radius: 10rpx;
+  text-align: center;
 }
-.inner-cate {
-  padding: 8rpx 20rpx;
-  background-color: #ffbb2a;
-  color: #fff;
+.fee-sty {
+  background-color: #1cc5a4;
+}
+.inner-depm {
+  margin: 0 14rpx;
+}
+.inner-text {
+  color: #9b9b9b;
   font-size: 26rpx;
-  border-radius: 10rpx;
 }
 .chat-time {
   display: block;
   font-size: 22rpx;
   color: #b4b4b4;
+  line-height: 120%;
 }
 .chat-text {
   width: 100%;
