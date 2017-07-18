@@ -22,7 +22,7 @@
       <header class="app_header">
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
-            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">松山湖</option><option :value="{ number: 1 }">卫计局</option><option :value="{ number: 2 }">控股大厦</option><option :value="{ number: 3 }">AC4测试</option><option :value="{ number: 4 }">学校招商</option></select></button>
+            地区<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">松山湖</option><option :value="{ number: 1 }">卫计局</option><option :value="{ number: 2 }">控股大厦</option><option :value="{ number: 3 }">AC4测试</option><option :value="{ number: 4 }">学校招商</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
           <button class="btn btn-left outline-none" :disabled="selId==-1" @click="review">上线</button>
         </div>
@@ -48,7 +48,7 @@
                 inline-template
                 label="图片">
                 <div>
-                  <img v-if="row.img" style="width:100%;height:auto;" :src="row.img">
+                  <img v-if="row.img" style="width:100%;height:auto;max-width:120px" :src="row.img">
                   <span v-else>-</span>
                 </div>
               </el-table-column>
