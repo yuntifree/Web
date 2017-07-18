@@ -34,6 +34,7 @@ import adban from './components/views/adban.vue'
 import uploadImg from './components/views/uploadImg.vue'
 import setActivity from './components/views/setActivity.vue'
 import setlogin from './components/views/setlogin.vue'
+import loginAd from './components/views/loginAd.vue'
 import setportal from './components/views/setportal.vue'
 import setscenes from './components/views/setscenes.vue'
 import setWjweb from './components/views/setWjweb.vue'
@@ -83,6 +84,7 @@ export default {
     uploadImg,
     setActivity,
     setlogin,
+    loginAd,
     setportal,
     setscenes,
     setWjweb,

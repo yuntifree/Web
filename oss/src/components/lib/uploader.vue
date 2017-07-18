@@ -99,11 +99,11 @@ export default {
               document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '完成';
               self.upDone++;
               if (self.filenames.length == self.upDone) {
-                console.log(uploadName);
+                //console.log(uploadName);
                 uploadName.forEach(function(val, idx) {
                   uploadName[idx] = 'http://img.yunxingzh.com/' + val;
                 })
-                console.log(uploadName);
+                //console.log(uploadName);
                 self.$store.state.imgUrl = uploadName;                
               } else {
                 doUpload(uploader, self.upDone);
