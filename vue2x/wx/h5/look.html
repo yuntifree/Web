@@ -143,9 +143,9 @@
           {{/each}}
         </tbody>
       </table>
-      <div class="down-table">
+      <!--div class="down-table">
         <a class="down-btn">下载统计表格</a>
-      </div>
+      </div-->
   </script>
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src='js/template.js'></script>
@@ -158,9 +158,9 @@
       if (resp.errno === 0) {
         var data = resp.data;
         $('.look').append(template('tplLook',data));
-        $('.down-btn').click(function() {
+        /*$('.down-btn').click(function() {
           $(this).ExportExcel('tbodyDate');
-        });
+        });*/
       } else {
         console.log(resp.desc);
       }
