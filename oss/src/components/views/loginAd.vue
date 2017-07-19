@@ -262,7 +262,6 @@ export default {
           time = time + '';
           s = time.substr(0,1);
           e = time.substr(1);
-          console.log(s);
         }
         if (time>=1000) {
           time = time + '';

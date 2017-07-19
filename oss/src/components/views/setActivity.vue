@@ -47,6 +47,11 @@
               </el-table-column>
               <el-table-column
                 inline-template
+                label="内容">
+                <div><a :href="row.url" target="_blank">预览</a></div>
+              </el-table-column>
+              <el-table-column
+                inline-template
                 :context="_self"
                 label="操作"
                 width="100">
@@ -108,6 +113,7 @@
 </template>
 <script>
 import CGI from '../../lib/cgi.js'
+var url = 'http://wx.yunxingzh.com/activity/?name=';
 export default {
   data() {
     return {
@@ -176,7 +182,12 @@ export default {
       CGI.post(this.$store.state, 'get_conf', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
-          this.infos = data.infos;
+          if (data.infos && data.infos.length>0) {
+            data.infos.forEach(function(item) {
+              item.url = url + item.key
+            })
+            this.infos = data.infos;
+          }
           this.pageCfg.total = data.total;
           this.dataReady = true;
         } else {
