@@ -183,6 +183,9 @@ Page({
   },
   chooseHead: function() {
     var _this = this;
+    wx.setNavigationBarTitle({
+      title: '修改头像'//页面标题为路由参数
+    })
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -199,7 +202,7 @@ Page({
             _this.setData({
               newHead: data.data.filename,
               checkHead: true,
-              editHead: false
+              editHead: false,
             })
             console.log(data.data.filename);
           }
@@ -213,15 +216,20 @@ Page({
     })
   },
   cancelCheck: function() {
-    console.log(1);
     this.setData({
       checkHead: false
+    })
+    wx.setNavigationBarTitle({
+      title: '健康莞家医生版'//页面标题为路由参数
     })
   },
   makeHead: function() {
     this.setData({
       ['info.headurl']: this.data.newHead,
       checkHead: false
+    })
+    wx.setNavigationBarTitle({
+      title: '健康莞家医生版'//页面标题为路由参数
     })
   },
   tip: function(val) {

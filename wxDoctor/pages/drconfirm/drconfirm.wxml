@@ -37,7 +37,7 @@
     </view>
   </view>
   <view class="preview-code" wx:if="{{checkHead}}">
-    <image class="checkhead-img" src="{{newHead}}" style="width: 100%;height: {{imgHeight}}"/>
+    <image class="checkhead-img" mode="aspectFill" src="{{newHead}}" style="width: 100%;height: {{imgHeight}}"/>
     <view class="checkhead-btn"><button bindtap="cancelCheck">取消</button><button bindtap="makeHead">确定</button></view>
   </view>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
