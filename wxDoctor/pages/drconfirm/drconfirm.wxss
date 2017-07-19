@@ -151,6 +151,3 @@
   color: #fff;
   background-color: transparent;
 }
-.checkhead-img {
-  width: 100%;
-}
