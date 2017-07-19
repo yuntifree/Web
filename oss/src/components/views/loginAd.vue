@@ -357,6 +357,9 @@ export default {
         this.alertInfo('请选择结束时间');
       } else {
         this.postInfo.endTime = ~~endTime.replace(':','');
+        if (this.postInfo.endTime==2400) {
+          this.postInfo.endTime = 0
+        }
       }
       var startTime = this.dateInfo.startTime.trim();
       if (startTime.length==0) {
@@ -364,6 +367,9 @@ export default {
         this.alertInfo('请选择开始时间');
       } else {
         this.postInfo.startTime = ~~startTime.replace(':','');  
+        if (this.postInfo.startTime==2400) {
+          this.postInfo.startTime = 0
+        }
       }
       return ret;
     },
