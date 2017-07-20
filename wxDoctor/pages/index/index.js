@@ -124,7 +124,6 @@ Page({
       // 是否医生
       if (this.data.role) {
         if (this.data.haspasswd) {
-          console.log('/pages/binddrlist/list');
           wx.switchTab({
             url: '/pages/drpatient/drpatient'
           })

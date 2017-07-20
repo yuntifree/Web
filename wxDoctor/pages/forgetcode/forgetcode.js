@@ -31,6 +31,7 @@ Page({
   },
   getcode: function() {
     var _this = this;
+    console.log(1);
     if (this.data.phone.length > 0) {
       if (~~this.data.phone && utils.checkTel(this.data.phone)) {
         if (!this.data.dbcheckphone) {
@@ -137,7 +138,7 @@ Page({
             var resp = res.data;
             if (resp.errno == 0) {
               wx.redirectTo({
-                url: '/pages/setcode/setcode?reset=1'
+                url: '/pages/setcode/setcode?reset=1&screen=1'
               })
               console.log('succ')
             } else {

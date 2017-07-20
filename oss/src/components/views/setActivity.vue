@@ -47,7 +47,7 @@
               </el-table-column>
               <el-table-column
                 inline-template
-                label="内容">
+                label="链接地址">
                 <div><a :href="row.url" target="_blank">预览</a></div>
               </el-table-column>
               <el-table-column

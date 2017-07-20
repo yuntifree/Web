@@ -1,8 +1,8 @@
 <view class="container">
   <view class="rule-title">常见问题：</view>
-  <view class="rule-list" wx:for="{{lists}}" wx:for-index="idx" wx:for-item="item">
+  <view class="rule-list" wx:for="{{lists}}" wx:key="id" wx:for-index="idx" wx:for-item="item">
     <view class="{{selIdx==idx?'rule-list-tit colorac margin20':'rule-list-tit colorac'}}" data-idx="{{idx}}" bindtap="setIdx">
-      <image wx:if="{{selIdx==idx}}"class="rule-ico" src="../../images/login/ico_option_press.png"/>
+      <image wx:if="{{selIdx==idx}}" class="rule-ico" src="../../images/login/ico_option_press.png"/>
       <image wx:else class="rule-ico" src="../../images/login/ico_option_nor.png"/>
       <text class="list-inner">{{item.title}}</text>
     </view>

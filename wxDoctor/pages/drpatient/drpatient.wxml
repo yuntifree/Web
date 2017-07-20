@@ -2,7 +2,8 @@
 <view class="container" wx:if="{{mounted}}">
   <scroll-view class="con-inner" 
       wx:if="{{ptInfo}}"
-      scroll-y style="height: 100%;" 
+      scroll-y="true"
+      style="height: 100%;" 
       bindscrolltoupper="upper" 
       bindscrolltolower="lower" 
       bindscroll="scroll" 

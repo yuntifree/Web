@@ -48,6 +48,9 @@ Page({
     var title = ''
     if (~~reset) {
       title = '请重新设置您的提现密码'
+      wx.setNavigationBarTitle({
+        title: '重设提现密码'//页面标题为路由参数
+      })
     } else {
       title = '请设置您的提现密码\n用于咨询费提现'
     }

@@ -259,7 +259,6 @@ export default {
           }      
         }
       })
-      
     },
     delUnit(idx, row) {
       this.selIdx = idx;

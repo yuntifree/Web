@@ -16,7 +16,9 @@ Page({
     ptInfo: false,
     hasmore: 0,
     codeImg: '',
-    drinfo: {}
+    drinfo: {},
+    second: -1,
+    btnUseBg: '#1ed2af',
   },
   //事件处理函数
 
@@ -62,7 +64,7 @@ Page({
         var resp = res.data;
         if (resp.errno == 0) {
           var data = resp.data;
-          /*if (data.infos && data.infos.length > 0) {
+          if (data.infos && data.infos.length > 0) {
             app.globalData.hasrelation = 1
             _this.setData({
               ptInfo: true,
@@ -74,7 +76,7 @@ Page({
               info: _this.data.info,
               hasmore: data.hasmore ? data.hasmore : 0
             })
-          } else {*/
+          } else {
             app.globalData.hasrelation = 0;
             _this.getDrinfo();
             var data = QR.createQrCodeImg(qrUrl,{'size':300});
@@ -82,7 +84,7 @@ Page({
               codeImg: data,
               mounted: true
             })
-          /*}*/
+          }
         } else if (resp.errno == 101) {
           _this.tip(resp.desc);
           _this.setData({
@@ -168,8 +170,16 @@ Page({
       viewCode: false
     })
   },
+  goUse: function() {
+    this.setData({
+      btnUseBg: '#1ed2af'
+    })
+    wx.navigateTo({
+      url: '/pages/screen/screen?dr=1'
+    })
+  },
   upper: function(e) {
-    console.log(e)
+    //console.log(e)
   },
   lower: function(e) {
     if (this.data.hasmore) {
@@ -179,9 +189,13 @@ Page({
         this.getData(seq);
       }
     }
+    console.log(this.data.hasmore);
+    wx.navigateTo({
+      url: '/pages/rules/rules'
+    })
   },
   scroll: function(e) {
-    console.log(e)
+    //console.log(e)
   },
   tip: function(val) {
     this.setData({
