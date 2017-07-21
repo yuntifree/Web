@@ -55,16 +55,28 @@ Page({
       }
     })
   },
-  payMoney(e) {
-    var _this = this;
+  changeBg: function() {
+    console.log(1);
     this.setData({
+      btnBg: '#oabf9c'
+    })
+  },
+  restoreBg: function() {
+    console.log(2);
+    this.setData({
+      btnBg: '#1ed2af'
+    })
+  },
+  payMoney: function(e) {
+    var _this = this;
+    /*this.setData({
       btnBg: '#oabf9c'
     })
     setTimeout(function(res) {
       _this.setData({
         btnBg: '#1ed2af'
       })
-    },300)
+    },300)*/
     var fee = this.data.info.fee *100;
     var formid = e.detail.formId;
     var param = {
@@ -97,7 +109,7 @@ Page({
       }
     })
   },
-  startWxpay(id) {
+  startWxpay: function(id) {
     var _this = this;
     var fee = this.data.info.fee *100
     var param = {

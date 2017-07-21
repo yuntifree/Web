@@ -7,7 +7,7 @@
     <view class="confrim-list"><text>所属医院</text>{{info.hospital}}</view>
     <view class="confrim-list"><text>所属科室</text>{{info.department}}</view>
     <view class="confrim-list confrim-ipt-list">
-      <text class>设置门诊费</text>
+      <text class>设置咨询费</text>
       <input class="mon-ipt" type="text"
         value="{{iptMoney}}"
         focus="{{iptFocus}}"
@@ -23,7 +23,8 @@
         <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
       </view>
     </view>
-    <text class="dr-text g-tac"><text class="coloraf"></text>让咨询者扫描此二维码，即可接收咨询\n建议<text style="color: #24cb9f">截图保存</text>二维码</text>
+    <text class="dr-text g-tac"><text class="coloraf"></text>让咨询者扫描此二维码，即可接收咨询\n*建议<text style="color: #24cb9f">截图保存</text>二维码</text>
+    <button class="btn drconfirm-help" style="background-color:{{btnUseBg}}" bindtouchstart="changeBg" bindtouchend="goUse">使用说明</button>
   </scroll-view>
   <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">
     <image class="preview-img" src="{{codeImg}}"/>

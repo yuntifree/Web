@@ -24,7 +24,10 @@ Page({
     endShow: false,
     end: false,
     mounted: false,
+    endTextColor: '#ffbb2a',
     ptColor: '#1ed2af',
+    cancelBg: '#fff',
+    endBg: '1ed2af',
     chkCamera: '../../images/patient/ico_camera.png',
     reachBottom: true,
     bottomHeight: 0
@@ -348,12 +351,24 @@ Page({
   },
   endInquiry(e) {
     this.setData({
-      endShow: true
+      endShow: true,
+      endTextColor: '#dcdcdc'
+    })
+  },
+  changeBg() {
+    this.setData({
+      cancelBg: '#dcdcdc'
     })
   },
   cancelEnd() {
     this.setData({
-      endShow: false
+      endShow: false,
+      cancelBg: "#fff"
+    })
+  },
+  changeEndBg() {
+    this.setData({
+      endBg: '#0abf9c'
     })
   },
   checkEnd() {
@@ -374,7 +389,9 @@ Page({
       },
       success: function(res) {
         _this.setData({
-          endShow: false
+          endShow: false,
+          endBg: '#1ed2af',
+          endTextColor: '#ffbb2a'
         })
         wx.switchTab({
           url: '/pages/drpatient/drpatient'
@@ -391,6 +408,7 @@ Page({
       this.setData({
         patientShow: !this.data.patientShow,
       })
+      console.log(this.data.patientShow);
       this.setData({
         ptColor: this.data.patientShow ? '#dcdcdc' : '1ed2af'
       })
@@ -398,10 +416,10 @@ Page({
       wx.getStorage({
         key: 'ptInfo'+ptid,
         success: function(res) {
-
           _this.setData({
             ptInfo: res.data,
-            patientShow: true
+            patientShow: true,
+            ptColor: '#dcdcdc'
           })
         },
         fail: function(res) {
@@ -424,7 +442,8 @@ Page({
               if (resp.errno === 0) {
                 _this.setData({
                   ptInfo: resp.data,
-                  patientShow: true
+                  patientShow: true,
+                  ptColor: '#dcdcdc'
                 })
                 wx.setStorage({
                   key: 'ptInfo'+ptid,

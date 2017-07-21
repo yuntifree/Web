@@ -3,7 +3,8 @@
 var md5 = require('../../utils/md5.js');
 var app = getApp();
 var uid,token,URL;
-var failText = app.globalData.failText;
+var failText = app.globalData.failText,reset;
+var reg=new RegExp("[0-9]+");
 Page({
   data: {
     tipMsg: '',
@@ -25,9 +26,9 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-    var reset = option.reset;
-    var screen = option.screen;
-    if (~~screen) {
+    reset = ~~option.reset;
+    var screen = ~~option.screen;
+    if (screen) {
       this.setData({
         second: -1
       })
@@ -46,7 +47,7 @@ Page({
       },1000)
     }
     var title = ''
-    if (~~reset) {
+    if (reset) {
       title = '请重新设置您的提现密码'
       wx.setNavigationBarTitle({
         title: '重设提现密码'//页面标题为路由参数
@@ -85,13 +86,14 @@ Page({
   },
   checkVal: function(e) {
     var val = e.detail.value;
+    console.log(typeof(val));
     if (val.length <6) {
       this.setData({
         rightCode: true,
       })
       return
     }
-    if (!(~~val)) {
+    if (!reg.test(val)) {
       this.setData({
         rightCode: true,
         password: ''
@@ -99,12 +101,12 @@ Page({
       return
     }
     this.setData({
-      password: ~~val
+      password: val
     })
   },
   checkPassword: function(e) {
     var val = e.detail.value;
-    if (~~val !== ~~this.data.password) {
+    if (val !== this.data.password) {
       this.setData({
         checkCode: true,
         btnDisable: true
@@ -118,13 +120,24 @@ Page({
   },
   checkBtn: function(e) {
     var val = e.detail.value;
-    if (~~val == ~~this.data.password) {
+    if (val==this.data.password) {
       this.setData({
         btnDisable: false
       })
     } else {
       this.setData({
         btnDisable: true
+      })
+    }
+    var pattern = /\d{6}/;
+    console.log(typeof(val));
+    if (val.length==6 && val!==this.data.password) {
+      this.setData({
+        checkCode: true
+      })
+    } else {
+      this.setData({
+        checkCode: false
       })
     }
   },
@@ -143,6 +156,7 @@ Page({
     this.setData({
       btnBg: '#78e4cf'
     });
+    console.log(this.data.password);
     if (this.data.canPost) {
       var param = {
         uid: uid,
@@ -161,10 +175,14 @@ Page({
         success: function(res) {
           var resp = res.data;
           if (resp.errno == 0) {
-            app.globalData.userData.haspasswd = 1
-            wx.switchTab({
-              url: '/pages/drpatient/drpatient'
-            })
+            app.globalData.userData.haspasswd = 1;
+            if (reset) {
+              wx.navigateBack({})
+            } else {
+              wx.switchTab({
+                url: '/pages/drpatient/drpatient'
+              })
+            }
           } else {
             _this.tip(resp.desc)
           }

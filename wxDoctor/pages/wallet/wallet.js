@@ -76,8 +76,16 @@ Page({
       })
     }
   },
+  changeBg: function() {
+    this.setData({
+      btnBg: '#0ABF9C'
+    })
+  },
   checkCode: function() {
     var _this = this;
+    this.setData({
+      btnBg: '#1ed2af'
+    })
     var fee = ~~this.data.money;
     if ( fee && fee>0) {
       var param = {

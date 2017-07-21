@@ -17,6 +17,7 @@ Page({
     codeImg: '',
     viewCode: false,
     btnBg: '#1ed2af',
+    btnUseBg: '#1ed2af',
     btnText: '修改',
     iptDisable: true,
     saveMoney: false,
@@ -114,15 +115,15 @@ Page({
     })
   },
   saveFee: function() {
+    this.setData({
+      btnBg: '#1ed2af'
+    })
     if (this.data.saveMoney) {
       this.saveFeeEnd();
     }
   },
   saveFeeEnd() {
     var _this = this;
-    this.setData({
-      btnBg: '#1ed2af'
-    })
     if (this.data.iptMoney > 0 || this.data.iptMoney == 0) {
       var param = {
         uid: uid,
@@ -230,6 +231,19 @@ Page({
     })
     wx.setNavigationBarTitle({
       title: '健康莞家医生版'//页面标题为路由参数
+    })
+  },
+  changeBg: function() {
+    this.setData({
+      btnUseBg: '#0ABF9C'
+    })
+  },
+  goUse: function() {
+    this.setData({
+      btnUseBg: '#1ed2af'
+    })
+    wx.navigateTo({
+      url: '/pages/screen/screen?dr=1'
     })
   },
   tip: function(val) {

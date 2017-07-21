@@ -21,8 +21,8 @@ Page({
     var imgurl = '';
     var height = '';
     if (~~dr) {
-      imgurl = 'http://img.yunxingzh.com/a5c37aab-9bd9-4a64-a40e-309febbc8dc7.png'
-      height = '6589rpx'
+      imgurl = 'http://img.yunxingzh.com/0b08b6bd-c9ea-4f7f-a80c-52e0d4d004e9.png'
+      height = '5535rpx'
     } else {
       imgurl = 'http://img.yunxingzh.com/08b93d70-4501-4b76-ada0-f4259dd28835.png'
       height = '8564rpx'

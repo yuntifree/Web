@@ -2,8 +2,7 @@
   <view class="ipt-container">
     <view class="ipt-inner">
       <input name="phone" placeholder="请输入手机号" placeholder-style="color: #b4b4b4" value="{{phone}}" 
-        bindblur="getphone"
-        focus="{{phoneFocus}}"/>
+        disabled="true"/>
     </view>
     <view class="ipt-inner">
       <input name="code" placeholder="请输入验证码" placeholder-style="color: #b4b4b4" value="{{code}}" 

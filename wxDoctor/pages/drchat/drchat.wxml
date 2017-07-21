@@ -1,7 +1,7 @@
 <view class="container drchat" wx:if="{{mounted}}">
   <view class="drchat-menu" wx:if="{{!end}}">
     <view class="menu-pait g-tac" bindtap="getPatient" style="color:{{ptColor}}">查看咨询人信息</view>
-    <view class="colorb2a g-tac" bindtap="endInquiry">结束咨询</view>
+    <view class="colorb2a g-tac" style="color:{{endTextColor}}" bindtap="endInquiry">结束咨询</view>
   </view>
   <view wx:else class="menu-end g-tac">该咨询者已结束咨询</view>
   <view class="dr-patient" wx:if="{{patientShow}}">
@@ -62,8 +62,8 @@
     <view class="end-quiry">
       <text class="g-tac end-tit">结束本次咨询</text>
       <view class="end-btn-con">
-        <button class="end-btn" bindtap="cancelEnd">取消</button>
-        <button class="end-btn" bindtap="checkEnd">结束</button>
+        <button class="end-btn" style="background-color:{{cancelBg}}" bindtouchstart="changeBg" bindtap="cancelEnd">取消</button>
+        <button class="end-btn" style="background-color:{{endBg}}" bindtouchstart="changeEndBg" bindtouchend="checkEnd">结束</button>
       </view>
     </view>
   </view>

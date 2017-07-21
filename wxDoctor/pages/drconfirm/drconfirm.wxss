@@ -151,3 +151,7 @@
   color: #fff;
   background-color: transparent;
 }
+.drconfirm-help {
+  width: 229rpx;
+  margin-top: 54rpx;
+}

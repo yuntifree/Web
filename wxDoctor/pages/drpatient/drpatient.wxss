@@ -121,4 +121,11 @@
   font-size: 40rpx;
   margin: 44rpx 0;
 }
+.color9f {
+  color: #24cb9f;
+}
+.text-spec {
+  height: 40rpx;
+  padding-top: 20rpx;
+}
 

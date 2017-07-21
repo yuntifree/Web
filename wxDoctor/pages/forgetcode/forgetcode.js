@@ -2,8 +2,9 @@
 //获取应用实例
 var utils = require('../../utils/util.js');
 var app = getApp();
-var uid,token,URL,timer;
+var uid,token,URL,timer,phone;
 var failText = app.globalData.failText;
+var reg=new RegExp("[0-9]+");
 Page({
   data: {
     tipMsg: '',
@@ -11,9 +12,7 @@ Page({
     btnBg: '#1ed2af',
     phone: '',
     code: '',
-    dbcheckphone: false,
     codeText: '获取验证码',
-    phoneFocus: true,
     codeFocus: false
   },
   //事件处理函数
@@ -22,44 +21,14 @@ Page({
     uid = app.globalData.uid;
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
-  },
-  getphone: function(e) {
-    var val = e.detail.value;
     this.setData({
-      phone: val
+      phone: app.globalData.userData.phone
     })
   },
   getcode: function() {
     var _this = this;
-    console.log(1);
-    if (this.data.phone.length > 0) {
-      if (~~this.data.phone && utils.checkTel(this.data.phone)) {
-        if (!this.data.dbcheckphone) {
-          this.getphonecode();
-          this.setCodeFocus();
-        } else {
-          return true;
-        }
-      } else {
-        this.setPhoneFocus();
-        this.tip('请输入正确的电话号码')
-        return false;
-      }
-    } else {
-      this.setPhoneFocus();
-      this.tip('请输入电话号码');
-      return false;
-    }
-  },
-  setPhoneFocus: function() {
+    this.getphonecode();
     this.setData({
-      codeFocus: false,
-      phoneFocus: true
-    })
-  },
-  setCodeFocus: function() {
-    this.setData({
-      phoneFocus: false,
       codeFocus: true
     })
   },
@@ -114,45 +83,44 @@ Page({
   postNext: function() {
     var _this = this;
     this.setData({
-      dbcheckphone: true,
       btnBg: '#1ed2af'
     })
-    if (this.getcode()) {
-      if (~~this.data.code && this.data.code.length == 6) {
-        var param = {
-          phone: this.data.phone,
-          code: ~~this.data.code,
-          uid: uid,
-          token: token
-        }
-        wx.request({
-          url: URL +'bind_phone',
-          method: 'POST',
-          data: {
-            data: param
-          },
-          header: {
-            'content-type': 'application/json',
-          },
-          success: function(res) {
-            var resp = res.data;
-            if (resp.errno == 0) {
-              wx.redirectTo({
-                url: '/pages/setcode/setcode?reset=1&screen=1'
-              })
-              console.log('succ')
-            } else {
-              console.log(resp)
-              _this.tip(resp.desc);
-            }
-          },
-          fail: function(res) {
-            _this.tip(failText)
-          }
-        })
-      } else {
-        this.tip('请输入正确的验证码');
+    if (reg.test(this.data.code) && this.data.code.length == 6) {
+      var param = {
+        phone: this.data.phone,
+        code: ~~this.data.code,
+        uid: uid,
+        token: token
       }
+      wx.request({
+        url: URL +'check_phone_code',
+        method: 'POST',
+        data: {
+          data: param
+        },
+        header: {
+          'content-type': 'application/json',
+        },
+        success: function(res) {
+          var resp = res.data;
+          if (resp.errno == 0) {
+            wx.redirectTo({
+              url: '/pages/setcode/setcode?reset=1&screen=1'
+            })
+            console.log('succ')
+          } else if(resp.errno == 102){
+            _this.tip('验证码错误，请重新输入');
+            _this.setData({
+              codeFocus: true
+            })
+          }
+        },
+        fail: function(res) {
+          _this.tip(failText)
+        }
+      })
+    } else {
+      this.tip('请输入正确的验证码');
     } 
   },
   changeBg() {

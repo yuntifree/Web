@@ -70,7 +70,7 @@ Page({
               ptInfo: true,
               mounted: true
             })
-            _this.data.info = data.infos
+            _this.data.info = seq==0 ? data.infos : _this.data.info.concat(data.infos)
             _this.makeTime();
             _this.setData({
               info: _this.data.info,
@@ -90,7 +90,7 @@ Page({
           _this.setData({
             mounted: false
           })
-          //app.goIndex();
+          app.goIndex();
         }else {
           _this.tip(res.desc);
         }
@@ -126,7 +126,7 @@ Page({
             drinfo: resp.data
           })
         } else {
-          _this.tip(reso.desc);
+          _this.tip(resp.desc);
         }
       },
       fail: function(res) {

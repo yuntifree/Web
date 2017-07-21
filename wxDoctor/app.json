@@ -1,21 +1,21 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/drpatient/drpatient",
+    "pages/pay/pay",
     "pages/drconfirm/drconfirm",
+    "pages/wallet/wallet",
+    "pages/drpatient/drpatient",
+    "pages/setcode/setcode",
+    "pages/scancode/scancode",
+    "pages/screen/screen",
     "pages/patientinfo/patientinfo",
     "pages/binddrlist/list",
-    "pages/screen/screen",
-    "pages/setcode/setcode",
     "pages/drchat/drchat",
-    "pages/scancode/scancode",
-    "pages/wallet/wallet",
     "pages/forgetcode/forgetcode",
     "pages/rules/rules",
     "pages/writepatient/writepatient",
     "pages/binddr/binddr",
     "pages/unbinddr/unbinddr",
-    "pages/pay/pay",
     "pages/patientchat/patientchat"
   ],
   "window":{

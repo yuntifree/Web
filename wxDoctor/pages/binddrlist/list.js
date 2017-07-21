@@ -75,7 +75,7 @@ Page({
               }
             })
             _this.setData({
-              info: info,
+              info: seq==0 ? data.infos : _this.data.info.concat(info),
               hasmore: ~~data.hasmore
             })
             app.globalData.userData.hasrelation = 1

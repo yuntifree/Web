@@ -3,7 +3,7 @@
 <view class="container">
   <template is="item" data="{{drinfo:info}}"/>
   <text class="pay-money-tip g-tac">本次咨询费用<text class="pay-money">{{info.fee}}</text>元\n支付后可跟医生联系咨询</text>
-  <form class="pay-form" bindsubmit="payMoney" reportSubmit="true">
+  <form class="pay-form" bindtouchstart="changeBg" bindtouchend="restoreBg" bindsubmit="payMoney" reportSubmit="true">
       <button class="btn pay-btn" formType="submit" style="background-color:{{btnBg}}">微信支付</button>
   </form>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>

@@ -37,7 +37,7 @@
     value="{{psd}}"
     focus="{{codeFocus}}"
     bindinput="makeBtnstatus"/>
-  <button bindtap="checkCode" disabled="{{btnDisable&&info.balance<info.mindraw}}" class="btn" >提现</button>
+  <button disabled="{{btnDisable&&info.balance<info.mindraw}}" class="btn" style="background-color: {{btnBg}}" bindtouchstart="changeBg" bindtouchend="checkCode" >提现</button>
   <view class="forget-code">
     <text class="forget-text" bindtap="fotgetpsd">忘记密码？</text>
   </view>
