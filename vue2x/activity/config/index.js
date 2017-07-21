@@ -3,7 +3,7 @@ var path = require('path')
 require('shelljs/global')
 var online = env.BUILD_ENV == 'deploy';
 // 这里改工程名
-var distPath = online ? 'activity' : 'dist';
+var distPath = online ? 'activity' : 'testactivity';
 module.exports = {
   build: {
     env: require('./prod.env'),
