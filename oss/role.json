@@ -118,6 +118,10 @@
       "title": "ap单位管理",
       "name": "setUnit",
       "icon": "yonghuxinxi"
+      },{
+      "title": "ap信息管理",
+      "name": "setApInfo",
+      "icon": "yonghuxinxi"
       }
     ]
   }],

@@ -47,6 +47,7 @@ import setTime from './components/views/setTime.vue'
 import setArea from './components/views/setArea.vue'
 import setaAdarea from './components/views/setAdarea.vue'
 import setUnit from './components/views/setUnit.vue'
+import setApInfo from './components/views/setApInfo.vue'
 import setWx from './components/views/setWx.vue'
 import setInterface from './components/views/setInterface.vue'
 
@@ -97,6 +98,7 @@ export default {
     setArea,
     setaAdarea,
     setUnit,
+    setApInfo,
     setWx,
     setInterface
   },
