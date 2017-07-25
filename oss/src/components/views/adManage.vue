@@ -155,7 +155,6 @@ export default {
       reviewOps: 0,
       alertShow: false,
       alertMsg: '',
-      addParam: {},
       rules: {
         dst: [
           { required: true, message: '请输入名称', trigger: 'blur' },
@@ -220,13 +219,6 @@ export default {
             })
           }
           this.dataReady = true;
-        } else {
-          this.alertInfo(resp.desc);
-        }
-      })
-      CGI.post(this.$store.state, 'get_ad_param', {}, (resp)=> {
-        if (resp.errno === 0) {
-          this.addParam = resp.data;
         } else {
           this.alertInfo(resp.desc);
         }
