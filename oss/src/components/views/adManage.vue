@@ -8,6 +8,8 @@
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
+          <button type="button" class="btn btn-info btn-left outline-none">
+            类型<select v-model="selected" @change="getData(true)"><option :value="{ number: 1 }">卫计</option><option :value="{ number: 2 }">松山湖</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
         </div>
         <div>
@@ -29,33 +31,13 @@
               </el-table-column>
               <el-table-column
                 inline-template
-                label="广告名称">
-                <div>{{row.name||'-'}}</div>
+                label="广告位置">
+                <div>{{row.stype==1?'banner':'新闻'||'-'}}</div>
               </el-table-column>
               <el-table-column
                 inline-template 
                 label="广告图片">
-                  <img style="width:100%;height:auto;" :src="row.img"/>
-              </el-table-column>
-              <el-table-column
-                inline-template
-                label="广告版本">
-                <div>{{row.version||'-'}}</div>
-              </el-table-column>
-              <el-table-column
-                inline-template
-                label="广告业主id">
-                <div>{{row.adid||'-'}}</div>
-              </el-table-column>
-              <el-table-column
-                inline-template
-                label="广告摘要">
-                <div>{{row.abstract||'-'}}</div>
-              </el-table-column>
-              <el-table-column
-                inline-template
-                label="广告内容">
-                <div>{{row.content||'-'}}</div>
+                  <img style="width:100%;height:auto;max-width:120px" :src="row.img"/>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -64,18 +46,8 @@
               </el-table-column>
               <el-table-column
                 inline-template
-                label="发布者">
-                <div>{{row.url || '-'}}</div>
-              </el-table-column>
-              <el-table-column
-                inline-template
                 label="状态">
                 <div>{{row.online ? '上线' : '下线'}}</div>
-              </el-table-column>
-              <el-table-column
-                inline-template
-                label="时段">
-                <div>{{row.timeslot}}</div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -103,56 +75,23 @@
         <div class="edit-form">
           <div class="form-title">{{modal.text}}</div>
           <el-form :model="postInfo" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-             <el-form-item label="广告名称" prop="name">
-              <el-input  v-model.trim="postInfo.name" placeholder="请输入广告名称"></el-input>
-            </el-form-item>
-            <el-form-item label="内容版本" prop="version">
-              <el-input v-model.trim="postInfo.version" placeholder="请输入内容版本"></el-input>
-            </el-form-item>
-            <el-form-item label="摘要信息" prop="abstract">
-              <el-input v-model.trim="postInfo.abstract"  placeholder="请输入摘要信息"></el-input>
-            </el-form-item>
-            <el-form-item label="广告内容" prop="content">
-              <el-input v-model.trim="postInfo.content"  placeholder="请输入摘要信息"></el-input>
-            </el-form-item>
-            <el-form-item label="跳转地址" prop="dst">
-              <el-input v-model.trim="postInfo.dst"  placeholder="请输入跳转地址"></el-input>
-            </el-form-item>
-            <el-form-item label="摘要信息" prop="img">
-              <uploader></uploader>
-            </el-form-item>
-            <el-form-item label="广告业主" prop="adid">
-              <el-select v-model="postInfo.adid" placeholder="请选择投放时段">
-                <el-option
-                  v-for="item in addParam.customer"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="投放时段" prop="tsid">
-              <el-select v-model="postInfo.tsid" placeholder="请选择投放时段">
-                <el-option
-                  v-for="item in addParam.timeslot"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="投放区域" prop="areaid">
-              <el-select v-model="postInfo.areaid" placeholder="请选择投放时段">
-                <el-option
-                  v-for="item in addParam.area"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="状态" prop="online">
+            <el-form-item label="广告位置" prop="stype">
+              <el-radio-group v-model="postInfo.stype">
+                <el-radio label="1">banner</el-radio>
+                <el-radio label="2">新闻</el-radio>
+              </el-radio-group>
+            </el-form-item>            
+            <el-form-item label="是否上线" prop="online" v-if="!modal.addShow">
               <el-radio-group v-model="postInfo.online">
                 <el-radio label="0">下线</el-radio>
                 <el-radio label="1">上线</el-radio>
               </el-radio-group>
+            </el-form-item>
+            <el-form-item label="跳转地址" prop="dst">
+              <el-input type="text" v-model.number="postInfo.dst"></el-input>
+            </el-form-item>
+            <el-form-item label="广告图片" prop="img">
+              <uploader></uploader>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" v-if="modal.addShow" @click="addPost">确定</el-button>
@@ -205,49 +144,28 @@ export default {
       },
       selIdx: -1,
       selected: {
-        number:0
+        number:1
       },
       postInfo: {
-        name: '',
-        version: '',
-        adid: Number,
-        areaid: Number,
-        tsid: Number,
+        dst: '',
         img: '',
-        abstract: '',
-        online: '1',
-        content: '',
-        dst: ''
+        online: '0',
+        stype: '1'
       },
       reviewOps: 0,
       alertShow: false,
       alertMsg: '',
       addParam: {},
       rules: {
-        name: [
+        dst: [
           { required: true, message: '请输入名称', trigger: 'blur' },
         ],
-        version: [
-          { required: true, message: '请输入内容版本', trigger: 'blur' }
-        ],
-        abstract: [
-          { required: true, message: '请输入摘要信息', trigger: 'blur' }
-        ],
-        content: [
-          { required: true, message: '请输入广告内容', trigger: 'blur' }
-        ],
-        adid: [
-          { type: 'number', required: true, message: '请选择广告业主', trigger: 'change' }
-        ],
-        areaid: [
-          { type: 'number',required: true, message: '请选择投放区域', trigger: 'change' }
-        ],
-        tsid: [
-          { type: 'number',required: true, message: '请选择投放时段', trigger: 'change' }
-        ],
         online: [
-          { required: true, message: '请选择在线状态', trigger: 'change' }
+          {required: true, message: '请选择在线状态', trigger: 'change' }
         ],
+        stype: [
+          {required: true, message: '请选择广告位置', trigger: 'change' }
+        ]
       }
     }
   },
@@ -286,8 +204,9 @@ export default {
       var param = {
         seq: this.pageCfg.start,
         num: 30,
+        type: 1
       }
-      CGI.post(this.$store.state, 'get_advertise', param, (resp) => {
+      CGI.post(this.$store.state, 'config/get_ad_banner', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
           this.infos = data.infos;
@@ -297,9 +216,6 @@ export default {
             this.infos.forEach(function(item) {
               if (!item.online) {
                 item.online = 0
-              }
-              if (!item.deleted) {
-                item.deleted = 0;
               }
             })
           }
@@ -331,16 +247,19 @@ export default {
     add() {
       this.$store.state.imgUrl = [];
       CGI.objClear(this.postInfo);
-      this.postInfo.online = "0";
+      this.postInfo.online = '0';
+      this.postInfo.stype = '1';
       this.modal.text = '增加';
       this.modal.addShow = true;
       this.modal.editShow = true;
+      console.log(this.postInfo.online);
     },
     edit(idx,row) {
       this.selIdx = idx;
       this.$store.state.imgUrl = [];
       CGI.objClear(this.postInfo);
       row.online = row.online.toString();
+      row.stype = row.stype.toString();
       CGI.extend(this.postInfo,row);
       this.modal.text = '修改';
       this.modal.addShow = false;
@@ -350,16 +269,16 @@ export default {
       var _this = this;
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          //_this.postInfo.img = _this.$store.state.imgUrl[0];
           var param = CGI.clone(_this.postInfo);        
           param.online = ~~param.online;
-          param.deleted = ~~param.deleted;
+          param.stype = ~~param.stype;
+          param.deleted = 0;
           param.id = _this.infos[_this.selIdx].id;
-          console.log(JSON.stringify(_this.postInfo));
+          console.log(JSON.stringify(param));
           if (_this.$store.state.imgUrl.length > 0) {
             param.img = _this.$store.state.imgUrl[0];
           }
-          CGI.post(this.$store.state, 'mod_advertise', param, function(resp) {
+          CGI.post(this.$store.state, 'config/mod_ad_banner', param, function(resp) {
             if (resp.errno === 0) {
               CGI.extend(_this.infos[_this.selIdx], param);
               _this.modal.editShow = false;
@@ -376,22 +295,26 @@ export default {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           //this.postInfo.img = this.$store.state.imgUrl[0];
-          var param = CGI.clone(this.postInfo);
-          param.online = ~~param.online;
+          var param = {
+            dst: this.postInfo.dst,
+            type: this.selected.number,
+            stype: ~~this.postInfo.stype
+          };
+          //param.stype = ~~param.stype
           if (this.$store.state.imgUrl.length <= 0) {
             _this.alertInfo('请选择广告图片');
             return false;
           } else {
             param.img = this.$store.state.imgUrl[0];
           }
-          CGI.post(this.$store.state, 'add_advertise', param, function(resp){
+          CGI.post(this.$store.state, 'config/add_ad_banner', param, function(resp){
             if (resp.errno === 0) {
-              var u = CGI.clone(_this.postInfo);
+              var u = CGI.clone(param);
               u.id = resp.data.id;
               _this.infos.push(u);
               _this.modal.editShow = false;
             } else {
-              this.alertInfo(resp.desc);
+              _this.alertInfo(resp.desc);
             }
           })
         } //else {}
@@ -400,13 +323,13 @@ export default {
     del(idx,row) {
       this.selIdx = idx;
       this.dialogCfg.title = '删除';
-      this.dialogCfg.text = '确认要删除' + row.name +'吗';
+      this.dialogCfg.text = '确认要删除' + row.id +'吗';
       this.modal.dialogShow = true; 
     },
     delPost() {
       var param = this.infos[this.selIdx];
       param.deleted = 1;
-      CGI.post(this.$store.state, 'mod_advertise', param, (resp)=> {
+      CGI.post(this.$store.state, 'config/mod_ad_banner', param, (resp)=> {
         if (resp.errno === 0) {
           this.infos.splice(this.selIdx,1);
           this.modal.dialogShow = false; 
