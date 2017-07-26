@@ -58,7 +58,7 @@
       confirm-type="send"></input>
     <image class="chat-pic" src="{{chkCamera}}" bindtouchstart="changeCm" bindtouchend="makImg"></image>
   </view>
-  <view class="drchat-shadow" wx:if="{{endShow}}">
+  <view class="view-shadow" wx:if="{{endShow}}">
     <view class="end-quiry">
       <text class="g-tac end-tit">结束本次咨询</text>
       <view class="end-btn-con">

@@ -20,12 +20,26 @@ Page({
     },
     iptFocus: false,
     toView: '',
-    end: false,
+    end: -1,
     userInfo: {},
     mounted: false,
     chkCamera: '../../images/patient/ico_camera.png',
     reachBottom: true,
-    bottomHeight: 0
+    bottomHeight: 0,
+    items: [
+      {name: 1, value: '15分钟内'},
+      {name: 2, value: '30分钟内', checked: 'true'},
+      {name: 3, value: '1小时内'},
+      {name: 4, value: '2小时内'},
+      {name: 5, value: '超过2小时'},
+    ],
+    refundBtnBg: '#1ed2af',
+    btnBg: '#1cc5a4',
+    interval: 2,
+    refundShow: true,
+    rflag: -1,
+    cancelBg: '#fff',
+    sureBg: '#1cc5a4'
   },
   onHide: function() {
     clearInterval(timer);
@@ -94,6 +108,12 @@ Page({
         _this.startTimer();
       }
     })
+    wx.getStorage({
+      key: 'rflag'+tuid,
+      success: function(res) {
+        _this.data.rflag = res.data
+      }
+    })
   },
   startTimer: function() {
     //3秒拉一次
@@ -152,13 +172,15 @@ Page({
             infos = []
           }
           _this.saveMsg(infos, t);
-          var tempStatus = data.status == 2
+          var tempStatus = data.status;
+          var tempRflag = data.rflag
           _this.setData({
             end: tempStatus,
-            status: data.status
+            rflag: tempRflag
           })
           try {
-            wx.setStorageSync("endInquiry" + tuid, tempStatus)
+            wx.setStorageSync("endInquiry" + tuid, tempStatus);
+            wx.setStorageSync("rflag" + tuid, data.rflag)
           } catch(e) {
 
           }
@@ -425,6 +447,128 @@ Page({
   onBlur: function() {
     this.setData({
       iptFocus: false
+    })
+  },
+  radioChange: function(e) {
+    this.setData({
+      interval: e.detail.value
+    })
+    console.log(e.detail.value)
+  },
+  changeColor: function() {
+    this.setData({
+      refundBtnBg: '#0abf9c'
+    })
+  },
+  getRefund: function() {
+    this.setData({
+      btnBg: '#1ed2af',
+      refundShow: false
+    })
+  },
+  changebg: function() {
+    this.setData({
+      btnBg: '#0abf9c'
+    })
+  },
+  hideRefund: function() {
+    this.setData({
+      refundShow: true
+    })
+  },
+  makeRefund: function() {
+    this.setData({
+      btnBg: '#1cc5a4'
+    })
+    var param = {
+      doctor: tuid,
+      interval: this.data.interval,
+      uid: uid,
+      token: token
+    }
+    var _this = this;
+    wx.request({
+      url: URL + 'apply_refund',
+      data: {
+        data: param
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json' 
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.errno == 0) {
+          _this.setData({
+            refundShow: true,
+            end: 3,
+            rflag: 0
+          })
+          wx.setStorageSync("endInquiry" + tuid, 3)
+          wx.setStorageSync("rflag" + tuid, 0)
+          _this.tip('您已成功申请退款，请等待人工审核')
+        } else {
+          _this.tip(resp.desc)
+        }
+      }
+    })
+  },
+  checkRefund: function() {
+    this.setData({
+      refundBtnBg: '#1ed2af',
+      cancelShow: true
+    })
+  },
+  cancelRefund: function() {
+    this.setData({
+      endBg: '#0abf9c'
+    })
+    var param ={
+      doctor: tuid,
+      uid: uid,
+      token: token
+    }
+    var _this = this;
+    wx.request({
+      url: URL + 'cancel_refund',
+      data: {
+        data: param
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json' 
+      },
+      success: function(res) {
+        var resp = res.data;
+        if (resp.errno == 0) {
+          _this.setData({
+            end: 1,
+            rflag: 1,
+            cancelShow: false
+          })
+          wx.setStorageSync("endInquiry" + tuid, 1)
+          wx.setStorageSync("rflag" + tuid, 1)
+          _this.tip('您已成功申请退款，请等待人工审核')
+        } else {
+          _this.tip(resp.desc)
+        }
+      }
+    })
+  },
+  changeCalcelBg: function() {
+    this.setData({
+      cancelBg: '#dcdcdc'
+    })
+  },
+  checkCancel: function() {
+    this.setData({
+      cancelShow: false,
+      cancelBg: "#fff"
+    })
+  },
+  changeSureBg: function() {
+    this.setData({
+      endBg: '#0abf9c'
     })
   },
   tip: function(val) {

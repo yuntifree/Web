@@ -1,5 +1,30 @@
 <view class="container drchat" wx:if="{{mounted}}">
-  <text class="patient-tit g-tac">您已进入医生咨询室，快提出您的问题吧</text>
+  <block  wx:if="{{end==1}}">
+    <text class="patient-tit g-tac">若医生没在8小时内回复，可申请退款</text>
+    <view class="sub-chat">
+    <input class="chat-ipt" bindinput="bindKeyInput" type="text"
+      value="{{iptVal}}"
+      focus="{{iptFocus}}"
+      cursor-spacing="20"
+      bindfocus="onFocus"
+      bindblur="onBlur"
+      bindconfirm="tapSub"
+      confirm-hold="true"
+      confirm-type="send"/>
+    <image class="chat-pic" src="{{chkCamera}}" bindtouchstart="changeCm" bindtouchend="makeImg"/>
+  </view>
+  </block>
+  <block  wx:if="{{end==3}}">
+    <text class="patient-tit g-tac">您正退款中，退款过程中不能主动与医生对话</text>
+    <view class="sub-chat">
+      <button class="chat-btn colc9">退款申请处理中</button>
+      <button class="chat-btn"  bindstouchstart="changeColor" bindtouchend="checkRefund" style="background-color:{{refundBtnBg}}">取消申请</button>
+    </view>
+  </block>
+  <view class="patient-refunds" wx:if="{{rflag}}">
+    <text class="patient-tit g-tac">医生长时间不回复?</text>
+    <button class="btn refund-btn" style="background-color:{{refundBtnBg}}" bindtaouchstart="changeColor" bindtap="getRefund">申请退款</button> 
+  </view>
   <scroll-view class="{{chatLists.length<5&&iptFocus ? 'drchat-info padd50' : 'drchat-info'}}" scroll-y style="height:100%;"
       bindscrolltoupper="upper"
       bindscrolltolower="lower"
@@ -32,21 +57,32 @@
       </view>
     </view>
   </scroll-view>
-  <view class="sub-chat" wx:if="{{!end}}">
-    <input class="chat-ipt" bindinput="bindKeyInput" type="text"
-      value="{{iptVal}}"
-      focus="{{iptFocus}}"
-      cursor-spacing="20"
-      bindfocus="onFocus"
-      bindblur="onBlur"
-      bindconfirm="tapSub"
-      confirm-hold="true"
-      confirm-type="send"/>
-    <image class="chat-pic" src="{{chkCamera}}" bindtouchstart="changeCm" bindtouchend="makeImg"/>
+  <view class="sub-chat" wx:if="{{end==2}}">
+    <button class="chat-btn colc9">本次咨询已结束</button>
+    <button class="chat-btn" bindtouchstart="changeColor" bindtouchend="reInquiry" style="background-color:{{refundBtnBg}}">再次咨询</button>
   </view>
-  <view class="sub-chat" wx:else>
-    <button class="chat-btn end-btn">本次咨询已结束</button>
-    <button class="chat-btn" bindtap="reInquiry">再次咨询</button>
+  <view class="view-shadow" hidden="{{refundShow}}">
+    <view class="view-refund-hidden" bindtap="hideRefund"></view>
+    <view class="refound-inner">
+      <text class="refound-inner-tit g-tac">您能接受医生多久回复？</text>
+      <radio-group class="radio-group refound-inner-grop" bindchange="radioChange">
+        <label class="radio refound-inner-label" wx:for="{{items}}" wx:key="radio" wx:for-index="idx">
+          <radio class="refound-inner-radio" value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+        </label>
+      </radio-group>
+      <button class="refond-inner-btn" style="background-color:{{btnBg}}" bindtouchstart="changebg" bindtouchend="makeRefund">申请退款</button>
+      <text class="refont-inner-text g-tac">申请退款期间将不能与医生对话</text>
+    </view>
+  </view>
+  <view class="view-shadow" wx:if="{{cancelShow}}">
+    <view class="end-quiry">
+      <text class="g-tac end-tit patientchat-end-tit">确认取消</text>
+      <text class="g-tac patientchat-end-text">取消退款后方可与医生对话</text>
+      <view class="end-btn-con">
+        <button class="end-btn" style="background-color:{{cancelBg}}" bindtouchstart="changeCalcelBg" bindtap="checkCancel">取消</button>
+        <button class="end-btn" style="background-color:{{sureBg}}" bindtouchstart="changeSureBg" bindtouchend="cancelRefund">确定</button>
+      </view>
+    </view>
   </view>
   <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
 </view>

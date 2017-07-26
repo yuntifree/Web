@@ -22,7 +22,7 @@ Page({
     ptInfo: {},
     patientShow: false,
     endShow: false,
-    end: false,
+    end: -1,
     mounted: false,
     endTextColor: '#ffbb2a',
     ptColor: '#1ed2af',
@@ -158,7 +158,7 @@ Page({
             infos = []
           }
           _this.saveMsg(infos, t);
-          var tempStatus = data.status == 2 ? true : false;
+          var tempStatus = data.status;
           _this.setData({
             end: tempStatus,
           })

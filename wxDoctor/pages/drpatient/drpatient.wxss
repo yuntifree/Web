@@ -128,4 +128,10 @@
   height: 40rpx;
   padding-top: 20rpx;
 }
+.drpatient-tip {
+  display: block;
+  font-size: 28rpx;
+  color: #9a9a9a;
+  margin-top: 44rpx;
+}
 

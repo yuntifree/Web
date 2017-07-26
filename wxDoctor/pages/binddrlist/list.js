@@ -87,10 +87,7 @@ Page({
           }
         } else if (resp.errno == 101) {
           _this.tip(resp.desc);
-          wx.reLaunch({
-            url: '/pages/index/index'
-          })
-          //app.goIndex();
+          app.goIndex();
         } else {
           _this.tip(resp.desc);
         }

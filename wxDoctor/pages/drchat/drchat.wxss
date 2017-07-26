@@ -211,60 +211,6 @@
 .drchat-menu .colorb2a {
   color: #ffbb2a;
 }
-.drchat-shadow {
-  z-index: 99;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.end-quiry {
-  width: 526rpx;
-  height: 316rpx;
-  padding: 70rpx 48rpx 30rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
-  position: absolute;
-  top:  50%;
-  left: 50%;
-  margin-top: -158rpx;
-  margin-left: -263rpx;
-}
-.end-tit {
-  display: block;
-  font-size: 36rpx;
-  color: #282828;
-  margin-bottom: 91rpx;
-}
-.end-btn-con {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.end-btn {
-  width: 160rpx;
-  height: 70rpx;
-  line-height: 70rpx;
-  border-radius: 10rpx;
-  background-color: #fff;
-  color: #282828;
-  font-size: 28rpx;
-  border: solid 1px #969696;
-}
-.end-btn:last-child {
-  background-color: #1cc5a4;
-  color: #fff;
-  border: 0;
-}
-.close {
-  position:absolute;
-  right: 40rpx;
-  top: 30rpx;
-  font-size: 28rpx;
-  color: #919191;
-}
 .padd50 {
   padding-top: 65%;
 }

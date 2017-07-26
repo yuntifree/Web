@@ -68,6 +68,9 @@
 .fee-sty {
   background-color: #1cc5a4;
 }
+.end-sty {
+  background-color: #ffbb2a;
+}
 .inner-depm {
   margin: 0 14rpx;
 }
