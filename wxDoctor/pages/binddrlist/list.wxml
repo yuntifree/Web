@@ -21,7 +21,7 @@
       </view>
       <view class="binddoctor-info info-right">
         <text class="text-sty" wx:if="{{item.status==1}}">咨询中</text>
-        <text class="text-sty end-sty" wx:if="{{item.status==3}}">退款中</text>
+        <text class="text-sty refund-sty" wx:if="{{item.status==3}}">退款中</text>
         <text class="text-sty fee-sty" wx:if="{{item.status!==1&&item.status!==3&&item.doctor.fee>0}}">{{(item.doctor.fee/100)}}元/次</text>
         <text class="chat-time">{{item.chat.ctime}}</text>
       </view>

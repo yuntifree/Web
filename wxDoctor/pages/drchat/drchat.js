@@ -54,11 +54,7 @@ Page({
     token = app.globalData.token;
     URL = app.globalData.reqUrl;
     var userInfo = app.globalData.rawUserInfo.userInfo
-    if (userInfo) {
-      drHead = userInfo.avatarUrl
-    } else {
-      drHead = '../../images/doctor/ico_personal.png'
-    }
+    drHead = userInfo.avatarUrl || '../../images/doctor/ico_personal.png'
     ptHead = app.globalData.ptHead;
     var _this = this;
     //wx.clearStorage();
@@ -103,7 +99,7 @@ Page({
   startTimer() {
     //3秒拉一次
     var _this = this;
-    if (!this.data.end && !timer) {
+    if (this.data.end!==2 && !timer) {
       timer = setInterval(function() {
         var len = _this.data.chatLists.length-1;
         if (len >= 0) {
@@ -267,7 +263,7 @@ Page({
       }
     })
   },
-  bindKeyInput(e) {
+  bindKeyInput: function(e) {
     this.setData({
       iptVal: e.detail.value
     })
@@ -318,14 +314,14 @@ Page({
       }
     })
   },
-  tapSub() {
+  tapSub: function() {
     if (this.data.iptVal.length <=0) {
       this.tip('请输入发送内容');
       return;
     }
     this.sendChat(1, this.data.iptVal)
   },
-  addChat(type,id) {
+  addChat: function(type,id) {
     var len = this.data.chatLists.length;
     var addInfo = [{
       id: id,
@@ -349,29 +345,35 @@ Page({
       toView: 'list'+ id,
     })
   },
-  endInquiry(e) {
+  makeEnd: function() {
     this.setData({
-      endShow: true,
-      endTextColor: '#dcdcdc'
+      endTextColor: '#dcdcdc',
+
     })
   },
-  changeBg() {
+  endInquiry: function() {
+    this.setData({
+      endShow: true,
+      endTextColor: '#ffbb2a',
+    })
+  },
+  changeBg: function() {
     this.setData({
       cancelBg: '#dcdcdc'
     })
   },
-  cancelEnd() {
+  cancelEnd: function() {
     this.setData({
       endShow: false,
       cancelBg: "#fff"
     })
   },
-  changeEndBg() {
+  changeEndBg: function() {
     this.setData({
       endBg: '#0abf9c'
     })
   },
-  checkEnd() {
+  checkEnd: function() {
     var _this = this;
     var param = {
       tuid: ptid,
@@ -402,7 +404,7 @@ Page({
       }
     })
   },
-  getPatient(e) {
+  getPatient: function(e) {
     var _this = this;
     if (this.data.ptInfo.name) {
       this.setData({
@@ -467,14 +469,14 @@ Page({
       })
     }
   },
-  changeCm(e){
+  changeCm: function(e){
     if (!sending) {
       this.setData({
         chkCamera: '../../images/patient/ico_camera_press.png'
       })
     }
   },
-  makImg(e) {
+  makImg: function(e) {
     var file = '';
     var _this = this;
     if (sending) {
@@ -516,7 +518,7 @@ Page({
       urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
     })
   },
-  makeClip(e) {
+  makeClip: function(e) {
     var val = e.currentTarget.dataset.clip;
     wx.setClipboardData({
       data: val,
@@ -548,6 +550,9 @@ Page({
       this.data.reachBottom = false
       console.log('reachBottom = false')
     }
+  },
+  tipRefund: function() {
+    this.tip('咨询都正申请退款中，不能进行结束咨询操作！！');
   },
   tip: function(val) {
     this.setData({

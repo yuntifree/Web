@@ -118,7 +118,7 @@ Page({
   startTimer: function() {
     //3秒拉一次
     var _this = this;
-    if (!this.data.end && !timer) {
+    if (this.data.end!==2 && !timer) {
       timer = setInterval(function() {
         var len = _this.data.chatLists.length-1;
         if (len >= 0) {

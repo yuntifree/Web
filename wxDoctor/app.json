@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/widthdraw/widthdraw",
     "pages/index/index",
     "pages/pay/pay",
     "pages/drconfirm/drconfirm",

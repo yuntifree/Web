@@ -116,6 +116,9 @@
 .end-sign {
   background-color: #1cc5a4;
 }
+.refund-btn {
+  background-color: #ffbb2a;
+}
 .drpatient-norelation {
   color: #1ed2af;
   font-size: 40rpx;

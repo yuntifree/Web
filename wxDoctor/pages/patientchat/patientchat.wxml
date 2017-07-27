@@ -32,8 +32,8 @@
       scroll-top="{{scrollTop}}"
       scroll-into-view="{{toView}}">
     <view wx:for="{{chatLists}}" wx:for-index="idx" wx:key="id" id="{{'list'+ item.seq}}">
-      <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.timestr}}</text>
-      <view wx:if="{{item.flag}}" class="drchat-r">
+      <text class="g-tac drchat-time" wx:if="{{item.timeshow&&item.type!==3}}">{{item.timestr}}</text>
+      <view wx:if="{{item.flag&&item.type!==3}}" class="drchat-r">
         <image class="drchat-head-r" src="{{item.ptHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg-r">
           <text selectable="true">{{item.content}}</text>
@@ -44,7 +44,7 @@
           <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
       </view>
-      <view wx:else class="drchat-l">
+      <view wx:if="{{!item.flag&&item.type!==3}}" class="drchat-l">
         <image class="drchat-head" src="{{item.drHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg">
           <text selectable="true">{{item.content}}</text>

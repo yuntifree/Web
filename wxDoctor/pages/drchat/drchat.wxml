@@ -1,9 +1,9 @@
 <view class="container drchat" wx:if="{{mounted}}">
-  <view class="drchat-menu" wx:if="{{!end}}">
+  <view class="drchat-menu" wx:if="{{end==1}}">
     <view class="menu-pait g-tac" bindtap="getPatient" style="color:{{ptColor}}">查看咨询人信息</view>
-    <view class="colorb2a g-tac" style="color:{{endTextColor}}" bindtap="endInquiry">结束咨询</view>
+    <view class="colorb2a g-tac" style="color:{{endTextColor}}" bindtouchstart="makeEnd" bindtouchend="endInquiry">结束咨询</view>
   </view>
-  <view wx:else class="menu-end g-tac">该咨询者已结束咨询</view>
+  <view wx:if="{{end==2}}" class="menu-end g-tac">该咨询者已结束咨询</view>
   <view class="dr-patient" wx:if="{{patientShow}}">
     <view class="dr-patient-info">
       <view class="close" bindtap="getPatient">关闭</view>
@@ -11,6 +11,10 @@
       <view class="info-list"><text class="weight500">医疗卡号：</text><text>{{ptInfo.mcard || '无'}}</text></view>
       <view class="info-list"><text class="weight500">联系电话：</text><text>{{ptInfo.phone}}</text></view>
     </view>
+  </view>
+  <view class="drchat-menu" wx:if="{{end==3}}">
+    <view class="menu-pait g-tac" bindtap="getPatient" style="color:{{ptColor}}">查看咨询人信息</view>
+    <view class="refund-menu g-tac" bindtap="tipRefund">结束咨询</view>
   </view>
   <scroll-view scroll-y style="height: 100%;"
       bindscrolltoupper="upper"
@@ -21,18 +25,18 @@
       class="{{chatLists.length<5&&iptFocus ? 'drchat-info padd50' : 'drchat-info'}}">
     <view wx:for="{{chatLists}}" wx:key="id" wx:for-index="idx" id="{{'list'+ item.seq}}">
       <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.timestr}}</text>
-      <view wx:if="{{item.flag}}" class="drchat-r">
+      <view wx:if="{{item.flag&&item.type!==3}}" class="drchat-r">
         <image class="drchat-head-r" src="{{item.drHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg-r">
           <text selectable="true">{{item.content}}</text>
           <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
-        <view wx:else class="drchat-msg drchat-msg-r">
+        <view wx:if="{{item.type==2}}" class="drchat-msg drchat-msg-r">
           <image class="chat-img" mode="aspectFill" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
           <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
         </view>
       </view>
-      <view wx:else class="drchat-l">
+      <view wx:if="{{!item.flag&&item.type!==3}}" class="drchat-l">
         <image class="drchat-head" src="{{item.ptHead}}"/>
         <view wx:if="{{item.type==1}}" class="drchat-msg">
           <text selectable="true">{{item.content}}</text>
@@ -42,6 +46,9 @@
           <image class="chat-img" mode="aspectFill" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
           <image class="chat-talk chat-talk-l" src="../../images/login/img_talk_white.png"/>
         </view>
+      </view>
+      <view class="g-tac refund-text" wx:if="{{item.type==3}}">
+        <text>{{item.content}}</text>
       </view>
     </view>
   </scroll-view>

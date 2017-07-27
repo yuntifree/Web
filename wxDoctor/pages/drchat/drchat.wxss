@@ -214,3 +214,14 @@
 .padd50 {
   padding-top: 65%;
 }
+
+.drchat-menu .refund-menu {
+  background-color: #c8c8c8;
+  color: #fff;
+}
+.refund-text {
+  display: block;
+  line-height: 150%;
+  font-size: 26rpx;
+  color: #368efc;
+}

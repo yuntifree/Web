@@ -68,7 +68,7 @@
 .fee-sty {
   background-color: #1cc5a4;
 }
-.end-sty {
+.refund-sty {
   background-color: #ffbb2a;
 }
 .inner-depm {
