@@ -3,7 +3,7 @@
     <view class="menu-pait g-tac" bindtap="getPatient" style="color:{{ptColor}}">查看咨询人信息</view>
     <view class="colorb2a g-tac" style="color:{{endTextColor}}" bindtouchstart="makeEnd" bindtouchend="endInquiry">结束咨询</view>
   </view>
-  <view wx:if="{{end==2}}" class="menu-end g-tac">该咨询者已结束咨询</view>
+  <view wx:if="{{end==2||end==4}}" class="menu-end g-tac">该咨询者已结束咨询</view>
   <view class="dr-patient" wx:if="{{patientShow}}">
     <view class="dr-patient-info">
       <view class="close" bindtap="getPatient">关闭</view>

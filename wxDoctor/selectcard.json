@@ -1,5 +1,8 @@
 {
   "pages":[
+    "pages/selectcard/selectcard",
+    "pages/addcard/addcard",
+    "pages/widthdraw/widthdraw",
     "pages/index/index",
     "pages/pay/pay",
     "pages/drconfirm/drconfirm",

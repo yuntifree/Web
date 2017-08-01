@@ -62,8 +62,8 @@
   <script type="text/javascript" src='js/template.js'></script>
   <script type="text/javascript" src="js/cgi.js"></script>
   <script type="text/javascript">
-    CGI.get('get_travel_ad',{},function(resp) {
-      console.log(resp);
+    var type = ~~CGI.query().type;
+    CGI.get('get_travel_ad',{type: type},function(resp) {
       if (resp.errno === 0) {
         var data = resp.data;
         if (data.infos && data.infos.length >0) {
@@ -71,9 +71,8 @@
             data.infos[i].title = data.infos[i].title.replace('\n\n', '<br/>');
           }
         }
-        console.log(JSON.stringify(data.infos));
+        console.log(type);
         $('.travel').append(template('tplTravel',data));
-        console.log(JSON.stringify(data));
       } else {
         console.log(resp.desc);
       }

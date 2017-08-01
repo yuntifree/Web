@@ -15,7 +15,7 @@ Page({
     psdFocus: false,
     btnDisable: true,
     codeFocus: false,
-    moneyDisable: true
+    canWithdraw: false
   },
   //事件处理函数
   onLoad: function () {
@@ -24,7 +24,7 @@ Page({
     URL = app.globalData.reqUrl;
   },
   onShow() {
-    this.getData();
+    //this.getData();
   },
   getData: function() {
     var _this = this;
@@ -60,20 +60,9 @@ Page({
     })
   },
   makeDraw(e) {
-    var val = ~~e.detail.value;
-  },
-  checkDraw(e) {
-    var val = ~~e.detail.value;
-    if (this.data.info.balance<this.data.info.widthdraw) {
-      this.tip('您的钱包余额低于最低提现金额，暂时不能提现哦')
-    } else if (this.data.info.balance < val) {
-      this.tip('您的钱包余额小于您输入的金额，请重新输入金额')
-    } else {
-      this.setData({
-        money: val,
-        moneyDisable: false
-      })
-    }
+    this.setData({
+      money: e.detail.value
+    })
   },
   makeBtnstatus: function(e) {
     var val = e.detail.value;
@@ -94,15 +83,11 @@ Page({
     })
   },
   checkCode: function() {
+    var _this = this;
     this.setData({
       btnBg: '#1ed2af'
     })
-    if (this.data.moneyDisable) {
-      this.tip('请检查您的提现金额');
-      return;
-    }
-    var _this = this;
-    var fee = this.data.money;
+    var fee = ~~this.data.money;
     if ( fee && fee>0) {
       var param = {
         uid: uid,
@@ -137,7 +122,7 @@ Page({
       })
     } else {
       this.setData({
-        feeFocus: true,
+        codeFocus: true,
         money: ''
       })
       this.tip('请输入提现金额')
