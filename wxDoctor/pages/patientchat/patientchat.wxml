@@ -57,7 +57,7 @@
       </view>
     </view>
   </scroll-view>
-  <view class="sub-chat" wx:if="{{end==2}}">
+  <view class="sub-chat" wx:if="{{end==2||end==4}}">
     <button class="chat-btn colc9">本次咨询已结束</button>
     <button class="chat-btn" bindtouchstart="changeColor" bindtouchend="reInquiry" style="background-color:{{refundBtnBg}}">再次咨询</button>
   </view>

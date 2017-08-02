@@ -114,7 +114,7 @@ Page({
     this.setData({
       selId: -1
     })
-    if (status == 0) {
+    if (status == 0 || status == 4) {
       if (haspatient) {
         wx.navigateTo({
           url: '/pages/patientinfo/patientinfo'
