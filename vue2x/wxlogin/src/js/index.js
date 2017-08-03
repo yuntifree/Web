@@ -144,7 +144,7 @@ function font(bFont) {
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
       data = taobaoCover = resp.data;
-      data.imgs = [];
+      data.imgs = [[],[],[],[]];
       console.log(JSON.stringify(data));
       autologin = data.autologin;
       taobao = data.taobao;
@@ -168,9 +168,8 @@ function font(bFont) {
           var ads = false
           if (data.ads && data.ads.length>0) {
             for(var i=0,len=data.ads.length;i<len;i++){
-              var idx = i%3;
-              data.imgs[idx] = [];
-              data.imgs[idx].push(data.ads[idx]);
+              var idx = i%4;
+              data.imgs[idx].push(data.ads[i]);
             }
             ads = true
           }
