@@ -18,6 +18,7 @@ router.post('/*', function(req, res, next) {
             .send(req.body)
             .end(function(err, res1) {
                 if (err || !res1.ok) {
+                    console.log(JSON.stringify(err));
                     var resp = makeResp(res1.status, 'error: '+res1.status, {});
                     res.jsonp(resp);
                 } else {

@@ -23,8 +23,9 @@
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
             地区<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">松山湖</option><option :value="{ number: 1 }">卫计局</option><option :value="{ number: 2 }">控股大厦</option><option :value="{ number: 3 }">AC4测试</option><option :value="{ number: 4 }">学校招商</option></select></button>
+           <button type="button" class="btn btn-info btn-left outline-none">
+            位置<select v-model="posSel" @change="getData(true)"><option v-for="area in areas" :value="{pos: area}">{{area}}</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
-          <button class="btn btn-left outline-none" :disabled="selId==-1" @click="review">上线</button>
         </div>
         <div>
           <button class="btn btn-default btn-ssm" @click="getData(0)">刷新</button>
@@ -155,6 +156,7 @@ export default {
     return {
       dataReady: true,
       infos: [],
+      areas: [0,1,2,3,4,5,6,7,8,9,10,11,12],
       modal: {
         dialogShow: false,
         addShow: false,
@@ -173,6 +175,9 @@ export default {
       selId: -1,
       selected: {
         number:0
+      },
+      posSel: {
+        pos: 0
       },
       postInfo: {
         startTime: 0,
@@ -225,7 +230,8 @@ export default {
       var param = {
         seq: this.pageCfg.start,
         num: 30,
-        type: this.selected.number
+        type: this.selected.number,
+        pos: this.posSel.pos
       }
       var _this = this;
       CGI.post(this.$store.state, 'config/get_login_img', param, (resp) => {
@@ -241,6 +247,8 @@ export default {
               }
             })
             this.infos = data.infos;
+          } else {
+            this.infos = [];
           }
           this.pageCfg.total = data.total;
           this.dataReady = true;
@@ -292,7 +300,8 @@ export default {
           stime: this.postInfo.startTime,
           etime: this.postInfo.endTime,
           img: this.$store.state.imgUrl[0],
-          type: this.selected.number
+          type: this.selected.number,
+          pos: this.posSel.pos
         }
         CGI.post(this.$store.state, 'config/add_login_img', param, (resp)=> {
           if (resp.errno == 0) {
@@ -437,6 +446,9 @@ export default {
           this.alertInfo(resp.desc);
         }
       })
+    },
+    getPos() {
+      console.log(this.posSel.pos)
     },
     alertInfo(val) {
       this.alertShow = true;
