@@ -54,14 +54,14 @@ fis.match('*.css', {
 //});
 
 //合并
-//fis.match('::package', {
-//    postpackager: fis.plugin('loader')
-//});
+fis.match('::package', {
+   postpackager: fis.plugin('loader')
+});
 
 //js合并
-// fis.match('*.js', {
-//    packTo: '/js/app.js'
-// });
+fis.match('*.js', {
+   packTo: '/js/index.js'
+});
 
 //css合并
 //fis.match('*.{less,css}', {

@@ -167,8 +167,10 @@ function font(bFont) {
         if (autologin) {
           var ads = false
           if (data.ads && data.ads.length>0) {
-            for(var i=0,len=data.ads.length;i<len;i+=4){
-               data.imgs.push(data.ads.slice(i,i+4));
+            for(var i=0,len=data.ads.length;i<len;i++){
+              var idx = i%3;
+              data.imgs[idx] = [];
+              data.imgs[idx].push(data.ads[idx]);
             }
             ads = true
           }
@@ -226,11 +228,9 @@ function swipe(swipeName,idx) {
       var infos = data.imgs[idx];
       if (this.swipeIdx<infos.length) {
         var id = infos[this.swipeIdx].id;
-        //adShow(id);
+        adShow(id);
       }
       ++this.swipeIdx
-      /*for (var i=0,len=infos.length;i<len;i++) {
-      }*/
     }
   });
 }
@@ -247,8 +247,9 @@ function setHeight() {
 
 function adShow(id) {
   var param = {
-    mac: mac,
-    ids: [id]
+    wlanusermac: wlanusermac,
+    ids: id,
+    wlanapmac: wlanapmac
   }
   console.log(JSON.stringify(param));
   CGI.get('report_ad_view', param, function(resp) {
