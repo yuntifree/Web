@@ -1,5 +1,5 @@
 var ads = {
-  img: 'images/act_banner.png',
+  img: '../../images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless',
   portalUrl: '',
 }
@@ -33,7 +33,7 @@ var bssid = "";
 var jumpUrl = "";
 var connected = false;
 var taobaoCover = {};
-
+var data = {};
 
 var loginParam = {
   wlanacname: wlanacname,
@@ -140,12 +140,15 @@ function font(bFont) {
     wlanapmac: wlanapmac,
   };
   var screenWidth = document.documentElement.clientWidth;
+  console.log(JSON.stringify(param));
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
-      var data = taobaoCover = resp.data;
+      data = taobaoCover = resp.data;
+      data.imgs = [];
+      console.log(JSON.stringify(data));
       autologin = data.autologin;
       taobao = data.taobao;
-      //autologin=1;
+      autologin=1;
       //taobao = 1;
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
@@ -162,16 +165,30 @@ function font(bFont) {
         $('.login').css('height', '100%');
       } else {
         if (autologin) {
+          var ads = false
+          if (data.ads && data.ads.length>0) {
+            for(var i=0,len=data.ads.length;i<len;i+=4){
+               data.imgs.push(data.ads.slice(i,i+4));
+            }
+            ads = true
+          }
+          console.log(JSON.stringify(data));
           //一键登录
           if (taobao) {
             //淘宝登录
             $('.login').append(template('tplOnetaobao', data));
-            $('.login').append(template('tplBottom', ads));
+            //$('.login').append(template('tplBottom', ads));
           } else {
             //一键登录
             $('.login').append(template('tplOnelogin', data));
-            $('.login').append(template('tplBottom', ads));
+            /*$('.login').append(template('tplBottom', ads));*/  
           }  
+          if (ads) {
+            var len = data.ads.length;
+            for(var i=0; i<len; i++) {
+              swipe('#slide'+i,i)
+            }
+          }
         } else {
           //密码登录
           if (taobao) {
@@ -192,7 +209,31 @@ function font(bFont) {
     }
   });
 })()
-
+function swipe(swipeName,idx) {
+  $(swipeName).swipeSlide({
+    autoSwipe : true,
+    continuousScroll:true,
+    lazyLoad : true,
+    speed: 1500,
+    swipeIdx: 0,
+    firstCallback: function(){
+      if (data.imgs[idx].length <2) {
+        var id = (data.imgs[idx][0].id);
+        adShow(id);
+      }
+    },
+    callback: function() {
+      var infos = data.imgs[idx];
+      if (this.swipeIdx<infos.length) {
+        var id = infos[this.swipeIdx].id;
+        //adShow(id);
+      }
+      ++this.swipeIdx
+      /*for (var i=0,len=infos.length;i<len;i++) {
+      }*/
+    }
+  });
+}
 function setHeight() {
   var height = document.documentElement.clientHeight;
   var htmlHeight = $('html').height();
@@ -202,6 +243,21 @@ function setHeight() {
     $('.login-bottom').css('left', 0);
     $('.login-bottom').css('bottom', 0);
   }
+}
+
+function adShow(id) {
+  var param = {
+    mac: mac,
+    ids: [id]
+  }
+  console.log(JSON.stringify(param));
+  CGI.get('report_ad_view', param, function(resp) {
+    if (resp.errno == 0) {
+      console.log('suc')
+    } else {
+      console.log('report_ad_view fail')
+    }
+  })
 }
 
 function initUI() {

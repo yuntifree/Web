@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="format-detection" content="telephone=no, email=no">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="./src/css/index.css">
     <title>东莞无限</title>
   </head>
   <body>
@@ -40,15 +40,28 @@
 
     <!--微信一键登录-->
     <script type="text/html" id="tplOnelogin">
-      <div class="one-click">
+      {{if imgs.length>0}}
+        {{each imgs as img index}}
+        <div class="slide" id="slide{{index}}">
+          <ul>
+            {{each img as val idx}}
+            <li>
+              <a href="//m.yhd.com/">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
+                </a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/each}}
+        {{else}}
         <div class="login-top">
-          <img class="login-top-bg" src="{{img || 'images/img_bg.png'}}">
-          <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
+          <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
         </div>
-        <div class="input-main g-clearfix">
-          <button class="btn wx-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">微信连WiFi<span id="btn-login"></span></button>
-          <span class="has-ques g-fr">遇到问题?</span>
-        </div>
+      {{/if}}
+      <div class="oneclick-bottom">
+        <button class="btn wx-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">微信连WiFi<span id="btn-login"></span></button>
+        <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
       </div>
     </script>
 
@@ -81,15 +94,28 @@
     
     <!--淘宝一键登录-->
     <script type="text/html" id="tplOnetaobao">
-      <div class="one-click">
+      {{if imgs.length>0}}
+        {{each imgs as img index}}
+        <div class="slide" id="slide{{index}}">
+          <ul>
+            {{each img as val idx}}
+            <li>
+              <a href="//m.yhd.com/">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
+                </a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/each}}
+        {{else}}
         <div class="login-top">
-          <img class="login-top-bg" src="{{img || 'images/img_bg.png'}}">
-          <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
+          <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
         </div>
-        <div class="input-main g-clearfix">
-          <button class="btn wx-btn tb-btn">淘宝连WiFi</button>
-          <span class="has-ques g-fr">遇到问题?</span>
-        </div>
+      {{/if}}
+      <div class="oneclick-bottom">
+        <button class="btn wx-btn tb-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">淘宝连WiFi<span id="btn-login"></span></button>
+        <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
       </div>
     </script>
     
@@ -160,10 +186,11 @@
       <iframe src="http://captive.apple.com/" frameborder="0" height="0" width="0"></iframe>
     </script>
   </body>
-  <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/template.js"></script>
-  <script type="text/javascript" src="js/wechatutil.js" ></script>
-  <script type="text/javascript" src="js/md5.js"></script>
-  <script type="text/javascript" src="js/cgi.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
+  <script type="text/javascript" src="./src/js/jquery.min.js"></script>
+  <script type="text/javascript" src="./src/js/template.js"></script>
+  <script type="text/javascript" src="./src/js/wechatutil.js" ></script>
+  <script type="text/javascript" src="./src/js/md5.js"></script>
+  <script type="text/javascript" src="./src/js/cgi.js"></script>
+  <script type="text/javascript" src="./src/js/index.js"></script>
+  <script type="text/javascript" src="./src/js/swipelide.js"></script>
 </html>
