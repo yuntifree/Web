@@ -1,3 +1,6 @@
+/**
+ * 角色配置文件: "1": admin “0”：甲方
+ */
 {
   "1":  [{
   "title": "用户管理",
@@ -121,6 +124,10 @@
       },{
       "title": "ap信息管理",
       "name": "setApInfo",
+      "icon": "yonghuxinxi"
+      },{
+      "title": "旅游广告管理",
+      "name": "travalAd",
       "icon": "yonghuxinxi"
       }
     ]

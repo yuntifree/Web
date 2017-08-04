@@ -50,6 +50,7 @@ import setUnit from './components/views/setUnit.vue'
 import setApInfo from './components/views/setApInfo.vue'
 import setWx from './components/views/setWx.vue'
 import setInterface from './components/views/setInterface.vue'
+import travelAd from './components/views/travelAd.vue'
 
 export default {
   name: 'app',
@@ -100,7 +101,8 @@ export default {
     setUnit,
     setApInfo,
     setWx,
-    setInterface
+    setInterface,
+    travelAd
   },
   // for share components View using.
   mounted() {
