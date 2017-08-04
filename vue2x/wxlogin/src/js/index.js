@@ -34,6 +34,7 @@ var jumpUrl = "";
 var connected = false;
 var taobaoCover = {};
 var data = {};
+var swipeIdx = 1;
 
 var loginParam = {
   wlanacname: wlanacname,
@@ -148,8 +149,8 @@ function font(bFont) {
       data.imgs2 = [];
       autologin = data.autologin;
       taobao = data.taobao;
-      //autologin=1;
-      //taobao = 1;
+      autologin=1;
+      taobao = 1;
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
       secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
@@ -175,7 +176,6 @@ function font(bFont) {
             }
             ads = true
           }
-          //console.log(JSON.stringify(data.imgs2));
           //一键登录
           if (taobao) {
             //淘宝登录
@@ -217,9 +217,23 @@ function swipe(swipeName,idx,imgName) {
     autoSwipe : true,
     continuousScroll:true,
     lazyLoad : true,
-    speed: 1500,
+    speed: 3000,
     swipeIdx: 0,
     firstCallback: function(){
+      swipeIdx++;
+      console.log(swipeName);
+      /*if (swipeIdx == data.ads.length) {
+        var ids = [];
+        for (var i=0,len=data.ads.length;i<len;i++){
+          ids.push(data.ads[i].id);
+        }
+        for (var i=0,len=data.imgs2.length;i<len;i++){
+          ids.push(data.imgs2[i].id);
+        }
+        console.log(JSON.stringify(ids))
+        //adShow(ids)
+      }*/
+      //上传id方式
       if (data.imgs[idx].length <2) {
         var id = data.imgs[idx][0].id;
         adShow(id);
@@ -279,7 +293,7 @@ function initUI() {
         //$('.wx-btn').addClass('btn-disable')
         var t = setInterval(function() {
           delay--;
-          $('#btn-login').text(' (' + delay + ')')
+          $('#btn-login').text('(' + delay + ')')
           if (delay == 0) {
             //$('.wx-btn').removeClass('btn-disable');
             $('.min5-view').css('display','block');

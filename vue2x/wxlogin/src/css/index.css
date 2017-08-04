@@ -318,13 +318,14 @@ video {
   left: 1.2rem;
 } 
 #btn-login {
-  height: 0.44rem;
+  /* height: 0.44rem;
   width: 0.6rem;
   display: inline-block;
   position: absolute;
   top: 50%;
   right: 1.1rem;
-  margin-top: -0.44rem;
+  margin-top: -0.44rem; */
+  color: #fff504;
 }
 .btn-disable {
   background-color: #88d887;
@@ -637,6 +638,7 @@ video {
   position: absolute;
   top:  0;
   left: 0;
+  padding-bottom: 2.6rem;
 }
 .min5-view {
   display: none;
