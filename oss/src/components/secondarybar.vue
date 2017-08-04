@@ -1,7 +1,7 @@
 <template>
   <section id="secondary_bar">
     <div class="users">
-      <p><i class="glyphicon glyphicon-user second-icon-user"></i>{{user}}(<a href="javascript:;" @click="logout">退出登录</a>)</p>
+      <p><i class="iconfont icon-yonghuxinxi second-icon-user"></i>{{user}}(<a href="javascript:;" @click="logout">退出登录</a>)</p>
     </div>
     <div class="breadcrumbs_container">
       <article class="breadcrumbs"><a href="javascript:;">{{paths[0]}}</a>

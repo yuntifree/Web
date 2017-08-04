@@ -22,7 +22,7 @@
       <header class="app_header">
         <div>
           <button type="button" class="btn btn-info btn-left outline-none">
-            地区<select v-model="selected" @change="getData(true)"><option :value="{ number: 0 }">松山湖</option><option :value="{ number: 1 }">卫计局</option><option :value="{ number: 2 }">控股大厦</option><option :value="{ number: 3 }">AC4测试</option><option :value="{ number: 4 }">学校招商</option></select></button>
+            类型<select v-model="selected" @change="getData(true)"><option :value="{ type: 0 }">0</option><option :value="{ type: 1 }">1</option></select></button>
           <button class="btn btn-left outline-none" @click="add">添加</button>
         </div>
         <div>
@@ -45,11 +45,21 @@
               </el-table-column>
               <el-table-column
                 inline-template
+                label="浮层文字">
+                <div>{{row.title||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
                 label="图片">
                 <div>
                   <img v-if="row.img" style="width:100%;height:auto;max-width:120px" :src="row.img">
                   <span v-else>-</span>
                 </div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="跳转地址">
+                <div><a :href="row.dst">{{row.dst||"00:00"}}</a></div>
               </el-table-column>
               <el-table-column
                 inline-template
@@ -92,7 +102,14 @@
       </el-pagination>
        <div class="shade" v-if="modal.addShow">
         <div class="edit-form" style="width:600px">
-          <el-form ref="form" :model="postInfo"label-width="100px">
+          <div class="form-title">{{modal.text}}</div>
+          <el-form ref="ruleForm" :model="postInfo" :rules="rules" label-width="100px">
+            <el-form-item label="浮层文字" prop="title">
+              <el-input  v-model="postInfo.title" placeholder="请输入浮层文字"></el-input>
+            </el-form-item> 
+            <el-form-item label="dst" prop="dst">
+              <el-input  v-model="postInfo.dst" placeholder="请输入跳转地址"></el-input>
+            </el-form-item> 
             <el-form-item label="开始时间">
               <el-time-select
                   placeholder="开始时间"
@@ -158,6 +175,7 @@ export default {
       modal: {
         dialogShow: false,
         addShow: false,
+        text: ''
       },
       dialogCfg: {
         title: '',
@@ -172,14 +190,13 @@ export default {
       selIdx: -1,
       selId: -1,
       selected: {
-        number:0
-      },
-      posSel: {
-        pos: 0
+        type:0
       },
       postInfo: {
         startTime: 0,
-        startTime: 0
+        startTime: 0,
+        title: '',
+        dst: ''
       },
       dateInfo: {
         startTime: '',
@@ -187,7 +204,15 @@ export default {
       },
       alertShow: false,
       alertMsg: '',
-      online: 0
+      online: 0,
+      rules: {
+        title: {
+          required: true, message: '请输入浮层文字', trigger: 'blur'
+        },
+        dst: {
+          required: true, message: '请输入跳转地址', trigger: 'blur'
+        }
+      }
     }
   },
   components: {
@@ -228,11 +253,10 @@ export default {
       var param = {
         seq: this.pageCfg.start,
         num: 30,
-        type: this.selected.number,
-        pos: this.posSel.pos
+        type: this.selected.type,
       }
       var _this = this;
-      CGI.post(this.$store.state, 'config/get_login_img', param, (resp) => {
+      CGI.post(this.$store.state, 'config/get_travel_ad', param, (resp) => {
         if (resp.errno === 0) {
           var data = resp.data;
           if (data.infos && data.infos.length >0) {
@@ -289,38 +313,43 @@ export default {
       CGI.objClear(this.dateInfo);
       CGI.objClear(this.postInfo);
       this.$store.state.imgUrl = [];
+      this.modal.text = '添加';
       this.modal.editShow = false;
       this.modal.addShow = true;
     },
     addPost() { 
-      if (this.makeParam()) {
-        var param = {
-          stime: this.postInfo.startTime,
-          etime: this.postInfo.endTime,
-          img: this.$store.state.imgUrl[0],
-          type: this.selected.number,
-          pos: this.posSel.pos
+      var _this = this;
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid && this.makeParam()) {
+          var param = CGI.clone(this.postInfo);
+          param.img = this.$store.state.imgUrl[0];
+          console.log(JSON.stringify(param));
+          CGI.post(this.$store.state, 'config/add_travel_ad', param, (resp)=> {
+            if (resp.errno == 0) {
+              var info = [{
+                id : resp.data.id,
+                img: param.img,
+                sTime: this.dateInfo.startTime,
+                eTime: this.dateInfo.endTime,
+                title: param.title,
+                dst: param.dst,
+                online: 0
+              }]
+              this.infos = info.concat(this.infos);
+              this.modal.addShow = false;
+            } else {
+              this.alertInfo(resp.desc);
+            }
+          })
         }
-        CGI.post(this.$store.state, 'config/add_login_img', param, (resp)=> {
-          if (resp.errno == 0) {
-            var info = [{
-              id : resp.data.id,
-              img: param.img,
-              sTime: this.dateInfo.startTime,
-              eTime: this.dateInfo.endTime,
-            }]
-            this.infos = info.concat(this.infos);
-            this.modal.addShow = false;
-          } else {
-            this.alertInfo(resp.desc);
-          }
-        })
-      }
+      })
     },
     edit(idx,row) {
       this.selIdx = idx;
+      this.modal.text = '修改';
       this.dateInfo.startTime = row.stime || '00:00';
       this.dateInfo.endTime = row.etime || '00:00';
+      CGI.extend(this.postInfo,row);
       this.$store.state.imgUrl = [];
       this.modal.editShow = true;
       this.modal.addShow = true;
@@ -402,9 +431,11 @@ export default {
         stime: this.infos[idx].stime ? ~~this.infos[idx].stime.replace(':','') : 0,
         etime: this.infos[idx].etime ? ~~this.infos[idx].etime.replace(':','') : 0,
         online: this.online,
+        title: this.infos[idx].title,
+        dst: this.infos[idx].dst,
         deleted: 0
       };
-      CGI.post(this.$store.state, 'config/mod_login_img', param, (resp)=> {
+      CGI.post(this.$store.state, 'config/mod_travel_ad', param, (resp)=> {
         if (resp.errno === 0) {
           this.getData();
           this.modal.dialogShow = false;
