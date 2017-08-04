@@ -40,28 +40,47 @@
 
     <!--微信一键登录-->
     <script type="text/html" id="tplOnelogin">
-      {{if imgs.length>0}}
-        {{each imgs as img index}}
-        <div class="slide" id="slide{{index}}">
+      <div class="login-view first-view">
+        {{if imgs.length>0}}
+          {{each imgs as img index}}
+          <div class="slide" id="slide{{index}}">
+            <ul>
+              {{each img as val idx}}
+              <li>
+                <a href="javascript:;">
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
+                  </a>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/each}}
+          {{else}}
+          <div class="login-top">
+            <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
+          </div>
+        {{/if}}
+        <div class="oneclick-bottom">
+          <button class="btn wx-btn btn-disable">点击或等待<span id="btn-login"></span></button>
+          <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
+        </div>
+      </div>
+      <div class="login-view min5-view">
+        {{each imgs2 as img2 idx}}
+        <div class="slide" id="slideview{{idx}}">
           <ul>
-            {{each img as val idx}}
             <li>
               <a href="javascript:;">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{img2.img}} alt="">
                 </a>
             </li>
-            {{/each}}
           </ul>
         </div>
         {{/each}}
-        {{else}}
-        <div class="login-top">
-          <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
+        <div class="oneclick-bottom">
+          <button class="btn wx-btn min5-btn">微信连WiFi<span id="btn-login"></span></button>
+          <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
         </div>
-      {{/if}}
-      <div class="oneclick-bottom">
-        <button class="btn wx-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">微信连WiFi<span id="btn-login"></span></button>
-        <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
       </div>
     </script>
 
@@ -94,28 +113,49 @@
     
     <!--淘宝一键登录-->
     <script type="text/html" id="tplOnetaobao">
+      <div class="login-view first-view">
+        {{if imgs.length>0}}
+          {{each imgs as img index}}
+          <div class="slide" id="slide{{index}}">
+            <ul>
+              {{each img as val idx}}
+              <li>
+                <a href="javascript:;">
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
+                  </a>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/each}}
+          {{else}}
+          <div class="login-top">
+            <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
+          </div>
+        {{/if}}
+        <div class="oneclick-bottom">
+          <button class="btn wx-btn tb-btn btn-disable"><img class="btn-img-wechat" src="images/ico_wechat.png">点击或等待<span id="btn-login"></span></button>
+          <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
+        </div>
+      </div>
+      <div class="login-view min5-view">
       {{if imgs.length>0}}
-        {{each imgs as img index}}
-        <div class="slide" id="slide{{index}}">
+        {{each imgs2 as img2 idx}}
+        <div class="slide" id="slideview{{idx}}">
           <ul>
-            {{each img as val idx}}
             <li>
               <a href="//m.yhd.com/">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{img2.img}} alt="">
                 </a>
             </li>
-            {{/each}}
           </ul>
         </div>
         {{/each}}
-        {{else}}
-        <div class="login-top">
-          <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
-        </div>
       {{/if}}
-      <div class="oneclick-bottom">
-        <button class="btn wx-btn tb-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">淘宝连WiFi<span id="btn-login"></span></button>
-        <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
+        <div class="oneclick-bottom">
+          <button class="btn wx-btn tb-btn min5-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">淘宝连WiFi<span id="btn-login"></span></button>
+          <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
+        </div>
       </div>
     </script>
     
@@ -186,7 +226,7 @@
       <iframe src="http://captive.apple.com/" frameborder="0" height="0" width="0"></iframe>
     </script>
   </body>
-  <script type="text/javascript" src="./src/js/jquery.min.js"></script>
+  <script type="text/javascript" src="./src/js/zepto.min.js"></script>
   <script type="text/javascript" src="./src/js/template.js"></script>
   <script type="text/javascript" src="./src/js/wechatutil.js" ></script>
   <script type="text/javascript" src="./src/js/md5.js"></script>

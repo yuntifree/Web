@@ -145,11 +145,11 @@ function font(bFont) {
     if (resp.errno == 0) {
       data = taobaoCover = resp.data;
       data.imgs = [[],[],[],[]];
-      console.log(JSON.stringify(data));
+      data.imgs2 = [];
       autologin = data.autologin;
       taobao = data.taobao;
       autologin=1;
-      //taobao = 1;
+      taobao = 1;
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
       secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
@@ -167,27 +167,29 @@ function font(bFont) {
         if (autologin) {
           var ads = false
           if (data.ads && data.ads.length>0) {
+            data.imgs2 = data.ads.splice(-4);
+            console.log(JSON.stringify(data.ads.length));
             for(var i=0,len=data.ads.length;i<len;i++){
               var idx = i%4;
               data.imgs[idx].push(data.ads[i]);
             }
             ads = true
           }
-          console.log(JSON.stringify(data));
+          //console.log(JSON.stringify(data.imgs2));
           //一键登录
           if (taobao) {
             //淘宝登录
             $('.login').append(template('tplOnetaobao', data));
-            //$('.login').append(template('tplBottom', ads));
           } else {
             //一键登录
             $('.login').append(template('tplOnelogin', data));
-            /*$('.login').append(template('tplBottom', ads));*/  
           }  
           if (ads) {
-            var len = data.ads.length;
-            for(var i=0; i<len; i++) {
-              swipe('#slide'+i,i)
+            for(var i=0,len=data.imgs.length; i<len; i++) {
+              swipe('#slide'+i,i,false);
+            }
+            for (var i=0,leng=data.imgs2.length;i<leng;i++) {
+              swipe('#slideview'+i,i,true);
             }
           }
         } else {
@@ -210,7 +212,7 @@ function font(bFont) {
     }
   });
 })()
-function swipe(swipeName,idx) {
+function swipe(swipeName,idx,imgName) {
   $(swipeName).swipeSlide({
     autoSwipe : true,
     continuousScroll:true,
@@ -219,7 +221,11 @@ function swipe(swipeName,idx) {
     swipeIdx: 0,
     firstCallback: function(){
       if (data.imgs[idx].length <2) {
-        var id = (data.imgs[idx][0].id);
+        var id = data.imgs[idx][0].id;
+        adShow(id);
+      }
+      if (imgName) {
+        var id = data.imgs2[idx].id;
         adShow(id);
       }
     },
@@ -247,10 +253,9 @@ function setHeight() {
 function adShow(id) {
   var param = {
     wlanusermac: wlanusermac,
-    ids: id,
+    id: id,
     wlanapmac: wlanapmac
   }
-  console.log(JSON.stringify(param));
   CGI.get('report_ad_view', param, function(resp) {
     if (resp.errno == 0) {
       console.log('suc')
@@ -271,21 +276,23 @@ function initUI() {
     if (autologin) {
       var btnText = $('#btn-login').text()
       if (delay) {
-        $('.wx-btn').addClass('btn-disable')
+        //$('.wx-btn').addClass('btn-disable')
         var t = setInterval(function() {
           delay--;
           $('#btn-login').text(' (' + delay + ')')
           if (delay == 0) {
-            $('.wx-btn').removeClass('btn-disable')
+            //$('.wx-btn').removeClass('btn-disable');
+            $('.min5-view').css('display','block');
+            $('.first-view').css('display','none');
             clearInterval(t)
             $('#btn-login').text('')
-            $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
-            $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
+            $('.min5-btn').get(0).addEventListener('touchstart', touchStart, false);
+            $('.min5-btn').get(0).addEventListener('touchend', mobOneClick, false);
           }
         },1000);
       } else {
-        $('.wx-btn').get(0).addEventListener('touchstart', touchStart, false);
-        $('.wx-btn').get(0).addEventListener('touchend', mobOneClick, false);
+        $('.min5-btn').get(0).addEventListener('touchstart', touchStart, false);
+        $('.min5-btn').get(0).addEventListener('touchend', mobOneClick, false);
       }
       // 发送自动认证请求, 不调用微信
       // oneClickLogin(true, false);
