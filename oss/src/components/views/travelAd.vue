@@ -318,27 +318,28 @@ export default {
       this.modal.addShow = true;
     },
     addPost() { 
-      var _this = this;
       this.$refs['ruleForm'].validate((valid) => {
         if (valid && this.makeParam()) {
           var param = CGI.clone(this.postInfo);
           param.img = this.$store.state.imgUrl[0];
-          console.log(JSON.stringify(param));
-          CGI.post(this.$store.state, 'config/add_travel_ad', param, (resp)=> {
+          param.type = this.selected.type;
+          var _this = this;
+          CGI.post(this.$store.state, 'config/add_travel_ad', param, function(resp) {
             if (resp.errno == 0) {
               var info = [{
                 id : resp.data.id,
                 img: param.img,
-                sTime: this.dateInfo.startTime,
-                eTime: this.dateInfo.endTime,
+                sTime: _this.dateInfo.startTime,
+                eTime: _this.dateInfo.endTime,
                 title: param.title,
                 dst: param.dst,
-                online: 0
+                online: 0,
+                type: _this.selected.type,
               }]
-              this.infos = info.concat(this.infos);
-              this.modal.addShow = false;
+              _this.infos = info.concat(this.infos);
+              _this.modal.addShow = false;
             } else {
-              this.alertInfo(resp.desc);
+              _this.alertInfo(resp.desc);
             }
           })
         }
@@ -356,27 +357,32 @@ export default {
     },
     editPost() {
       var idx = this.selIdx;
-      if (this.makeParam()) {
-        var param = {
-          id: this.infos[idx].id,
-          stime: this.postInfo.startTime,
-          etime: this.postInfo.endTime,
-          img: this.$store.state.imgUrl[0] || this.infos[idx].img,
-          type: this.selected.number,
-          online: this.infos[idx].online || 0,
-          deleted: 0
-        }
-        CGI.post(this.$store.state, 'config/mod_login_img', param, (resp)=> {
-          if (resp.errno === 0) {
-            this.infos[idx].stime = this.dateInfo.startTime;
-            this.infos[idx].etime = this.dateInfo.endTime;
-            this.modal.addShow = false;
-            this.selIdx = -1;
-          } else {
-            this.alertInfo(resp.desc);
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid && this.makeParam()) {
+          var param = {
+            id: this.infos[idx].id,
+            stime: this.postInfo.startTime,
+            etime: this.postInfo.endTime,
+            img: this.$store.state.imgUrl[0] || this.infos[idx].img,
+            dst: this.postInfo.dst,
+            title: this.postInfo.title,
+            online: 0,
+            deleted: 0,
           }
-        })
-      }
+          var _this = this;
+          CGI.post(this.$store.state, 'config/mod_login_img', param, function(resp) {
+            if (resp.errno === 0) {
+              CGI.extend(_this.infos[idx],_this.postInfo);
+              _this.infos[idx].stime = _this.dateInfo.startTime;
+              _this.infos[idx].etime = _this.dateInfo.endTime;
+              _this.modal.addShow = false;
+              _this.selIdx = -1;
+            } else {
+              _this.alertInfo(resp.desc);
+            }
+          })
+        }
+      })
     },
     makeParam() {
       var ret = true
