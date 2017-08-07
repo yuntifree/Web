@@ -363,4 +363,18 @@ button>i {
   margin-bottom: 10px;
   font-weight: bold;
 }
+input,textarea,select,button{
+  border:0;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  -webkit-box-shadow:none;
+  resize:none;
+}
+select:not(:-internal-list-box) {
+    overflow: visible !important;
+}
+select{
+  color: #000;
+}
 </style>

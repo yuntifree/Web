@@ -111,14 +111,6 @@ export default {
 
 <style>
   @import './assets/iconfont/iconfont.css';
-  input,textarea,select,button{
-    border:0;
-    outline: none;
-    background: transparent;
-    box-shadow: none;
-    -webkit-box-shadow:none;
-    resize:none;
-  }
   .main{
     width: 100%;
     height: 100%;
