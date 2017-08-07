@@ -370,7 +370,7 @@ export default {
             deleted: 0,
           }
           var _this = this;
-          CGI.post(this.$store.state, 'config/mod_login_img', param, function(resp) {
+          CGI.post(this.$store.state, 'config/mod_travel_ad', param, function(resp) {
             if (resp.errno === 0) {
               CGI.extend(_this.infos[idx],_this.postInfo);
               _this.infos[idx].stime = _this.dateInfo.startTime;
