@@ -149,8 +149,8 @@ function font(bFont) {
       data.imgs2 = [];
       autologin = data.autologin;
       taobao = data.taobao;
-      autologin=1;
-      taobao = 1;
+      //autologin=1;
+      //taobao = 1;
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
       secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
