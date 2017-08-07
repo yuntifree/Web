@@ -219,39 +219,7 @@ function swipe(swipeName,idx,imgName) {
     lazyLoad : true,
     speed: 3000,
     swipeIdx: 0,
-    firstCallback: function(){
-      swipeIdx++;
-      console.log(swipeName);
-      /*if (swipeIdx == data.ads.length) {
-        var ids = [];
-        for (var i=0,len=data.ads.length;i<len;i++){
-          ids.push(data.ads[i].id);
-        }
-        for (var i=0,len=data.imgs2.length;i<len;i++){
-          ids.push(data.imgs2[i].id);
-        }
-        console.log(JSON.stringify(ids))
-        //adShow(ids)
-      }*/
-      //上传id方式
-      if (data.imgs[idx].length <2) {
-        var id = data.imgs[idx][0].id;
-        adShow(id);
-      }
-      if (imgName) {
-        var id = data.imgs2[idx].id;
-        adShow(id);
-      }
-    },
-    callback: function() {
-      var infos = data.imgs[idx];
-      if (this.swipeIdx<infos.length) {
-        var id = infos[this.swipeIdx].id;
-        adShow(id);
-      }
-      ++this.swipeIdx
-    }
-  });
+  })
 }
 function setHeight() {
   var height = document.documentElement.clientHeight;
@@ -262,21 +230,6 @@ function setHeight() {
     $('.login-bottom').css('left', 0);
     $('.login-bottom').css('bottom', 0);
   }
-}
-
-function adShow(id) {
-  var param = {
-    wlanusermac: wlanusermac,
-    id: id,
-    wlanapmac: wlanapmac
-  }
-  CGI.get('report_ad_view', param, function(resp) {
-    if (resp.errno == 0) {
-      console.log('suc')
-    } else {
-      console.log('report_ad_view fail')
-    }
-  })
 }
 
 function initUI() {
