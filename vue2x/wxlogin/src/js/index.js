@@ -23,7 +23,6 @@ var canClick = true;
 //
 var appId = "";
 var secretkey = "";
-var extend = [wlanacname, wlanuserip, wlanacip, wlanusermac, wlanapmac].join(',');　　　 //开发者自定义参数集合
 var timestamp = new Date().getTime();　　　　 //时间戳(毫秒)
 var shop_id = "";　　 //AP设备所在门店的ID
 var authUrl = ""; //认证服务端URL
@@ -535,6 +534,7 @@ function genJumpUrl(info) {
 }
 
 function callWechatBrowser() {
+  var extend = [wlanacname, wlanuserip, wlanacip, wlanusermac, wlanapmac,appId].join(',');　　　 //开发者自定义参数集合
   var sign = md5(appId + extend + timestamp + shop_id + authUrl + mac + ssid + bssid + secretkey);
   Wechat_GotoRedirect(appId, extend, timestamp, sign, shop_id, authUrl, mac, ssid, bssid);
 }
