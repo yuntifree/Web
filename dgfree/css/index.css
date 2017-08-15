@@ -1,0 +1,156 @@
+
+.main1-link {
+  display: block;
+  width: 288px;
+  height: 60px;
+  line-height: 60px;
+  border:  1px solid #4b8eff;
+  border-radius: 4px;
+  font-size: 24px;
+  color: #4b8eff;
+  margin:  40px auto 0;
+}
+.main1-link:hover{
+  color: #fff;
+  background-color: #4b8eff;
+}
+.content-main2 {
+  padding: 120px 0 164px;
+}
+.main2-tit {
+  font-size: 40px;
+  margin-bottom: 18px;
+}
+.main2-des {
+  font-size: 24px;
+  color: #9b9b9b;
+}
+.main-inner {
+  width: 1000px;
+  height: auto;
+  margin: 60px auto 0;
+}
+.main-inner li {
+  width: 33%;
+  text-align: center;
+}
+.main-inner-text1 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 33px 0 20px;
+  position: relative;
+}
+.main-inner-text1::after {
+  display: block;
+  content: " ";
+  width: 24px;
+  height: 3px;
+  background-color: #4a4a4a;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  margin-left: -12px;
+}
+.main-inner-text2 {
+  font-size: 16px;
+  color: #9b9b9b;
+}
+.content-main3 {
+  padding:  100px 0 140px;
+  background-color: #f6f7f8;
+}
+.main3-list div {
+  position: relative;
+  padding-right: 5px;
+}
+.main3-list img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.main3-list div:nth-child(2) {
+  margin-top: 10px;
+}
+.text-right  {
+  position: absolute;
+  bottom: 20px;
+  right: 32px;
+  transform:  translate(-50%, -50%);
+  font-size: 24px;
+  color: #fff;
+}
+.text-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:  translate(-50%, -50%);
+  font-size: 24px;
+  color: #fff;
+}
+.fixed-tool {
+  position: fixed;
+  top:  75%;
+  right: 65px;
+}
+.fixed-tool li {
+  text-align: center;
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+  background-color: #f6f6f6;
+  position: relative;
+  border-bottom: 1px solid  #cacaca;
+  font-size: 14px;
+  color: #cacaca;
+}
+.scroll-top {
+  display: none;
+}
+.fixed-tool li:last-child {
+  border-bottom: 0;
+}
+.fixed-tool li:hover {
+  background-color: #5097f5;
+  color: #fff;
+}
+.hover-wechat {
+  position: absolute;
+  left: -216px;
+  top: -160px;
+  display: block;
+  width: 216px;
+  height: auto;
+  display: none;
+}
+.hover-phone {
+  display: none;
+  position: absolute;
+  left: -216px;
+  top: -5px;
+  width: 216px;
+  height: auto;
+  display: none;
+}
+.fix-tool-icon {
+  margin-top: 8px;
+}
+.return-top {
+  display: none;
+  width: 28px;
+  height: 32px;
+  line-height: 120%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -16px;
+  margin-left: -14px;
+  color: #fff;
+}
+.fixed-tool li:hover .hover-phone,
+.fixed-tool li:hover .hover-wechat,
+.fixed-tool li:hover .return-top{
+  display: block;
+}
+.fixed-tool li:hover .fix-tool-top{
+  display: none;
+}

@@ -1,0 +1,55 @@
+.main2-inner {
+  width: 1000px;
+  height: auto;
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  margin-left: -500px;
+}
+.main2-inner-left {
+  width: 382px;
+  height: auto;
+}
+.main2-inner-right {
+  width: 618px;
+  height: auto;
+}
+.main2-inner-tit {
+  font-size: 80px;
+  color: #5097f5;
+  font-weight: bold;
+}
+.main2-inner-tit span {
+  font-size: 48px;
+  color: #bcbcbc;
+}
+.main2-inner-list {
+  margin-top: 10px;
+}
+.main2-inner-list li {
+  font-size: 26px;
+  margin-bottom: 16px;
+  position: relative;
+  padding-left: 20px;
+}
+.main2-inner-list li:before {
+  display: block;
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: #5aa1fb;
+  border-radius: 50%;
+  position: absolute;
+  top:  50%;
+  left: 0;
+  margin-top: -5px;
+}
+.main2-inner-right p {
+  text-indent: 2em;
+  text-align: justify;
+  font-size: 16px;
+  line-height: 150%;
+  margin-bottom: 10px;
+  color: #4a4a4a;
+}
+

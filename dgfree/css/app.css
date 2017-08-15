@@ -1,0 +1,122 @@
+.app-inner-text {
+  width: 1000px;
+  height: auto;
+  top:  16%;
+  left:  50%;
+  margin-left: -500px;
+}
+.app-tit {
+  width: 433px;
+  color: #fff;
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+.download-info {
+  width: 433px;
+  height: auto;
+}
+.app-download a{
+  display: block;
+  width: 226px;
+  height: 56px;
+  border-radius: 8px;
+  border: solid 2px #ffffff;
+  color: #fff;
+  font-size: 32px;
+  line-height: 56px;
+  padding-left: 80px;
+  position: relative;
+  margin-bottom: 30px;
+}
+.app-download a:before {
+  display: block;
+  content: '';
+  width: 40px;
+  height: 40px;
+  background: #fff url() 0 0 no-repeat;
+  position: absolute;
+  top:  8px;
+  left: 24px;
+}
+.app-login-img {
+  width: 350px;
+  height: auto
+}
+.app-login-img img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.app-main2-tit {
+  font-size: 80px;
+  font-weight: bold;
+  color: #4bc2c8;
+}
+.app-main2-desc {
+  font-size: 48px;
+  color: #bcbcbc;
+}
+.main2-inner-list li {
+  font-size: 26px;
+  margin-bottom: 16px;
+  position: relative;
+  padding-left: 20px;
+}
+.main2-inner-list li:before {
+  display: block;
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: #5aa1fb;
+  border-radius: 50%;
+  position: absolute;
+  top:  50%;
+  left: 0;
+  margin-top: -5px;
+}
+.app-main2-code:first-child{
+  margin-right: 68px;
+}
+.app-main2-code p {
+  color: #4a4a4a;
+  font-size: 16px;
+}
+.app-content-main {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+}
+.app-main3-text {
+  width: 1000px;
+  height: auto;
+  padding: 78px 0 140px;
+  margin: 0 auto;
+}
+.app-main3-tit {
+  color: #4b8eff;
+}
+.app-main3-btn {
+  display: block;
+  width: 187px;
+  height: 36px;
+  border-radius: 8px;
+  border: solid 1px #9b9b9b;
+  color: #4b8eff;
+  font-size: 20px;
+  line-height: 36px;
+  position: relative;
+  margin-top:  26px;
+}
+.app-main3-btn:after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-left: 8px solid  #ff5b62;
+  border-bottom: 4px solid transparent;
+  position: absolute;
+  top:  50%;
+  right: 13px;
+  margin-top: -4px;
+}
