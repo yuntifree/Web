@@ -47,7 +47,8 @@
   <script type="text/javascript" src="js/jquery.min.js"></script> 
   <script type="text/javascript" src="js/cgi.js"></script>
   <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&ak=BiR1G4yZybhnXDTDHLYq8WXMPaK7owWm"></script>
-  <script type="text/javascript">
+</body>
+<script type="text/javascript">
   var apAddress = [];
   // 百度地图API功能
   var map = new BMap.Map("allmap");    // 创建Map实例
@@ -109,7 +110,6 @@
     };
 
     function addMarker(lng,lat,idx) {
-      //alert(lng+','+lat+','+idx);
       var spot = new BMap.Point(lng, lat);
       var myIcon2 = new BMap.Icon("./images/marker.png", new BMap.Size(46,47));
       var marker2 = new BMap.Marker(spot,{icon:myIcon2});
@@ -117,5 +117,4 @@
       marker2.selIdx = idx;
     }
 </script>
-</body>
 </html>
