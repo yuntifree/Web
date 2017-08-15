@@ -54,15 +54,17 @@
   /*map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
   map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
   map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的*/
-  map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+  //map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
   var longitude = 0.0;
   var latitude = 0.0;
+  var apSet;
+  mapShow();
   function mapShow() {
-      var apSet = new Set();
+    apSet = new Set();
 
       longitude = 113.90387023396529;
       latitude = 22.93310386339828;
-      point = new BMap.Point(_this.longitude, _this.latitude);
+      point = new BMap.Point(longitude, latitude);
       //标注
       /*map.centerAndZoom(point,15);
       var myIcon = new BMap.Icon("./static/target.png", new BMap.Size(60,60));
@@ -77,8 +79,8 @@
     }
       function  getApAddress(){
          var param = {
-          uid:uid,
-          token:token
+          uid:137,
+          token:'6ba9ac5a422d4473b337d57376dd3488'
         }
         CGI.post('get_all_aps',param,(resp)=>{
           if (resp.errno === 0) {
@@ -92,7 +94,7 @@
         var adsL = apAddress[p.selIdx];
         var pointB = new BMap.Point(adsL.longitude,adsL.latitude);
         var distance  = map.getDistance(point, pointB).toFixed(2);
-        _this.tipBox('位置:'+adsL.address,distance);
+        //_this.tipBox('位置:'+adsL.address,distance);
       };
 
       function addlonglat(infos) {
@@ -110,7 +112,7 @@
       function addMarker(lng,lat,idx) {
         //alert(lng+','+lat+','+idx);
         var spot = new BMap.Point(lng, lat);
-        var myIcon2 = new BMap.Icon("./static/marker.png", new BMap.Size(60,60));
+        var myIcon2 = new BMap.Icon("./images/marker.png", new BMap.Size(31,50));
         var marker2 = new BMap.Marker(spot,{icon:myIcon2});
         map.addOverlay(marker2);
         marker2.addEventListener("click",attribute);
