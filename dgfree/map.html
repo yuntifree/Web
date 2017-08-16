@@ -71,9 +71,9 @@
     var myIcon = new BMap.Icon("./images/marker.png", new BMap.Size(46,47));
     infos.forEach((item)=>{
       if (item.longitude && item.latitude) {
-        var spot = new BMap.Point(lng, lat);
+        var spot = new BMap.Point(item.longitude, item.latitude);
         var marker = new BMap.Marker(spot,{icon:myIcon});
-        map.addOverlay(marker2);
+        map.addOverlay(marker);
       }
     })
   };

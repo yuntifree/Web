@@ -16,7 +16,7 @@
   bottom: 60px;
   width: 46px;
   height: 46px;
-  margin-left: 395px;
+  margin-left: 349px;
   background-color: #f6f6f6;
   border: 1px solid #b5b5b5;
 }
@@ -50,6 +50,6 @@
 }
 .bigmap #enlarge {
   position: fixed;
-  top:0;
+  bottom:0;
   right: 0;
 }
