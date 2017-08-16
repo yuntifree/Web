@@ -51,5 +51,6 @@
 .bigmap #enlarge {
   position: fixed;
   bottom:0;
-  right: 0;
+  left: 100%;
+  margin-left: -46px;
 }
