@@ -8,4 +8,30 @@
   width: 790px;
   height: 560px;
   margin: 0 auto;
+  position: relative;
+}
+.map-enlarge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 46px;
+  height: 46px;
+  background-color: #f6f6f6;
+  border: 1px solid #b5b5b5;
+}
+.map-enlarge img{
+  display: block;
+  width: 22px;
+  height: auto;
+  margin: 11px;
+}
+.map-enlarge:hover {
+  background-color: #5097f5;
+}
+.map-enlarge:hover .enlarge-icon-normal,
+.map-enlarge .enlarge-icon-hover {
+  display: none;
+}
+.map-enlarge:hover .enlarge-icon-hover{
+  display: block;
 }
