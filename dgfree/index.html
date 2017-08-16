@@ -115,21 +115,6 @@
       <img class="hover-phone" src="http://img.yunxingzh.com/8b432f5e-6814-43dc-bc33-8513d868d192.png">
     </li>
   </ul>
-  <script type="text/javascript">
-    var screenHeight = window.screen.availHeight;
-    console.log(screenHeight);
-    window.onscroll = function(){ 
-      var t = document.documentElement.scrollTop || document.body.scrollTop; 
-      var top_div = document.getElementById( "toTop" ); 
-      if( t >= 200 ) { 
-          top_div.style.display = "block"; 
-          top_div.onclick = function() {
-            document.getElementById('nav').scrollIntoView();
-          }
-      } else { 
-          top_div.style.display = "none"; 
-      } 
-    }
-  </script>
+  <script type="text/javascript" src="js/totop.js"></script>
 </body>
 </html>
