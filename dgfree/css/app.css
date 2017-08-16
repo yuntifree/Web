@@ -9,7 +9,7 @@
   width: 433px;
   color: #fff;
   font-size: 36px;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 .download-info {
   width: 433px;
@@ -33,10 +33,13 @@
   content: '';
   width: 40px;
   height: 40px;
-  background: #fff url() 0 0 no-repeat;
+  background: url('../images/ico_ios.png') 0 0 no-repeat;
   position: absolute;
-  top:  8px;
+  top:  5px;
   left: 24px;
+}
+.app-download .app-download-android:before {
+  background: url('../images/ico_android.png') 0 0 no-repeat;
 }
 .app-login-img {
   width: 350px;
@@ -106,6 +109,9 @@
   line-height: 36px;
   position: relative;
   margin-top:  26px;
+}
+.app-main3-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);;
 }
 .app-main3-btn:after {
   display: block;

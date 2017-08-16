@@ -176,6 +176,15 @@ a {text-decoration: none;}
 .nav-list-cur a {
   color: #fff;
 }
+.nav-list-item .coleff {
+  color: #4b8eff;
+}
+.nav-list-item:hover {
+  background-color: #4b8eff;
+}
+.nav-list-item:hover a {
+  color: #fff;
+}
 
 
 /** 尾部 **/
@@ -249,7 +258,4 @@ a {text-decoration: none;}
 .main1-des {
   font-size: 24px;
   margin-top: 18px;
-}
-.coleff {
-  color: #4b8eff !important;
 }

@@ -91,6 +91,8 @@
   position: fixed;
   top:  75%;
   right: 65px;
+  border: 1px solid #cacaca;
+  box-shadow: 0 5px 4px 0 rgba(0, 0, 0, 0.2);
 }
 .fixed-tool li {
   text-align: center;
@@ -122,6 +124,14 @@
   height: auto;
   display: none;
 }
+.hover-wechat2 {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -14px;
+  margin-left: -14px;
+}
 .hover-phone {
   display: none;
   position: absolute;
@@ -147,10 +157,13 @@
   color: #fff;
 }
 .fixed-tool li:hover .hover-phone,
+.fixed-tool li:hover .return-top,
+.fixed-tool li:hover .wechat-nomal,
 .fixed-tool li:hover .hover-wechat,
-.fixed-tool li:hover .return-top{
+.fixed-tool li:hover .hover-wechat2{
   display: block;
 }
-.fixed-tool li:hover .fix-tool-top{
+.fixed-tool li:hover .fix-tool-top,
+.fixed-tool li:hover .wechat-normal{
   display: none;
 }
