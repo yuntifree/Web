@@ -19,10 +19,10 @@
   </div>
   <div class="content-main">
     <div class="map-main" id="allmap">
-      <div class="map-enlarge" id="enlarge">
-        <img class="enlarge-icon-normal" src="images/enlarge.png">
-        <img class="enlarge-icon-hover" src="images/ico_enlarge_white.png">
-      </div>
+    </div>
+    <div class="map-enlarge" id="enlarge">
+      <img class="enlarge-icon-normal" src="images/enlarge.png">
+      <img class="enlarge-icon-hover" src="images/ico_enlarge_white.png">
     </div>
   </div>
   <div class="footer">
@@ -78,7 +78,14 @@
     })
   };
   $('#enlarge').click(function() {
-    $('#allmap').css({'width': '100%','height':'100%','position':'fixed','top':0,'left':0})
+    var className=$("html").attr("class");
+    if (className == 'bigmap') {
+      $('html, body').removeClass('bigmap');
+      $('#allmap').css({'position':'relative'});
+    } else {
+      $('html, body').addClass('bigmap');
+      $('#allmap').css({'position':'fixed'});
+    }
   })
 </script>
 </html>
