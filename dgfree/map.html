@@ -50,23 +50,26 @@
 </body>
 <script type="text/javascript">
   var map = new BMap.Map("allmap");
-    var point = new BMap.Point(116.404, 39.915);
+    var point = new BMap.Point(113.90387023396529, 22.93310386339828);
     map.centerAndZoom(point, 15);
     
-    var json_data = [[116.404,39.915],[116.383752,39.91334],[116.384502,39.932241]];
+    var json_data = [];
+    var param = {
+      uid:137,
+      token:'6ba9ac5a422d4473b337d57376dd3488'
+    }
+    CGI.post('get_all_aps',param,(resp)=>{
+      if (resp.errno === 0) {
+        if (resp.data.infos.length>0){
+          json_data = resp.data.infos;
+        }
+      }
+    })
     var pointArray = new Array();
     for(var i=0;i<json_data.length;i++){
       var marker = new BMap.Marker(new BMap.Point(json_data[i][0], json_data[i][1])); // 创建点
       map.addOverlay(marker);    //增加点
       pointArray[i] = new BMap.Point(json_data[i][0], json_data[i][1]);
-      marker.addEventListener("click",attribute);
-    }
-    //让所有点在视野范围内
-    map.setViewport(pointArray);
-    //获取覆盖物位置
-    function attribute(e){
-      var p = e.target;
-      alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);    
     }
   /*var apAddress = [];
   // 百度地图API功能
