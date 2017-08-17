@@ -147,22 +147,23 @@ a {text-decoration: none;}
 /** 头部 **/
 .content-nav {
   width: 1000px;
-  height: auto;
+  height: 140px;
   margin:  0 auto;
+  padding-top: 45px;
 }
 .nav-logo {
   display: block;
   width: 228px;
-  height: auto
-  margin-bottom: 17px;
-}
-.nav-list {
-  border-bottom: 3px solid #4b8eff;
+  height: auto;
+  margin-top: -2px;
 }
 .nav-list-item {
   width: 64px;
   height:  50px;
-  background-color: #f5f5f5;
+  margin-right: 54px;
+}
+.nav-list-item:last-child {
+  margin-right: 0;
 }
 .nav-list-item a {
   display: block;
@@ -173,19 +174,19 @@ a {text-decoration: none;}
   text-align: center;
 }
 .nav-list-cur {
-  background-color: #4b8eff;
+  border-bottom: 3px solid #4b8eff;
 }
 .nav-list-cur a {
-  color: #fff;
+  color: #262626;
 }
 .nav-list-item .coleff {
   color: #4b8eff;
 }
 .nav-list-item:hover {
-  background-color: #4b8eff;
+  border-bottom: 3px solid #4b8eff;
 }
 .nav-list-item:hover a {
-  color: #fff;
+  color: #4b8eff;
 }
 
 
@@ -201,16 +202,20 @@ a {text-decoration: none;}
   margin:  0 auto;
   padding: 43px 0 40px;
 }
+.footer-inner-left {
+  width: 50%;
+  height: auto;
+}
 .footer-logo {
   color: #fff;
   position: relative;
 } 
 .footer-logo-text {
   position: absolute;
-  right: -120px;
-  top:  50%;
-  margin-top: -22px;
-  font-size: 26px;
+  left: 223px;
+  bottom: 0;
+  /*margin-top: -22px;*/
+  font-size: 20px;
 }
 .footer-contact {
   font-size: 16px;

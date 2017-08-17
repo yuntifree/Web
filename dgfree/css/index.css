@@ -4,15 +4,14 @@
   width: 288px;
   height: 60px;
   line-height: 60px;
-  border:  1px solid #4b8eff;
   border-radius: 4px;
   font-size: 24px;
-  color: #4b8eff;
+  color: #fff;
   margin:  40px auto 0;
+  background-color: #4b8eff;
 }
 .main1-link:hover{
-  color: #fff;
-  background-color: #4b8eff;
+  background-color: #447fe4;
 }
 .content-main2 {
   padding: 120px 0 164px;

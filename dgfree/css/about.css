@@ -19,16 +19,17 @@
   color: #5097f5;
   font-weight: bold;
 }
-.main2-inner-tit span {
+.main2-inner-desc {
   font-size: 48px;
   color: #bcbcbc;
+  margin-top: -25px;
 }
 .main2-inner-list {
-  margin-top: 10px;
+  margin-top: 30px;
 }
 .main2-inner-list li {
   font-size: 26px;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   position: relative;
   padding-left: 20px;
 }
