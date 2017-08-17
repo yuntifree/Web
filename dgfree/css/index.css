@@ -73,8 +73,7 @@
 .text-right  {
   position: absolute;
   bottom: 20px;
-  right: 02px;
-  transform:  translate(-50%, -50%);
+  right: 20px;
   font-size: 24px;
   color: #fff;
 }

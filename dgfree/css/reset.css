@@ -213,8 +213,7 @@ a {text-decoration: none;}
 .footer-logo-text {
   position: absolute;
   left: 223px;
-  bottom: 0;
-  /*margin-top: -22px;*/
+  bottom: 6px;
   font-size: 20px;
 }
 .footer-contact {
