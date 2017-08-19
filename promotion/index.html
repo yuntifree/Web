@@ -7,11 +7,13 @@
   <script type="text/javascript">
     function isWeiXin() {
       var ua = window.navigator.userAgent.toLowerCase();
-      if (ua.match(/MicroMessenger/i) !== 'micromessenger') {
+      if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        console.log('wx');
+      } else {
         location.href = "https://fir.im/rnq8"
-      } 
+      }
     }
-    //isWeiXin();
+    isWeiXin();
   </script>  
   <style>
     *{
@@ -86,15 +88,20 @@
         background-color: #fff;
     }
     .btn-link {
+      border:0;
+      outline: none;
+      background: transparent;
+      -webkit-appearance: none;
       display: block;
       width: 38%;
-      height: auto;
+      height:  auto;
       position: absolute;
       top: 10%;
       left: 50%;
       transform: translateX(-50%);
     }
     .btn-link img {
+      display: block;
       width: 100%;
       height: auto;
     }
@@ -158,7 +165,7 @@
   <div class="shade">
     <img src="image/52.png">
   </div>
-  <div class="shade wechat-shade">
+  <div class="wechat-shade">
     <img src="image/wechat.jpeg">
   </div>
 </body>
@@ -168,7 +175,7 @@
   $('#slide3').swipeSlide({
     continuousScroll:true,
     speed : 3000,
-    autoSwipe: false,
+    autoSwipe: true,
     transitionType : 'cubic-bezier(0.22, 0.69, 0.72, 0.88)'
   });
   $('.down-link').click(function() {
