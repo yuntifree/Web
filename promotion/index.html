@@ -13,7 +13,7 @@
         location.href = "https://fir.im/rnq8"
       }
     }
-    isWeiXin();
+    //isWeiXin();
   </script>  
   <style>
     *{
@@ -128,7 +128,7 @@
       background-color:rgba(0,0,0,0.8);
     }
     .wechat-shade img{
-      display: block;
+      displaiy: block;
       width: 40%;
       height: auto;
       position: absolute;
@@ -144,19 +144,19 @@
     <ul>
       <li>
         <a href="javascript:;">
-            <img class="slide-img" src="./image/img_a.png" alt="">
+            <img class="slide-img" src="./image/img_a.jpg" alt="">
             <button class="btn-link down-link"><img src="image/btn_download.png"></button>
         </a>
       </li>
       <li>
         <a href="javascript:;">
-            <img class="slide-img" src="./image/img_b.png" alt="">
+            <img class="slide-img" src="./image/img_b.jpg" alt="">
             <button class="btn-link down-link"><img src="image/btn_download.png"></button>
         </a>
       </li>
       <li>
         <a href="javascript:;">
-            <img  class="slide-img" src="./image/img_c.png" alt="">
+            <img  class="slide-img" src="./image/img_c.jpg" alt="">
             <button class="btn-link wechat-btn"><img src="image/btn_wechat.png"></button>
         </a>
       </li>
@@ -171,7 +171,9 @@
 </body>
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script type="text/javascript" src="js/swipeSlide.min.js"></script>
+<script type="text/javascript" src="js/wx.js"></script>
 <script type="text/javascript">
+  weixin.init(wxReady(), true);
   $('#slide3').swipeSlide({
     continuousScroll:true,
     speed : 3000,
@@ -193,5 +195,19 @@
   $('.wechat-shade').click(function() {
     $(this).css({'display': 'none'})
   })
+  function wxReady() {
+    var param = {
+      desc: '我在约嘛麻将，三缺一快来凑脚',
+      title: '立刻加入东乡麻将',
+      link: 'http://yunxingzh.com/promotion/',
+      imgUrl: 'image/logo.jpg',
+      callback: function(type, res) {
+        if (type === 'fail') {
+          //this.tip(JSON.stringify(res));
+        }
+      }
+    }
+   weixin.bindShare(param);
+}
 </script>
 </html>
