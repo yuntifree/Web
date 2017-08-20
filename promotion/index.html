@@ -125,6 +125,10 @@
       height: 100%;
       top: 0;
       left: 0;
+    }
+    .shage2 {
+      width: 100%;
+      height: 100%;
       background-color:rgba(0,0,0,0.8);
     }
     .wechat-shade img{
@@ -166,14 +170,15 @@
     <img src="image/52.png">
   </div>
   <div class="wechat-shade">
+    <div class="shage2"></div>
     <img src="image/wechat.jpeg">
   </div>
 </body>
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script type="text/javascript" src="js/swipeSlide.min.js"></script>
-<script type="text/javascript" src="js/wx.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script type="text/javascript">
-  weixin.init(wxReady(), true);
+  var appId, nonceStr, timestamp, signature;
   $('#slide3').swipeSlide({
     continuousScroll:true,
     speed : 3000,
@@ -192,22 +197,46 @@
   $('.wechat-btn').click(function() {
     $('.wechat-shade').css({'display': 'block'})
   })
-  $('.wechat-shade').click(function() {
-    $(this).css({'display': 'none'})
+  $('.shage2').click(function() {
+    $('.wechat-shade').css({'display': 'none'})
   })
-  function wxReady() {
-    var param = {
-      desc: '我在约嘛麻将，三缺一快来凑脚',
-      title: '立刻加入东乡麻将',
-      link: 'http://yunxingzh.com/promotion/',
-      imgUrl: 'image/logo.jpg',
-      callback: function(type, res) {
-        if (type === 'fail') {
-          //this.tip(JSON.stringify(res));
-        }
-      }
-    }
-   weixin.bindShare(param);
-}
+  open();
+  function open() {
+    wx.config({
+      appId: appId,
+      timestamp: timestamp,
+      nonceStr: nonceStr,
+      signature: signature,
+      jsApiList: [
+          'checkJsApi',
+          'openLocation',
+          'getLocation',
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage'
+      ] 
+    });
+    wx.ready(function() {
+      // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+      wx.onMenuShareTimeline({
+          title: '约嘛抚州麻将！', // 分享标题
+          link: 'https://www.baidu.com', 
+          imgUrl: "image/logo.jpg", // 分享图标
+          success: function(data) {
+              console.log('suc')
+          }
+      });
+      // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+      wx.onMenuShareAppMessage({
+          title: '约嘛抚州麻将！', // 分享标题
+          desc: "我在玩抚州麻将棋牌，三缺一快来凑脚！", // 分享描述
+          link: 'https://www.baidu.com',
+          imgUrl: "image/logo.jpg", // 分享图标
+          type: 'link', // 分享类型,music、video或link，不填默认为link
+          success: function(data) {
+            console.log('suc')
+          }
+      });
+    });
+  }
 </script>
 </html>
