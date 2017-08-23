@@ -26,6 +26,7 @@
   .sec-info {
     width: 100%;
     height: auto;
+    padding-top: 0.2rem;
     position: absolute;
     top: 0;
     left: 0;
@@ -38,7 +39,7 @@
   .sec-info-integral {
     width: 36%;
     height: auto;
-    margin: 0 auto;
+    margin: 0.1rem auto 0;
     position: relative;
   }
   .sec-info-integral img {
@@ -73,9 +74,9 @@
     font-size: 0.36rem;
     font-weight: 500;
     color: #5aa1fb;
-    position: relative;
+    position: absolute;
     left: -10%;
-    bottom: 0.24rem;
+    bottom: -0.7rem;
   }
   .link-rule {
     display: block;
@@ -84,7 +85,7 @@
     padding: 0.14rem 0;
     font-size: 0.28rem;
     border-bottom: 0.02rem solid #fff;
-    margin: 0 auto;
+    margin: 0.8rem auto 0;
   }
   .voucher {
     width: 100%;
@@ -104,6 +105,7 @@
   }
   .vocher-notuse,
   .vocher-canuse {
+    display: none;
     width: 1.4rem;
     height: 1.2rem;
     position: absolute;
@@ -145,9 +147,18 @@
   .col96 {
     color: #969696;
   }
+  .active-btn {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .block {
+    display: block;
+  }
   </style>
 </head>
 <body>
+  <div id="info">
+    
+  </div>
   <script type="text/html" id="tplInfo">
     <div class="section">
       <img class="sec-bg" src="http://img.yunxingzh.com/786ac6e5-bb38-400f-853e-b05e7e7c7d40.png">
@@ -156,36 +167,33 @@
         <div class="sec-info-integral">
           <img  src="http://img.yunxingzh.com/afe6dc81-178f-48fc-87e3-7a3f3aef4948.png">
           <span class="integral g-tac">{{score}}</span>
-          <button class="{{sign ? 'signintegral-btn' : 'signintegral-btn col96'}}">{{sign ? '今天已领取' : '每天签到领积分'}}</button>
+          <button class="{{sign ? 'integral-btn  col96' : 'integral-btn'}}">{{sign ? '今天已领取' : '每天签到领积分'}}</button>
         </div>
-        <a href="javascript:;" class="link-rule">活动规则</a>
+        <a href="rule.html" class="link-rule">活动规则</a>
       </div>
     </div>
     <ul class="voucher">
       {{if items && items.length>0}}
         {{each items item idx}}
           <li>
-            <img class="vocher-img" src="{{item.url}}">
-            {{if item.status==0}}
-            <div class="vocher-notuse">
+            <img class="vocher-img" src="{{item.img}}">
+            <div class="{{!item.status ? 'vocher-notuse block' : 'vocher-notuse'}}" data-idx="{{idx}}">
               <button class="vocher-btn">兑换</button>
               <p class="vocher-integral g-tac">300积分</p>
             </div>
-            {{else if item.status==1}}
-            <div class="vocher-canuse">
+            <div class="{{item.status==1 ? 'vocher-canuse block' : 'vocher-canuse'}}" data-idx="{{idx}}">
               <button class="vocher-btn">去使用</button>
             </div>
-            {{else if item.status==2}}
-            <div class="vocher-used">
+            <div class="{{item.status==2 ? 'vocher-used block' : 'vocher-used'}}" data-idx="{{idx}}">
               <img src="http://img.yunxingzh.com/ceb8007d-d1d3-49de-ba9b-5e4c279035b3.png">
             </div>
-            {{/if}}
           </li>
         {{/each}}
       {{/if}}
     </ul>
   </script>
   <script type="text/javascript" src="js/zepto.min.js"></script>
+  <script type="text/javascript" src="js/template-web.js"></script>
   <script type="text/javascript" src="js/cgi.js"></script>
   <script type="text/javascript">
     font(true);
@@ -200,7 +208,7 @@
           var scale = 1 / dpr;
           var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
 
-          $(docEl).data('dpr', dpr);
+          docEl.setAttribute('data-dpr',dpr);
           var recalc = function() {
             var width = docEl.clientWidth;
             if (width / dpr > 640) {
@@ -214,8 +222,40 @@
         }
       }
     }
+    var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":1}
+    function creatHtml() {
+      var html = template('tplInfo',data);
+      document.getElementById('info').innerHTML = html;
+      var idx = -1;
+      bindTouchstart('.vocher-notuse');
+      //兑换点击结束
+      $('.vocher-notuse').bind('touchend',function() {
+        $(this).find('.vocher-btn').removeClass('active-btn');
+        var score = data.score - data.items[idx].score;
+        $('.integral').text(score);
+        $('.vocher-canuse').addClass('block');
+        $(this).removeClass('block');
+        idx = -1;
+      })
+      //去使用点击结束
+      bindTouchstart('.vocher-canuse');
+      $('.vocher-canuse').bind('touchend', function() {
+        $(this).find('.vocher-btn').removeClass('active-btn');
+        $('.vocher-used').addClass('block');
+        $(this).removeClass('block');
+        idx = -1;
+        //location.href="https://www.baidu.com";
+      })
+    }
+    //点击开始，按钮变色 ，idx赋值
+    function bindTouchstart(item) {
+      $(item).bind('touchstart',function() {
+        idx = $('.vocher-notuse').data('idx');
+        $(this).find('.vocher-btn').addClass('active-btn');
+      })
+    }
     var uid = CGI.query().uid;
-    var token = CGI.query.token;
+    var token = CGI.query().token;
     var param = {
       uid : ~~uid,
       token: token
