@@ -179,7 +179,7 @@
             <img class="vocher-img" src="{{item.img}}">
             <div class="{{!item.status ? 'vocher-notuse block' : 'vocher-notuse'}}" data-idx="{{idx}}">
               <button class="vocher-btn">兑换</button>
-              <p class="vocher-integral g-tac">300积分</p>
+              <p class="vocher-integral g-tac">{{item.score}}积分</p>
             </div>
             <div class="{{item.status==1 ? 'vocher-canuse block' : 'vocher-canuse'}}" data-idx="{{idx}}">
               <button class="vocher-btn">去使用</button>
@@ -222,18 +222,22 @@
         }
       }
     }
-    var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":1}
+    //var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":1}
+    creatHtml(data);
     function creatHtml() {
       var html = template('tplInfo',data);
       document.getElementById('info').innerHTML = html;
       var idx = -1;
       bindTouchstart('.vocher-notuse');
+
       //兑换点击结束
       $('.vocher-notuse').bind('touchend',function() {
         $(this).find('.vocher-btn').removeClass('active-btn');
-        var score = data.score - data.items[idx].score;
-        $('.integral').text(score);
-        $('.vocher-canuse').addClass('block');
+        idx = $(this).data('idx');
+        var score = ~~$('.integral').text();
+        var rest = score - data.items[idx].score;
+        $('.integral').text(rest);
+        $(this).siblings('.vocher-canuse').addClass('block');
         $(this).removeClass('block');
         idx = -1;
       })
@@ -241,16 +245,14 @@
       bindTouchstart('.vocher-canuse');
       $('.vocher-canuse').bind('touchend', function() {
         $(this).find('.vocher-btn').removeClass('active-btn');
-        $('.vocher-used').addClass('block');
+        $(this).siblings('.vocher-used').addClass('block');
         $(this).removeClass('block');
-        idx = -1;
-        //location.href="https://www.baidu.com";
+        location.href="https://www.baidu.com";
       })
     }
     //点击开始，按钮变色 ，idx赋值
     function bindTouchstart(item) {
       $(item).bind('touchstart',function() {
-        idx = $('.vocher-notuse').data('idx');
         $(this).find('.vocher-btn').addClass('active-btn');
       })
     }
@@ -263,8 +265,7 @@
     CGI.post('get_user_score', param, function(resp) {
       if (resp.errno == 0) {
         var data = resp.data;
-        $('body').append(template('tplInfo'), data);
-        //console.log(resp.data);
+        creatHtml(data);
       } else {
         console.log(resp.desc);
       }
