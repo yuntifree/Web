@@ -144,6 +144,23 @@
     height: auto;
     display: block;
   }
+  .tip-box {
+    display: none;
+    width:  60%;
+    height: auto;
+    padding: 0.2rem 0.1rem;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    font-size: 0.28rem;
+    border-radius: 5px;
+    text-align: center;
+  }
+
   .col96 {
     color: #969696;
   }
@@ -159,6 +176,7 @@
   <div id="info">
     
   </div>
+  <div class="tip-box">您的积分不够，暂时不能兑换哦</div>
   <script type="text/html" id="tplInfo">
     <div class="section">
       <img class="sec-bg" src="http://img.yunxingzh.com/786ac6e5-bb38-400f-853e-b05e7e7c7d40.png">
@@ -222,8 +240,8 @@
         }
       }
     }
-    //var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":1}
-    creatHtml(data);
+    //var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":100,"sign":1}
+    //creatHtml(data);
     function creatHtml() {
       var html = template('tplInfo',data);
       document.getElementById('info').innerHTML = html;
@@ -236,9 +254,13 @@
         idx = $(this).data('idx');
         var score = ~~$('.integral').text();
         var rest = score - data.items[idx].score;
-        $('.integral').text(rest);
-        $(this).siblings('.vocher-canuse').addClass('block');
-        $(this).removeClass('block');
+        if (rest <=0) {
+          tip('您的积分不够，暂时不能兑换哦')
+        } else {
+          $('.integral').text(rest);
+          $(this).siblings('.vocher-canuse').addClass('block');
+          $(this).removeClass('block');
+        }
         idx = -1;
       })
       //去使用点击结束
@@ -249,6 +271,13 @@
         $(this).removeClass('block');
         location.href="https://www.baidu.com";
       })
+    }
+    function tip(val) {
+      $('.tip-box').text(val);
+      $('.tip-box').addClass('block');
+      setTimeout(function() {
+        $('.tip-box').removeClass('block');
+      },1500)
     }
     //点击开始，按钮变色 ，idx赋值
     function bindTouchstart(item) {
@@ -267,7 +296,7 @@
         var data = resp.data;
         creatHtml(data);
       } else {
-        console.log(resp.desc);
+        tip(resp.desc);
       }
     })
   </script>
