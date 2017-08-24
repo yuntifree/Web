@@ -244,7 +244,7 @@
     var uid = CGI.query().uid;
     var token = CGI.query().token;
     var param = {
-      uid: uid,
+      uid: ~~uid,
       token: token
     }
     CGI.post('get_user_score', param, function(resp) {
@@ -303,7 +303,9 @@
         CGI.post('daily_sign', param, function(resp) {
           if (resp.errno == 0) {
             var score = resp.data.score;
-            $('.integral').text(score)
+            $('.integral').text(score);
+            $('.integral-btn').text('今天已领取');
+            $('.integral-btn').addClass('col96');
           } else {
             tip(resp.desc)
           }
