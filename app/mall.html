@@ -240,9 +240,23 @@
         }
       }
     }
-    //var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":100,"sign":1}
+    //var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":0}
+    var uid = CGI.query().uid;
+    var token = CGI.query().token;
+    var param = {
+      uid: uid,
+      token: token
+    }
+    CGI.post('get_user_score', param, function(resp) {
+      if (resp.errno == 0) {
+        var data = resp.data;
+        creatHtml(data);
+      } else {
+        tip(resp.desc);
+      }
+    })
     //creatHtml(data);
-    function creatHtml() {
+    function creatHtml(data) {
       var html = template('tplInfo',data);
       document.getElementById('info').innerHTML = html;
       var idx = -1;
@@ -257,9 +271,18 @@
         if (rest <=0) {
           tip('您的积分不够，暂时不能兑换哦')
         } else {
-          $('.integral').text(rest);
-          $(this).siblings('.vocher-canuse').addClass('block');
-          $(this).removeClass('block');
+          var p = param;
+          p.id = data.items[idx].id;
+          CGI.post('exchange_score', p, function(resp) {
+            if (resp.errno == 0) {
+              var score = resp.data.score;
+              $('.integral').text(score);
+              $(this).siblings('.vocher-canuse').addClass('block');
+              $(this).removeClass('block');
+            } else {
+              tip(resp.desc);
+            }
+          })
         }
         idx = -1;
       })
@@ -270,6 +293,21 @@
         $(this).siblings('.vocher-used').addClass('block');
         $(this).removeClass('block');
         location.href="https://www.baidu.com";
+      })
+
+      $('.integral-btn').bind('touchstart', function() {
+        $(this).css({'box-shadow': 'none'})
+      })
+      $('.integral-btn').bind('touchend', function() {
+        $(this).css({'box-shadow': '0 0.04rem 0.2rem 0 #68a2e0'})
+        CGI.post('daily_sign', param, function(resp) {
+          if (resp.errno == 0) {
+            var score = resp.data.score;
+            $('.integral').text(score)
+          } else {
+            tip(resp.desc)
+          }
+        })
       })
     }
     function tip(val) {
@@ -285,21 +323,7 @@
         $(this).find('.vocher-btn').addClass('active-btn');
       })
     }
-    var uid = CGI.query().uid;
-    var token = CGI.query().token;
-    var param = {
-      uid : ~~uid,
-      token: token
-    }
-    CGI.post('get_user_score', param, function(resp) {
-      if (resp.errno == 0) {
-        var data = resp.data;
-        creatHtml(data);
-      } else {
-        tip(resp.desc);
-      }
-    })
-  </script>
+ </script>
 </body>
 
 </html>
