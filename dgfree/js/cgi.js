@@ -42,9 +42,7 @@ window.CGI = {
 
   post: function(action, param, callback) {
     var p = {
-      data: param,
-      term: 2,
-      version: 1
+      data: param
     };
 
     var url = this.CGI + action;
@@ -83,22 +81,11 @@ window.CGI = {
     }
     return ret.join('&');
   },
-  query: function() {
-    //var url = window.document.location.search.toString().substr(1);
-    var url = window.document.location.href.toString();
-    url = url.substr(url.indexOf('?') + 1);
-    if (typeof(url) === 'string') {
-      var u = url.split('&');
-      var get = {};
-      for (var i in u) {
-        if (typeof(u[i]) === 'string') {
-          var j = u[i].split('=');
-          get[j[0]] = j[1];
-        }
-      }
-      return get;
-    } else {
-      return {};
-    }
+  checkTel: function(tel) {
+    var isPhone = /^([0-9]{3,4})?[0-9]{7,8}$/;
+    var isMob = /^((\+?86)|(\(\+86\)))?(1[0-9]{10})$/;
+    //var isNum=/^\+?[1-9][0-9]||isNum.test(tel)*$/;
+    var ret = isMob.test(tel) || isPhone.test(tel);
+    return ret;
   }
 }

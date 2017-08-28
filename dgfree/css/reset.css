@@ -270,7 +270,7 @@ a {text-decoration: none;}
 
 .fixed-tool {
   position: fixed;
-  top:  75%;
+  top:  50%;
   right: 65px;
   border: 1px solid #cacaca;
   box-shadow: 0 5px 4px 0 rgba(0, 0, 0, 0.2);
@@ -341,11 +341,101 @@ a {text-decoration: none;}
 .fixed-tool li:hover .return-top,
 .fixed-tool li:hover .wechat-nomal,
 .fixed-tool li:hover .hover-wechat,
-.fixed-tool li:hover .hover-wechat2{
+.fixed-tool li:hover .hover-wechat2,
+.fixed-tool li:hover .contact-box {
   display: block;
 }
 .fixed-tool li:hover .fix-tool-top,
 .fixed-tool li:hover .wechat-normal{
   display: none;
 }
+.fixed-tool .fixed-tool-contact {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 140%;
+  padding: 4px 9px;
+  font-size: 14px;
+  color: #4b8eff;
+}
+.fixed-tool li:hover .fixed-tool-contact {
+  color: #fff;
+}
+/*联系我们*/
+.contact-box {
+  display: none;
+  width: 226px;
+  height: auto;
+  padding: 18px 16px;
+  position: absolute;
+  top: -290px;
+  left: -226px;
+  border-radius: 10px;
+  box-shadow: 0 0 4px 0 rgba(150, 150, 150, 0.5);
+  background-color: #fff;
+  color: #4a4a4a;
+  line-height: 150%;
+  text-align: left;
+}
+.contact-box-tip {
+  font-size: 14px;
+  line-height: 150%;
+  text-align: justify;
+}
 
+.contact-ques-tit{
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  text-align: justify;
+}
+.ipt-radio {
+  margin-right: 7px;
+}
+.ipt-text {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: solid 1px #979797;
+  font-size: 14px;
+}
+.contact-btn {
+  width: 194px;
+  height: 29px;
+  line-height: 29px;
+  margin-top: 20px;
+  border-radius: 6px;
+  background-color: #5097f5;
+  color: #fff;
+  font-size: 14px;
+}
+.contact-way {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #969696;
+}
+.col18 {
+  color: #e90018;
+}
+.tip-text {
+  display: none;
+  width: 195px;
+  height: auto;
+  padding: 5px 10px;
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+}
+.block {
+  display: block;
+}
