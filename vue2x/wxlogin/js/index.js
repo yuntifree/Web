@@ -199,8 +199,10 @@ function setLognBtn(type) {
       $('.btn').addClass('tb-btn');
       break;
     case 3: 
-      $('.btn-text').text('App连WiFi');
+      $('.btn-text').text('官方APP连WiFi');
       $('.btn').addClass('app-btn');
+      $('.app-text-tip').css({'display': 'block'});
+      $('.has-ques').addClass('g-tac')
       break;
   }
 }

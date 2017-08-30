@@ -141,7 +141,9 @@ video {
 .g-fr{
   float: right;
 }
-
+.g-tar {
+    text-align: right;
+}
 .g-tac {
     text-align: center;
 }
@@ -301,16 +303,16 @@ video {
     background-color: #42bd40;
     position: relative
 }
-.wx-btn {
+.top16 {
   margin-top: 1.6rem;
+}
+.wx-btn {
   background-color: #42bd40;
 }
 .tb-btn {
-  margin-top: 1.6rem;
   background-color: #ff9933;
 }
 .app-btn {
-  margin-top: 1.6rem;
   background-color: #3bb6fc;
 }
 .btn-img-wechat {
@@ -573,6 +575,12 @@ video {
   font-size: 0.28rem;
   line-height: 0.5rem;
   color: #fff;
+}
+.app-text-tip {
+  display: none;
+  margin: 0.1rem 0 0.36rem;
+  font-size: 0.26rem;
+  color: #ee001d;
 }
 
 
