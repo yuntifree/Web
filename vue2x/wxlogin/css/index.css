@@ -305,6 +305,14 @@ video {
   margin-top: 1.6rem;
   background-color: #42bd40;
 }
+.tb-btn {
+  margin-top: 1.6rem;
+  background-color: #ff9933;
+}
+.app-btn {
+  margin-top: 1.6rem;
+  background-color: #3bb6fc;
+}
 .btn-img-wechat {
   display: none;
   width: 0.44rem;
@@ -329,10 +337,10 @@ video {
   background-color: #88d887;
 }
 .tb-disable {
-
+  background-color: #fdb976;
 }
 .app-disable {
-  background-color: #52bdfa;
+  background-color: #86d1fb;
 }
 .click-btn {
   width: 1.74rem;
@@ -536,14 +544,6 @@ video {
 }
 .pc-ques {
   font-size: 12px;
-}
-.tb-btn {
-  margin-top: 1.6rem;
-  background-color: #ff9933;
-}
-.app-btn {
-  margin-top: 1.6rem;
-  background-color: #3bb6fc;
 }
 .con-cover {
   width: 100%;

@@ -356,7 +356,6 @@ function touchStart(e) {
   } 
   $('.btn').css('backgroundColor', endColor);
   setTimeout(function() {$('.btn').css('backgroundColor', startColor);}, 300);
-  console.log(1);
 }
 
 function pcRegClick(e) {
@@ -403,7 +402,7 @@ function mobOneClick(e) {
         countdown(false,false,true);
         break;
       case 3:
-        callTaobao();
+        callApp();
         break;
     }
     /*if (taobao) {
@@ -433,7 +432,7 @@ function regClick(wx) {
           countdown(param,wx,false);
           break;
         case 3:
-          callTaobao();
+          callApp();
           break;
       }
       /*if (taobao) {
@@ -557,6 +556,12 @@ function countdown(param, wx, oneclick) {
 //taobao 
 function callTaobao() { 
   location.replace(notWxUrl);
+}
+function callApp() {
+  location.replace('dgwireless://');
+  window.setTimeout(function() {
+    location.replace(notWxUrl);
+  }, 2000)
 }
 
 // make apple happy!
