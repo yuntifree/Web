@@ -24,6 +24,7 @@ App({
             },
             data: {
               data: {
+                appid: 'wxb5c7692e667731fc',
                 code: res.code
               }
             },

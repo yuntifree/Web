@@ -48,7 +48,6 @@ Page({
     })
   },
   onShow: function() {
-    console.log('index');
     app.init(this.checkLogin);
   },
   checkLogin: function() {
