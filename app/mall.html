@@ -240,21 +240,21 @@
         }
       }
     }
-    var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":0}
+    //var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":0}
     var uid = CGI.query().uid;
     var token = CGI.query().token;
     var param = {
       uid: ~~uid,
       token: token
     }
-    /*CGI.post('get_user_score', param, function(resp) {
+    CGI.post('get_user_score', param, function(resp) {
       if (resp.errno == 0) {
         var data = resp.data;
         creatHtml(data);
       } else {
         tip(resp.desc);
       }
-    })*/
+    })
     creatHtml(data);
     function creatHtml(data) {
       var html = template('tplInfo',data);
@@ -279,6 +279,7 @@
               $('.integral').text(score);
               $(this).siblings('.vocher-canuse').addClass('block');
               $(this).removeClass('block');
+              tip('兑换成功')
             } else {
               tip(resp.desc);
             }
@@ -290,9 +291,7 @@
       bindTouchstart('.vocher-canuse');
       $('.vocher-canuse').bind('touchend', function() {
         $(this).find('.vocher-btn').removeClass('active-btn');
-        $(this).siblings('.vocher-used').addClass('block');
-        $(this).removeClass('block');
-        location.href="https://www.baidu.com";
+        location.href="http://api.yunxingzh.com/redirect_shop?uid=" + uid + '&token=' + token;
       })
 
       $('.integral-btn').bind('touchstart', function() {
