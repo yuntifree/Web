@@ -448,18 +448,19 @@ function portalLogin(param, wx) {
       genJumpUrl(resp.data);
       connected = true;
       sendTest();
-      if (wx) {
-        callWeixin();
-      } else if (logintype==2){
-        callTaobao();
-      } else if (logintype == 3) {
-        callApp();
-      }else {
-        console.log(jumpUrl);
+      if (isPC()) {
         if (CGI.isIE()) {
           location.replace(firsturl);
         } else {
           location.replace(jumpUrl);
+        }
+      } else {
+        if (wx) {
+          callWeixin();
+        } else if (logintype==2){
+          callTaobao();
+        } else if (logintype == 3) {
+          callApp();
         }
       }
     } else {
@@ -488,17 +489,19 @@ function oneClickLogin(auto, callWX) {
       connected = true;
       if (!auto) {
         // 如果需要，调用微信
-        if (callWX) {
-          callWeixin();
-        } else if (logintype == 2) {
-          callTaobao();
-        } else if (logintype == 3) {
-          callApp();
-        }else {
+        if (isPC()) {
           if (CGI.isIE()) {
             location.replace(firsturl);
           } else {
             location.replace(jumpUrl);
+          }
+        } else {
+          if (callWX) {
+            callWeixin();
+          } else if (logintype == 2) {
+            callTaobao();
+          } else if (logintype == 3) {
+            callApp();
           }
         }
       } else {
