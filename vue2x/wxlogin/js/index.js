@@ -557,7 +557,7 @@ function callTaobao() {
   location.replace(notWxUrl);
 }
 function callApp() {
-  var isAndroid = useragent.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+  var isAndroid = useragent.indexOf('Android') > -1 || useragent.indexOf('Adr') > -1; //android终端
   var isiOS = !!useragent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
   if (isAndroid) {
     var ifr = document.createElement('iframe');
