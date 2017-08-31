@@ -17,7 +17,7 @@ var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com'; //'http://www.b
 var autologin = 0;
 var logintype = 0;  //1 微信  2淘宝  3App
 var delay = 5;
-//var useragent = navigator.userAgent;
+var useragent = navigator.userAgent;
 var canClick = true;
 
 //
@@ -108,7 +108,7 @@ function font(bFont) {
     // init font
     if (bFont) {
       var docEl = document.documentElement;
-      var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+      var isIOS = useragent.match(/iphone|ipod|ipad/gi);
       var dpr = isIOS ? Math.min(window.devicePixelRatio, 3) : 1;
       dpr = window.top === window.self ? dpr : 1; //被iframe引用时，禁止缩放
       var scale = 1 / dpr;
@@ -144,7 +144,6 @@ function font(bFont) {
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
       var data = taobaoCover = resp.data;
-      console.log(JSON.stringify(data));
       autologin = data.autologin;
       logintype = data.logintype;
       //autologin=1;
@@ -276,14 +275,14 @@ function initUI() {
 }
 
 function isPC() {
-  var userAgentInfo = navigator.userAgent;
+  //var userAgentInfo = navigator.userAgent;
   var Agents = ["Android", "iPhone",
     "SymbianOS", "Windows Phone",
     "iPad", "iPod"
   ];
   var flag = true;
   for (var v = 0; v < Agents.length; v++) {
-    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+    if (useragent.indexOf(Agents[v]) > 0) {
       flag = false;
       break;
     }
@@ -378,11 +377,6 @@ function mobRegClick(e) {
       case 3:
         regClick(false);
     }
-    /*if (taobao) {
-      regClick(false);
-    } else {
-      regClick(true);
-    }*/
   }
 }
 
@@ -404,7 +398,7 @@ function mobOneClick(e) {
         countdown(false,false,true);
         break;
       case 3:
-        callApp();
+        oneClickLogin(false, false);
         break;
     }
     /*if (taobao) {
@@ -434,7 +428,7 @@ function regClick(wx) {
           countdown(param,wx,false);
           break;
         case 3:
-          callApp();
+          portalLogin(param, wx);
           break;
       }
       /*if (taobao) {
@@ -456,9 +450,11 @@ function portalLogin(param, wx) {
       sendTest();
       if (wx) {
         callWeixin();
-      } else if (logintype==2 ||logintype == 3){
+      } else if (logintype==2){
         callTaobao();
-      } else {
+      } else if (logintype == 3) {
+        callApp();
+      }else {
         console.log(jumpUrl);
         if (CGI.isIE()) {
           location.replace(firsturl);
@@ -485,7 +481,6 @@ function portalLogin(param, wx) {
 function oneClickLogin(auto, callWX) {
   var param = loginParam;
   CGI.get('one_click_login', param, function(resp) {
-  //CGI.get('unify_login', param, function(resp) {
     if (resp.errno === 0) {
       // 局部刷新，通知iOS能上网了
       genJumpUrl(resp.data);
@@ -495,9 +490,11 @@ function oneClickLogin(auto, callWX) {
         // 如果需要，调用微信
         if (callWX) {
           callWeixin();
-        } else if (logintype == 2 || logintype == 3) {
+        } else if (logintype == 2) {
           callTaobao();
-        } else {
+        } else if (logintype == 3) {
+          callApp();
+        }else {
           if (CGI.isIE()) {
             location.replace(firsturl);
           } else {
@@ -560,10 +557,24 @@ function callTaobao() {
   location.replace(notWxUrl);
 }
 function callApp() {
-  location.replace('dgwireless://');
-  window.setTimeout(function() {
-    location.replace(notWxUrl);
-  }, 2000)
+  var isAndroid = useragent.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+  var isiOS = !!useragent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+  if (isAndroid) {
+    var ifr = document.createElement('iframe');
+    ifr.src = 'dgwireless://';
+    ifr.style.display = 'none';
+    document.body.appendChild(ifr);
+    window.setTimeout(function(){
+        document.body.removeChild(ifr);
+        location.replace(notWxUrl);
+    },2000)
+  }
+  if (isiOS) {
+    location.replace('dgwireless://');
+    window.setTimeout(function() {
+      location.replace(notWxUrl);
+    }, 2000)
+  }
 }
 
 // make apple happy!
