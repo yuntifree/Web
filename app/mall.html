@@ -273,7 +273,10 @@
         } else {
           var p = param;
           p.id = data.items[idx].id;
-          CGI.post('exchange_score', p, function(resp) {
+          $(this).siblings('.vocher-canuse').addClass('block');
+          $(this).removeClass('block');
+          tip('兑换成功')
+          /*CGI.post('exchange_score', p, function(resp) {
             if (resp.errno == 0) {
               var score = resp.data.score;
               $('.integral').text(score);
@@ -283,7 +286,7 @@
             } else {
               tip(resp.desc);
             }
-          })
+          })*/
         }
         idx = -1;
       })
