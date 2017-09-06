@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8">
+  <title>东莞无限</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style type="text/css">
+  html,body {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    background-color: #f0f0f0;
+  }
+  .section {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-bottom: 0.26rem;
+  }
+  .sec-banner,
+  .sec-banner img{
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .goods-list {
+    width: 100%;
+    height: auto;
+    padding: 0 0.3rem;
+    background-color: #fff;
+  }
+  .goods-list li {
+    padding:  0.18rem 0;
+    border-bottom: 0.02rem solid #e6e6e6;
+    position: relative;
+  }
+  .goods-img {
+    display: block;
+    width: 1.08rem;
+    height: auto;
+    margin-right: 0.32rem;
+  }
+  .goods-title {
+    font-size: 0.34rem;
+    color: #5a5a5a;
+    max-width: 4rem;
+  }
+  .goods-price {
+    font-size: 0.32rem;
+    color: #ff543c;
+    position: absolute;
+    right: 0;
+    bottom: 0.43rem;
+  }
+  .tip-box {
+    display: none;
+    width:  60%;
+    height: auto;
+    padding: 0.2rem 0.1rem;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    font-size: 0.28rem;
+    border-radius: 5px;
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <div id="info">
+    
+  </div>
+  <div class="tip-box">您的积分不够，暂时不能兑换哦</div>
+  <script type="text/html" id="tplInfo">
+    {{each info value index}}
+    <div class="section">
+      <a class="sec-banner" href="{{value.dst}}">
+        <img src="{{value.banner}}">
+      </a>
+      <ul class="goods-list">
+        {{each value.list val idx}}
+        <li class="g-clearfix goods-item" data-dst="{{val.dst}}">
+          <img class="g-fl goods-img" src="{{val.img}}">
+          <p class="g-fl goods-title">{{val.title}}</p>
+          <div class="g-fr goods-price">￥{{(val.price/100).toFixed(2)}}</div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/each}}
+  </script>
+  <script type="text/javascript" src="js/zepto.min.js"></script>
+  <script type="text/javascript" src="js/template-web.js"></script>
+  <script type="text/javascript" src="js/cgi.js"></script>
+  <script type="text/javascript">
+    font(true);
+    function font(bFont) {
+      if (document && window) {
+        // init font
+        if (bFont) {
+          var docEl = document.documentElement;
+          var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+          var dpr = isIOS ? Math.min(window.devicePixelRatio, 3) : 1;
+          dpr = window.top === window.self ? dpr : 1; //被iframe引用时，禁止缩放
+          var scale = 1 / dpr;
+          var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+          docEl.setAttribute('data-dpr',dpr);
+          var recalc = function() {
+            var width = docEl.clientWidth;
+            if (width / dpr > 640) {
+              width = 640 * dpr;
+            }
+            docEl.style.fontSize = 100 * (width / 750) + 'px';
+          };
+          recalc();
+          if (!document.addEventListener) return;
+          window.addEventListener(resizeEvt, recalc, false);
+        }
+      }
+    }
+    /*var data = {"info": [{
+      "banner": "http://img.yunxingzh.com/a026a70c-3166-4a57-bd65-e80abc8aafef.png",
+      "dst": "https://www.baidu.com",
+      "list": [
+        {
+          "img": "http://img.yunxingzh.com/e2d5b08c-8cc9-44d3-a25c-ec89966d74a4.png",
+          "dst": "https://www.baidu.com",
+          "title": "德国进口嘉云糖德国进口嘉云糖德国进口嘉云糖德国进口嘉云糖德国进口嘉云糖",
+          "price": 3990
+        },
+        {
+          "img": "http://img.yunxingzh.com/7ea0d342-11d6-4da1-a4ab-f213d52602af.png",
+          "dst": "",
+          "title": "奥嘉莱虾片",
+          "price": 2490
+        }
+      ]
+    },
+    {
+      "banner": "http://img.yunxingzh.com/1cf8a683-f1f5-4861-bde7-45650b19b1a9.png",
+      "dst": "https://www.baidu.com",
+      "list": [
+        {
+          "img": "http://img.yunxingzh.com/f69dae67-d3bc-48e0-b43c-bbfd2c585265.png",
+          "dst": "",
+          "title": "惠普 OMEN 15-AX200",
+          "price": 5444
+        },
+        {
+          "img": "http://img.yunxingzh.com/d53c35fc-9b8d-4a50-8eba-1ce19675250a.png",
+          "dst": "",
+          "title": "佳能 6D Mark II",
+          "price": 4555
+        }
+      ]
+    }
+  ]}*/
+  var name = CGI.query().name;
+  CGI.post('get_user_score', {name: name}, function(resp) {
+    if (resp.errno == 0) {
+      var data = resp.data;
+      initUI(data);
+    } else {
+      tip(resp.desc);
+    }
+  })
+
+  function initUI(data) {
+    $('#info').append(template('tplInfo',data));
+    $('.goods-item').bind('touchstart', function() {
+      $(this).css({'background-color': 'rgba(0,0,0,0.1)'})
+    })
+    $('.goods-item').bind('touchend', function() {
+      $(this).css({'background-color': '#fff'});
+      var dst = $(this).data('dst');
+      location.href = dst;
+    })
+  }
+
+    function tip(val) {
+      $('.tip-box').text(val);
+      $('.tip-box').addClass('block');
+      setTimeout(function() {
+        $('.tip-box').removeClass('block');
+      },1500)
+    }
+    //点击开始，按钮变色 ，idx赋值
+    function bindTouchstart(item) {
+      $(item).bind('touchstart',function() {
+        $(this).find('.vocher-btn').addClass('active-btn');
+      })
+    }
+ </script>
+</body>
+
+</html>
