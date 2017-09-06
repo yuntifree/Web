@@ -273,20 +273,20 @@
         } else {
           var p = param;
           p.id = data.items[idx].id;
-          $(this).siblings('.vocher-canuse').addClass('block');
-          $(this).removeClass('block');
-          tip('兑换成功')
-          /*CGI.post('exchange_score', p, function(resp) {
+          //$(this).siblings('.vocher-canuse').addClass('block');
+          //$(this).removeClass('block');
+          //tip('兑换成功')
+          CGI.post('exchange_score', p, function(resp) {
             if (resp.errno == 0) {
               var score = resp.data.score;
               $('.integral').text(score);
-              $(this).siblings('.vocher-canuse').addClass('block');
-              $(this).removeClass('block');
+              $('.vocher-notuse').removeClass('block');
+              $('.vocher-canuse').addClass('block');
               tip('兑换成功')
             } else {
               tip(resp.desc);
             }
-          })*/
+          })
         }
         idx = -1;
       })
@@ -294,7 +294,7 @@
       bindTouchstart('.vocher-canuse');
       $('.vocher-canuse').bind('touchend', function() {
         $(this).find('.vocher-btn').removeClass('active-btn');
-        location.href="http://api.yunxingzh.com/redirect_shop?uid=" + uid + '&token=' + token;
+        location.href="http://api.yunxingzh.com/redirect_shop?uid=" + uid + '&token=' + token + '&callback=1';
       })
 
       $('.integral-btn').bind('touchstart', function() {
