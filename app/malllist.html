@@ -163,7 +163,7 @@
     }
   ]}*/
   var name = CGI.query().name;
-  CGI.post('get_user_score', {name: name}, function(resp) {
+  CGI.post('get_conf', {name: name}, function(resp) {
     if (resp.errno == 0) {
       var data = resp.data;
       initUI(data);
