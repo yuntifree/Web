@@ -80,7 +80,7 @@
   <script type="text/html" id="tplInfo">
     {{each info value index}}
     <div class="section">
-      <a class="sec-banner" href="{{value.dst}}">
+      <a class="sec-banner" data-dst="{{value.dst}}" href="javascript:;">
         <img src="{{value.banner}}">
       </a>
       <ul class="goods-list">
@@ -136,24 +136,29 @@
   }
   CGI.post('get_conf', param, function(resp) {
     if (resp.errno == 0) {
-      var data = resp.data;
+      var data = JSON.parse(resp.data.val);
       initUI(data);
     } else {
       tip(resp.desc);
     }
   })
 
-  initUI(data);
   function initUI(data) {
-    console.log(data.info);
+    var params = '&uid='+uid +'&token='+token
     $('#info').append(template('tplInfo',data));
+    $('.sec-banner').click(function() {
+      var dst = $(this).data('dst');
+      console.log(dst + params);
+      location.href = dst + params;
+    })
     $('.goods-item').bind('touchstart', function() {
       $(this).css({'background-color': 'rgba(0,0,0,0.1)'})
     })
     $('.goods-item').bind('touchend', function() {
       $(this).css({'background-color': '#fff'});
       var dst = $(this).data('dst');
-      location.href = dst + '&uid='+uid +'&token='+token;
+       console.log(dst + params);
+      location.href = dst + params;
     })
   }
 
