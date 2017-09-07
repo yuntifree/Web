@@ -125,47 +125,13 @@
         }
       }
     }
-    /*var data = {"info": [{
-      "banner": "http://img.yunxingzh.com/a026a70c-3166-4a57-bd65-e80abc8aafef.png",
-      "dst": "https://www.baidu.com",
-      "list": [
-        {
-          "img": "http://img.yunxingzh.com/e2d5b08c-8cc9-44d3-a25c-ec89966d74a4.png",
-          "dst": "https://www.baidu.com",
-          "title": "德国进口嘉云糖德国进口嘉云糖德国进口嘉云糖德国进口嘉云糖德国进口嘉云糖",
-          "price": 3990
-        },
-        {
-          "img": "http://img.yunxingzh.com/7ea0d342-11d6-4da1-a4ab-f213d52602af.png",
-          "dst": "",
-          "title": "奥嘉莱虾片",
-          "price": 2490
-        }
-      ]
-    },
-    {
-      "banner": "http://img.yunxingzh.com/1cf8a683-f1f5-4861-bde7-45650b19b1a9.png",
-      "dst": "https://www.baidu.com",
-      "list": [
-        {
-          "img": "http://img.yunxingzh.com/f69dae67-d3bc-48e0-b43c-bbfd2c585265.png",
-          "dst": "",
-          "title": "惠普 OMEN 15-AX200",
-          "price": 5444
-        },
-        {
-          "img": "http://img.yunxingzh.com/d53c35fc-9b8d-4a50-8eba-1ce19675250a.png",
-          "dst": "",
-          "title": "佳能 6D Mark II",
-          "price": 4555
-        }
-      ]
-    }
-  ]}*/
-  var name = CGI.query().name;
+  var query = CGI.query();
+  var name = query.name;
+  var uid = ~~(query.uid);
+  var token = query.token;
   var param = {
-    uid: 137,
-    token: '6ba9ac5a422d4473b337d57376dd3488',
+    uid: uid,
+    token: token,
     key: name,
   }
   CGI.post('get_conf', param, function(resp) {
@@ -177,7 +143,9 @@
     }
   })
 
+  initUI(data);
   function initUI(data) {
+    console.log(data.info);
     $('#info').append(template('tplInfo',data));
     $('.goods-item').bind('touchstart', function() {
       $(this).css({'background-color': 'rgba(0,0,0,0.1)'})
@@ -185,7 +153,7 @@
     $('.goods-item').bind('touchend', function() {
       $(this).css({'background-color': '#fff'});
       var dst = $(this).data('dst');
-      location.href = dst;
+      location.href = dst + '&uid='+uid +'&token='+token;
     })
   }
 
