@@ -1,0 +1,22 @@
+<view class="container">
+  <text class="g-tac setcode-title">{{title}}</text>
+  <view class="form-area">
+    <view class="section">
+      <input class="setcode-ipt" name="password" maxlength="6" bindfocus="checkValfocus" bindblur="checkVal" value="{{password}}" placeholder="请设置6位数字密码" type="password" placeholder-class="holder-ipt"/>
+       <view class="set-tip" wx:if="{{rightCode}}"><image src="../../images/doctor/ico_cancel.png"/><text>请输入6位数字密码</text></view>
+    </view>
+    <view class="section section2">
+      <input class="setcode-ipt" name="checkword" maxlength="6" bindfocus="checkPsdfocus" bindblur="checkPassword" value="{{checkword}}" bindinput="checkBtn" placeholder="请再次输入确认" type="password" placeholder-class="holder-ipt"/>
+      <view class="set-tip" wx:if="{{checkCode}}"><image src="../../images/doctor/ico_cancel.png"/><text>两次密码不一致，请重新输入</text></view>
+    </view>
+    <view class="btn-area">
+      <button class="btn setcode-btn" disabled="{{btnDisable}}" bindtouchstart="changeBg" bindtouchend="formSubmit" style="{{btnBg}}">确认</button>
+    </view>
+  </view> 
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+  <view class="splash" wx:if="{{second>=0}}">
+    <image class="splash-img" src="http://img.yunxingzh.com/9274c830-284c-4853-8ee4-958339691702.png"/>
+    <view class="splash-sec" bindtap="jump">{{second}} 跳过</view>
+    <button class="btn use-btn" bindtouchstart="changeColor" bindtouchend="goUse" style="background-color: {{btnUseBg}}">使用说明</button>
+  </view>
+</view>

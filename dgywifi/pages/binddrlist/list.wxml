@@ -1,0 +1,34 @@
+<!--index.wxml-->
+<view class="container">
+  <scroll-view scroll-y style="height: 100%;"
+    bindscrolltolower="lower"
+    scroll-top="{{scrollTop}}">
+    <view class="binddoctor-list" wx:for="{{info}}"
+      wx:key="mydr"
+      wx:for-index="idx"
+      style="background-color: {{selId == idx ? '#f1f1f1' : '#fff'}}">
+      <view class="info-left">
+        <image class="binddoctor-img" src="{{item.doctor.headurl}}" data-index="{{idx}}" bindtap="delDr"></image>
+        <view class="binddoctor-info"  data-index="{{idx}}" bindtouchstart="changebg" bindtouchend="goPt">
+          <view class="binddoctor-name">
+            <text class="inner-name">{{item.doctor.name}}</text>
+            <text class="inner-text inner-depm">{{item.doctor.department}}</text>
+            <text class="inner-text" wx:if="{{item.doctor.department.length<6}}">{{item.doctor.title}}</text>
+          </view>
+          <text wx:if="{{item.flag}}" class="chat-text g-ellipsis" wx:if="{{item.chat.type}}">{{item.chat.type==1 ? item.chat.content :'[图片]'}}</text>
+          <text wx:else class="click-inquiry">点击开始咨询</text>
+        </view>
+      </view>
+      <view class="binddoctor-info info-right">
+        <text class="text-sty" wx:if="{{item.status==1}}">咨询中</text>
+        <text class="text-sty refund-sty" wx:if="{{item.status==3}}">退款中</text>
+        <text class="text-sty fee-sty" wx:if="{{item.status!==1&&item.status!==3&&item.doctor.fee>0}}">{{(item.doctor.fee/100)}}元/次</text>
+        <text class="chat-time">{{item.chat.ctime}}</text>
+      </view>
+      <text class="binddoctor-line"></text>
+    </view>
+  </scroll-view>
+  <text class="none-tip g-tac" wx:if="{{infoNull}}">您还没有已经绑定的医生，快去绑定吧~</text>
+  <button class="bottom-btn g-tac" bindtouchstart="changeColor" bindtouchend="addDr" style="background-color: {{btnBg}}"><image class="img-add" src="../../images/patient/ico_scan.png"/><text>绑定新医生</text></button>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

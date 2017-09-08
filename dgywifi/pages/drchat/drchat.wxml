@@ -1,0 +1,78 @@
+<view class="container drchat" wx:if="{{mounted}}">
+  <view class="drchat-menu" wx:if="{{end==1}}">
+    <view class="menu-pait g-tac" bindtap="getPatient" style="color:{{ptColor}}">查看咨询人信息</view>
+    <view class="colorb2a g-tac" style="color:{{endTextColor}}" bindtouchstart="makeEnd" bindtouchend="endInquiry">结束咨询</view>
+  </view>
+  <view wx:if="{{end==2||end==4}}" class="menu-end g-tac">该咨询者已结束咨询</view>
+  <view class="dr-patient" wx:if="{{patientShow}}">
+    <view class="dr-patient-info">
+      <view class="close" bindtap="getPatient">关闭</view>
+      <view class="info-list"><text class="weight500">基本信息：</text><text>{{ptInfo.name}}</text><text wx:if="{{ptInfo.gender}}">{{ptInfo.gender==1 ? '  男  ' : '  女  '}}</text><text wx:if="{{ptInfo.age}}">{{ptInfo.age}}岁</text></view>
+      <view class="info-list"><text class="weight500">医疗卡号：</text><text>{{ptInfo.mcard || '无'}}</text></view>
+      <view class="info-list"><text class="weight500">联系电话：</text><text>{{ptInfo.phone}}</text></view>
+    </view>
+  </view>
+  <view class="drchat-menu" wx:if="{{end==3}}">
+    <view class="menu-pait g-tac" bindtap="getPatient" style="color:{{ptColor}}">查看咨询人信息</view>
+    <view class="refund-menu g-tac" bindtap="tipRefund">结束咨询</view>
+  </view>
+  <scroll-view scroll-y style="height: 100%;"
+      bindscrolltoupper="upper"
+      bindscrolltolower="lower"
+      bindscroll="scroll"
+      scroll-top="{{scrollTop}}"
+      scroll-into-view="{{toView}}"
+      class="{{chatLists.length<5&&iptFocus ? 'drchat-info padd50' : 'drchat-info'}}">
+    <view wx:for="{{chatLists}}" wx:key="id" wx:for-index="idx" id="{{'list'+ item.seq}}">
+      <text class="g-tac drchat-time" wx:if="{{item.timeshow}}">{{item.timestr}}</text>
+      <view wx:if="{{item.flag&&item.type!==3}}" class="drchat-r">
+        <image class="drchat-head-r" src="{{item.drHead}}"/>
+        <view wx:if="{{item.type==1}}" class="drchat-msg-r">
+          <text selectable="true">{{item.content}}</text>
+          <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
+        </view>
+        <view wx:if="{{item.type==2}}" class="drchat-msg drchat-msg-r">
+          <image class="chat-img" mode="aspectFill" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
+          <image class="chat-talk chat-talk-r" src="../../images/login/img_talk.png"/>
+        </view>
+      </view>
+      <view wx:if="{{!item.flag&&item.type!==3}}" class="drchat-l">
+        <image class="drchat-head" src="{{item.ptHead}}"/>
+        <view wx:if="{{item.type==1}}" class="drchat-msg">
+          <text selectable="true">{{item.content}}</text>
+          <image class="chat-talk chat-talk-l" src="../../images/login/img_talk_white.png"/>
+        </view>
+        <view wx:if="{{item.type==2}}" class="drchat-msg">
+          <image class="chat-img" mode="aspectFill" src="{{item.content}}" data-src="{{item.content}}" bindtap="previewImg"/>
+          <image class="chat-talk chat-talk-l" src="../../images/login/img_talk_white.png"/>
+        </view>
+      </view>
+      <view class="g-tac refund-text" wx:if="{{item.type==3}}">
+        <text>{{item.content}}</text>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="sub-chat">
+    <input class="chat-ipt" bindinput="bindKeyInput"
+      value="{{iptVal}}"
+      focus="{{iptFocus}}"
+      type="text"
+      bindfocus="onFocus"
+      bindblur="onBlur"
+      cursor-spacing="20"
+      bindconfirm="tapSub"
+      confirm-hold="true"
+      confirm-type="send"></input>
+    <image class="chat-pic" src="{{chkCamera}}" bindtouchstart="changeCm" bindtouchend="makImg"></image>
+  </view>
+  <view class="view-shadow" wx:if="{{endShow}}">
+    <view class="end-quiry">
+      <text class="g-tac end-tit">结束本次咨询</text>
+      <view class="end-btn-con">
+        <button class="end-btn" style="background-color:{{cancelBg}}" bindtouchstart="changeBg" bindtap="cancelEnd">取消</button>
+        <button class="end-btn" style="background-color:{{endBg}}" bindtouchstart="changeEndBg" bindtouchend="checkEnd">结束</button>
+      </view>
+    </view>
+  </view>
+    <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

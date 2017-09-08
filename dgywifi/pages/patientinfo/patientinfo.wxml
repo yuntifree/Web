@@ -1,0 +1,29 @@
+<!--index.wxml-->
+<view class="container patientinfo">
+  <scroll-view class="patient-inner" scroll-y style="height: 100%;">
+    <view class="patientinfo-list" wx:for="{{info}}" wx:for-index="idx" wx:key="ptinfo">
+      <view data-index="{{idx}}" bindtouchstart="changeViewBg" bindtouchend="goPay" class="{{viewBg ? 'bg' :''}}">
+        <view class="patientinfo-list-top">
+            <text class="list-top-text">{{item.name}}</text>
+            <text class="list-top-text" wx:if="{{item.gender}}">{{item.gender==1 ? '男' : '女'}}</text>
+            <text class="list-top-text" wx:if="{{item.age}}">{{item.age}}岁</text>
+            <text class="list-top-text" wx:if="{{item.mcard}}">{{item.mcard}}</text>
+        </view>
+        <view class="patientinfo-list-top patientinfo-list-mid">
+          <text class="list-top-text">{{item.phone}}</text>
+        </view>
+        <text class="card">咨询</text>
+      </view>
+      <view class="patientinfo-list-bot">
+        <view class="list-bot-img g-tac" data-index="{{idx}}" data-text="del" bindtouchstart="changeBg" bindtouchend="delPt" style="background-color: {{item.delBg}}">
+            <text>删除</text>
+        </view>
+        <view class="list-bot-img g-tac" data-index="{{idx}}" data-text="edit" bindtouchstart="changeBg" bindtouchend="editPt" style="background-color:{{item.editBg}}">
+          <text>编辑</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <button class="bottom-btn g-tac" bindtouchstart="changeBtnBg" bindtouchend="addPt" style="background-color: {{btnBg}}"><image class="img-add" src="../../images/login/ico_add.png"/>新增咨询者</button>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

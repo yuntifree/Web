@@ -1,0 +1,9 @@
+@import "../template/drinfo/drinfo.wxss";
+.btn_circle {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 70%;
+  right: 60rpx;
+  margin-top: -20rpx;
+}

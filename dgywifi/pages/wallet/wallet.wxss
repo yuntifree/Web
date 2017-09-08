@@ -1,0 +1,100 @@
+.wallet {
+  width: 100%;
+  height: auto;
+  padding-bottom: 40rpx;
+  background-color: #f1f1f1;
+}
+.wallet-info {
+  width: 100%;
+  height: auto;
+  margin-top: 20rpx;
+  background-color: #fff;
+  border-top: 2rpx solid #dcdcdc;
+  border-bottom: 2rpx solid #dcdcdc;
+}
+.list-inner {
+  width: 92%;
+  height: 105rpx;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+.list-inner:last-child {
+  border-bottom: 0;
+}
+.list-ipt {
+  justify-content: flex-start;
+}
+.list-ipt text {
+  width: 164rpx;
+}
+.list-inner-tit{
+  font-size: 32rpx;
+}
+.list-inner-r {
+  display: block;
+  height: 40rpx;
+  color: #282828;
+  display: flex;
+  align-items: center;
+}
+
+.list-inner-money {
+  font-size: 40rpx;
+  color: #f1951c;
+  margin-top: 5rpx;
+}
+.list-inner-unit {
+  font-size: 30rpx;
+  margin-top: 5rpx;
+}
+.wallet-ipt {
+  width: 270rpx;
+  height: 50rpx;
+  line-height: 60rpx;
+  font-size: 36rpx;
+}
+.code-ipt {
+  margin-top: 50rpx;
+}
+.wallet-ipt-plhd {
+  color: #bebebe;
+}
+.mindraw-tip {
+  font-size: 28rpx;
+  color: #969696;
+  margin-top: 20rpx;
+  line-height: 150%;
+}
+.forget-code {
+  width: 90%;
+  height: auto;
+  margin: 26rpx auto 40rpx;
+  color: #1ed2af;
+  font-size: 26rpx;
+  text-align: right;
+}
+.widthdraw-tip {
+  width: 100%;
+  height: auto;
+  padding: 0 5%;
+  margin-top: 24rpx;
+}
+.widthdraw-tip view {
+  display: block;
+  font-size: 28rpx;
+  color: #797979;
+  line-height: 150%;
+}
+.widthdraw-tip .colfb {
+  color: #2b76fb;
+}
+.widthdraw-tip .col1c {
+  color: #f1961c;
+}
+.wallet-btn {
+  width: 90%;
+}

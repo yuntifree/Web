@@ -1,0 +1,140 @@
+@import "../template/drcodeinfo/drcodeinfo.wxss";
+
+.con-inner {
+  width: 100%;
+  height: 100%;
+}
+.drpaitent-list {
+  width: 92%;
+  margin: 0 auto;
+  padding: 24rpx 0;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+.drpaitent-head {
+  position: relative;
+  width: 20%;
+  max-width: 114rpx;
+}
+.drpaitent-img {
+  width: 114rpx;
+  height: 114rpx;
+  border-radius: 50%;
+}
+.drpaitent-chat-num {
+  width: 30rpx;
+  height: 30rpx;
+  display: block;
+  position: absolute;
+  right: 0rpx;
+  bottom: 0;
+  background-color: #e5001c;
+  color: #fff;
+  border-radius: 50%;
+}
+.drpaitent-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 85%;
+  padding-left: 14rpx;
+}
+.info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+  padding: 10rpx 0;
+}
+.info-text-name {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #282828;
+}
+.info-text-chat {
+  display: block;
+  font-size: 26rpx;
+  color:  #828282;
+  width: 100%;
+}
+.info-text-time {
+  font-size: 24rpx;
+  color: #b4b4b4;
+}
+
+/** drcode **/
+/*.img-box {
+  width: 400rpx;
+  height: 400rpx;
+  padding: 23rpx;
+  margin: 259rpx auto 0;
+  border:1rpx solid #b4b4b4
+}*/
+.drconfirm-codeimg {
+  width: 390rpx;
+  height: 390rpx;
+}
+.doctorcode-text {
+  display: block;
+  line-height: 150%;
+  font-size: 34rpx;
+  color: #282828;
+}
+.doctorcode-btn {
+  margin-top: 120rpx;
+}
+.preview-code {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  z-index: 20;
+}
+.preview-code image {
+  width: 500rpx;
+  height: 500rpx;
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  margin-left: -250rpx;
+  margin-top: -250rpx;
+}
+.info-text2 {
+  width: auto;
+  text-align: right;
+}
+.pay-sign {
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background-color: #60c64b;
+  color: #fff;
+  font-size: 26rpx;
+}
+.end-sign {
+  background-color: #1cc5a4;
+}
+.refund-btn {
+  background-color: #ffbb2a;
+}
+.drpatient-norelation {
+  color: #1ed2af;
+  font-size: 40rpx;
+  margin: 44rpx 0;
+}
+.color9f {
+  color: #24cb9f;
+}
+.text-spec {
+  height: 40rpx;
+  padding-top: 20rpx;
+}
+.drpatient-tip {
+  display: block;
+  font-size: 28rpx;
+  color: #9a9a9a;
+  margin-top: 44rpx;
+}
+

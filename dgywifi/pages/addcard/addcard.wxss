@@ -1,0 +1,35 @@
+.addcard {
+  width: 100%;
+  height: 100%;
+  background-color: #f1f1f1;
+}
+.addcard-form {
+  width: 100%;
+  height: auto;
+}
+.addcard-form-view {
+  width: 100%;
+  height: auto;
+  padding: 0 5%;
+  background-color: #fff;
+  border-top: 2rpx solid #dcdcdc;
+  border-bottom: 2rpx solid #dcdcdc;
+}
+.addcard-ipt-inner {
+  width: 100%;
+  height: 105rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 2rpx solid #dcdcdc;
+  font-size: 32rpx;
+}
+.addcard-ipt-inner:last-child {
+  border-bottom: 0;
+}
+.addcard-ipt-label {
+  width: 160rpx;
+}
+.addcard-btn {
+  width: 90%;
+}

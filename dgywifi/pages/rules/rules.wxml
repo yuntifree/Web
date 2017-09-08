@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="rule-title">常见问题：</view>
+  <view class="rule-list" wx:for="{{lists}}" wx:key="id" wx:for-index="idx" wx:for-item="item">
+    <view class="{{selIdx==idx?'rule-list-tit colorac margin20':'rule-list-tit colorac'}}" data-idx="{{idx}}" bindtap="setIdx">
+      <image wx:if="{{selIdx==idx}}" class="rule-ico" src="../../images/login/ico_option_press.png"/>
+      <image wx:else class="rule-ico" src="../../images/login/ico_option_nor.png"/>
+      <text class="list-inner">{{item.title}}</text>
+    </view>
+    <text wx:if="{{selIdx==idx}}" class="rule-list-text">{{item.text}}</text>
+  </view>
+  <view class="rule-title">还有更多疑问吗？</view>
+  <view class="section">
+    <form bindtouchstart="changeColor" bindsubmit="postQuestion">
+      <textarea class="section-area" placeholder="请输入您的疑问，我们会尽快安排人员为您解答（最多300字）" name="textarea" maxlength="300" placeholder-style="color: #b4b4b4" value="{{areaVal}}"/>
+      <button class="btn rule-btn" form-type="submit" style="background-color: {{btnBg}}"> 提交 </button>
+    </form>
+  </view>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

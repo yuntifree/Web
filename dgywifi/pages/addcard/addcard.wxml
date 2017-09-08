@@ -1,0 +1,42 @@
+<view class="container viewf1">
+  <form class="addcard-form" bindsubmit="formSubmit">
+    <view class="addcard-form-view">
+      <view class="addcard-ipt-inner">
+        <text class="addcard-ipt-label">持卡人</text>
+        <input name="name "class="addcard-input" placeholder-class="addcard-ipt-plhd" placeholder="请输入持卡人姓名"
+          value="{{money}}"
+          bindinput="makeDraw"
+          focus="{{feeFocus}}"/>
+      </view>
+      <view class="addcard-ipt-inner">
+        <text class="addcard-ipt-label">银行</text>
+        <input name="bank" class="addcard-input code-ipt" placeholder-class="addcard-ipt-plhd" placeholder="请输入汇款银行"
+          type="password"
+          maxlength="6"
+          value="{{psd}}"
+          focus="{{codeFocus}}"
+          bindinput="makeBtnstatus"/>
+      </view>
+      <view class="addcard-ipt-inner">
+        <text class="addcard-ipt-label">支行</text>
+        <input name="branch" class="addcard-input code-ipt" placeholder-class="addcard-ipt-plhd" placeholder="请输入汇款银行支行"
+          type="password"
+          maxlength="6"
+          value="{{psd}}"
+          focus="{{codeFocus}}"
+          bindinput="makeBtnstatus"/>
+      </view>
+      <view class="addcard-ipt-inner">
+        <text class="addcard-ipt-label">银行卡号</text>
+        <input name="cardnumber" class="addcard-input code-ipt" placeholder-class="addcard-ipt-plhd" placeholder="请输入银行卡号"
+          type="password"
+          maxlength="6"
+          value="{{cardnumber}}"
+          focus="{{codeFocus}}"
+          bindinput="makeBtnstatus"/>
+      </view>
+    </view>
+    <button class="btn addcard-btn" formType="submit" disabled="{{!canWithdraw}}" style="background-color: {{btnBg}}">确定</button>
+  </form>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

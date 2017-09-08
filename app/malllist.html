@@ -32,6 +32,8 @@
     background-color: #fff;
   }
   .goods-list li {
+    width: 100%;
+    height: auto;
     padding:  0.18rem 0;
     border-bottom: 0.02rem solid #e6e6e6;
     position: relative;
@@ -148,16 +150,10 @@
     $('#info').append(template('tplInfo',data));
     $('.sec-banner').click(function() {
       var dst = $(this).data('dst');
-      console.log(dst + params);
       location.href = dst + params;
     })
-    $('.goods-item').bind('touchstart', function() {
-      $(this).css({'background-color': 'rgba(0,0,0,0.1)'})
-    })
-    $('.goods-item').bind('touchend', function() {
-      $(this).css({'background-color': '#fff'});
+    $('.goods-item').click(function() {
       var dst = $(this).data('dst');
-       console.log(dst + params);
       location.href = dst + params;
     })
   }

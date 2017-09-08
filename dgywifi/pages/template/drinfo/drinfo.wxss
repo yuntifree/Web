@@ -1,0 +1,23 @@
+.drinfo-img {
+  display: block;
+  margin: 108rpx auto 0;
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 50%;
+}
+.drinfo-name {
+  display: block;
+  margin-top: 40rpx;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #282828;
+}
+.drinfo-title {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  color: #828282;
+}
+.drinfo-info {
+  margin-top: 14rpx;
+}

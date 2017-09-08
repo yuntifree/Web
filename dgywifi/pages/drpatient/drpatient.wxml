@@ -1,0 +1,55 @@
+<import src="../template/drcodeinfo/drcodeinfo.wxml"/>
+<view class="container" wx:if="{{mounted}}">
+  <scroll-view class="con-inner" 
+      wx:if="{{ptInfo}}"
+      scroll-y="true"
+      style="height: 100%;" 
+      bindscrolltoupper="upper" 
+      bindscrolltolower="lower" 
+      bindscroll="scroll" 
+      scroll-top="{{scrollTop}}"
+      scroll-into-view="">
+    <view class="drpaitent-list" wx:for="{{info}}" 
+      wx:key="drpt" 
+      wx:for-index="idx"
+      data-index="{{idx}}"
+      bindtap="goDrchat"
+      >
+      <view class="drpaitent-head">
+        <image class="drpaitent-img" src="{{item.headurl}}"></image>
+        <text class="drpaitent-chat-num g-tac" wx:if="{{item.reddot}}"></text>
+      </view>
+      <view class="drpaitent-info">
+        <view class="info-text">
+          <text class="info-text-name">{{item.nickname}}</text>
+          <text class="info-text-chat g-ellipsis" wx:if="{{item.type}}">{{item.type==1 ? item.content : '[图片]'}}</text>
+          <text class="info-text-chat g-ellipsis" wx:else>-</text>
+        </view>
+        <view class="info-text info-text2">
+          <text class="pay-sign" wx:if="{{item.status==1}}">已付费</text>
+          <text class="pay-sign end-sign" wx:if="{{item.status==2||item.status==4}}">已结束</text>
+          <text class="pay-sign refund-btn" wx:if="{{item.status==3}}">退款中</text>
+          <text class="info-text-time">{{item.ctime}}</text>
+        </view>
+      </view>
+    </view>
+    <text class="drpatient-tip g-tac">请尽快回复咨询者，超过8小时咨询者可能会申请退款</text>
+  </scroll-view>
+  <view wx:else class="con-inner">
+     <view class="drpatient-norelation g-tac">暂时未收到咨询</view>
+    <view class="drconfirm-drinfo-content">
+      <view class="img-box doctorcode-img ">
+        <template is="item" data="{{info: drinfo}}"/>
+        <image class="drconfirm-codeimg" src="{{codeImg}}" data-src="{{codeImg}}" bindtap="previewImg"/>
+      </view>
+    </view>
+    <text class="doctorcode-text g-tac">
+        让咨询者扫描此二维码，即可接收咨询\n*<text class="color9f">二维码</text>和<text class="color9f">使用说明</text>可在【个人中心】找到
+    </text>
+  </view>
+  <view class="preview-code" wx:if="{{viewCode}}" bindtap="viewShow">
+    <image src="{{codeImg}}"/>
+    <text class="img-tip">点击屏幕即可关闭图片</text>
+  </view>
+  <text class="tip-show" wx:if="{{tipShow}}">{{tipMsg}}</text>
+</view>

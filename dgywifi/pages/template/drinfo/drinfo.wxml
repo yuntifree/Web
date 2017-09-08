@@ -1,0 +1,6 @@
+<template name="item">
+  <image class="drinfo-img" src="{{drinfo.headurl}}"></image>
+  <text class="drinfo-name g-tac">{{drinfo.name}}</text>
+  <text class="drinfo-title g-tac">{{drinfo.title}}</text>
+  <text class="drinfo-title drinfo-info g-tac">{{drinfo.hospital}}  {{drinfo.department}}</text>
+</template>

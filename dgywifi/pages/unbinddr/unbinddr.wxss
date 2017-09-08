@@ -1,0 +1,5 @@
+@import "../template/drinfo/drinfo.wxss";
+.unbinddr-btn {
+  margin-top: 123rpx;
+  background-color: #f6a623;
+}
