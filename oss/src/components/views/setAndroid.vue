@@ -250,18 +250,21 @@ export default {
       var param = {};
       var action = ''
       if (this.modal.editShow) {
-        param = this.addInfo
+        param = CGI.clone(this.addInfo);
+        param.version = ~~param.version;
         param.id = this.infos[this.selIdx].id;
         action = 'mod_channel_version';
       } else {
-        param = CGI.objModified(this.infos[this.selIdx], this.addInfo);
+        param = this.addInfo;
+        param.version = ~~param.version;
         action = 'add_channel_version';
       }
       CGI.post(this.$store.state, action, param, (resp)=> {
         if (resp.errno == 0) {
           if (this.modal.editShow) {
             this.alertInfo('修改成功');
-            CGI.extend(this.infos[this.selIdx], this.addInfo);
+            this.addInfo.id= this.infos[this.selIdx].id;
+            this.infos[this.selIdx] = this.addInfo;
             this.selIdx = -1;
           } else {
             this.alertInfo('新增成功');
