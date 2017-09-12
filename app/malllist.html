@@ -33,8 +33,8 @@
   }
   .goods-list li {
     width: 100%;
-    height: 1.6rem;
-    padding:  0.18rem 0;
+    height: 1.34rem;
+    padding:  0.12rem 0;
     border-bottom: 1px solid #e6e6e6;
     position: relative;
   }
@@ -67,7 +67,8 @@
     height: auto;
   }
   .goods-title {
-    font-size: 0.34rem;
+    font-size: 0.32rem;
+    font-weight: bold;
     color: #5a5a5a;
     max-width: 4rem;
   }
@@ -76,7 +77,7 @@
     color: #ff543c;
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 0.26rem;
   }
   .tip-box {
     display: none;
@@ -137,7 +138,7 @@
             <span class="g-fl goods-img">
               <img src="{{val.img}}">
             </span>
-            <p class="g-fl goods-title">{{val.title}}</p>
+            <p class="g-fl goods-title g-ellipsis">{{val.title}}</p>
             <div class="g-fr goods-price">{{val.price}}</div>
           </div>
         </li>
@@ -194,9 +195,9 @@
       tip(resp.desc);
     }
   })
- /* var data = {"info": [{"banner": "http://img.yunxingzh.com/a026a70c-3166-4a57-bd65-e80abc8aafef.png","dst": "dgfree://http/www.yunxingzh.com/redirect_shop?callback=1","isUid":1,"list": [{ "img": "http://img.yunxingzh.com/yrtEmkNTUrh4ZdrurNAT5PMTXXdnueKk.jpg","dst": "dgfree://http/www.yunxingzh.com/redirect_shop?callback=1&params=%26r%3Dgoods.detail%26id%3D461", "title": "风味手撕牛肉干", "price": "￥59.90"},{"img": "http://img.yunxingzh.com/m4I3q3znnZ73r9Zu4478N77qI79J76.jpg","dst": "dgfree://http/www.yunxingzh.com/redirect_shop?callback=1&params=%26r%3Dgoods.detail%26id%3D458", "title": "水果芦荟冻饮（3杯）", "price": "￥34.90"}]},{"banner": "http://img.yunxingzh.com/1cf8a683-f1f5-4861-bde7-45650b19b1a9.png","dst": "http://m.vmall.com/#cid=10000080&wi=mid:135,fid:131,cid:10000080","isUid":0,"list": [{"img": "https://res.vmallres.com/pimages//sale/2017-09/20170907152709803.png","dst": "https://msale.vmall.com/v9play.html#cid=10000080&wi=mid:135,fid:131,cid:10000080","title": "荣耀V9 play","price": "￥999起"},{"img": "https://res.vmallres.com/pimages//sale/2017-09/20170904212837127.png","dst": "https://m.vmall.com/product/87443107.html#cid=10000080&wi=mid:135,fid:131,cid:10000080","title": "华为畅享7","price": "￥899起"}]}]}
- initUI(data); */
-  function initUI(data) {
+  /*var data = {"info": [{"banner": "http://img.yunxingzh.com/a026a70c-3166-4a57-bd65-e80abc8aafef.png","dst": "dgfree://http/www.yunxingzh.com/redirect_shop?callback=1","isUid":1,"list": [{ "img": "http://img.yunxingzh.com/yrtEmkNTUrh4ZdrurNAT5PMTXXdnueKk.jpg","dst": "dgfree://http/www.yunxingzh.com/redirect_shop?callback=1&params=%26r%3Dgoods.detail%26id%3D461", "title": "风味手撕牛肉干", "price": "￥59.90"},{"img": "http://img.yunxingzh.com/m4I3q3znnZ73r9Zu4478N77qI79J76.jpg","dst": "dgfree://http/www.yunxingzh.com/redirect_shop?callback=1&params=%26r%3Dgoods.detail%26id%3D458", "title": "水果芦荟冻饮（3杯）", "price": "￥34.90"}]},{"banner": "http://img.yunxingzh.com/1cf8a683-f1f5-4861-bde7-45650b19b1a9.png","dst": "http://m.vmall.com/#cid=10000080&wi=mid:135,fid:131,cid:10000080","isUid":0,"list": [{"img": "http://img.yunxingzh.com/cbd37748-6ba2-4ad1-b64b-976cc4207266.png","dst": "https://msale.vmall.com/v9play.html#cid=10000080&wi=mid:135,fid:131,cid:10000080","title": "荣耀V9 play","price": "￥999起"},{"img": "http://img.yunxingzh.com/cafe4cd0-5de2-41fa-8314-e7f4480a0e25.png","dst": "https://m.vmall.com/product/87443107.html#cid=10000080&wi=mid:135,fid:131,cid:10000080","title": "华为畅享7","price": "￥899起"}]}]}
+ initUI(data); 
+*/  function initUI(data) {
     var params = '&uid='+uid +'&token='+token
     $('#info').append(template('tplInfo',data));
     var length = data.info.length

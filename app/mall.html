@@ -268,7 +268,7 @@
         idx = $(this).data('idx');
         var score = ~~$('.integral').text();
         var rest = score - data.items[idx].score;
-        if (rest <=0) {
+        if (rest <0) {
           tip('您的积分不够，暂时不能兑换哦')
         } else {
           var p = param;
