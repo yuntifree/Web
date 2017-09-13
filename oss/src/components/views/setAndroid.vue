@@ -67,6 +67,16 @@
               </el-table-column>
               <el-table-column
                 inline-template
+                label="标题">
+                <div>{{row.title||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
+                label="描述">
+                <div>{{row.desc||'-'}}</div>
+              </el-table-column>
+              <el-table-column
+                inline-template
                 :context="_self"
                 label="操作"
                 width="100">
@@ -117,6 +127,18 @@
                 v-model.trim="addInfo.downurl">
               </el-input>
             </el-form-item>  
+            <el-form-item label="标题">
+              <el-input
+                placeholder="请输入标题"
+                v-model.trim="addInfo.title">
+              </el-input>
+            </el-form-item> 
+            <el-form-item label="描述">
+              <el-input
+                placeholder="请输入描述"
+                v-model.trim="addInfo.desc">
+              </el-input>
+            </el-form-item> 
             <el-form-item>
               <el-button type="primary" @click="addPost">确定</el-button>
               <el-button @click="modal.addShow=false">取消</el-button>
@@ -159,7 +181,9 @@ export default {
         cname: '',
         version: 0,
         vname: '',
-        downurl: ''
+        downurl: '',
+        title: '',
+        desc: ''
       },
       alertShow: false,
       alertMsg: '',
@@ -237,10 +261,10 @@ export default {
         this.alertInfo('请输入外部版本号');
         ret = false;
       }
-      if (this.addInfo.downurl.length <=0) {
+      /*if (this.addInfo.downurl.length <=0) {
         this.alertInfo('请输入下载地址');
         ret = false;
-      }
+      }*/
       return ret;
     },
     addPost() {
