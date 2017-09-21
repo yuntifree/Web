@@ -118,8 +118,8 @@ function font(bFont) {
       $(docEl).data('dpr', dpr);
       var recalc = function() {
         var width = docEl.clientWidth;
-        if (width / dpr > 640) {
-          width = 640 * dpr;
+        if (width / dpr > 750) {
+          width = 750 * dpr;
         }
         docEl.style.fontSize = 100 * (width / 750) + 'px';
       };
@@ -150,7 +150,7 @@ function font(bFont) {
        autologin = data.autologin;
       logintype = data.logintype;
       //autologin=1;
-      logintype = 2;
+      //logintype = 3;
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
       secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
@@ -226,7 +226,6 @@ function setHeight() {
 }
 //设置登录方式
 function setLognBtn(type) {
-  console.log(1);
   switch (type) {
     case 1:
       $('.hold-btn').css('background-color','#88d887');
@@ -388,14 +387,14 @@ function pcRegClick(e) {
 function mobRegClick(e) {
   if (canClick) {
     disableButton();
-    if (taobao) {
-      regClick(false);
-    } else {
-      regClick(true);
+    switch (logintype) {
+      case 1:
+        regClick(true);
+        break;
+      case 2:
+      case 3:
+        regClick(false);
     }
-    
-    /*disableButton();
-    oneClickLogin(false, true);*/
   }
 }
 
@@ -409,11 +408,14 @@ function pcOneClick(e) {
 function mobOneClick(e) {
   if (canClick) {
     disableButton();
-    if (taobao) {
-      countdown(false,false,true);
-      //oneClickLogin(false, false);
-    } else {
-      oneClickLogin(false, true);
+    switch (logintype) {
+      case 1:
+        oneClickLogin(false, true);
+        break;
+      case 2:
+      case 3:
+        oneClickLogin(false, false);
+        break;
     }
   }
 }
@@ -428,11 +430,7 @@ function regClick(wx) {
       tipShow('请输入验证码');
     } else {
       param.code = code;
-      if (taobao) {
-        countdown(param,wx,false);
-      } else {
-        portalLogin(param, wx);
-      }
+      portalLogin(param, wx);
     }
   } else {
     // tip in checkphone
@@ -455,7 +453,7 @@ function portalLogin(param, wx) {
         if (wx) {
           callWeixin();
         } else if (logintype==2){
-          callTaobao();
+          countdown();
         } else if (logintype == 3) {
           callApp();
         }
@@ -479,7 +477,6 @@ function portalLogin(param, wx) {
 function oneClickLogin(auto, callWX) {
   var param = loginParam;
   CGI.get('one_click_login', param, function(resp) {
-  //CGI.get('unify_login', param, function(resp) {
     if (resp.errno === 0) {
       // 局部刷新，通知iOS能上网了
       genJumpUrl(resp.data);
@@ -497,7 +494,7 @@ function oneClickLogin(auto, callWX) {
           if (callWX) {
             callWeixin();
           } else if (logintype == 2) {
-            callTaobao();
+            countdown()
           } else if (logintype == 3) {
             callApp();
           }
@@ -528,7 +525,8 @@ function disableButton() {
   }, 3000)
 }
 
-function countdown(param, wx, oneclick) {
+function countdown() {
+  $('.login-view').css('display','none');
   $('.login').append(template('tplCover', taobaoCover));
   var text = 3;
   var timer = setInterval(function() {
@@ -536,25 +534,17 @@ function countdown(param, wx, oneclick) {
       text--;
       $('.time-count').text(text);
       if(text == 1) {
-        if (oneclick) {
-          oneClickLogin(param,wx);
-        } else {
-          portalLogin(param, wx)
-        }
+        callTaobao()
       }
     }
   },1000);
   $('.tao-link').click(function() {
-    if (onclick) {
-      oneClickLogin(param,wx);
-    } else {
-      portalLogin(param, wx)
-    }
     clearInterval(timer);
+    callTaobao();
   })
 }
 //taobao 
-function callTaobao(data) { 
+function callTaobao() { 
   location.replace(notWxUrl);
 }
 //App登录
