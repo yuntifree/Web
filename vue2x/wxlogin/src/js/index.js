@@ -16,8 +16,9 @@ var wlanapmac = query.wlanapmac || '';
 var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com'; //'http://www.baidu.com';
 var autologin = 0;
 var taobao = 0;
+var logintype = 0;  //1 微信  2淘宝  3App
 var delay = 5;
-//var useragent = navigator.userAgent;
+var useragent = navigator.userAgent;
 var canClick = true;
 
 //
@@ -34,6 +35,7 @@ var connected = false;
 var taobaoCover = {};
 var data = {};
 var swipeIdx = 1;
+var notWxUrl = "";
 
 var loginParam = {
   wlanacname: wlanacname,
@@ -107,7 +109,7 @@ function font(bFont) {
     // init font
     if (bFont) {
       var docEl = document.documentElement;
-      var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+      var isIOS = useragent.match(/iphone|ipod|ipad/gi);
       var dpr = isIOS ? Math.min(window.devicePixelRatio, 3) : 1;
       dpr = window.top === window.self ? dpr : 1; //被iframe引用时，禁止缩放
       var scale = 1 / dpr;
@@ -140,20 +142,20 @@ function font(bFont) {
     wlanapmac: wlanapmac,
   };
   var screenWidth = document.documentElement.clientWidth;
-  console.log(JSON.stringify(param));
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
       data = taobaoCover = resp.data;
       data.imgs = [[],[],[],[]];
       data.imgs2 = [];
-      autologin = data.autologin;
-      taobao = data.taobao;
+       autologin = data.autologin;
+      logintype = data.logintype;
       //autologin=1;
-      //taobao = 1;
+      logintype = 2;
       appId = data.wxappid || 'wxbf43854270af39aa';
       shop_id = data.wxshopid || '4040455';
       secretkey = data.wxsecret || 'f1d41ba80597ee59b142032e16f801d9';
       authUrl = data.wxauthurl || 'http://wx.yunxingzh.com/auth';
+      if (logintype !==1) notWxUrl = data.dst;
       if (isPC()) {
         if (autologin) {
           $('.login').append(template('tplPhone', {}));
@@ -175,14 +177,8 @@ function font(bFont) {
             }
             ads = true
           }
-          //一键登录
-          if (taobao) {
-            //淘宝登录
-            $('.login').append(template('tplOnetaobao', data));
-          } else {
-            //一键登录
-            $('.login').append(template('tplOnelogin', data));
-          }  
+          $('.login').append(template('tplOnelogin', data));
+          setLognBtn(logintype);
           if (ads) {
             for(var i=0,len=data.imgs.length; i<len; i++) {
               swipe('#slide'+i,i,false);
@@ -193,13 +189,9 @@ function font(bFont) {
           }
         } else {
           //密码登录
-          if (taobao) {
-            $('.login').append(template('tplIpttaobao', data));
-            $('.login').append(template('tplBottom', ads));
-          } else {
-            $('.login').append(template('tplIptlogin', data));
-            $('.login').append(template('tplBottom', ads));
-          }
+          $('.login').append(template('tplIptlogin', data));
+            //$('.login').append(template('tplBottom', ads));
+            setLognBtn(logintype);
         }
         setTimeout(function() {
           setHeight()
@@ -211,6 +203,7 @@ function font(bFont) {
     }
   });
 })()
+//设置轮播
 function swipe(swipeName,idx,imgName) {
   $(swipeName).swipeSlide({
     autoSwipe : true,
@@ -220,6 +213,7 @@ function swipe(swipeName,idx,imgName) {
     swipeIdx: 0,
   })
 }
+//设置图片高度
 function setHeight() {
   var height = document.documentElement.clientHeight;
   var htmlHeight = $('html').height();
@@ -230,7 +224,32 @@ function setHeight() {
     $('.login-bottom').css('bottom', 0);
   }
 }
+//设置登录方式
+function setLognBtn(type) {
+  console.log(1);
+  switch (type) {
+    case 1:
+      $('.hold-btn').css('background-color','#88d887');
+      $('.btn-img-wechat').css('display','block');
+      $('.btn-text').text('微信连WiFi');
+      $('.btn').addClass('wx-btn');
+      break;
+    case 2:
+      $('.hold-btn').css('background-color','#f7b069');
+      $('.btn-text').text('淘宝连WiFi');
+      $('.btn').addClass('tb-btn');
+      break;
+    case 3: 
+      $('.hold-btn').css('background-color','#6cc6f9');
+      $('.btn-text').text('官方APP连WiFi');
+      $('.btn').addClass('app-btn');
+      $('.app-text-tip').css({'display': 'block'});
+      $('.has-ques').addClass('g-tac')
+      break;
+  }
+}
 
+//渲染页面
 function initUI() {
   $('.ipt-phone').focus();
   JPlaceHolder.init();
@@ -269,23 +288,23 @@ function initUI() {
   }
   $('.has-ques').click(getQues)
 }
-
+//判断客户端 pc
 function isPC() {
-  var userAgentInfo = navigator.userAgent;
+  //var userAgentInfo = navigator.userAgent;
   var Agents = ["Android", "iPhone",
     "SymbianOS", "Windows Phone",
     "iPad", "iPod"
   ];
   var flag = true;
   for (var v = 0; v < Agents.length; v++) {
-    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+    if (useragent.indexOf(Agents[v]) > 0) {
       flag = false;
       break;
     }
   }
   return flag;
 }
-
+//tip 显示
 function tipShow(val) {
   $('.tip-info').text(val);
   $('.tip-info').show();
@@ -293,7 +312,7 @@ function tipShow(val) {
     $('.tip-info').hide();
   }, 1500);
 }
-
+//验证手机号
 function checkPhone(phone) {
   var ret = false;
   if (phone.length <= 0) {
@@ -334,10 +353,27 @@ function getCode() {
     }
   });
 }
-
+//点击颜色变色
 function touchStart(e) {
-  var startColor = taobao ? '#f93' : '#42bd40';
+  /*var startColor = taobao ? '#f93' : '#42bd40';
   var endColor = taobao ? '#F5800B' : '#19A717';
+  $('.btn').css('backgroundColor', endColor);
+  setTimeout(function() {$('.btn').css('backgroundColor', startColor);}, 300);
+*/  var startColor,endColor;
+  switch (logintype) {
+    case 1: 
+     startColor = '#42bd40';
+     endColor = '#19A717';
+     break;
+    case 2: 
+      startColor = '#f93';
+      endColor = '#F5800B';
+      break;
+    case 3:
+      startColor = '#0099f0';
+      endColor = '#3bb6fc';
+      break;
+  } 
   $('.btn').css('backgroundColor', endColor);
   setTimeout(function() {$('.btn').css('backgroundColor', startColor);}, 300);
 }
@@ -409,16 +445,19 @@ function portalLogin(param, wx) {
       genJumpUrl(resp.data);
       connected = true;
       sendTest();
-      if (wx) {
-        callWeixin();
-      } else if (taobao){
-        callTaobao(resp.data);
-      } else {
-        console.log(jumpUrl);
+      if (isPC()) {
         if (CGI.isIE()) {
           location.replace(firsturl);
         } else {
           location.replace(jumpUrl);
+        }
+      } else {
+        if (wx) {
+          callWeixin();
+        } else if (logintype==2){
+          callTaobao();
+        } else if (logintype == 3) {
+          callApp();
         }
       }
     } else {
@@ -448,15 +487,19 @@ function oneClickLogin(auto, callWX) {
       connected = true;
       if (!auto) {
         // 如果需要，调用微信
-        if (callWX) {
-          callWeixin();
-        } else if (taobao) {
-          callTaobao(resp.data);
-        } else {
+        if (isPC()) {
           if (CGI.isIE()) {
             location.replace(firsturl);
           } else {
             location.replace(jumpUrl);
+          }
+        } else {
+          if (callWX) {
+            callWeixin();
+          } else if (logintype == 2) {
+            callTaobao();
+          } else if (logintype == 3) {
+            callApp();
           }
         }
       } else {
@@ -512,8 +555,30 @@ function countdown(param, wx, oneclick) {
 }
 //taobao 
 function callTaobao(data) { 
-  location.replace(data.dst);
+  location.replace(notWxUrl);
 }
+//App登录
+function callApp() {
+  var isAndroid = useragent.indexOf('Android') > -1 || useragent.indexOf('Adr') > -1; //android终端
+  var isiOS = !!useragent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+  if (isAndroid) {
+    var ifr = document.createElement('iframe');
+    ifr.src = 'dgwireless://';
+    ifr.style.display = 'none';
+    document.body.appendChild(ifr);
+    window.setTimeout(function(){
+        document.body.removeChild(ifr);
+        location.replace(notWxUrl);
+    },2000)
+  }
+  if (isiOS) {
+    location.replace('dgwireless://');
+    window.setTimeout(function() {
+      location.replace(notWxUrl);
+    }, 2000)
+  }
+}
+
 
 // make apple happy!
 function sendTest() {

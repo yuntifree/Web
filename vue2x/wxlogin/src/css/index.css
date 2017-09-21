@@ -307,10 +307,13 @@ video {
   position: relative;
   margin:  0 auto;
 }
+.input-main .btn {
+  width: 100%;
+}
 .btn-img-wechat {
+  display: none;
   width: 0.44rem;
   height: 0.44rem;
-  display: block;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -327,9 +330,9 @@ video {
   margin-top: -0.44rem; */
   color: #fff504;
 }
-.btn-disable {
+/* .btn-disable {
   background-color: #88d887;
-}
+} */
 .click-btn {
   width: 1.74rem;
   line-height: 0.6rem;
@@ -642,4 +645,16 @@ video {
 }
 .min5-view {
   display: none;
+}
+/* .wx-disable {
+  background-color: #88d887;
+}
+.tb-disable {
+  background-color: #f7b069;
+}
+.app-disable {
+  background-color: #6cc6f9;
+} */
+.app-btn {
+  background-color: #3bb6fc;
 }

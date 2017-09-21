@@ -31,7 +31,7 @@
           </div>
           <!--button class="btn mob-btn" type="button">开启智慧城市之旅</button-->
           <div class="input-main g-clearfix">
-            <button class="btn mob-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">微信连WiFi</button>
+            <button class="btn mob-btn"><img class="btn-img-wechat" src="images/ico_wechat.png"><span class="btn-text"></span></button>
             <span class="has-ques g-fr">遇到问题?</span>
           </div>
         </div>
@@ -61,7 +61,7 @@
           </div>
         {{/if}}
         <div class="oneclick-bottom">
-          <button class="btn wx-btn btn-disable">等待<span id="btn-login">(5)</span>秒即可连WiFi</button>
+          <button class="btn wx-btn hold-btn">等待<span id="btn-login">(5)</span>秒即可连WiFi</button>
           <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
         </div>
       </div>
@@ -78,82 +78,7 @@
         </div>
         {{/each}}
         <div class="oneclick-bottom">
-          <button class="btn wx-btn min5-btn"><img class="btn-img-wechat" src="images/ico_wechat.png">微信连WiFi<span id="btn-login"></span></button>
-          <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
-        </div>
-      </div>
-    </script>
-
-
-    <!--淘宝密码登录-->
-    <script type="text/html" id="tplIpttaobao">
-      <div class="ipt-login">
-        <div class="login-top">
-          <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
-        </div>
-        <p class="g-tac top-text">欢迎使用东莞无限免费WiFi</p>
-        <div class="input-main">
-          <div class="input-info g-clearfix">
-            <label class="input-img g-fl" for="name"><img src="images/loading_icon_phone.png"></label>
-            <input class="g-fr ipt-phone" id="name" type="text" placeholder="请输入手机号">
-          </div>
-          <div class="input-info g-clearfix">
-            <label class="input-img g-fl" for="code" ><img src="images/loading_icon_key.png"></label>
-            <input class="g-fr ipt-code" id="code" type="text" placeholder="请输入验证码">
-            <i class="query-code">获取验证码</i>
-          </div>
-          <!--button class="btn mob-btn" type="button">开启智慧城市之旅</button-->
-          <div class="input-main g-clearfix">
-            <button class="btn mob-btn tb-btn">淘宝连WiFi</button>
-            <span class="has-ques g-fr">遇到问题?</span>
-          </div>
-        </div>
-      </div>
-    </script>
-    
-    <!--淘宝一键登录-->
-    <script type="text/html" id="tplOnetaobao">
-      <div class="login-view first-view">
-        {{if imgs.length>0}}
-          {{each imgs as img index}}
-          <div class="slide" id="slide{{index}}">
-            <ul>
-              {{each img as val idx}}
-              <li>
-                <a href="javascript:;">
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
-                  </a>
-              </li>
-              {{/each}}
-            </ul>
-          </div>
-          {{/each}}
-          {{else}}
-          <div class="login-top">
-            <img class="login-top-bg" src="{{img || 'images/img_loginbg.png'}}">
-          </div>
-        {{/if}}
-        <div class="oneclick-bottom">
-          <button class="btn wx-btn tb-btn btn-disable">等待<span id="btn-login">(5)</span>秒即可连WiFi</button>
-          <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
-        </div>
-      </div>
-      <div class="login-view min5-view">
-      {{if imgs.length>0}}
-        {{each imgs2 as img2 idx}}
-        <div class="slide" id="slideview{{idx}}">
-          <ul>
-            <li>
-              <a href="//m.yhd.com/">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{img2.img}} alt="">
-                </a>
-            </li>
-          </ul>
-        </div>
-        {{/each}}
-      {{/if}}
-        <div class="oneclick-bottom">
-          <button class="btn wx-btn tb-btn min5-btn">淘宝连WiFi<span id="btn-login"></span></button>
+          <button class="btn wx-btn min5-btn"><img class="btn-img-wechat" src="images/ico_wechat.png"><span class="btn-text"></span></button>
           <span class="oneclick-bottom-text">服务热线：0769-21660569</span>
         </div>
       </div>
