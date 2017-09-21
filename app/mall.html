@@ -200,7 +200,8 @@
               <p class="vocher-integral g-tac">{{item.score}}积分</p>
             </div>
             <div class="{{item.status==1 ? 'vocher-canuse block' : 'vocher-canuse'}}" data-idx="{{idx}}">
-              <button class="vocher-btn">去使用</button>
+              <button class="vocher-btn">去看看</button>
+             <p class="vocher-integral g-tac">已领取</p>
             </div>
             <div class="{{item.status==2 ? 'vocher-used block' : 'vocher-used'}}" data-idx="{{idx}}">
               <img src="http://img.yunxingzh.com/ceb8007d-d1d3-49de-ba9b-5e4c279035b3.png">
@@ -240,7 +241,7 @@
         }
       }
     }
-    //var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":0}
+    /*var data = {"items":[{"id":1,"score":300,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"},{"id":2,"score":500,status: 1,"img":"http://img.yunxingzh.com/a538c4bb-f77f-4ed6-918e-bd4d2090a066.png"}],"score":10000,"sign":0}*/
     var uid = CGI.query().uid;
     var token = CGI.query().token;
     var param = {
