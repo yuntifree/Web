@@ -193,7 +193,13 @@ export default {
       });
     },
     makeAddress(row) {
-      var ret = 'http://api.yunxingzh.com/'+row.dir+'wifilink.html?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&portaltype=1&adtype=1&s=1#/home';
+      var num = this.selected.number
+      var ret = '';
+      if (num == 6) {
+        ret = 'http://120.234.130.194:8080/'+row.dir+'??wsmp-theme=1001&wsmp-page=0&wsmp-time=-1&wsmp-portal=103&wlanacname=AC_120_A_01&wlanuserip=10.96.72.28&wlanacip=120.197.159.10&wlanusermac=f45c89987347&wlanapmac=a85840cdf2a0&wlanuserfirsturl=http://qq.com';
+      } else {
+        ret = 'http://api.yunxingzh.com/'+row.dir+'?uid=137&token=6ba9ac5a422d4473b337d57376dd3488&ts=1487489960&portaltype=1&adtype=1&s=1#/home';
+      } 
       return ret
     },
     handleSizeChange(val) {

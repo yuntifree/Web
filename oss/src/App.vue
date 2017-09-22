@@ -16,13 +16,13 @@
   </div>
 </template>
 <script>
-import uheader from './components/header.vue'
-import secondarybar from './components/secondarybar.vue'
-import sidebar from './components/sidebar.vue'
-import Login from './login.vue'
+import uheader from './components/header.vue'   //顶部
+import secondarybar from './components/secondarybar.vue' 
+import sidebar from './components/sidebar.vue'  //侧边栏
+import Login from './login.vue'   //登录
 
 // import views
-import getUsers from './components/views/getUsers.vue'
+import getUsers from './components/views/getUsers.vue'  
 import whiteList from './components/views/whitelist.vue'
 import feedback from './components/views/feedback.vue'
 import newsReview from './components/views/newsReview.vue'
