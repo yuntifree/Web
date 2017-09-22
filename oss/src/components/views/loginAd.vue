@@ -383,11 +383,8 @@ export default {
     },
     review(idx,row,online) {  
       this.selIdx = idx;
-      var title ='下线'
-      if (online) {
-        title = '上线';
-        this.online = 1
-      }
+      var title = online ? '上线' : '下线';
+      this.online = online;
       this.dialogCfg.title = title;
       this.dialogCfg.text = '确认要'+title+'吗';
       this.modal.delShow = false;
