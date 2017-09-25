@@ -576,7 +576,7 @@ video {
   position: relative;
   max-width: 7.5rem;
   overflow: hidden;
-  margin-bottom: 0.16rem;
+  margin-bottom: 0.06rem;
 }
 .slide:after{
   content: '';
@@ -622,9 +622,9 @@ video {
   position: fixed;
   left: 0;
   bottom: 0;
-  padding: 0.5rem 0 0.44rem;
+  padding: 0.28rem 0;
   width: 100%;
-  height: 2.4rem;
+  height: 1.99rem;
   background-color: #fff;
   z-index: 10;
 }
@@ -633,7 +633,7 @@ video {
   text-align: center;
   font-size: 0.26rem;
   color: #969696;
-  margin-top: 0.3rem;
+  margin-top: 0.18rem;
 }
 .login-view {
   width: 100%;
