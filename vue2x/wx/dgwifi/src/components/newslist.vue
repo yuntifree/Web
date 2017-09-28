@@ -82,36 +82,6 @@
     <div v-for="item in items"
         class="item-container"
         @click="link(item)">
-      <!--新闻有3张图片-->
-      <template v-if="item.images.length>2 && !item.stype">
-        <div class="list-img3">
-          <p class="item-title" :class="{'item-visited':item.visited}">{{item.title}}</p>
-          <ul class="g-clearfix item-imgs">
-            <li v-for="imgs in item.images"
-                class="g-fl"><img v-lazy="imgs" class="img-list">
-            </li>
-          </ul>
-          <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
-        </div>
-      </template>
-      <!--新闻有1、2张图片-->
-      <template v-if="item.images.length==1 || item.images.length==2 && !item.stype">
-        <dl class="g-clearfix">
-         <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
-         <dd class="list1-info g-fl">
-           <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
-           <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
-         </dd>
-       </dl>
-      </template>
-      <!--广告-->
-      <template  v-if="item.images && item.stype">
-        <div>
-          <p class="item-title g-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
-          <div class="adv-img"><img v-lazy="item.images[0]"></div>
-          <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
-        </div>
-      </template>
       <!--无图片新闻-->
       <template v-if="!item.images">
         <div>
@@ -119,12 +89,49 @@
           <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
         </div>
       </template>
+      
+      <!--有图片新闻-->
+      <template v-else>
+        <!--新闻有3张图片-->
+        <template v-if="item.images.length>2 && !item.stype">
+          <div class="list-img3">
+            <p class="item-title" :class="{'item-visited':item.visited}">{{item.title}}</p>
+            <ul class="g-clearfix item-imgs">
+              <li v-for="imgs in item.images"
+                  class="g-fl"><img v-lazy="imgs" class="img-list">
+              </li>
+            </ul>
+            <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
+          </div>
+        </template>
+        <!--新闻有1、2张图片-->
+        <template v-if="item.images.length==1 || item.images.length==2 && !item.stype">
+          <dl class="g-clearfix">
+           <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
+           <dd class="list1-info g-fl">
+             <p class="item-title list1-item-title lines-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
+             <p class="item-desc"><span>{{item.source}}</span><span>{{formatTime(item.ctime)}}</span></p>
+           </dd>
+         </dl>
+        </template>
+        <!--广告-->
+        <template  v-if="item.images && item.stype">
+          <div>
+            <p class="item-title g-ellipsis" :class="{'item-visited':item.visited}">{{item.title}}</p>
+            <div class="adv-img"><img v-lazy="item.images[0]"></div>
+            <p class="item-desc"><span class="adv-text">广告</span><span>{{item.source}}</span></p>
+          </div>
+        </template>
+
+      </template>
+            
     </div>
   </div>
   <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   <p class="item-desc g-tac loading" v-if="loading">加载中<img src="../assets/images/loading.gif" height="12" width="12" alt=""></p>
   <p class="item-desc g-tac" v-if="nomore">全都在这没有更多了</p>
 </div>
+
 </template>
 <script>
 import tip from './lib/tip.vue'
@@ -144,7 +151,6 @@ export default {
         tooltip: false,
       },
       items: [],
-      ready: false,
       loading: false,
       nomore: false,
       useCache: false
@@ -192,11 +198,11 @@ export default {
         if (resp.errno === 0) {
           resp.data.infos.forEach((item)=>{
             this.$set(item, "visited", false);
+            if (!item.stype) {
+              this.$set(item, "stype", 0);
+            }
           })
           this.items = this.items.concat(resp.data.infos);
-          if (param.seq==0) {
-            this.ready = true;
-          }
           this.nomore = resp.data.hasmore ? false : true;
           this.loading = false;
         } else {
