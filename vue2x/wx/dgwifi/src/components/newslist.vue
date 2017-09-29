@@ -105,7 +105,7 @@
           </div>
         </template>
         <!--新闻有1、2张图片-->
-        <template v-if="item.images.length==1 || item.images.length==2 && !item.stype">
+        <template v-if="iitem.images.length==1 && !item.stype || item.images.length==2 && !item.stype">
           <dl class="g-clearfix">
            <dt class="g-fr list-img1"><img v-lazy="item.images[0]"></dt>
            <dd class="list1-info g-fl">
