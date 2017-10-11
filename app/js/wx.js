@@ -26,7 +26,7 @@ window.wxutil = {
       //'chooseWXPay'
     ];
     wx.config(wx_cfg);
-
+    console.log(callback);
     if (callback) {
       // 设置一个标记
       wx.ok = false;
@@ -42,41 +42,4 @@ window.wxutil = {
 
 
   },
-
-  bindShare: function(cfg) {
-    var option = {
-      title: cfg.title || '微信分享title',
-      link: cfg.link || '微信分享link',
-      imgUrl: cfg.imgUrl || '微信分享imgUrl',
-      desc: cfg.desc || '微信分享desc',
-      type: 'link',
-      fail: function(res) {
-        //alert(JSON.stringify(res));
-        if (cfg.callback) {
-          cfg.callback('fail', res);
-        }
-      },
-      trigger: function(res) {
-        if (cfg.callback) {
-          cfg.callback('trigger', res);
-        }
-      },
-      success: function(res) {
-        if (cfg.callback) {
-          cfg.callback('success', res);
-        }
-      },
-      cancel: function(res) {
-        if (cfg.callback) {
-          cfg.callback('cancel', res);
-        }
-      }
-    };
-    wx.onMenuShareAppMessage(option);
-    //wx.onMenuShareQQ(option);
-    //wx.onMenuShareWeibo(option);
-
-    // 朋友圈没有desc字段，用title代替
-    wx.onMenuShareTimeline(option);
-  }
 };
