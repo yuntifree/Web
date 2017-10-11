@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta charset="utf-8">
+  <title>聊天测试</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <style type="text/css">
+  html,body {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    font-size: 0.28rem;
+  }
+  .chat-main {
+    width: 96%;
+    height: 100%;
+  }
+  .chat-list {
+    padding-bottom: 10px;
+  }
+  .chat-list span{
+    display: inline-block;
+    padding: 5px;
+    background-color: #fcfcfc;
+  }
+  .make-chat {
+    width: 100%;
+    height: 0.98rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #f7f6fb;
+    padding: 0.14rem 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .make-chat input {
+    width: 4rem;
+    height: 0.7rem;
+    padding: 0.06rem 0.1rem;
+    border-radius: 0.10rem;
+    background-color: #ffffff;
+    border: solid 1px #dcdcdc;
+  }
+  .make-chat button {
+    width: 1rem;
+    height: 0.7rem;
+    border-radius: 0.1rem;
+    background-color: #1ed2af;
+  }
+  .tip {
+    display: none;
+    border-radius: 0.06rem;
+    padding: 5px 10px;
+    font-size: 0.24rem;
+    color: #fff;
+    position: fixed;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  </style>
+</head>
+<body>
+  <div class="chat-main">
+    <p class="chat-list chat-text"><span>123</span></p>
+    <p class="chat-list chat-audio"><span><audio data-src="12"></audio>语音</span></p>
+  </div>
+  <div class="make-chat">
+    <input type="text" name="" class="input-text"/>
+    <button class="send-text">发送</button>
+    <button class="send-audio">语音</button>
+  </div>
+  <div class="tip"></div>
+  <script type="text/javascript" src="./js/zepto.min.js"></script> 
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <script src="http://wx.yunxingzh.com/get_jsapi_sign" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/wx.js"></script>
+  <script type="text/javascript">
+    wxutil.init(wx);
+    //字体设置
+    font(true)
+    //发送文本信息
+    $('.send-text').click(function() {
+      var html = $('.input-text').val();
+      if (html.trim().length <=0) {
+        tip('请先输入发送内容');
+        $('.input-text').focus();
+      } else {
+        var text = '<p class="chat-list chat-text"><span>' + html + '</span></p>';
+        $('.chat-main').append(text);
+        $('.input-text').val('');
+      }
+    })
+    //发送语音信息
+    var timer,count=0;
+    $('.send-audio').bind('touchstart', function(event) {
+      //开始录音接口
+      wx.startRecord();
+
+      //监听录音自动停止接口
+      wx.onVoiceRecordEnd({
+          // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+          complete: function (res) {
+              var localId = res.localId; 
+              console.log(localId);
+          }
+      });
+      timer = setInterval(function() {
+        count++;
+      },1000)
+    })
+    //录音完成上传
+    $('.send-audio').bind('touchend', function(event) {
+      clearInterval(timer);
+        //停止录音接口
+        wx.stopRecord({
+            success: function (res) {
+                var localId = res.localId;
+                var text = '<p class="chat-list chat-audio"><span><audio data-src='+localId+'></audio>语音</span></p>';
+                $('.chat-main').append(text);
+            }
+        });
+    })
+
+    //语音播放
+    var play = true;
+    $('.chat-audio').click(function() {
+      var audioId = $(this).find('audio')[0].dataset.src;
+      if (play) {
+        wx.playVoice({
+            localId: audioId // 需要播放的音频的本地ID，由stopRecord接口获得
+        });
+      } else {
+        wx.stopVoice({
+            localId: audioId // 需要停止的音频的本地ID，由stopRecord接口获得
+        });
+      }
+      play = !play;
+      console.log(play);
+    })
+    //提示
+    function tip(val) {
+      $('.tip').text(val);
+      $('.tip').show();
+      setTimeout(function(){$('.tip').hide()},1500)
+    }
+
+    function font(bFont) {
+      if (document && window) {
+        // init font
+        if (bFont) {
+          var docEl = document.documentElement;
+          var isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi);
+          var dpr = isIOS ? Math.min(window.devicePixelRatio, 3) : 1;
+          dpr = window.top === window.self ? dpr : 1; //被iframe引用时，禁止缩放
+          var scale = 1 / dpr;
+          var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+          docEl.setAttribute("data-dpr",dpr);
+          var recalc = function() {
+            var width = docEl.clientWidth;
+            if (width / dpr > 640) {
+              width = 640 * dpr;
+            }
+            docEl.style.fontSize = 100 * (width / 750) + 'px';
+          };
+          recalc();
+          if (!document.addEventListener) return;
+          window.addEventListener(resizeEvt, recalc, false);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
