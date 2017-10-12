@@ -34,9 +34,9 @@
                 var stop = document.querySelector('#stop');
                 var upload = document.querySelector('#upload');
                 var container = document.querySelector('#audio-container');
-                var blob;
+                var formBlob;
                 var recorder = new Recorder({
-                    sampleRate: 44100, //采样频率，默认为44100Hz(标准MP3采样率)
+                    sampleRate: 16000, //采样频率，默认为44100Hz(标准MP3采样率)
                     bitRate: 128, //比特率，默认为128kbps(标准MP3质量)
                     success: function(){ //成功回调函数
                         start.disabled = false;
@@ -81,30 +81,44 @@
                     upload.disabled = false;
                     recorder.stop();
                     recorder.getBlob(function(blob){
-                        blob = blob;
+                        formBlob = blob;
                         var audio = document.createElement('audio');
                         audio.src = URL.createObjectURL(blob);
                         audio.controls = true;
                         container.appendChild(audio);
-                        console.log(audio.src);
                     });
                 });
                 upload.addEventListener('click',function() {
                     stop.disabled = true;
                     var _this = this;
-                  var formData = new FormData();
-                  formData.append('file', blob);
-                  CGI.POST('http://120.76.236.185:9999/asr_raw', {file: formData}, function(resp){
-                    if (resp.error === 0) {
-                        _this.disabled = true;
-                        start.disabled = false;
-                        console.log(上传成功);
-                    } else {
-                        _this.disabled = false;
-                        start.disabled = true;
-                        console.log(上传失败);
-                    }
-                  })
+                    var a = new String(123);
+                    var formData = new FormData();
+                    formData.append('file', formBlob);
+                    console.log(formBlob + ',' + formData);
+                    $.ajax({
+                        url:"http://120.76.236.185:9999/asr_raw",
+                        type:"post",
+                        data:formData,
+                        processData:false,
+                        contentType:false,
+                        type: 'post',
+                        dataType: 'json',
+                        success:function(data){
+                            console.log("over..");
+                        }
+                    });
+
+                    /*CGI.post('asr_raw',formData, function(resp){
+                        if (resp.error === 0) {
+                            _this.disabled = true;
+                            start.disabled = false;
+                            console.log(上传成功);
+                        } else {
+                            _this.disabled = false;
+                            start.disabled = true;
+                            console.log(上传失败);
+                        }
+                    })*/
                 })
             };
         </script>

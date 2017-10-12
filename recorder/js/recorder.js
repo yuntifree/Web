@@ -21,7 +21,7 @@
 
         var _this = this;
         config = config || {}; //初始化配置对象
-        config.sampleRate = config.sampleRate || 44100; //采样频率，默认为44100Hz(标准MP3采样率)
+        config.sampleRate = config.sampleRate || 16000; //采样频率，默认为44100Hz(标准MP3采样率)
         config.bitRate = config.bitRate || 128; //比特率，默认为128kbps(标准MP3质量)
 
         Util.init();

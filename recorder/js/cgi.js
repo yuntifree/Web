@@ -2,7 +2,7 @@ var ajax = $.ajax;
 //var __DEV__ = true;
 window.CGI = {
   //HOST: 'http://120.25.133.234/',
-  HOST: 'http://120.76.236.185/',
+    HOST: 'http://120.76.236.185:9999/',
   CGI: '/',
 
   /**
@@ -42,22 +42,17 @@ window.CGI = {
    */
 
   post: function(action, param, callback) {
-    var p = {
-      data: param,
-      term: 2,
-      version: 1
-    };
 
-    var url = this.CGI + action;
+    var url = this.HOST + action;
 
     try {
       ajax({
         type: 'POST',
         url: url,
-        contentType: 'application/json',
-        dataType: 'json',
+        processData:false,
+        contentType:false,
         timeout: 5000,
-        data: JSON.stringify(p),
+        data: param,
         success: function(data) {
           callback(data);
         },
