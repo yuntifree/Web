@@ -34,7 +34,6 @@ var jumpUrl = "";
 var connected = false;
 var taobaoCover = {};
 var data = {};
-var swipeIdx = 1;
 var notWxUrl = "";
 
 var loginParam = {
@@ -180,6 +179,7 @@ function font(bFont) {
             }*/
             ads = true
           }
+          console.log(data.imgs.length);
           $('.login').append(template('tplOnelogin', data));
           setLognBtn(logintype);
           if (ads) {
@@ -212,11 +212,14 @@ function font(bFont) {
 //设置轮播
 function swipe(swipeName,idx,imgName) {
   $(swipeName).swipeSlide({
-    autoSwipe : true,
-    continuousScroll:true,
     lazyLoad : true,
     speed: 3000,
-    swipeIdx: 0,
+    firstCallback : function(i,sum,me){
+        me.find('.dot').children().first().addClass('cur');
+    },
+    callback : function(i,sum,me){
+        me.find('.dot').children().eq(i).addClass('cur').siblings().removeClass('cur');
+    }
   })
 }
 //设置图片高度
@@ -535,6 +538,7 @@ function disableButton() {
 
 function countdown() {
   $('.login-view').css('display','none');
+  $('.login').css('top','0');
   $('.login').append(template('tplCover', taobaoCover));
   var text = 3;
   var timer = setInterval(function() {

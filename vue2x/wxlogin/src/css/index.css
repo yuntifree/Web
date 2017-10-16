@@ -620,6 +620,34 @@ video {
   border: none;
 }
 
+.slide .dot{
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    z-index: 5;
+    transform:  translateX(-50%);
+    -webkit-transform:  translateX(-50%);
+    -ms-transform:  translateX(-50%);
+    -moz-transform:  translateX(-50%);
+    -o-transform:  translateX(-50%);
+    font-size: 0;
+}
+.slide .dot span{
+    display: inline-block;
+    width: 0.14rem;
+    height: 0.14rem;
+    margin-right: 0.2rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+.slide .dot .cur{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#slide0,
+#slide0 li img{
+  height: 4.6rem;
+}
+
 .oneclick-bottom {
   position: fixed;
   left: 0;
@@ -649,15 +677,6 @@ video {
   display: none;
   padding-bottom: 2.6rem;
 }
-/* .wx-disable {
-  background-color: #88d887;
-}
-.tb-disable {
-  background-color: #f7b069;
-}
-.app-disable {
-  background-color: #6cc6f9;
-} */
 .app-btn {
   background-color: #3bb6fc;
 }
