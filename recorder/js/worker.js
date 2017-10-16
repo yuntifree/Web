@@ -10,7 +10,8 @@
     };
 
     var appendToBuffer = function(mp3Buf){
-        dataBuffer.push(new Int8Array(mp3Buf));
+        //dataBuffer.push(new Int8Array(mp3Buf));
+        dataBuffer.push(mp3Buf)
     };
 
     var init = function(prefConfig){
@@ -38,18 +39,19 @@
     };
 
     var encode = function(arrayBuffer){
-        samplesMono = convertBuffer(arrayBuffer);
-        var remaining = samplesMono.length;
+        //samplesMono = convertBuffer(arrayBuffer);
+        /*var remaining = samplesMono.length;
         for(var i = 0; remaining >= 0; i += maxSamples){
             var left = samplesMono.subarray(i, i + maxSamples);
             var mp3buf = mp3Encoder.encodeBuffer(left);
             appendToBuffer(mp3buf);
             remaining -= maxSamples;
-        }
+        }*/
+        appendToBuffer(arrayBuffer);
     };
 
     var finish = function(){
-        appendToBuffer(mp3Encoder.flush());
+        //appendToBuffer(mp3Encoder.flush());
         self.postMessage({
             cmd: 'end',
             buf: dataBuffer
