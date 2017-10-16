@@ -145,7 +145,8 @@ function font(bFont) {
   CGI.get('check_login', param, function(resp) {
     if (resp.errno == 0) {
       data = taobaoCover = resp.data;
-      data.imgs = [[],[],[],[]];
+      data.imgs = [];
+      data.imgs1 = [];
       data.imgs2 = [];
        autologin = data.autologin;
       logintype = data.logintype;
@@ -169,19 +170,24 @@ function font(bFont) {
         if (autologin) {
           var ads = false
           if (data.ads && data.ads.length>0) {
+            data.imgs = data.ads.splice(0,2);
+            data.imgs1 = data.ads.splice(2,2);
             data.imgs2 = data.ads.splice(-4);
-            console.log(JSON.stringify(data.ads.length));
-            for(var i=0,len=data.ads.length;i<len;i++){
+            console.log(JSON.stringify(data.imgs));
+            /*for(var i=0,len=data.ads.length;i<len;i++){
               var idx = i%4;
               data.imgs[idx].push(data.ads[i]);
-            }
+            }*/
             ads = true
           }
           $('.login').append(template('tplOnelogin', data));
           setLognBtn(logintype);
           if (ads) {
             for(var i=0,len=data.imgs.length; i<len; i++) {
-              swipe('#slide'+i,i,false);
+              swipe('#slide0',0,false);
+            }
+            for(var i=0,len=data.imgs1.length; i<len; i++) {
+              swipe('#slideImgs'+i,i,true);
             }
             for (var i=0,leng=data.imgs2.length;i<leng;i++) {
               swipe('#slideview'+i,i,true);
@@ -265,9 +271,11 @@ function initUI() {
           delay--;
           $('#btn-login').text('(' + delay + ')')
           if (delay == 0) {
-            //$('.wx-btn').removeClass('btn-disable');
+            $('.fitst-view').css('display','none');
             $('.min5-view').css('display','block');
-            $('.first-view').css('display','none');
+            var height = $('.first-view').outerHeight();
+            $('.login').animate({'top': -height},1500);
+            //$('.first-view').css('display','none');
             clearInterval(t)
             $('#btn-login').text('')
             $('.min5-btn').get(0).addEventListener('touchstart', touchStart, false);

@@ -42,16 +42,25 @@
     <script type="text/html" id="tplOnelogin">
       <div class="login-view first-view">
         {{if imgs.length>0}}
-          {{each imgs as img index}}
-          <div class="slide" id="slide{{index}}">
+          <div class="slide" id="slide0">
             <ul>
-              {{each img as val idx}}
+              {{each imgs as val idx}}
               <li>
                 <a href="javascript:;">
                   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
                   </a>
               </li>
               {{/each}}
+            </ul>
+          </div>
+          {{each imgs1 as val idx}}
+          <div class="slide" id="slideImgs{{idx}}">
+            <ul>
+              <li>
+                <a href="javascript:;">
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
+                  </a>
+              </li>
             </ul>
           </div>
           {{/each}}
