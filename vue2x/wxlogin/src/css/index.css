@@ -673,9 +673,11 @@ video {
   left: 0; */
   
 }
+/* .first-view {
+  padding-bottom: 2rem;
+} */
 .min5-view {
   display: none;
-  padding-bottom: 2.6rem;
 }
 .app-btn {
   background-color: #3bb6fc;

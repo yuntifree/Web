@@ -35,6 +35,7 @@ var connected = false;
 var taobaoCover = {};
 var data = {};
 var notWxUrl = "";
+var BtnHeight = 50;
 
 var loginParam = {
   wlanacname: wlanacname,
@@ -171,17 +172,14 @@ function font(bFont) {
           if (data.ads && data.ads.length>0) {
             data.imgs = data.ads.splice(0,2);
             data.imgs1 = data.ads.splice(2,2);
-            data.imgs2 = data.ads.splice(-4);
-            console.log(JSON.stringify(data.imgs));
-            /*for(var i=0,len=data.ads.length;i<len;i++){
-              var idx = i%4;
-              data.imgs[idx].push(data.ads[i]);
-            }*/
-            ads = true
+            data.imgs2 = data.ads.splice(4,4);
+            ads = true;
+
           }
-          console.log(data.imgs.length);
           $('.login').append(template('tplOnelogin', data));
           setLognBtn(logintype);
+          BtnHeight = $('.oneclick-bottom').outerHeight();
+          $('.login-view').css('padding-bottom',BtnHeight);
           if (ads) {
             for(var i=0,len=data.imgs.length; i<len; i++) {
               swipe('#slide0',0,false);
@@ -274,11 +272,11 @@ function initUI() {
           delay--;
           $('#btn-login').text('(' + delay + ')')
           if (delay == 0) {
-            $('.fitst-view').css('display','none');
+            $('.login-view').css('padding-bottom',0);
             $('.min5-view').css('display','block');
-            var height = $('.first-view').outerHeight();
-            $('.login').animate({'top': -height},1500);
-            //$('.first-view').css('display','none');
+            var height = $('.first-view').height();
+            $('.login').animate({'top': -height-3},1500);
+            $('.min5-view').css('padding-bottom',BtnHeight);
             clearInterval(t)
             $('#btn-login').text('')
             $('.min5-btn').get(0).addEventListener('touchstart', touchStart, false);
