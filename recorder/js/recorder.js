@@ -55,7 +55,7 @@
                             break;
                         case 'end':
                             if(successCallback){
-                                var blob = new Blob(e.data.buf, { type: 'audio/mp3' });
+                                var blob = new Blob(e.data.buf, { type: 'audio/wav' });
                                 successCallback(blob);
                                 Util.log('MP3大小：' + blob.size + '%cB', 'color:#0000EE');
                             }
