@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import ElementUI from 'element-ui'
+import Vue from 'vue';
+import ElementUI from 'element-ui';
+import 'element-theme-default';
 //import VueRouter from 'vue-router'
 
 import App from './App'
