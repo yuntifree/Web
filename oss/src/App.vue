@@ -115,8 +115,7 @@ export default {
 <style lang="scss">
 @import './assets/css/css.css',
 './assets/iconfont/iconfont.css',
-'./assets/css/common.scss',
-'./assets/css/element-ui.css';
+'./assets/css/common.scss';
 html,
 body,
 .oss {

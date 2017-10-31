@@ -122,7 +122,7 @@
       <div v-show="alertShow">
         <el-alert
           :title="alertMsg"
-          type="dark">
+          type="warning">
         </el-alert>
       </div>
     </article>
