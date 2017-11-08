@@ -41,6 +41,8 @@ import setWjweb from './components/views/setWjweb.vue'
 import setAndroid from './components/views/setAndroid.vue'
 import setPortalMenu from './components/views/setPortalmenu.vue'
 import adCount from './components/views/adCount.vue'
+import setAc from './components/views/setAc.vue'
+import setWxinfo from './components/views/setWxinfo.vue'
 import adManage from './components/views/adManage.vue'
 import adCooperate from './components/views/adCooperate.vue'
 import setTime from './components/views/setTime.vue'
@@ -92,6 +94,8 @@ export default {
     setWjweb,
     setAndroid,
     setPortalMenu,
+    setAc,
+    setWxinfo,
     adCount,
     adManage,
     adCooperate,

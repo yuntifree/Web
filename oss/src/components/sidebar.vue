@@ -81,7 +81,6 @@ export default {
           sessionStorage.setItem('viewName', view);
           sessionStorage.setItem('viewTitle', title);
           sessionStorage.setItem('subTitle', subtitle); 
-          console.log(this.menuIdx); 
           //this.menus[this.menuIdx].show = false;
         } catch(e){}
       }

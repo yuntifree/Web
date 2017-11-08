@@ -89,6 +89,14 @@
     "title":"接口统计",
     "name": "setInterface",
     "icon": "yonghuxinxi"
+    },{
+    "title":"Ac配置",
+    "name": "setAc",
+    "icon": "yonghuxinxi"
+    },{
+    "title":"公众号设置",
+    "name": "setWxinfo",
+    "icon": "yonghuxinxi"
     }]
   },{
     "title":"广告管理",
@@ -124,6 +132,10 @@
       },{
       "title": "ap信息管理",
       "name": "setApInfo",
+      "icon": "yonghuxinxi"
+      },{
+      "title": "ac登录配置",
+      "name": "setAc",
       "icon": "yonghuxinxi"
       },{
       "title": "旅游广告管理",
