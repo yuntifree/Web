@@ -135,7 +135,7 @@ export default {
       }
       var _this = this;
       if (ret) {
-        CGI.post('feedback/add', param , (resp)=> {
+        CGI.post('/feedback/add', param , (resp)=> {
           if (resp.errno === 0) {
             _this.success = true;
             setTimeout(function() {
