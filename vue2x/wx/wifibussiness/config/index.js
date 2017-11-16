@@ -2,7 +2,7 @@
 var path = require('path')
 var online = env.BUILD_ENV == 'deploy';
 // 这里改工程名
-var distPath = online ? 'businesswifi' : 'businesstest';
+var distPath = online ? 'bussinesswifi' : 'bussinesstest';
 module.exports = {
   build: {
     env: require('./prod.env'),

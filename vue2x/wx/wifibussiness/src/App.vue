@@ -25,9 +25,9 @@ export default {
   },
   methods: {
     setCookie() {
-      CGI.setCookie('uid','137');
+      /*CGI.setCookie('uid','137');
       CGI.setCookie('token','dfdsfdsfsd');
-      CGI.setCookie('wid','9');
+      CGI.setCookie('wid','9');*/
       try {
       //CGI.delCookie('phone');
        var phone = CGI.getCookie('phone');
