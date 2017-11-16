@@ -109,12 +109,12 @@ export default {
         img: './static/images/ico_wifi.png',
         title: 'WIFI业务',
         txt: 'WiFi开通、缴费、有效期查询',
-        router: 'business'
+        router: 'login'
       },{
         img: './static/images/ico_free.png',
         title: '免费试用',
         txt: '每个手机号可免费体验WiFi2天',
-        router: 'freeticket'
+        router: 'login'
       },{
         img: 'http://img.yunxingzh.com/9a9d4cdd-eb77-45f6-a166-583a80ced1c3.png',
         title: '遇到问题？',
@@ -153,9 +153,12 @@ export default {
     },
     goLink(idx) {
       var logined = this.$store.state.logined;
-      if (!logined) {
-        if (idx < 2) {
-          this.lists[idx].router = 'login';
+      console.log(logined);
+      if (logined) {
+        if (idx === 0) {
+          this.lists[0].router = 'business';
+        } else if (idx === 1){
+          this.lists[1].router = 'freeticket';
         }
       }
       var url = this.lists[idx].router;
