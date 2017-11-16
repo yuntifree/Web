@@ -115,6 +115,13 @@ export default {
     feedback() {
       var ret = true;
       var param = {};
+      if (this.text.length > 0) {
+        param.content = this.text;
+      } else {
+        this.tip('请输入您的问题和建议')
+        ret = false;
+      }
+
       if (this.phone>0) {
         if (CGI.checkTel(this.phone)) {
           param.phone = this.phone + '';
@@ -127,12 +134,6 @@ export default {
         ret = false;
       }
       
-      if (this.text.length > 0) {
-        param.content = this.text;
-      } else {
-        this.tip('请输入您的问题和建议')
-        ret = false;
-      }
       var _this = this;
       if (ret) {
         CGI.post('/feedback/add', param , (resp)=> {
@@ -140,6 +141,9 @@ export default {
             _this.success = true;
             setTimeout(function() {
               _this.success = false;
+              _this.phone = '';
+              _this.text = '';
+              _this.$router.replace({name: 'home'})
             }, 1500)
           } else {
             _this.fail = true;

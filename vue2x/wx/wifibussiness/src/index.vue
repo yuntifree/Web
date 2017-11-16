@@ -73,7 +73,7 @@
       </carousel>
     </template>
     <ul class="main-list">
-      <li class="index-list" v-for="(list,idx) in lists" @click="goLink(list.router)">
+      <li class="index-list" v-for="(list,idx) in lists" @click="goLink(idx)">
         <h2 class="list-title" ><img class="list-img" :src="list.img"><span class="try-free">{{list.title}}<i v-if="idx===1"></i></span></h2>
         <p class="list-txt" v-text="list.txt"></p>
         <div class="arrow-right arrow-box">
@@ -103,17 +103,18 @@ export default {
         duration: 1500,
         tooltip: false,
       },
+      getlogin: false,
       infos: [],
       lists: [{
         img: './static/images/ico_wifi.png',
         title: 'WIFI业务',
         txt: 'WiFi开通、缴费、有效期查询',
-        router: 'login'
+        router: 'business'
       },{
         img: './static/images/ico_free.png',
         title: '免费试用',
         txt: '每个手机号可免费体验WiFi2天',
-        router: 'login'
+        router: 'freeticket'
       },{
         img: 'http://img.yunxingzh.com/9a9d4cdd-eb77-45f6-a166-583a80ced1c3.png',
         title: '遇到问题？',
@@ -137,10 +138,6 @@ export default {
   },
   mounted() {
     this.getData();
-    if (this.$store.state.logined) {
-      this.lists[0].router = 'business';
-      this.lists[1].router = 'freeticket'
-    }
   },
   methods: {
     getData() {
@@ -154,7 +151,14 @@ export default {
         }
       })
     },
-    goLink(url) {
+    goLink(idx) {
+      var logined = this.$store.state.logined;
+      if (!logined) {
+        if (idx < 2) {
+          this.lists[idx].router = 'login';
+        }
+      }
+      var url = this.lists[idx].router;
       this.$router.push({name: url});
     },
     tip(val) {

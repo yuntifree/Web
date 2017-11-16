@@ -75,7 +75,6 @@ export default {
   },
   computed: {
     getLogined() {
-      console.log(this.$store.state.logined);
       return this.$store.state.logined;
     },
     getPhone() {
