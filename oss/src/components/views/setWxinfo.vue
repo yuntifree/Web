@@ -3,7 +3,7 @@
     <article class="module width_3_quarter">
       <header class="app_header">
         <div>
-          <button class="btn btn-default btn-sm outline-none" @click="addUnit">
+          <button class="btn btn-default btn-sm outline-none" @click="addWxmp">
           <i class="iconfont icon-add"></i>添加
           </button>
         </div>
@@ -184,14 +184,14 @@ export default {
         }
       });
     },
-    editUnit(idx, row) {
+    editWxmp(idx, row) {
       CGI.extend(this.postInfo, row);
       this.selIdx = idx;
       this.modal.text = '修改';
       this.modal.addShow = false;
       this.modal.editShow = true;
     },
-    addUnit() {
+    addWxmp() {
       CGI.objClear(this.postInfo);
       this.modal.text = '增加';
       this.modal.addShow = true;
