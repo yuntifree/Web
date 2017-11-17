@@ -193,7 +193,6 @@ export default {
       this.tips.msg = val;
     },
     getCode() {
-      console.log('getcode');
       var _this = this;
       if (this.makePhone()) {
         CGI.post('/phone/getcode', {phone: this.phone}, (resp)=> {
@@ -213,7 +212,6 @@ export default {
       }
     },
     login() {
-
       var ret = this.makePhone();
       if (this.code.length>0 && ~~this.code) {
         console.log(ret)
@@ -247,7 +245,6 @@ export default {
     },
     makePhone() {
       var ret = true;
-      console.log(this.phone.length> 0);
       if (this.phone.length> 0) {
         if (!CGI.checkTel(this.phone)) {
           this.tip('请输入正确的手机号');

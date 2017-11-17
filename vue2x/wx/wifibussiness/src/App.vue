@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import tip from './components/lib/tip.vue'
-import CGI from './lib/cgi'
 
 export default {
   name: 'app',

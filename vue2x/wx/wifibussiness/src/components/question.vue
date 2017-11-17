@@ -60,6 +60,13 @@
   .img100 {
     @extend %img100;
   }
+  .ques-textLength {
+    @include containerSize(92%, auto);
+    margin: 0.12rem auto 0;
+    color: #848484;
+    text-align: right;
+    font-size: 0.28rem;
+  }
 </style>
 <template>
   <div id="question">
@@ -71,7 +78,8 @@
       <label for="phone"><img class="img100" src="http://img.yunxingzh.com/286aca0d-771f-48da-b8f4-cb9a3fb1c407.png"></label>
       <input class="ipt-phone" id="phone" type="text"  v-model.trim="phone" name="" placeholder="请输入正确的手机号">
     </div>
-    <textarea class="ques-text" type="textarea" name="" v-model.trim="text" placeholder="请输入您的问题和建议(300字以内)"></textarea>
+    <textarea class="ques-text" type="textarea" name="" v-model.trim="text" placeholder="请输入您的问题和建议(300字以内)" maxlength="300" @keyup="makeContent"></textarea>
+    <p class="ques-textLength">{{textlength}}/300</p>
     <button class="g-tac ques-btn" @click="feedback">提交</button>
     <p class="ques-tip g-tac">如遇紧急情况，请拨打客服电话<br />000-0000000</p>
     <div class="ques-result" v-if="fail">
@@ -103,7 +111,8 @@ export default {
       phone: '',
       text: '',
       fail: false,
-      success: false
+      success: false,
+      textlength: 0,
     }
   },
   components: {
@@ -152,6 +161,13 @@ export default {
             }, 1500)
           }
         })
+      }
+    },
+    makeContent() {
+      var len = this.text.length;
+      this.textlength = len;
+      if (~~len >= 30) {
+        this.tip('最多可输入300字呢！！')
       }
     },
     tip(val) {

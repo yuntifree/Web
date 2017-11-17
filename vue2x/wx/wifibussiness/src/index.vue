@@ -69,7 +69,7 @@
     <logined :show="getLogined" :phone="getPhone"></logined>
     <template v-if="infos.length>0">
       <carousel :auto="3000">
-          <div v-for="info in infos"><img class="img100" :src="info.img" alt=""></div>
+          <div v-for="info in infos" @click="goBanner(info)"><img class="img100" :src="info.img" alt=""></div>
       </carousel>
     </template>
     <ul class="main-list">
@@ -163,6 +163,9 @@ export default {
       }
       var url = this.lists[idx].router;
       this.$router.push({name: url});
+    },
+    goBanner(info) {
+      location.href = info.dst;
     },
     tip(val) {
       this.tips.show = true;
