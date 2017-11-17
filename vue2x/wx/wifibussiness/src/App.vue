@@ -15,7 +15,7 @@
 </template>
 
 <script>
-
+import CGI from './lib/cgi.js'
 export default {
   name: 'app',
   mounted() {
