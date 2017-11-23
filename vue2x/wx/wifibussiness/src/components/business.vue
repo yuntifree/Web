@@ -86,6 +86,7 @@
 import tip from './lib/tip.vue'
 import logined from './lib/logined.vue'
 import CGI from '../lib/cgi'
+import weixin from '../lib/wx.js'
 
 export default {
   name: 'login',
@@ -136,8 +137,24 @@ export default {
       if (this.selIdx === -1) {
         this.tip('请先选择套餐')
       } else{
-        console.log(123);
+        this.wxReady();
       }
+    },
+    wxReady(param) {
+      var _this = this;
+      wx && wx.chooseWXPay({
+        timestamp: param.timeStamp, 
+        nonceStr: param.nonceStr, // 支付签名随机串，不长于 32 位
+        package: param.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+        signType: param.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+        paySign: param.paySign, // 支付签名
+        success: function (res) {
+            _this.tip('支付完成')
+        },
+        fail: function(res) {
+          _this.tip('pay fail')
+        }
+      })
     },
     tip(val) {
       this.tips.show = true;

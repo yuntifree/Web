@@ -16,8 +16,12 @@
 
 <script>
 import CGI from './lib/cgi.js'
+import weixin from './lib/wx.js'
 export default {
   name: 'app',
+  created() {
+    weixin.init();
+  },
   mounted() {
     this.setCookie();
   },
