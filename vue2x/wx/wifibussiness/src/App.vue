@@ -22,6 +22,9 @@ export default {
   created() {
     weixin.init(function(res)  {
       alert('weixin init:' + res)
+      if (wx.ok) {
+        this.$store.state.wxReady = true;
+      }
     });
   },
   mounted() {

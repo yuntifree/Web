@@ -5,7 +5,8 @@ Vue.use(Vuex);
 const state = {
   // 登录状态
   logined: false,
-  phone: ''
+  phone: '',
+  wxReady: false
 }
 
 export default new Vuex.Store({

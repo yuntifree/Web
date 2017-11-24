@@ -143,7 +143,7 @@ export default {
         }
         CGI.post('/pay/wx_pay', param, (resp)=>{
           if (resp.errno === 0) {
-            this.wxReady(resp);
+            this.wxPay(resp);
           } else {
             this.tip(resp.desc);
           }
@@ -151,21 +151,26 @@ export default {
         
       }
     },
-    wxReady(param) {
+    wxPay(param) {
       var _this = this;
-      wx && wx.chooseWXPay({
-        timestamp: param.timeStamp, 
-        nonceStr: param.nonceStr, // 支付签名随机串，不长于 32 位
-        package: param.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-        signType: param.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-        paySign: param.paySign, // 支付签名
-        success: function (res) {
-            _this.tip('支付完成')
-        },
-        fail: function(res) {
-          _this.tip('pay fail')
-        }
-      })
+      if (this.$store.state.wxReady) {
+        wx && wx.chooseWXPay({
+          timestamp: param.timeStamp, 
+          nonceStr: param.nonceStr, // 支付签名随机串，不长于 32 位
+          package: param.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+          signType: param.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+          paySign: param.paySign, // 支付签名
+          success: function (res) {
+              _this.tip('支付完成')
+          },
+          fail: function(res) {
+            _this.tip('pay fail')
+          }
+        })
+      } else {
+        this.tip('请在微信公众号页面打开')
+      }
+      
     },
     tip(val) {
       this.tips.show = true;

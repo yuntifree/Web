@@ -26,12 +26,7 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
             // 设置一个标记
             wx.ok = false;
             wx.ready(function(){
-                success:function(res) {
-                    alert(res);
-                },
-                fail: function(res) {
-                    alert(res);
-                }
+                wx.ok = true;
             });
 }
 
