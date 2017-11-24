@@ -11,8 +11,8 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
             return null;
 
 }
-            
-        wx_cfg.debug = false;
+        console.log(wx_cfg);
+        wx_cfg.debug = true;
         wx_cfg.jsApiList = [
             'checkJsApi',
             'onMenuShareTimeline',
@@ -24,23 +24,19 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
 
         if (callback) {
             // 设置一个标记
-            wx.ok = false;
-            wx.ready(function(){
-                wx.ok = true;
-            });
-}
+            console.log('wx callback:' +callback);
+            wx.ready(callback);
+        }
 
         wx.error(function(res) {
             if (wx_cfg.debug) {
-                alert(res.errMsg);
+                console.log(res);
             }
         });
         return this;
-
-
 },
 
-    
+
     bindShare: function(cfg) {
         var option = {
             title: cfg.title || '微信分享title',

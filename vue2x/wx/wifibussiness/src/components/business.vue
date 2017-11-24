@@ -143,6 +143,7 @@ export default {
         }
         CGI.post('/pay/wx_pay', param, (resp)=>{
           if (resp.errno === 0) {
+            alert(JOSN.stringify(resp));
             this.wxPay(resp);
           } else {
             this.tip(resp.desc);

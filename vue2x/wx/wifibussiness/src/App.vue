@@ -20,11 +20,9 @@ import weixin from './lib/wx.js'
 export default {
   name: 'app',
   created() {
+    var _this = this;
     weixin.init(function(res)  {
-      alert('weixin init:' + res)
-      if (wx.ok) {
-        this.$store.state.wxReady = true;
-      }
+        _this.$store.state.wxReady = true;
     });
   },
   mounted() {
@@ -32,13 +30,8 @@ export default {
   },
   methods: {
     setCookie() {
-      /*CGI.setCookie('uid','137');
-      CGI.setCookie('token','dfdsfdsfsd');
-      CGI.setCookie('wid','9');*/
       try {
-      //CGI.delCookie('phone');
        var phone = CGI.getCookie('phone');
-       console.log(phone);
        if (phone && phone.length >0) {
          this.$store.state.logined = true;
          this.$store.state.phone = phone;
