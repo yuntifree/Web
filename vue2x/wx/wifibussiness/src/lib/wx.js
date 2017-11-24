@@ -18,12 +18,6 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
             'onMenuShareTimeline',
             'onMenuShareAppMessage',
             'onMenuShareQQ',
-            // 'onMenuShareWeibo',
-            // 'onMenuShareQZone',
-            // 'chooseImage',
-            // 'previewImage',
-            // 'uploadImage',
-            // 'downloadImage',
             'chooseWXPay'
         ];
         wx.config(wx_cfg);
@@ -31,7 +25,14 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
         if (callback) {
             // 设置一个标记
             wx.ok = false;
-            wx.ready(callback);
+            wx.ready(function(){
+                success:function(res) {
+                    alert(res);
+                },
+                fail: function(res) {
+                    alert(res);
+                }
+            });
 }
 
         wx.error(function(res) {

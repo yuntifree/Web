@@ -20,7 +20,9 @@ import weixin from './lib/wx.js'
 export default {
   name: 'app',
   created() {
-    weixin.init();
+    weixin.init(function(res)  {
+      alert('weixin init:' + res)
+    });
   },
   mounted() {
     this.setCookie();
