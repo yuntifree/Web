@@ -137,7 +137,18 @@ export default {
       if (this.selIdx === -1) {
         this.tip('请先选择套餐')
       } else{
-        this.wxReady();
+        var param = {
+          id: this.infos.items[this.selIdx].id,
+          price: this.infos.items[this.selIdx].price
+        }
+        CGI.post('/pay/wx_pay', param, (resp)=>{
+          if (resp.errno === 0) {
+            this.wxReady(resp);
+          } else {
+            this.tip(resp.desc);
+          }
+        })
+        
       }
     },
     wxReady(param) {

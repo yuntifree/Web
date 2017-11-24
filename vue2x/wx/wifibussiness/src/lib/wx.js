@@ -18,14 +18,13 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
             'onMenuShareTimeline',
             'onMenuShareAppMessage',
             'onMenuShareQQ',
-            'getLocation',
             // 'onMenuShareWeibo',
             // 'onMenuShareQZone',
             // 'chooseImage',
             // 'previewImage',
             // 'uploadImage',
             // 'downloadImage',
-            //'chooseWXPay'
+            'chooseWXPay'
         ];
         wx.config(wx_cfg);
 
