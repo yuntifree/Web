@@ -32,12 +32,12 @@ export default {
     setCookie() {
       try {
        var phone = CGI.getCookie('phone');
+       console.log(phone);
        if (phone && phone.length >0) {
          this.$store.state.logined = true;
          this.$store.state.phone = phone;
        } 
       } catch (e){console.log(e.message);}
-      
     }
   }
 }

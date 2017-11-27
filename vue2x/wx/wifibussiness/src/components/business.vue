@@ -143,7 +143,6 @@ export default {
         }
         CGI.post('/pay/wx_pay', param, (resp)=>{
           if (resp.errno === 0) {
-            alert(JOSN.stringify(resp));
             this.wxPay(resp);
           } else {
             this.tip(resp.desc);
@@ -162,7 +161,8 @@ export default {
           signType: param.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
           paySign: param.paySign, // 支付签名
           success: function (res) {
-              _this.tip('支付完成')
+              //_this.tip('支付完成')
+              _this.getData();
           },
           fail: function(res) {
             _this.tip('pay fail')

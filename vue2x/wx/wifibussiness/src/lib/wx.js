@@ -11,8 +11,7 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
             return null;
 
 }
-        console.log(wx_cfg);
-        wx_cfg.debug = true;
+        wx_cfg.debug = false;
         wx_cfg.jsApiList = [
             'checkJsApi',
             'onMenuShareTimeline',
@@ -24,7 +23,6 @@ if (window.wx === undefined || window.wx_cfg === undefined) {
 
         if (callback) {
             // 设置一个标记
-            console.log('wx callback:' +callback);
             wx.ready(callback);
         }
 
