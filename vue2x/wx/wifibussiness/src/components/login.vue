@@ -195,20 +195,24 @@ export default {
     getCode() {
       var _this = this;
       if (this.makePhone()) {
-        CGI.post('/phone/getcode', {phone: this.phone}, (resp)=> {
-          if (resp.errno === 0) {
-            this.tip('获取成功');
-            var count = 60;
-            var timer = setInterval(function(){
-              count--;
-              _this.codetext = count + 's'
-            },1000)
-            if (count == 0) {
-              clearInterval(timer);
-              _this.codetext = '获取验证码'
+        if (this.selIdx == -1) {
+          this.tip('请选择所在区域')
+        } else {
+          CGI.post('/phone/getcode', {phone: this.phone}, (resp)=> {
+            if (resp.errno === 0) {
+              this.tip('获取成功');
+              var count = 60;
+              var timer = setInterval(function(){
+                count--;
+                _this.codetext = count + 's'
+                if (count <= 0) {
+                  clearInterval(timer);
+                  _this.codetext = '获取验证码'
+                }
+              },1000)
             }
-          }
-        })
+          })
+        }
       }
     },
     login() {
@@ -236,6 +240,7 @@ export default {
             this.code = '';
             this.selVal = '请选择所在区域';
             this.selIdx = -1;
+            this.adsChecked = false;
             this.$router.replace('business');
           } else {
             this.tip(resp.desc);

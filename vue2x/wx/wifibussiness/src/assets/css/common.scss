@@ -92,3 +92,19 @@ $color84: #848484;
     color:#2063ff
   }
 }
+%ques-result {
+    position: fixed;
+    top: 0;
+    left: 0;
+    @include containerSize(100%, 100%);
+    background-color: rgba(0,0,0,0.6);
+    .result-ico {
+      display: block;
+      @include containerSize(1.02rem, auto);
+      margin: 3.2rem auto 0.24rem;
+    }
+    .result-text {
+      font-size: 0.36rem;
+      color: #fff;
+    }
+  }

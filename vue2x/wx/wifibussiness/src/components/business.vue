@@ -55,6 +55,9 @@
   .col67 {
     color: #679bfd;
   }
+  .busi-result {
+    @extend  %result;
+  }
 </style>
 <template>
   <div id="login">
@@ -78,6 +81,10 @@
     </ul>
     <button class="g-tac busi-btn" @click="openWifi">开通</button>
     <p class="busi-tip g-tac">单一WiFi账户仅支持单一绑定设备连接</p>
+    <div class="result" v-if="success">
+      <img class="result-ico" src="http://img.yunxingzh.com/06f2ccc4-d076-424d-a7d2-a6d78cf308ee.png" alt="">
+      <p class="result-text g-tac">提交成功</p>
+    </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
@@ -102,6 +109,7 @@ export default {
       selIdx: -1,
       dataReady: false,
       infos: {},
+      success: false
     }
   },
   computed: {
@@ -163,6 +171,10 @@ export default {
           success: function (res) {
               //_this.tip('支付完成')
               _this.getData();
+              _this.success = true;
+              setTimeout(function() {
+                _this.success = false;
+              },3000)
           },
           fail: function(res) {
             _this.tip('pay fail')

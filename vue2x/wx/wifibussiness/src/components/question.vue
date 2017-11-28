@@ -42,20 +42,7 @@
     line-height: 1.5;
   }
   .ques-result {
-    position: fixed;
-    top: 0;
-    left: 0;
-    @include containerSize(100%, 100%);
-    background-color: rgba(0,0,0,0.6);
-    .result-ico {
-      display: block;
-      @include containerSize(1.02rem, auto);
-      margin: 3.2rem auto 0.24rem;
-    }
-    .result-text {
-      font-size: 0.36rem;
-      color: #fff;
-    }
+    @extend  %result
   }
   .img100 {
     @extend %img100;
