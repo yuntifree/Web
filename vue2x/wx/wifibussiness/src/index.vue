@@ -153,12 +153,17 @@ export default {
     },
     goLink(idx) {
       var logined = this.$store.state.logined;
-      console.log(logined);
       if (logined) {
         if (idx === 0) {
           this.lists[0].router = 'business';
         } else if (idx === 1){
           this.lists[1].router = 'freeticket';
+        }
+      } else {
+        if (idx === 0) {
+          this.$store.state.routerName = 'business';
+        } else if (idx === 1){
+          this.$store.state.routerName = 'freeticket';
         }
       }
       var url = this.lists[idx].router;

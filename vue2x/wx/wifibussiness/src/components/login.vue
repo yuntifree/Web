@@ -241,7 +241,7 @@ export default {
             this.selVal = '请选择所在区域';
             this.selIdx = -1;
             this.adsChecked = false;
-            this.$router.replace('business');
+            this.$router.replace(this.$store.state.routerName);
           } else {
             this.tip(resp.desc);
           }

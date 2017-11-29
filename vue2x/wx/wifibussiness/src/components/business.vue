@@ -186,9 +186,9 @@ export default {
     },
     getBtntext() {
       var ret = ''
-      if (infos.payed) {
+      if (this.infos.payed) {
         var nowTime = new Date().getTime();
-        var expire = infos.expire;
+        var expire = this.infos.expire;
         expire = new Date(expire.replace(/-/g, '/')).getTime();
         if (nowTime < expire) {
           ret = '续费';

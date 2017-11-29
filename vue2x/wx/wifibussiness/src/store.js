@@ -6,7 +6,8 @@ const state = {
   // 登录状态
   logined: false,
   phone: '',
-  wxReady: false
+  wxReady: false,
+  routerName: ''
 }
 
 export default new Vuex.Store({

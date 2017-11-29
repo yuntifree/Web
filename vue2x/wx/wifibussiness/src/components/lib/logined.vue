@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     goLink() {
+      this.$store.state.routerName = 'business';
       this.$router.push({name: 'login'})
     }
   }
