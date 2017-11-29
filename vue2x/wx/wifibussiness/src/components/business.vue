@@ -65,10 +65,10 @@
     <div class="busi-info">
       <img class="img100" src="http://img.yunxingzh.com/6991b924-e1ac-4cd5-a278-862c6841056b.png">
       <div class="top-text" v-if="infos.payed">
-        <h2>我的WIFI有效期至</h2>
+        <h2>WIFI有效期至</h2>
         <h3>{{infos.expire | dateFormat('yyyy-MM-dd')}}</h3>
-        <h2>{{infos.expire | dateFormat('hh:mm')}}</h2>
-        <h2 class="wel">欢迎开通WIFI服务</h2>
+        <!--h2>{{infos.expire | dateFormat('hh:mm')}}</h2-->
+        <h2 class="wel">{{welText}}</h2>
       </div>
       <div class="top-text no-bus" v-else>
         <h2>尚未开通WiFi服务</h2>
@@ -80,7 +80,7 @@
       <li v-if="infos.items" v-for="(list,idx) in infos.items" v-text="list.title" @click.stop="setActive(idx)" :class="{active:selIdx==idx}"></li>
     </ul>
     <button class="g-tac busi-btn" @click="openWifi">{{btnText}}</button>
-    <p class="busi-tip g-tac">单一WiFi账户仅支持单一绑定设备连接</p>
+    <p class="busi-tip g-tac">只能同时登陆一台手机噢</p>
     <div class="busi-result" v-if="success">
       <img class="result-ico" src="http://img.yunxingzh.com/06f2ccc4-d076-424d-a7d2-a6d78cf308ee.png" alt="">
       <p class="result-text g-tac">支付成功</p>
@@ -110,7 +110,8 @@ export default {
       dataReady: false,
       infos: {},
       success: false,
-      btnText: ''
+      btnText: '',
+      welText: ''
     }
   },
   computed: {
@@ -185,20 +186,24 @@ export default {
       }
     },
     getBtntext() {
-      var ret = ''
+      var btnText  = '', 
+          welText = '';
       if (this.infos.payed) {
         var nowTime = new Date().getTime();
         var expire = this.infos.expire;
         expire = new Date(expire.replace(/-/g, '/')).getTime();
         if (nowTime < expire) {
-          ret = '续费';
+          btnText = '续费';
+          welText = '欢迎续费'
         } else {
-          ret = '开通';
+          btnText = '开通';
+          welText = '欢迎开通WiFi服务'
         }
       } else {
-        ret = '开通'
+        btnText = '开通'
       }
-      this.btnText = ret;
+      this.btnText = btnText;
+      this.welText = welText;
     },
     tip(val) {
       this.tips.show = true;

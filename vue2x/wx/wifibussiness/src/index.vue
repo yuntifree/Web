@@ -81,7 +81,7 @@
         </div>
       </li>
     </ul>
-    <p class="main-tip g-tac">单一WiFi账户仅支持单一绑定设备连接</p>
+    <p class="main-tip g-tac">只能同时登陆一台手机噢</p>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
 </template>
