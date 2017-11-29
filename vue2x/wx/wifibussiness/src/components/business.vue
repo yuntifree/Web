@@ -79,11 +79,11 @@
       <li class="col67">选择套餐</li>
       <li v-for="(list,idx) in infos.items" v-text="list.title" @click.stop="setActive(idx)" :class="{active:selIdx==idx}"></li>
     </ul>
-    <button class="g-tac busi-btn" @click="openWifi">开通</button>
+    <button class="g-tac busi-btn" @click="openWifi">{{getBtntext(infos.expire)}}</button>
     <p class="busi-tip g-tac">单一WiFi账户仅支持单一绑定设备连接</p>
-    <div class="result" v-if="success">
+    <div class="busi-result" v-if="success">
       <img class="result-ico" src="http://img.yunxingzh.com/06f2ccc4-d076-424d-a7d2-a6d78cf308ee.png" alt="">
-      <p class="result-text g-tac">提交成功</p>
+      <p class="result-text g-tac">支付成功</p>
     </div>
     <tip :tipinfo="tips" @tip-show="tips.show=false"></tip>
   </div>
@@ -109,7 +109,7 @@ export default {
       selIdx: -1,
       dataReady: false,
       infos: {},
-      success: false
+      success: false,
     }
   },
   computed: {
@@ -169,7 +169,6 @@ export default {
           signType: param.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
           paySign: param.paySign, // 支付签名
           success: function (res) {
-              //_this.tip('支付完成')
               _this.getData();
               _this.success = true;
               setTimeout(function() {
@@ -183,7 +182,22 @@ export default {
       } else {
         this.tip('请在微信公众号页面打开')
       }
-      
+    },
+    getBtntext(expire) {
+      var ret = ''
+      if (infos.payed) {
+        var nowTime = new Date().getTime();
+        var expire = expire.replace(/-/g, '/');
+        expire = new Date(expire).getTime();
+        if (nowTime < expire) {
+          ret = '续费';
+        } else {
+          ret = '开通';
+        }
+      } else {
+        ret = '开通'
+      }
+      return ret;
     },
     tip(val) {
       this.tips.show = true;

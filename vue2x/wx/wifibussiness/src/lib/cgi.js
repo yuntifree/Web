@@ -109,7 +109,6 @@ module.exports = {
     },
     dateFormat: function(date, fmt) {
         var date = date.replace(/-/g, '/');
-        console.log(date);
         var d = new Date(date);
         var o = {
             'M+': d.getMonth() + 1, //月份
