@@ -77,9 +77,9 @@
     </div>
     <ul class="login-lists">
       <li class="col67">选择套餐</li>
-      <li v-for="(list,idx) in infos.items" v-text="list.title" @click.stop="setActive(idx)" :class="{active:selIdx==idx}"></li>
+      <li v-if="infos.items" v-for="(list,idx) in infos.items" v-text="list.title" @click.stop="setActive(idx)" :class="{active:selIdx==idx}"></li>
     </ul>
-    <button class="g-tac busi-btn" @click="openWifi">{{getBtntext(infos.expire)}}</button>
+    <button class="g-tac busi-btn" @click="openWifi">{{btnText}}</button>
     <p class="busi-tip g-tac">单一WiFi账户仅支持单一绑定设备连接</p>
     <div class="busi-result" v-if="success">
       <img class="result-ico" src="http://img.yunxingzh.com/06f2ccc4-d076-424d-a7d2-a6d78cf308ee.png" alt="">
@@ -110,6 +110,7 @@ export default {
       dataReady: false,
       infos: {},
       success: false,
+      btnText: ''
     }
   },
   computed: {
@@ -132,7 +133,7 @@ export default {
       CGI.post('/business/info', {}, (resp)=> {
         if (resp.errno===0) {
           this.infos = resp;
-          this.dataReady = true;
+          this.getBtntext();
         } else {
           this.tip(resp.desc);
         }
@@ -183,12 +184,12 @@ export default {
         this.tip('请在微信公众号页面打开')
       }
     },
-    getBtntext(expire) {
+    getBtntext() {
       var ret = ''
       if (infos.payed) {
         var nowTime = new Date().getTime();
-        var expire = expire.replace(/-/g, '/');
-        expire = new Date(expire).getTime();
+        var expire = infos.expire;
+        expire = new Date(expire.replace(/-/g, '/')).getTime();
         if (nowTime < expire) {
           ret = '续费';
         } else {
@@ -197,7 +198,7 @@ export default {
       } else {
         ret = '开通'
       }
-      return ret;
+      this.btnText = ret;
     },
     tip(val) {
       this.tips.show = true;

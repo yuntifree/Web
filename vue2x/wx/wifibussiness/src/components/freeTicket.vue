@@ -32,7 +32,7 @@
   }
 </style>
 <template>
-  <div id="login">
+  <div id="freeTicket">
     <logined :show="getLogined" :phone="getPhone"></logined>
     <div v-if="used">
       <div class="tick-info">
@@ -58,7 +58,7 @@ import CGI from '../lib/cgi'
 import logined from './lib/logined.vue'
 
 export default {
-  name: 'login',
+  name: 'freeTicket',
   data() {
     return {
       tips: {
