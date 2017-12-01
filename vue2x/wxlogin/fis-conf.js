@@ -53,15 +53,21 @@ fis.match('*.css', {
 //    //optimizer: null   //不需要压缩
 //});
 
-//合并
-fis.match('::package', {
-   postpackager: fis.plugin('loader')
-});
 
 //js合并
 fis.match('*.js', {
    packTo: '/js/index.js'
 });
+
+
+//合并
+fis.match('::package', {
+   postpackager: fis.plugin('loader'),
+   package: fis.plugin('map', {
+    '/js/index.js': 'js/jquery.min.js'
+   })
+});
+
 
 //css合并
 //fis.match('*.{less,css}', {
