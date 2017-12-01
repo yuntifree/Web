@@ -1,48 +1,47 @@
-var ads = {
+/*var ads = {
   img: '../../images/act_banner.png',
   url: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.yunxingzh.wireless',
   portalUrl: '',
-}
+}*/
 
 //倒计时
-var timer;
-
-var query = CGI.query();
-var wlanacname = query.wlanacname || ''; //'2043.0769.200.00';
-var wlanuserip = query.wlanuserip || ''; //'10.96.72.28';
-var wlanacip = query.wlanacip || ''; //'120.197.159.10';
-var wlanusermac = query.wlanusermac || ''; //'f45c89987347';
-var wlanapmac = query.wlanapmac || '';
-var firsturl = query.wlanuserfirsturl || 'http://www.baidu.com'; //'http://www.baidu.com';
-var autologin = 0;
-var taobao = 0;
-var logintype = 0;  //1 微信  2淘宝  3App
-var delay = 5;
-var useragent = navigator.userAgent;
-var canClick = true;
-
-//
-var appId = "";
-var secretkey = "";
-var timestamp = new Date().getTime();　　　　 //时间戳(毫秒)
-var shop_id = "";　　 //AP设备所在门店的ID
-var authUrl = ""; //认证服务端URL
-var mac = query.wlanusermac || '';　　　 //用户手机mac地址 安卓设备必需
-var ssid = ""; //AP设备信号名称，非必须
-var bssid = "";
-var jumpUrl = "";
-var connected = false;
-var taobaoCover = {};
-var data = {};
-var notWxUrl = "";
-var BtnHeight = 50;
+var timer,
+    query = CGI.query(),
+    wlanacname = query.wlanacname || '', //'2043.0769.200.00';
+    wlanuserip = query.wlanuserip || '', //'10.96.72.28';
+    wlanacip = query.wlanacip || '', //'120.197.159.10';
+    wlanusermac = query.wlanusermac || '',  //'f45c89987347';
+    wlanapmac = query.wlanapmac || '',
+    firsturl = query.wlanuserfirsturl || 'http://www.baidu.com', //'http://www.baidu.com';
+    wlanssid = query.ssid || '',
+    autologin = 0,
+    taobao = 0,
+    logintype = 0,  //1 微信  2淘宝  3App
+    delay = 5,
+    useragent = navigator.userAgent,
+    canClick = true,
+    appId = "",
+    secretkey = "",
+    timestamp = new Date().getTime(),　　　　 //时间戳(毫秒)
+    shop_id = "",　　 //AP设备所在门店的ID
+    authUrl = "", //认证服务端URL
+    mac = query.wlanusermac || '',　　　 //用户手机mac地址 安卓设备必需
+    ssid = "", //AP设备信号名称，非必须
+    bssid = "",
+    jumpUrl = "",
+    connected = false,
+    taobaoCover = {},
+    data = {},
+    notWxUrl = "",
+    BtnHeight = 50;
 
 var loginParam = {
   wlanacname: wlanacname,
   wlanuserip: wlanuserip,
   wlanacip: wlanacip,
   wlanusermac: wlanusermac,
-  wlanapmac: wlanapmac
+  wlanapmac: wlanapmac,
+  ssid: wlanssid
 };
 
 function errorJump() {
@@ -140,6 +139,7 @@ function font(bFont) {
     wlanusermac: wlanusermac,
     wlanacname: wlanacname,
     wlanapmac: wlanapmac,
+    ssid: wlanssid
   };
   var screenWidth = document.documentElement.clientWidth;
   CGI.get('check_login', param, function(resp) {
@@ -245,7 +245,7 @@ function setLognBtn(type) {
       $('.btn-text').text('淘宝连WiFi');
       $('.btn').addClass('tb-btn');
       break;
-    case 3: 
+    case 3:
       $('.hold-btn').css('background-color','#6cc6f9');
       $('.btn-text').text('官方APP连WiFi');
       $('.btn').addClass('app-btn');
@@ -267,7 +267,6 @@ function initUI() {
     if (autologin) {
       var btnText = $('#btn-login').text()
       if (delay) {
-        //$('.wx-btn').addClass('btn-disable')
         var t = setInterval(function() {
           delay--;
           $('#btn-login').text('(' + delay + ')')
@@ -275,7 +274,7 @@ function initUI() {
             $('.login-view').css('padding-bottom',0);
             $('.min5-view').css('display','block');
             var height = $('.first-view').height();
-            $('.login').animate({'top': -height-3},1500);
+            $('.login').css({'top': -height-3});
             $('.min5-view').css('padding-bottom',BtnHeight);
             clearInterval(t)
             $('#btn-login').text('')
@@ -363,17 +362,13 @@ function getCode() {
 }
 //点击颜色变色
 function touchStart(e) {
-  /*var startColor = taobao ? '#f93' : '#42bd40';
-  var endColor = taobao ? '#F5800B' : '#19A717';
-  $('.btn').css('backgroundColor', endColor);
-  setTimeout(function() {$('.btn').css('backgroundColor', startColor);}, 300);
-*/  var startColor,endColor;
+  var startColor,endColor;
   switch (logintype) {
-    case 1: 
+    case 1:
      startColor = '#42bd40';
      endColor = '#19A717';
      break;
-    case 2: 
+    case 2:
       startColor = '#f93';
       endColor = '#F5800B';
       break;
@@ -381,7 +376,7 @@ function touchStart(e) {
       startColor = '#0099f0';
       endColor = '#3bb6fc';
       break;
-  } 
+  }
   $('.btn').css('backgroundColor', endColor);
   setTimeout(function() {$('.btn').css('backgroundColor', startColor);}, 300);
 }
@@ -430,10 +425,10 @@ function mobOneClick(e) {
 }
 
 function regClick(wx) {
-  var param = loginParam;
   var phone = $('.ipt-phone').val().trim();
   var code = $('.ipt-code').val().trim();
   if (checkPhone(phone)) {
+    var param = loginParam;
     param.phone = phone;
     if (code.length <= 0) {
       tipShow('请输入验证码');
@@ -484,8 +479,7 @@ function portalLogin(param, wx) {
  * @param  {[type]} callWX 是否调用微信
  */
 function oneClickLogin(auto, callWX) {
-  var param = loginParam;
-  CGI.get('one_click_login', param, function(resp) {
+  CGI.get('one_click_login', loginParam, function(resp) {
     if (resp.errno === 0) {
       // 局部刷新，通知iOS能上网了
       genJumpUrl(resp.data);
@@ -527,6 +521,7 @@ function callWeixin() {
   }
 }
 
+//按钮是否可点击
 function disableButton() {
   canClick = false;
   setTimeout(function() {
@@ -534,6 +529,7 @@ function disableButton() {
   }, 3000)
 }
 
+// 淘宝登录 图片显示倒计时
 function countdown() {
   $('.login-view').css('display','none');
   $('.login').css('top','0');
@@ -553,8 +549,8 @@ function countdown() {
     callTaobao();
   })
 }
-//taobao 
-function callTaobao() { 
+//taobao
+function callTaobao() {
   location.replace(notWxUrl);
 }
 //App登录
