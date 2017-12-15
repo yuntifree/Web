@@ -4,7 +4,7 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-            <shrinkable-menu 
+            <shrinkable-menu
                 :shrink="shrink"
                 :menu-list="menuList">
                 <div slot="top" class="logo-con">
@@ -72,9 +72,12 @@ export default {
             this.shrink = !this.shrink;
         },
         handleClickUserDropdown (name) {
-            this.$router.push({
-                name: 'login'
-            });
+            if (name == 'loginout') {
+                Cookies.remove('user')
+                this.$router.push({
+                    name: 'login'
+                });
+            }
         }
     },
     mounted () {

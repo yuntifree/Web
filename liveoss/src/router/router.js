@@ -50,36 +50,46 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
-        path: '/group',
+        path: '/account',
         icon: 'ios-folder',
-        name: 'group',
-        title: 'Group',
+        name: 'account',
+        title: '账户管理',
         component: Main,
         children: [
             {
-                path: 'page1',
+                path: 'income',
                 icon: 'ios-paper-outline',
-                name: 'page1',
-                title: 'Page1',
+                name: 'income',
+                title: '收益记录',
                 component: resolve => { require(['@/views/group/page1/page1.vue'], resolve); }
             },
             {
-                path: 'page2',
+                path: 'withdraw',
                 icon: 'ios-list-outline',
-                name: 'page2',
-                title: 'Page2',
+                name: 'account_withdraw',
+                title: '提现记录',
                 component: resolve => { require(['@/views/group/page2/page2.vue'], resolve); }
+            },
+            {
+                path: 'balance',
+                icon: 'ios-paper-outline',
+                name: 'account_balance',
+                title: '余额管理',
+                component: resolve => { require(['@/views/group/page1/page1.vue'], resolve); }
             }
         ]
     },
     {
-        path: '/page',
-        icon: 'ios-paper',
-        title: 'Page',
-        name: 'page',
+        path: '/videos',
+        icon: 'ios-folder',
+        title: '视频管理',
+        name: 'videos',
         component: Main,
         children: [
-            { path: 'index', title: 'Page', name: 'page_index', component: resolve => { require(['@/views/page/page.vue'], resolve); } }
+            { path: 'add', icon: 'ios-list-outline', title: '新开直播', name: 'videos_add', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
+            { path: 'list', icon: 'ios-list-outline', title: '视频列表', name: 'videos_list', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
+            { path: 'channel', icon: 'ios-list-outline', title: '频道管理', name: 'videos_channel', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
+            { path: 'stat', icon: 'ios-list-outline', title: '视频统计', name: 'videos_stat', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
         ]
     }
 ];
