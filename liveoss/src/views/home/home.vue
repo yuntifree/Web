@@ -56,19 +56,28 @@
         <TabPane label="认证信息">
           <confirm></confirm>
         </TabPane>
-        <TabPane label="密码设置">密码设置</TabPane>
-        <TabPane label="工单管理">工单管理</TabPane>
+        <TabPane label="密码设置">
+          <password></password>
+        </TabPane>
+        <TabPane label="工单管理">
+          <workorder></workorder>
+        </TabPane>
       </Tabs>
     </div>
   </div>
 </template>
 
 <script>
-import confirm from './confirm.vue'
+import confirm from './confirm.vue';
+import password from './password.vue'
+import workorder from './workOrder.vue'
+
 export default {
     name: 'home',
     components: {
-      confirm
+      confirm,
+      password,
+      workorder
     },
     data() {
       return {
