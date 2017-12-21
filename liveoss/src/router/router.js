@@ -1,4 +1,7 @@
 import Main from '@/views/Main.vue';
+import home from '@/views/home/home.vue';
+import widthdraw from '@/views/group/page1/widthdraw.vue';
+import balance from '@/views/group/page1/balance.vue';
 
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
@@ -43,7 +46,7 @@ export const otherRouter = {
     name: 'otherRouter',
     component: Main,
     children: [
-        { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: resolve => { require(['@/views/home/home.vue'], resolve); } }
+        { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: home  }
     ]
 };
 
@@ -68,14 +71,14 @@ export const appRouter = [
                 icon: 'ios-list-outline',
                 name: 'account_withdraw',
                 title: '提现记录',
-                component: resolve => { require(['@/views/group/page2/page2.vue'], resolve); }
+                component: widthdraw 
             },
             {
                 path: 'balance',
                 icon: 'ios-paper-outline',
                 name: 'account_balance',
                 title: '余额管理',
-                component: resolve => { require(['@/views/group/page1/page1.vue'], resolve); }
+                component: balance
             }
         ]
     },
