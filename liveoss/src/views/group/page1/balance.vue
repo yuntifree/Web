@@ -81,7 +81,7 @@
               <Icon type="ios-loop-strong"></Icon>
             </a>
             <Row :gutter="16">
-              <Col class-name="recharge" :lg="12" :md="24" v-for="item in recharge">
+              <Col class-name="recharge" :lg="12" :md="24" v-for="(item,idx) in recharge" :key="idx">
                 <div class="recharge-img"><img :src="item"/></div>
                 <Button type="warning">充值</Button>
               </Col>

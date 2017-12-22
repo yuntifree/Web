@@ -2,6 +2,12 @@ import Main from '@/views/Main.vue';
 import home from '@/views/home/home.vue';
 import widthdraw from '@/views/group/page1/widthdraw.vue';
 import balance from '@/views/group/page1/balance.vue';
+import add from '@/views/group/video/add.vue';
+import videolist from '@/views/group/video/list.vue';
+import statistics from '@/views/group/video/statistics.vue';
+import channel from '@/views/group/video/channel.vue';
+
+
 
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
@@ -89,10 +95,29 @@ export const appRouter = [
         name: 'videos',
         component: Main,
         children: [
-            { path: 'add', icon: 'ios-list-outline', title: '新开直播', name: 'videos_add', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
-            { path: 'list', icon: 'ios-list-outline', title: '视频列表', name: 'videos_list', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
-            { path: 'channel', icon: 'ios-list-outline', title: '频道管理', name: 'videos_channel', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
-            { path: 'stat', icon: 'ios-list-outline', title: '视频统计', name: 'videos_stat', component: resolve => { require(['@/views/page/page.vue'], resolve); } },
+            { path: 'add', 
+                icon: 'ios-list-outline', 
+                title: '新开直播', 
+                name: 'videos_add', 
+                component: add 
+            },
+            { path: 'list', 
+                icon: 'ios-list-outline', 
+                title: '视频列表', 
+                name: 'videos_list', 
+                component: videolist
+            },
+            { path: 'channel',
+             icon: 'ios-list-outline', 
+             title: '频道管理',
+              name: 'videos_channel', 
+              component: channel
+            },
+            { path: 'stat',
+                 icon: 'ios-list-outline', 
+                 title: '视频统计', name: 'videos_stat', 
+                 component: statistics 
+            },
         ]
     }
 ];

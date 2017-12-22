@@ -15,7 +15,7 @@
 <template>
   <div class="confirm-main">
     <Row type="flex" justify="end">
-      <Col><Button type="info">创建工单</Button></Col>
+      <Col><Button type="info" @click="createOrder=true">创建工单</Button></Col>
     </Row>
     <Table border :columns="columns" :data="data" :height="tableHeight"></Table>
     <Page class="page-next" :total="pageTotal" size="small" :page-size="pageSize" show-elevator show-total></Page>
@@ -72,6 +72,10 @@
             </Upload>
           </FormItem>
         </Form>
+        <div slot="footer">
+          <Button type="primary" size="default" @click="handleSubmit">创建</Button>
+          <Button type="primary" size="default" @click="createOrder=false">取消</Button>
+        </div>
     </Modal>
   </div>
 </template>
@@ -87,7 +91,7 @@ Vue.use(iviewArea);
       return {
         pageSize: 30,
         workModalShow: false,
-        createOrder: true,
+        createOrder: false,
         columns: [{
             title: 'ID',
             key: 'Id',
@@ -194,6 +198,7 @@ Vue.use(iviewArea);
             this.$Message.error('Fail!');
           }
         })
+        this.createOrder = false;
       },
       handleReset (name) {
         this.$refs[name].resetFields();
