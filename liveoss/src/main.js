@@ -11,6 +11,12 @@ new Vue({
     el: '#app',
     router: router,
     store: store,
+    http: {
+      root: '/root',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    },
     render: h => h(App),
     mounted () {
         this.$store.commit('updateMenulist');

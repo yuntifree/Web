@@ -22,11 +22,11 @@
             <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
         </FormItem>
         <FormItem label="访问权限" prop="permiss">
-          <RadioGroup v-model="formValidate.permiss" class="video-add-limit">
+          <RadioGroup v-model="formValidate.permiss" class="video-add-limit" @on-change="getPermiss">
             <div><Radio label="public">公开</Radio></div>
-            <div><Radio label="female">密码</Radio><Input class="video-radio-input" v-model="formValidate.password" placeholder="Enter your name" :disabled="true"></Input></div>
-            <div><Radio label="pay">支付</Radio><Input class="video-radio-input" v-model="formValidate.pay" placeholder="Enter your name" :disabled="true"></Input></div>
-            <div><Radio label="pay">支付有效期(小时)</Radio><Input class="video-radio-input" v-model="formValidate.limitTime" placeholder="Enter your name" :disabled="true"></Input></div>
+            <div><Radio label="password">密码</Radio><Input class="video-radio-input" v-model="formValidate.password" placeholder="Enter your name" :disabled="passwordDisabled"></Input></div>
+            <div><Radio label="pay">支付</Radio><Input class="video-radio-input" v-model="formValidate.pay" placeholder="Enter your name" :disabled="payDisabled"></Input></div>
+            <div>支付有效期(小时)<Input class="video-radio-input" v-model="formValidate.limitTime" placeholder="Enter your name" :disabled="limitDisabled"></Input></div>
           </RadioGroup>
         </FormItem>
         <FormItem label="分辨率" v-model="formValidate.resolution">
@@ -98,7 +98,10 @@
             { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
             { type: 'string', min: 20, message: 'Introduce no less than 20 words', trigger: 'blur' }
           ]
-        }
+        },
+        passwordDisabled: true,
+        limitDisabled: true,
+        payDisabled: true,
       }
     },
     methods: {
@@ -108,7 +111,7 @@
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
             if (valid) {
-                this.$Message.success('Success!');
+              console.log(this.formValidate)
             } else {
                 this.$Message.error('Fail!');
             }
@@ -116,6 +119,21 @@
       },
       handleReset (name) {
         this.$refs[name].resetFields();
+      },
+      getPermiss() {
+        var permiss = this.formValidate.permiss
+        switch (this.formValidate.permiss) {
+          case 'password':
+            this.payDisabled = true;
+            this.limitDisabled = true;
+            this.passwordDisabled = false;
+            break;
+          case 'pay': 
+            this.passwordDisabled = true;
+            this.payDisabled = false;
+            this.limitDisabled = false;
+            break;
+        }
       }
     }
   }
