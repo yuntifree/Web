@@ -1,5 +1,4 @@
 import axios from 'axios';
-import env from '../../build/env';
 import semver from 'semver';
 import packjson from '../../package.json';
 
@@ -11,9 +10,9 @@ util.title = function (title) {
     window.document.title = title;
 };
 
-const ajaxUrl = env === 'development'
+const ajaxUrl = process.env === 'development'
     ? 'http://127.0.0.1:8888'
-    : env === 'production'
+    : process.env === 'production'
     ? 'https://www.url.com'
     : 'https://debug.url.com';
 
