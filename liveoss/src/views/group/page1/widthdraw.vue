@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import CGI from '../../../libs/cgi.js'
+
 export default {
   name: 'page1',
   computed: {
@@ -65,12 +67,15 @@ export default {
       pageSize: 30,
       columns1: [{
           title: 'ID',
-          key: 'Id',
+          key: 'id',
           align: 'center'
         },{
           title: '提现金额',
           key: 'widthdraw',
-          align: 'center'
+          align: 'center',
+          render: (h,params) => {
+            return h('div', (params.row.amount / 100).toFixed(2))
+          }
         },{
           title: '备注',
           key: 'remark',
@@ -84,7 +89,7 @@ export default {
           key: 'status',
           align: 'center',
           render: (h,params) => {
-            return h('div', params.row.status ? '已审核' : '审核中')
+            return h('div', this.makeStatus(params.row.status))
           }
         },{
           title: '操作',
@@ -111,28 +116,30 @@ export default {
           }
         }
       ],
-      initTable: [{
-        Id: 1000,
-        widthdraw: 134,
-        remark: '上传视频',
-        status: 0,
-        applyTime: '2017-12-19 14:38:46'
-      },{
-        Id: 1001,
-        widthdraw: 10,
-        remark: '观看视频100次',
-        status: 1,
-        applyTime: '2017-12-09 18:08:26'
-      }],
+      initTable: [],
       data1:[]
     }
   },
   mounted() {
+    console.log(1);
     this.init();
   },
   methods: {
     init() {
-      this.data1 = this.initTable;
+      var param = {
+        seq: 0,
+        num: 30
+      }
+      console.log(param);
+      CGI.post('withdraw/records', param, (resp)=> {
+        if (resp.errno === 0) {
+          if (resp.infos && resp.infos.length>0) {
+            this.data1 = this.initTable = resp.infos;
+          }
+        } else {
+          this.$Message.info(resp.desc);
+        }
+      })
     },
     cancel() {
       //this.modalShow = false;

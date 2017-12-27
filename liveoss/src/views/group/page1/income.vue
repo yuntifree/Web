@@ -48,10 +48,10 @@
           @on-cancel="cancel"
           :scrollable="true"
           class-name="ivu-modal-table">
-          <p><span class="modal-list-key">视频名称：</span>少儿魔童大赛</p>
-          <p><span class="modal-list-key">收益描述：</span>{{modalVal.income}}</p>
-          <p><span class="modal-list-key">金额：</span>{{modalVal.amount}}</p>
-          <p><span class="modal-list-key">时间：</span>{{modalVal.incomeTime}}</p>
+          <p><span class="modal-list-key">视频名称：</span>{{modalVal.id}}</p>
+          <p><span class="modal-list-key">收益描述：</span>{{modalVal.depict}}</p>
+          <p><span class="modal-list-key">金额：</span>{{(modalVal.amount/100).toFixed(2)}}</p>
+          <p><span class="modal-list-key">时间：</span>{{modalVal.incomeTime | dateFormat}}</p>
           <p><span class="modal-list-key">支付者昵称：</span>{{modalVal.nickname}}</p>
           <p><span class="modal-list-key">支付者头像:</span><img :src="modalVal.avatar" style="width: 60px;height: 60px"></p>
       </Modal>
@@ -59,8 +59,9 @@
 </template>
 
 <script>
+import CGI from '../../../libs/cgi.js'
 export default {
-  name: 'page1',
+  name: 'income',
   computed: {
     getHeight() {
       return this.$store.state.app.contentHeight;
@@ -86,20 +87,20 @@ export default {
       pageSize: 30,
       columns1: [{
           title: 'ID',
-          key: 'Id',
+          key: 'id',
           align: 'center'
         },{
-          title: 'videoId',
-          key: 'videoId',
+          title: '视频id',
+          key: 'hid',
           align: 'center'
         },{
           title: '支付者头像',
-          key: 'avatar',
+          key: 'headurl',
           align: 'center',
           render: (h,params) => {
             return h('img',{
               attrs: {
-                src: params.row.avatar
+                src: params.row.headurl
               },
               style: {
                 width: '60px',
@@ -114,20 +115,26 @@ export default {
           align: 'center'
         },{
           title: '收益说明',
-          key: 'income',
+          key: 'depict',
           align: 'center'
         },{
           title: '金额(元)',
-          key: 'amount',
-          align: 'center'
+          key: 'price',
+          align: 'center',
+          render: (h,params) => {
+            return h('div', (params.row.headurl /100).toFixed(2))
+          }
         },{
           title: '支付用户',
-          key: 'userId',
+          key: 'uid',
           align: 'center'
         },{
-          title: '收益时间',
-          key: 'incomeTime',
-          align: 'center'
+          title: '支付时间',
+          key: 'ctime',
+          align: 'center',
+          render: (h,params) => {
+            return h('div', new Date(this.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+          }
         },{
           title: '操作',
           key: 'operate',
@@ -153,36 +160,34 @@ export default {
           }
         }
       ],
-      initTable: [{
-        Id: 10847,
-        videoId: 13418,
-        videoName: '少儿“魔童大赛',
-        nickname: 'John Brown',
-        avatar: 'http://wx.qlogo.cn/mmopen/vi_32/WrLtFUfyajJahiaKl3iaibYghtzj6Eic2A3qVR7hbnwicUrM6AS8zMnCpia4dNzFpiccVBoNlZVeC3DAVKnNickTjF4ibAg/0',
-        income: '观看视频支付了0.01元',
-        amount: 0.01,
-        userId: 861963,
-        incomeTime: '2017-12-19 14:38:46'
-      },{
-        Id: 10644,
-        videoId: 13418,
-        nickname: '周伟',
-        videoName: '少儿“魔童大赛”',
-        avatar: 'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIQJlbUdj67UId4oSAr7cyuJBxia39URgh7VV4BW2XEQSDiaIibVJtSg2GPUK4UnAA4ibSdiaEBMxIpjicg/0',
-        income: '观看视频支付了0.01元',
-        amount: 0.01,
-        userId: 861862,
-        incomeTime: '2017-12-18 14:34:29'
-      }],
+      initTable: [],
       data1:[]
     }
   },
+  created() {
+    Date.prototype.Format = this.initFormatter()
+  },
   mounted() {
-    this.init();
+    if (this.initTable.length <= 0) {
+      this.init();
+    }
   },
   methods: {
     init() {
-      this.data1 = this.initTable;
+      var param = {
+        seq: 0,
+        num: 30
+      }
+      CGI.post('order/records', param, (resp)=> {
+        if (resp.errno === 0) {
+          if (resp.infos && resp.infos.length>0) {
+            this.data1 = this.initTable = resp.infos;
+          }
+        } else {
+          this.$Message.info(resp.desc);
+        }
+      })
+      //this.data1 = this.initTable;
     },
     show(idx) {
       this.modalVal = this.data1[idx];
@@ -213,6 +218,32 @@ export default {
         this.data1 = this.initTable;
         this.data1 = this.search(this.data1, {Id: this.searchId});
     },
+    initFormatter(){  
+      new Date().prototype.Format = function(date, fmt) { //  
+        var dateStr = (date+'').replace(/-/g,"/");
+        var d = new Date(dateStr);
+        if (isNaN(d.getDate())) {
+          return 'Invalid date'
+        }
+        var o = {
+          'y+': d.getFullYear(),
+          'M+': d.getMonth() + 1, //月份
+          'd+': d.getDate(), //日
+          'h+': d.getHours(), //小时
+          'm+': d.getMinutes(), //分
+          's+': d.getSeconds(), //秒
+          'q+': Math.floor((d.getMonth() + 3) / 3), //季度
+          //'S': d.getMilliseconds() //毫秒
+        };
+
+        //o['S'] = ('000' + o['S']).substr(('' + o['S']).length);
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (d.getFullYear() + '').substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp('(' + k + ')').test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+        return fmt;  
+      }  
+    } 
   }
 };
 </script>

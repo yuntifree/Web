@@ -95,6 +95,8 @@
 </template>
 
 <script>
+import CGI from '../../../libs/cgi.js'
+var status = {};
 export default {
   name: 'page1',
   computed: {
@@ -129,26 +131,29 @@ export default {
       recharge: ['http://upload.xiangbojiubo.com/15065011821017.png?imageView/2/w/180','http://upload.xiangbojiubo.com/15065011823127.png?imageView/2/w/180','http://upload.xiangbojiubo.com/15065011829683.png?imageView/2/w/180','http://upload.xiangbojiubo.com/15096134266256.png?imageView/2/w/180'],
       columns1: [{
           title: 'ID',
-          key: 'Id',
+          key: 'id',
           align: 'center'
         },{
-          title: '提现金额',
+          title: '订单号',
           key: 'widthdraw',
           align: 'center'
         },{
-          title: '备注',
-          key: 'remark',
+          title: '说明',
+          key: 'depict',
           align: 'center'
         },{
-          title: '申请时间',
-          key: 'applyTime',
-          align: 'center'
+          title: '支付时间',
+          key: 'ctime',
+          align: 'center',
+          render: (h,params) => {
+            return h('div', new Date(params.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+          }
         },{
           title: '状态',
           key: 'status',
           align: 'center',
           render: (h,params) => {
-            return h('div', params.row.status ? '已审核' : '审核中')
+            return h('div', status.make(params.row.status))
           }
         },{
           title: '操作',
@@ -175,28 +180,32 @@ export default {
           }
         }
       ],
-      initTable: [{
-        Id: 1000,
-        widthdraw: 134,
-        remark: '上传视频',
-        status: 0,
-        applyTime: '2017-12-19 14:38:46'
-      },{
-        Id: 1001,
-        widthdraw: 10,
-        remark: '观看视频100次',
-        status: 1,
-        applyTime: '2017-12-09 18:08:26'
-      }],
+      initTable: [],
       data1:[]
     }
   },
+  created() {
+    Date.prototype.Format = this.initFormatter();
+    status.prototype.make = this.initMakeStatus();
+  },
   mounted() {
-    this.init();
+    if (this.initTable.length <= 0) {
+      this.init();
+    }
   },
   methods: {
     init() {
-      this.data1 = this.initTable;
+      var param = {
+        seq: 0,
+        num: 30
+      }
+      CGI.post('order/recharges', param, (resp)=> {
+        if (resp.errno === 0) {
+          console.log(resp)
+        } else {
+          this.$Message.info(resp.desc);
+        }
+      })
     },
     changeLimit() {
       console.log('change');
@@ -223,6 +232,23 @@ export default {
         this.data1 = this.initTable;
         this.data1 = this.search(this.data1, {Id: this.searchId});
     },
+    initFormatter() {
+      new Date().prototype.Format = CGI.dateFormat();
+    },
+    initMakeStatus() {
+      status.prototype.makeStatus = function(param) {
+        var ret ='';
+        switch (param) {
+          case 0:
+            ret = '未支付'
+            break;
+          case 1:
+            ret = '支付成功'
+            break;
+        }
+        return ret;
+      }
+    }
   }
 };
 </script>

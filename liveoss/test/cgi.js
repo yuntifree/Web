@@ -2,7 +2,7 @@ var express = require('express');
 var agent = require('superagent');
 var router = express.Router();
 //var HOST = 'http://114.55.36.175/oss-bin/'
-var HOST = 'http://120.76.236.185:9898/'
+var HOST = 'http://video.yunxingzh.com/'
 
 
 

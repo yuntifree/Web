@@ -1,5 +1,6 @@
 import Main from '@/views/Main.vue';
 import home from '@/views/home/home.vue';
+import income from '@/views/group/page1/income.vue';
 import widthdraw from '@/views/group/page1/widthdraw.vue';
 import balance from '@/views/group/page1/balance.vue';
 import add from '@/views/group/video/add.vue';
@@ -70,7 +71,7 @@ export const appRouter = [
                 icon: 'ios-paper-outline',
                 name: 'income',
                 title: '收益记录',
-                component: resolve => { require(['@/views/group/page1/page1.vue'], resolve); }
+                component: income
             },
             {
                 path: 'withdraw',

@@ -14,7 +14,7 @@ const ajaxUrl = process.env === 'development'
     ? 'http://127.0.0.1:8888'
     : process.env === 'production'
     ? 'https://www.url.com'
-    : 'https://debug.url.com';
+    : 'http://video.yunxingzh.com/';
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,

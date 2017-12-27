@@ -46,7 +46,7 @@
     <Table v-show="listViewShow" border :columns="columns1" :data="data1" :height="tableHeight"></Table>
     <Table v-show="listDataShow" border :columns="columns2" :data="data2" :height="tableHeight"></Table>
     <Page class="page-next" :total="pageTotal" size="small" :page-size="pageSize" show-elevator show-total></Page>
-    <Tabs value="basic">
+    <Tabs v-show="listEditShow" value="basic">
       <TabPane label="基本信息" name="basic">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
           <FormItem label="分享标题" prop="title">
@@ -142,8 +142,10 @@
 </template>
 
 <script>
+import CGI from '../../../libs/cgi.js'
+var status = {};
 export default {
-  name: 'page1',
+  name: 'list',
   computed: {
     getHeight() {
       return this.$store.state.app.contentHeight;
@@ -166,6 +168,7 @@ export default {
       selIdx: -1,
       listViewShow: true,
       listDataShow: false,
+      listEditShow: false,
       formValidate: {
         title: '',
         desc: '',
@@ -175,10 +178,10 @@ export default {
         resolution: '',
         tag: '',
         startTime: '',
-        push: 'rtmp://pili-publish.xiangbojiubo.com/vcdn/390662?e=1513937045&token=buysOo-In92etTxTHOORWVoI13pVX_wSED3r9Mp4:K6sFL23r_sFvIeqv8ZI8vAlWTPw=',
-        rtmp: 'rtmp://pili-live-rtmp.xiangbojiubo.com/vcdn/390662',
-        hls: 'http://pili-live-hls.xiangbojiubo.com/vcdn/390662.m3u8',
-        flv: 'http://pili-live-hdl.xiangbojiubo.com/vcdn/390662.flv'
+        push: '',
+        rtmp: '',
+        hls: '',
+        flv: ''
       },
       ruleValidate: {
         title: [
@@ -207,42 +210,78 @@ export default {
       },
       columns1: [{
           title: 'ID',
-          key: 'Id',
+          key: 'id',
           align: 'center'
         },{
-          title: '视频名称',
-          key: 'name',
+          title: '标题',
+          key: 'title',
           align: 'center'
         },{
-          title: '权限',
-          key: 'permiss',
-          align: 'center'
+          title: '封面',
+          key: 'cover',
+          align: 'center',
+          render: (h,params) => {
+            return h('img',{
+              attrs: {
+                src: params.row.headurl
+              },
+              style: {
+                width: '60px',
+                height: '60px',
+                margin: '10px'
+              }
+            })
+          }
         },{
-          title: '用户ID',
-          key: 'userId',
-          align: 'center'
-        },{
-          title: '支付用户',
-          key: 'userId',
+          title: '说明',
+          key: 'depict',
           align: 'center'
         },{
           title: '开始时间',
-          key: 'startTime',
-          align: 'center'
+          key: 'ctime',
+          align: 'center',
+          render: (h,params) => {
+            return h('div', new Date(this.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+          }
         },{
           title: '结束时间',
-          key: 'endTime',
+          key: 'ftime',
+          align: 'center',
+          render: (h,params) => {
+            return h('div', new Date(this.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+          }
+        },{
+          title: '访问权限',
+          key: 'authority',
           align: 'center'
         },{
-          title: '排序',
-          key: 'sort',
+          title: '密码',
+          key: 'ftime',
           align: 'center'
+        },{
+          title: '价格',
+          key: 'price',
+          align: 'center',
+          render: (h,params) => {
+            return h('div', (params.row.headurl /100).toFixed(2))
+          }
         },{
           title: '状态',
           key: 'status',
           align: 'center',
-          render: (h, params)=> {
-            return h('div',params.row.status)
+          render: (h,params) => {
+            return h('div', status.make(params.row.status))
+          }
+        },{
+          title: '录播地址',
+          key: 'replay',
+          align: 'center',
+          render: (h,params) => {
+            return h('a',{
+              attrs: {
+                href: params.row.replay
+              }
+            },params.row.replay)
           }
         },{
           title: '操作',
@@ -317,73 +356,34 @@ export default {
           }
         }
       ],
-      initTable: [{
-        Id: 10847,
-        name: '少儿“魔童大赛"',
-        permiss: '支付',
-        userId: 390661,
-        startTime: '2017-12-19 14:38:46',
-        endTime: '',
-        sort: 50,
-        status: 1,
-      },{
-        Id: 10886,
-        name: '紫光影业',
-        permiss: '密码',
-        userId: 390661,
-        startTime: '2017-12-19 14:38:46',
-        endTime: '2017-12-19 16:38:46',
-        sort: 30,
-        status: 1,
-      }],
-      data1:[],
-      columns2: [{
-        title: 'ID',
-        key: 'Id',
-        align: 'center'
-      },{
-        title: 'name',
-        key: 'name',
-        align: 'center'
-      },{
-        title: '头像',
-        key: 'avatar',
-        align: 'center',
-        render: (h,params) => {
-          return h('img',{
-            attrs: {
-              src: params.row.avatar
-            },
-            style: {
-              width: '60px',
-              height: '60px',
-              margin: '10px'
-            }
-          })
-        }
-      },{
-        title: '邀请人数',
-        key: 'invNum',
-        align: 'center'
-      },{
-        title: '付款人数',
-        key: 'payNum',
-        align: 'center'
-      },{
-        title: '联系信息',
-        key: 'contact',
-        align: 'center'
-      }],
+      initTable: [],
       initTable2: [],
       data2: []
     }
+  },
+  created() {
+    Date.prototype.Format = this.initFormatter()
   },
   mounted() {
     this.init();
   },
   methods: {
     init() {
-      this.data1 = this.initTable;
+      var param = {
+        seq: 0,
+        num: 30
+      }
+      console.log(param);
+      CGI.post('live/records', param, (resp)=> {
+        if (resp.errno === 0) {
+          if (resp.infos && resp.infos.length>0) {
+            this.data1 = this.initTable = resp.infos;
+          }
+        } else {
+          this.$Message.info(resp.desc);
+        }
+      })
+      //this.data1 = this.initTable;
       this.data2 = this.initTable2;
     },
     checkSure(idx, chkbtn) {
@@ -421,6 +421,8 @@ export default {
     },
     show(idx) {
       this.selIdx = idx;
+      this.listDataShow = show;
+      this.listEditVal = CGI.clone(this.data1[idx]);
     },
     search (data, argumentObj) {
       let res = data;
@@ -444,7 +446,28 @@ export default {
         this.data2 = this.initTable2;
         this.data2 = this.search(this.data2, {Id: this.searchId});
       }
+    },
+    initFormatter(){  
+      new Date().prototype.Format = CGI.dateFormat(date,fmt);
+    },
+    initMakeStatus() {
+      status.prototype.makeStatus = function(param) {
+        var ret ='';
+        switch (param) {
+          case 0:
+            ret = '创建'
+            break;
+          case 1:
+            ret = '推流中'
+            break;
+          case 1:
+            ret = '结束'
+            break;
+        }
+        return ret;
+      }
     }
+
   }
 };
 </script>
