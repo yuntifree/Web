@@ -35,7 +35,7 @@
       <div class="content-top">
         <Row type="flex" justify="end">
           <Col>
-            <div class="search"><Input icon="search" v-model="searchId"  @on-change="handleSearch" placeholder="视频ID"></Input></div>
+            <div class="search"><Input icon="search" v-model="searchText"  @on-change="handleSearch" placeholder="视频ID"></Input></div>
           </Col>
         </Row> 
       </div>
@@ -70,12 +70,12 @@ export default {
       return this.$store.state.app.contentHeight - 90;
     },
     pageTotal() {
-      return this.data1.length;
+      return this.data1.length || 0;
     }
   },
   data() {
     return  {
-      searchId: '',
+      searchText: '',
       modalShow: false,
       modalVal: {
         income: '',
@@ -133,7 +133,7 @@ export default {
           key: 'ctime',
           align: 'center',
           render: (h,params) => {
-            return h('div', new Date(this.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+            return h('div', new Date().Format(params.row.ctime, 'yyyy-MM-dd hh:mm:ss'))
           }
         },{
           title: '操作',
@@ -165,18 +165,19 @@ export default {
     }
   },
   created() {
-    Date.prototype.Format = this.initFormatter()
+    this.initFormatter();
+    this.init();
   },
   mounted() {
-    if (this.initTable.length <= 0) {
-      this.init();
-    }
   },
   methods: {
-    init() {
+    init(search) {
       var param = {
         seq: 0,
         num: 30
+      }
+      if (search) {
+        param.search = search;
       }
       CGI.post('order/records', param, (resp)=> {
         if (resp.errno === 0) {
@@ -187,7 +188,6 @@ export default {
           this.$Message.info(resp.desc);
         }
       })
-      //this.data1 = this.initTable;
     },
     show(idx) {
       this.modalVal = this.data1[idx];
@@ -215,35 +215,11 @@ export default {
         return res;
     },
     handleSearch () {
-        this.data1 = this.initTable;
-        this.data1 = this.search(this.data1, {Id: this.searchId});
+        this.init(this.searchText)
     },
-    initFormatter(){  
-      new Date().prototype.Format = function(date, fmt) { //  
-        var dateStr = (date+'').replace(/-/g,"/");
-        var d = new Date(dateStr);
-        if (isNaN(d.getDate())) {
-          return 'Invalid date'
-        }
-        var o = {
-          'y+': d.getFullYear(),
-          'M+': d.getMonth() + 1, //月份
-          'd+': d.getDate(), //日
-          'h+': d.getHours(), //小时
-          'm+': d.getMinutes(), //分
-          's+': d.getSeconds(), //秒
-          'q+': Math.floor((d.getMonth() + 3) / 3), //季度
-          //'S': d.getMilliseconds() //毫秒
-        };
-
-        //o['S'] = ('000' + o['S']).substr(('' + o['S']).length);
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (d.getFullYear() + '').substr(4 - RegExp.$1.length));
-        for (var k in o)
-          if (new RegExp('(' + k + ')').test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
-        return fmt;  
-      }  
-    } 
+    initFormatter() {  
+      Date.prototype.Format = CGI.dateFormat;
+    }
   }
 };
 </script>

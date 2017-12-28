@@ -69,7 +69,7 @@ export default {
       return this.$store.state.app.contentHeight - 90;
     },
     pageTotal() {
-      return this.data1.length;
+      return this.data1.length || 0;
     }
   },
   data() {

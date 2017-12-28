@@ -35,7 +35,7 @@
             <Button type="primary"  :disable="selIdx==-1">提现</Button>
           </Col>
           <Col>
-            <div class="search"><Input icon="search" v-model="searchId"  @on-change="handleSearch" placeholder="视频ID"></Input></div>
+            <div class="search"><Input icon="search" v-model="searchText"  @on-change="handleSearch" placeholder="视频ID"></Input></div>
           </Col>
         </Row> 
       </div>
@@ -57,12 +57,12 @@ export default {
       return this.$store.state.app.contentHeight - 90;
     },
     pageTotal() {
-      return this.data1.length;
+      return this.data1.length || 0;
     }
   },
   data() {
     return  {
-      searchId: '',
+      searchText: '',
       selIdx: -1,
       pageSize: 30,
       columns1: [{
@@ -83,7 +83,10 @@ export default {
         },{
           title: '申请时间',
           key: 'applyTime',
-          align: 'center'
+          align: 'center',
+          render: (h,params)=> {
+            return('div', new Date().Format(params.row.applyTime, 'yyyy-MM-dd'))
+          }
         },{
           title: '状态',
           key: 'status',
@@ -121,14 +124,17 @@ export default {
     }
   },
   mounted() {
-    console.log(1);
     this.init();
+    this.initFormatter()
   },
   methods: {
-    init() {
+    init(search) {
       var param = {
         seq: 0,
         num: 30
+      }
+      if (search) {
+        param.search = search;
       }
       console.log(param);
       CGI.post('withdraw/records', param, (resp)=> {
@@ -160,9 +166,11 @@ export default {
         return res;
     },
     handleSearch () {
-        this.data1 = this.initTable;
-        this.data1 = this.search(this.data1, {Id: this.searchId});
+        this.init(this.searchText)
     },
+    initFormatter() {
+      Date.prototype.Format = CGI.dateFormat;
+    }
   }
 };
 </script>

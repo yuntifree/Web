@@ -51,15 +51,15 @@
             </a>
             <Row>
               <Col class-name="account-info" :md="24" :lg="12">
-                <p>用户账号：{{accountInfo.account}}</p>
-                <p>用户昵称：{{accountInfo.nickname}}</p>
-                <p>用户头像：<img :src="accountInfo.avatar" alt=""></p>                
+                <p>用户账号：{{userInfo.username}}</p>
+                <p>用户昵称：{{userInfo.nickname}}</p>
+                <p>用户头像：<img :src="userInfo.headurl" alt=""></p>                
               </Col>
               <Col class-name="account-info" :md="24" :lg="12">
-                <p>服务类型：{{accountInfo.type}}</p>
-                <p>注册时间：{{accountInfo.ctime}}</p>
-                <p>服务开通：{{accountInfo.open}}</p>
-                <p>服务期限：{{accountInfo.deadline}}</p>                                
+                <p>服务类型：{{userInfo.role ? 'VIP' : '普通'}}</p>
+                <p>注册时间：{{userInfo.ctime | dateFormat('yyyy-MM-dd hh:mm:ss')}}</p>
+                <p>服务开通：{{userInfo.start | dateFormat('yyyy-MM-dd hh:mm:ss')}}</p>
+                <p>服务期限：{{userInfo.end | dateFormat('yyyy-MM-dd hh:mm:ss')}}</p>
               </Col>
             </Row>
           </Card>
@@ -70,8 +70,8 @@
             <a href="#" slot="extra" @click.prevent="changeLimit">
               <Icon type="ios-loop-strong"></Icon>
             </a>
-            <h2 class="income-balance">余额：{{(income.balance/100).toFixed(2)}}元</h2>
-            <h2 class="income-expenses">支出：{{(income.expenses/100).toFixed(2)}}元</h2>
+            <h2 class="income-balance">余额：{{(userInfo.income/100).toFixed(2)}}元</h2>
+            <h2 class="income-expenses">支出：{{(userInfo.expense/100).toFixed(2)}}元</h2>
           </Card>
         </Col>
         <Col :md="8" :sm="24">
@@ -82,23 +82,34 @@
             </a>
             <Row :gutter="16">
               <Col class-name="recharge" :lg="12" :md="24" v-for="(item,idx) in recharge" :key="idx">
-                <div class="recharge-img"><img :src="item"/></div>
-                <Button type="warning">充值</Button>
+                <div class="recharge-img"><img :src="item.img"/></div>
+                <Button type="warning" @click="makeRecharge(idx)">充值</Button>
               </Col>
             </Row>
           </Card>
         </Col>
       </Row>
       <Table class="ivu-table-balance" border :columns="columns1" :data="data1" :height="tableHeight"></Table>
-      <Page class="page-next" :total="pageTotal" size="small" :page-size="pageSize" show-elevator show-total></Page>
+      <Page  class="page-next" :total="pageTotal" size="small" :page-size="pageSize" show-elevator show-total></Page>
+      <Modal v-model="modalCode" width="360"
+        title="扫码充值">
+        <div v-for="(item,idx) in recharge" v-show="idx == rechargeIdx" style="text-align:center">
+          <qrcode :value="item.qrcode" :options="{ size: 200 }"></qrcode>
+        </div>
+      </Modal>
     </div>
 </template>
 
 <script>
 import CGI from '../../../libs/cgi.js'
+import qrcode from '@xkeshi/vue-qrcode'
+//require('qrcode')
 var status = {};
 export default {
-  name: 'page1',
+  name: 'balance',
+  components: {
+    qrcode
+  },
   computed: {
     getHeight() {
       return this.$store.state.app.contentHeight;
@@ -107,76 +118,62 @@ export default {
       return this.$store.state.app.contentHeight - 200;
     },
     pageTotal() {
-      return this.data1.length;
+      return 0;
     }
   },
   data() {
     return  {
+      dataReady: false,
+      dataReady1: false,
       searchId: '',
       selIdx: -1,
       pageSize: 30,
-      accountInfo: {
-        account: '13533157742',
-        nickname: '啦啦啦啦',
-        avatar: 'http://upload.xiangbojiubo.com/Fpu80AaJd-Q9gG5D0xRTm9tuIFWL',
-        type: 'VIP',
-        ctime: '2017-12-06 09:06:14',
-        open: '2017-12-10 19:10:14',
-        deadline: '2018-12-10 19:10:14'
+      modalCode: false,
+      rechargeIdx: -1,
+      userInfo: {
+        username: '',
+        nickname: '',
+        headurl: '',
+        role: 0,
+        ctime: '',
+        start: '',
+        end: '',
+        income: 0,
+        expense: 0
       },
-      income: {
-        balance: 100,
-        expenses: 10000
-      },
-      recharge: ['http://upload.xiangbojiubo.com/15065011821017.png?imageView/2/w/180','http://upload.xiangbojiubo.com/15065011823127.png?imageView/2/w/180','http://upload.xiangbojiubo.com/15065011829683.png?imageView/2/w/180','http://upload.xiangbojiubo.com/15096134266256.png?imageView/2/w/180'],
+      recharge: [],
       columns1: [{
           title: 'ID',
           key: 'id',
           align: 'center'
         },{
           title: '订单号',
-          key: 'widthdraw',
+          key: 'oid',
           align: 'center'
         },{
           title: '说明',
           key: 'depict',
           align: 'center'
         },{
+          title: '价格',
+          key: 'price',
+          align: 'center',
+          render: (h, params)=> {
+            return h('div', (params.row.price / 100).toFixed(2))
+          }
+        },{
           title: '支付时间',
           key: 'ctime',
           align: 'center',
           render: (h,params) => {
-            return h('div', new Date(params.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+            return h('div', new Date().Format(params.row.ctime,'yyyy-MM-dd'))
           }
         },{
           title: '状态',
           key: 'status',
           align: 'center',
           render: (h,params) => {
-            return h('div', status.make(params.row.status))
-          }
-        },{
-          title: '操作',
-          key: 'operate',
-          width: 100,
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: ()=> {
-                    this.cancel(params.index)
-                  }
-                }
-              }, '取消')
-              ])
+            return h('div', params.row.status)
           }
         }
       ],
@@ -185,15 +182,26 @@ export default {
     }
   },
   created() {
-    Date.prototype.Format = this.initFormatter();
-    status.prototype.make = this.initMakeStatus();
+    this.initFormatter(); 
+    //Date.prototype.Format = this.initFormatter();
   },
   mounted() {
-    if (this.initTable.length <= 0) {
+      this.initUser();
       this.init();
-    }
   },
   methods: {
+    initUser() {
+      CGI.post('user/summary', {}, (resp)=> {
+        if (resp.errno === 0) {
+          this.userInfo = resp.userinfo;
+          this.recharge = resp.items;
+          this.dataReady = true;
+          console.log(JSON.stringify(this.userInfo) + ',' +this.recharge);
+        } else {
+          this.$Message.error(resp.desc || '')
+        }
+      })
+    },
     init() {
       var param = {
         seq: 0,
@@ -201,9 +209,9 @@ export default {
       }
       CGI.post('order/recharges', param, (resp)=> {
         if (resp.errno === 0) {
-          console.log(resp)
+          this.data1 = this.initTable = resp.infos;
         } else {
-          this.$Message.info(resp.desc);
+          this.$Message.error(resp.desc);
         }
       })
     },
@@ -212,6 +220,11 @@ export default {
     },
     cancel() {
       //this.modalShow = false;
+    },
+    makeRecharge(idx) {
+      //this.codeVal = code;
+      this.rechargeIdx = idx;
+      this.modalCode = true;
     },
     search (data, argumentObj) {
         let res = data;
@@ -232,8 +245,8 @@ export default {
         this.data1 = this.initTable;
         this.data1 = this.search(this.data1, {Id: this.searchId});
     },
-    initFormatter() {
-      new Date().prototype.Format = CGI.dateFormat();
+    initFormatter(){  
+      Date.prototype.Format = CGI.dateFormat; 
     },
     initMakeStatus() {
       status.prototype.makeStatus = function(param) {

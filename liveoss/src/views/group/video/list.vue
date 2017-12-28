@@ -29,6 +29,9 @@
     }
   }
 }
+.btnEnd-hide {
+  display: none
+}
 </style>
 <template>
   <div class="page1-content" :style="{height: getHeight+'px'}">
@@ -39,7 +42,7 @@
           <Button type="info">新增直播</Button>
         </Col>
         <Col>
-          <div class="search"><Input icon="search" v-model="searchId"  @on-change="handleSearch" placeholder="视频ID"></Input></div>
+          <div class="search"><Input icon="search" v-model="searchText"  @on-change="handleSearch" placeholder="视频ID"></Input></div>
         </Col>
       </Row> 
     </div>
@@ -154,12 +157,12 @@ export default {
       return this.$store.state.app.contentHeight - 90;
     },
     pageTotal() {
-      return this.data1.length;
+      return this.data1.length || 0;
     }
   },
   data() {
     return  {
-      searchId: '',
+      searchText: '',
       modalShow: false,
       modalVal: '',
       pageSize: 30,
@@ -241,14 +244,14 @@ export default {
           key: 'ctime',
           align: 'center',
           render: (h,params) => {
-            return h('div', new Date(this.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+            return h('div', new Date().Format(params.row.ctime, 'yyyy-MM-dd hh:mm:ss'))
           }
         },{
           title: '结束时间',
           key: 'ftime',
           align: 'center',
           render: (h,params) => {
-            return h('div', new Date(this.row.cTime).Format(this.row.ctime,'yyyy-MM-dd hh:mm:ss'))
+            return h('div', new Date().Format(params.row.ctime, 'yyyy-MM-dd hh:mm:ss'))
           }
         },{
           title: '访问权限',
@@ -293,7 +296,8 @@ export default {
               h('Button', {
                 props: {
                   type: 'primary',
-                  size: 'small'
+                  size: 'small',
+                  class: params.row.status !== 1 ? 'btnEnd-hide': ''
                 },
                 style: {
                   marginRight: '5px',
@@ -305,7 +309,7 @@ export default {
                     this.checkSure(params.index,true)
                   }
                 }
-              }, '开始'),
+              }, '结束'),
               h('Button', {
                 props: {
                   type: 'primary',
@@ -356,8 +360,7 @@ export default {
           }
         }
       ],
-      initTable: [],
-      initTable2: [],
+      data1: [],
       data2: []
     }
   },
@@ -373,18 +376,18 @@ export default {
         seq: 0,
         num: 30
       }
-      console.log(param);
+      if (param) {
+        param.search = search
+      }
       CGI.post('live/records', param, (resp)=> {
         if (resp.errno === 0) {
-          if (resp.infos && resp.infos.length>0) {
-            this.data1 = this.initTable = resp.infos;
+          if (resp.infos) {
+            this.data1 = resp.infos;
           }
         } else {
           this.$Message.info(resp.desc);
         }
       })
-      //this.data1 = this.initTable;
-      this.data2 = this.initTable2;
     },
     checkSure(idx, chkbtn) {
       this.selIdx = idx
@@ -424,31 +427,11 @@ export default {
       this.listDataShow = show;
       this.listEditVal = CGI.clone(this.data1[idx]);
     },
-    search (data, argumentObj) {
-      let res = data;
-      let dataClone = data;
-      for (let argu in argumentObj) {
-        if (argumentObj[argu].length > 0) {
-          res = dataClone.filter(d => {
-            console.log(d[argu]);
-              return d[argu].toString().indexOf(argumentObj[argu]) > -1;
-          });
-          dataClone = res;
-        }
-      }
-      return res;
-    },
     handleSearch () {
-      if (this.listViewShow) {
-        this.data1 = this.initTable;
-        this.data1 = this.search(this.data1, {Id: this.searchId});
-      } else {
-        this.data2 = this.initTable2;
-        this.data2 = this.search(this.data2, {Id: this.searchId});
-      }
+      this.init(this.searchText)
     },
     initFormatter(){  
-      new Date().prototype.Format = CGI.dateFormat(date,fmt);
+      new Date().prototype.Format = CGI.dateFormat;
     },
     initMakeStatus() {
       status.prototype.makeStatus = function(param) {
@@ -467,7 +450,6 @@ export default {
         return ret;
       }
     }
-
   }
-};
+}
 </script>
