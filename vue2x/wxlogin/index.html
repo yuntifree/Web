@@ -42,22 +42,6 @@
     <script type="text/html" id="tplOnelogin">
       <div class="login-view first-view">
         {{if imgs.length>0}}
-          <!--div class="slide" id="slide0">
-            <ul>
-              {{each imgs as val idx}}
-              <li>
-                <a href="javascript:;">
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{val.img}} alt="">
-                  </a>
-              </li>
-              {{/each}}
-            </ul>
-            <div class="dot">
-              {{each imgs as val idx}}
-                <span></span>
-              {{/each}}
-            </div>
-          </div-->
           {{each imgs as val idx}}
             <div class="slide">
               <ul>
@@ -80,17 +64,6 @@
         </div>
       </div>
       <div class="login-view min5-view">
-        <!-- {{each imgs2 as img2 idx}}
-        <div class="slide" id="slideview{{idx}}">
-          <ul>
-            <li>
-              <a href="javascript:;">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" data-src={{img2.img}} alt="">
-                </a>
-            </li>
-          </ul>
-        </div>
-        {{/each}} -->
         <div class="oneclick-bottom">
           <button class="btn wx-btn min5-btn"><img class="btn-img-wechat" src="images/ico_wechat.png"><span class="btn-text"></span></button>
           <span class="oneclick-bottom-text">服务热线：0769-21660569</span>

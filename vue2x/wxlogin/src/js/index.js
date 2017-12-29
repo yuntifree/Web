@@ -271,10 +271,7 @@ function initUI() {
           if (delay == 0) {
             $('.login-view').css('padding-bottom',0);
             $('.min5-view').css('display','block');
-            //var height = $('.first-view').height();
-            //$('.login').css({'top': -height-3});
             $('.min5-view').css('padding-bottom',BtnHeight);
-            //clearInterval(t)
             $('#btn-login').text('')
             $('.min5-btn').get(0).addEventListener('touchstart', touchStart, false);
             $('.min5-btn').get(0).addEventListener('touchend', mobOneClick, false);
