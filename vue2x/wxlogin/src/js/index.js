@@ -146,9 +146,7 @@ function font(bFont) {
     if (resp.errno == 0) {
       data = taobaoCover = resp.data;
       data.imgs = [];
-      data.imgs1 = [];
-      data.imgs2 = [];
-       autologin = data.autologin;
+      autologin = data.autologin;
       logintype = data.logintype;
       //autologin=1;
       //logintype = 3;
@@ -170,16 +168,16 @@ function font(bFont) {
         if (autologin) {
           var ads = false
           if (data.ads && data.ads.length>0) {
-            data.imgs = data.ads.splice(0,2);
-            data.imgs1 = data.ads.splice(2,2);
+            data.imgs = data.ads;
+            console.log(data.imgs);
+            /*data.imgs1 = data.ads.splice(2,2);
             data.imgs2 = data.ads.splice(4,4);
-            ads = true;
-
+            ads = true;*/
           }
           $('.login').append(template('tplOnelogin', data));
           setLognBtn(logintype);
           BtnHeight = $('.oneclick-bottom').outerHeight();
-          $('.login-view').css('padding-bottom',BtnHeight);
+          /*$('.login-view').css('padding-bottom',BtnHeight);
           if (ads) {
             for(var i=0,len=data.imgs.length; i<len; i++) {
               swipe('#slide0',0,false);
@@ -190,16 +188,16 @@ function font(bFont) {
             for (var i=0,leng=data.imgs2.length;i<leng;i++) {
               swipe('#slideview'+i,i,true);
             }
-          }
+          }*/
         } else {
           //密码登录
           $('.login').append(template('tplIptlogin', data));
             //$('.login').append(template('tplBottom', ads));
             setLognBtn(logintype);
         }
-        setTimeout(function() {
+        /*setTimeout(function() {
           setHeight()
-        }, 300);
+        }, 300);*/
       }
       initUI();
     } else {
@@ -273,10 +271,10 @@ function initUI() {
           if (delay == 0) {
             $('.login-view').css('padding-bottom',0);
             $('.min5-view').css('display','block');
-            var height = $('.first-view').height();
-            $('.login').css({'top': -height-3});
+            //var height = $('.first-view').height();
+            //$('.login').css({'top': -height-3});
             $('.min5-view').css('padding-bottom',BtnHeight);
-            clearInterval(t)
+            //clearInterval(t)
             $('#btn-login').text('')
             $('.min5-btn').get(0).addEventListener('touchstart', touchStart, false);
             $('.min5-btn').get(0).addEventListener('touchend', mobOneClick, false);
