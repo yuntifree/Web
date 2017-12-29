@@ -155,7 +155,6 @@ export default {
               authority: ~~formVal.authority,
               resolution: ~~formVal.resolution
             }
-            console.log(param);
             if (~~formVal.authority == 1) {
               if (formVal.passwd.length>0) {
                 param.passwd = formVal.passwd;
@@ -262,7 +261,6 @@ export default {
           suffix.push(file);
         }
       });
-      return suffix;
       return suffix;
     }
   }
