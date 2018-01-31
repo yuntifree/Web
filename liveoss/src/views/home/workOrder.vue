@@ -22,8 +22,7 @@
     <Modal
       title="工单详情"
       v-model="workModalShow"
-      class-name="vertical-center-modal"
-      @on-ok="handleSubmit('formValidate')">
+      class-name="vertical-center-modal">
       <Form ref="formValidate" :model="formValidate" :label-width="80">
         <FormItem label="当前状态">
           <Input v-model="modalVal.status?'已受理':'未受理'" :disabled="true"></Input>
@@ -55,8 +54,7 @@
       <Modal
         title="创建工单"
         v-model="createOrder"
-        class-name="vertical-center-modal"
-        @on-ok="handleSubmit('orderValidate')">
+        class-name="vertical-center-modal">
         <Form ref="orderValidate" :model="createVal" :rules="ruleValidate" :label-width="80">
           <FormItem label="工单标题" prop="title">
             <Input v-model="createVal.title" placeholder="请输入工单标题"></Input>
@@ -80,7 +78,7 @@
         </Form>
         <div slot="footer">
           <Button type="primary" size="ghost" @click="createOrder=false">取消</Button>
-          <Button type="primary" size="default" @click="handleSubmit">创建</Button>
+          <Button type="primary" size="default" @click="handleSubmit('orderValidate')">创建</Button>
         </div>
     </Modal>
   </div>
@@ -149,21 +147,7 @@ import CGI from '../../libs/cgi.js'
             }
           }
         ],
-        data: [{
-          Id: 10,
-          name: '测试账号',
-          title: '平台故障-直播问题',
-          status: 0,
-          commitTime: '2017-12-19 14:38:46',
-          folder: ['http://upload.xiangbojiubo.com/work_order/201711151731186660.png']
-        },{
-          Id: 11,
-          name: '美女主播',
-          title: '平台故障-直播问题',
-          status: 1,
-          commitTime: '2017-12-09 18:08:26',
-          folder: ['http://upload.xiangbojiubo.com/work_order/201711151731186660.png']
-        }],
+        data: [],
         modalVal: {
           Id: '',
           name: '',
@@ -198,7 +182,23 @@ import CGI from '../../libs/cgi.js'
         return this.data.length;
       }
     },
+    mounted() {
+      this.init();
+    },
     methods: {
+      init() {
+        var param = {
+          seq: 0,
+          num: 30
+        }
+        CGI.post('feedback/recods', param, (resp)=> {
+          if (resp.errno ===0 ) {
+            this.data = resp.infos;
+          } else {
+            this.$Message.info(resp.desc || '');
+          }
+        })
+      },
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
