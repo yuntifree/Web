@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import chat from '@/components/views/Chat.vue'
-import intro from '@/components/views/Introduction.vue'
-import award from '@/components/views/Award.vue'
+import Chat from '@/components/views/Chat.vue'
+import Intro from '@/components/views/Intro.vue'
+import Award from '@/components/views/Award.vue'
+import Vote from '@/components/views/Vote.vue'
 
 /**/
 Vue.use(Router)
@@ -12,15 +13,19 @@ export default new Router({
    {
       path: '/',
       name: 'chat',
-      component: chat
+      component: Chat
     },{
       path: '/intro',
       name: 'intro',
-      component: intro
+      component: Intro
     },{
       path: '/award',
       name: 'award',
-      component: award
+      component: Award
+    },{
+      path: '/vote',
+      name: 'vote',
+      component: Vote
     }
   ]
 })

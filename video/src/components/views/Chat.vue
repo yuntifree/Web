@@ -6,6 +6,7 @@
   @include containerSize(100%, 100%);
   overflow: auto;
   padding: 0.1rem 0.1rem 0.94rem;
+  color: #2c3e50;
 }
 .tip-text {
   padding: 0.1rem;

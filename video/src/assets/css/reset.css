@@ -196,3 +196,9 @@ legend{
 .fade-enter, .fade-leave {
   opacity: 0;
 }
+img {
+  border: 0;
+  vertical-align: top;
+  width: auto;
+  height: auto;
+}

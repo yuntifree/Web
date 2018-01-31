@@ -19,13 +19,12 @@ module.exports = function(bFont) {
         if (width / dpr > 750) {
           width = 750 * dpr;
         }
-        docEl.style.fontSize = 100 * (width / 750) + 'px';
+        //docEl.style.fontSize = 100 * (width / 750) + 'px';
+        docEl.style.fontSize = (width / 10) + 'px';
       };
       recalc();
       if (!document.addEventListener) return;
       window.addEventListener(resizeEvt, recalc, false);
     }
-
-    // fastclick
   }
 }

@@ -40,11 +40,12 @@
         <Col>
           <Button v-show="!listViewShow" type="info" icon="ios-arrow-left" @click="returnBack">返回视频列表</Button>
           <Button type="info">新增直播</Button>
+          <Button type="info" @click="refresh">刷新</Button>
         </Col>
         <Col>
           <div class="search"><Input icon="search" v-model="searchText"  @on-change="handleSearch" placeholder="视频ID"></Input></div>
         </Col>
-      </Row> 
+      </Row>
     </div>
     <Table v-show="listViewShow" border :columns="columns1" :data="data1" :height="tableHeight"></Table>
     <Table v-show="listDataShow" border :columns="columns2" :data="data2" :height="tableHeight"></Table>
@@ -376,9 +377,9 @@ export default {
         seq: 0,
         num: 30
       }
-      if (param) {
-        param.search = search
-      }
+      // if (param) {
+      //   param.search = search
+      // }
       CGI.post('live/records', param, (resp)=> {
         if (resp.errno === 0) {
           if (resp.infos) {
@@ -388,6 +389,9 @@ export default {
           this.$Message.info(resp.desc);
         }
       })
+    },
+    refresh() {
+      this.init()
     },
     checkSure(idx, chkbtn) {
       this.selIdx = idx
@@ -430,7 +434,7 @@ export default {
     handleSearch () {
       this.init(this.searchText)
     },
-    initFormatter(){  
+    initFormatter(){
       new Date().prototype.Format = CGI.dateFormat;
     },
     initMakeStatus() {

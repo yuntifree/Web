@@ -1,25 +1,109 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../assets/css/common.scss';
-.video-container,.video-player {
+#video {
   @include containerSize(100%, auto);
+  display: none;
+}
+.adv.slider {
+    width: 100%;
+    height: 1.306666rem;
+    overflow: hidden;
+    position: relative;
+}
+.top-close {
+    width: 1.306666rem;
+    height: 1.306666rem;
+    background-image: url(../assets/close.png);
+    -webkit-background-size: 0.425rem;
+    background-size: 0.425rem;
+    position: absolute;
+    right: 0;
+    z-index: 2017;
+    background-color: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    -ms-background-position-x: 0.725rem;
+    background-position-x: 0.725rem;
+    background-position-y: 0.105rem;
+}
+.adv.slider > a > img {
+    display: block;
+    width: 100%;
+    min-height: 100%;
+}
+.video-container,.video-player {
+  width: 100%;
   display: block;
   position: relative;
 }
-.video-btn {
-  @include containerSize(1.5rem, 1.5rem);
-  @include pos(top, 40%, left, 50%);
-  transform: translate(-50%, -50%);
-  img {
-    display: block;
-    @extend %img100;
-  }
+.video-player img{
+  width: 100%;
+}
+.stats {
+  height: 1rem;
+  padding-right: 0.1rem;
+  background-color: rgba(64, 74, 88, 0.5);
+  border-radius: 0.04rem;
+  position: absolute;
+  left: 0.104rem;
+  top: 0.26666rem;
+  z-index: 50;
+}
+.stats > p:nth-child(2) {
+  height: 0.273333rem;
+  margin: 0.175rem 0 0.1rem 0;
+  line-height: 0.273333rem;
+  background-size: 0.293333rem 0.293333rem;
+}
+.stats > p {
+  width: 100%;
+  text-indent: 1.64rem;
+  font-size: 0.2rem;
+  color: #fff;
+  line-height: 1;
+}
+.usericon {
+  width: 0.746666rem;
+  height: 0.746666rem;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0.2rem;
+}
+.channel-home {
+  height: 1rem;
+  padding-right: 0.01rem;
+  border-radius: 0.04rem;
+  position: absolute;
+  bottom: 2rem;
+  z-index: 101;
+  left: 0.104rem;
+}
+.channel-home img {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+}
+.playbtn {
+  @include containerSize(2rem, 2rem);
+  @include pos(top, 50%, left, 50%);
+  border-radius: 50%;
+  position: absolute;
+  background: url(../assets/playbtn.png) no-repeat center center;
+  background-size: 100% 100%;
+  margin: -1rem 0 0 -1rem;
+  z-index: 3;
+  line-height: 2rem;
+  text-align: center;
+  color: #FF9933;
+  font-size: 0.35rem;
 }
 .menu,.tab {
   @extend %rowFlex;
 }
 .tab {
-  font-size: 0.14rem;
+  font-size: 0.45rem;
   background-color: #fff;
   color: #333;
   flex: 6;
@@ -28,8 +112,8 @@
 
 .tab-item {
   flex: 1;
-  height: 0.74rem;
-  line-height: 0.74rem;
+  height: 1rem;
+  line-height: 1rem;
   text-align: center;
 }
 .tab-item-active {
@@ -48,34 +132,35 @@
     pointer-events: none;
     border-color: rgba(255, 255, 255, 0);
     border-bottom-color: rgb(245, 112, 45);
-    border-width: 0.15rem;
+    border-width: 0.2rem;
   }
 }
 .hit-follow {
   flex: 1;
-  height: 0.74rem;
-  line-height: 0.74rem;
+  height: 1rem;
+  line-height: 1rem;
   color: #fff;
   text-align: center;
   background-color: #f5702d;
-} 
+  font-size: 0.45rem;
+}
 .marqueen-container {
-  height: 0.52rem;
+  height: 0.7rem;
   overflow: hidden;
   position: relative;
   background-color: rgba(0,0,0,0.8);
 }
 .marqueen-transition {
   width: auto;
-  height: 0.8rem;
-  line-height: 0.52rem;
-  font-size: 0.24rem;
+  height: 1.0667rem;
+  line-height: 0.7rem;
+  font-size: 0.32rem;
   color: #fff;
   @extend %Absolute0;
   animation: myfirst 10s linear infinite;
   white-space:nowrap;
   span {
-    margin-right: 0.6rem;
+    margin-right: 0.8rem;
     &:nth-child(odd) {
       color: #fff;
     }
@@ -157,7 +242,7 @@
   display: flex;
   flex-direction: row-reverse;
   dt {
-    margin-left: 0.2rem;
+    margin-left: 0.2667rem;
   }
   dd {
     .chat-meta {
@@ -181,14 +266,14 @@
   left: 0;
   z-index: 999;
   .follow-main {
-    @include containerSize(4.5rem, auto);
+    @include containerSize(6rem, auto);
     @include pos(top,50%,left,50%);
     transform:translate(-50%, -50%);
     background-color: #fff;
     border-radius: 0.1rem;
-    font-size: 0.28rem;
+    font-size: 0.37333rem;
     .follow-inner {
-      padding:0.2rem 0.6rem;
+      padding:0.2667rem 0.8rem;
     }
   }
 }
@@ -197,9 +282,9 @@
   @extend %img100;
 }
 .follow-tit {
-  font-size: 0.28rem;
+  font-size: 0.37rem;
   font-weight: bold;
-  padding-bottom: 0.08rem;
+  padding-bottom: 0.10667rem;
   border-bottom: 1px solid #eee;
   color: #000;
   span {
@@ -207,11 +292,11 @@
   }
 }
 .follow-tip {
-  font-size: 0.24rem;
+  font-size: 0.32rem;
   color: #999;
 }
 .follow-close {
-  line-height: 0.56rem;
+  line-height: 0.75rem;
   background-color: #f2f2f2;
   border-top: 1px solid #d0d0d0;
   color: #40AFFE;
@@ -222,19 +307,50 @@
 
 <template>
   <div class="index">
-    <div class="video-container">
-      <div class="videoPlayer" style="width: 100%;height: auto;"></div>
-      <!--div class="video-btn" v-show="playerBtnShow" @click.stop="makePlayer"><img src="http://pdnlive.cfbond.com/video/img/playbtn.png"></div-->
+    <!-- 顶部广告 -->
+    <div class="adv slider" data-special="adv" id="adv1">
+      <div class="top-close" @click="topClose"></div>
+      <a href="http://cs.vautoshow.com/special/autoshow/5a28a4aed8edcd1000c92080" title="第26届长沙红星国际会展中心汽车博览会" class="adv-item active">
+        <img src="http://upload.xiangbojiubo.com/FqGP9lAiSEjvraUz7RoRWfP0rczG?imageView2/2/w/640">
+      </a>
     </div>
+    <!-- 视频区域 -->
+    <div class="video-container">
+      <!-- 数字区域 -->
+      <div class="stats">
+        <img src="http://imgv.xldlive.com/FnUNHRjJExZWA_CRbTg0xCouWNTB?imageView2/2/w/640" class="usericon">
+        <p style="text-indent: 0.615rem;background: none;font-size: 0.265rem;">
+          <i class="fa fa-clock-o" style="width: 0.795rem;font-size: 0.305rem;margin-top: .015rem;margin-right: 0.15rem;"></i> 4:46:55
+        </p>
+        <p style="text-indent: 0.615rem;background: none;font-size: 0.265rem;">
+          <i class="fa fa-eye" style="width: 0.795rem;font-size: 0.305rem;margin-right: 0.15rem;"></i><span> 57431</span>
+        </p>
+      </div>
+      <!-- 回到主页区域 -->
+      <div class="channel-home">
+        <a href="/app/channel/d6f95aecab4aa2ebe942d903038bff2b" target="_self">
+          <img src="http://imgv.xldlive.com/file/201706161404561876.png" alt="【1.7直播】2018 第十四届“中华童星”全国青少年艺术人才选拔活动">
+        </a>
+      </div>
+      <!-- 默认视频区域 -->
+      <video id="video" controls="" webkit-playsinline="" playsinline="" x5-playsinline="" data-src="http://v.xldlive.com/recordings/z1.xldlive.3861520/1515290439_1515309185.m3u8" style="font-size:14px"></video>
+      <!-- 视频区 -->
+      <div class="video-player" style="height: auto; overflow: hidden;">
+        <img src="http://imgv.xldlive.com/FuNYDZ34IdX_Wdz7FGQtJnBaAIFD?imageView2/2/w/640" class="poster">
+        <div class="playbtn" @click="play"></div>
+      </div>
+    </div>
+    <!-- 菜单区域 -->
     <div class="menu">
       <ul class="tab">
-        <li class="tab-item" v-for="(tab,idx) in tabs" 
-          @click="getTab(tab,idx)" 
+        <li class="tab-item" v-for="(tab,idx) in tabs"
+          @click="getTab(tab,idx)"
           :class="{'tab-item-active': idx === tabIdx}">{{tab.text}}
         </li>
       </ul>
       <div class="hit-follow" @click="followShow=true">关注</div>
     </div>
+    <!-- 跑马灯 -->
     <div class="marqueen-container">
       <div class="marqueen-transition">
         <span>主办方：新华社·中国财富传媒集团      承办方：普谛恩(中国)国际文化发展有限公司</span>
@@ -244,6 +360,7 @@
     <div class="main-container">
       <router-view/>
     </div>
+    <!-- 关注区 -->
     <div class="follow-shade" v-show="followShow">
       <div class="follow-main">
         <div class="follow-inner">
@@ -263,6 +380,7 @@ export default {
   name: 'index',
   data () {
     return {
+      raw:{},
       msg: 'Welcome to Your Vue.js App',
       comment: "",
       tabIdx: 0,
@@ -277,6 +395,9 @@ export default {
       },{
         text: '抽奖',
         component: 'award'
+      },{
+        text: '投票',
+        component: 'vote'
       }],
       tips: {
         show: false,
@@ -311,41 +432,80 @@ export default {
     }
   },
   mounted() {
-    try {
-      var idx = sessionStorage.getItem('tabIdx');
-      if (idx || idx == 0) {
-        this.tabIdx = ~~idx;
-        console.log(this.tabIdx);
-      } else {
-        sessionStorage.setItem('tabIdx',0);
-      }
-    } catch(e) {}
-    var videoObject = {
-      container: '.videoPlayer',//“#”代表容器的ID，“.”或“”代表容器的class
-      variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
-      poster:'http://www.ckplayer.com/sampleX/pic/wdm.jpg',//封面图片
-      video:'http://img.ksbbs.com/asset/Mon_1703/05cacb4e02f9d9e.mp4'//视频地址
-    };
-    player=new ckplayer(videoObject);
+    // 创建video
+    var VIDEO = this.VIDEO = {};
+    (function (el) {
+        VIDEO.EL = el;
+        var COVER = document.querySelector(".video-player");
+        VIDEO.play = function () {
+          if (isMobile.any) {
+            COVER.style.display = 'none';
+            VIDEO.EL.style.display = 'block';
+            VIDEO.EL.src = VIDEO.EL.getAttribute("data-src") || "";
+            VIDEO.EL.play();
+          } else {
+            COVER.style.display = 'none';
+            var _new = document.createElement("div")
+                      , _old = VIDEO.EL
+                      , videoUrl = VIDEO.EL.getAttribute("data-src") || "";
+
+            _old.parentNode.replaceChild(_new, _old);
+            _new.id = 'video';
+            _new.style.height = '5.75rem';
+            _new.style.display = 'block';
+
+            function create_player(video_type, v_control) {
+              var vars = {
+                f: '/static/m3u8.swf',
+                a: videoUrl,
+                c: 1,
+                s: 4,
+                p: video_type,
+                lv: v_control, //注意，如果是直播，需设置lv:1
+                loaded: 'loadHandler'
+              },
+              video = [videoUrl];
+
+              CKobject.embed('/static/xplayer.swf',
+                        'video',
+                        'ck_film',
+                        '100%',
+                        '100%',
+                        false,
+                        vars,
+                        video
+              );
+              function loadHandler() {
+                CKobject.getObjectById('ck_film').addListener('play', 'playHandler');
+              }
+
+              function playHandler() {
+                CKobject.getObjectById('ck_film').removeListener('play', 'playHandler');
+              }
+            }
+            create_player(1, 0);
+        }
+      };
+    })(document.getElementById("video"))
+    this.initData()
   },
   methods: {
+    initData() {
+      this.raw = {
+        video_id: 12345,
+        title: '第26届长沙红星国际会展中心汽车博览会',
+      }
+    },
     getTab(tab,idx) {
       this.tabIdx = idx;
-      try {
-        console.log(1);
-        sessionStorage.setItem('tabIdx',idx);
-      } catch(e) {}
       this.$router.push({name: tab.component});
     },
-    makePlayer() {
-      if (this.playerBtnShow) {
-        player.videoPlay()
-      } else {
-        player.videoPause()
-      }
-      this.playerBtnShow = !this.playerBtnShow;
-    }
+    play() {
+      this.VIDEO.play()
+    },
+    topClose(e) {
+      e.target.parentNode.remove();
+    },
   }
 }
 </script>
-
